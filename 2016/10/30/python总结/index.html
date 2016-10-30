@@ -4,13 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Hello World | Kevin&#39;s Blog</title>
+    <title>Python总结 | Kevin&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="打开Github看见自己是2 Nov 2015加入的，还记得当时是学习第一行代码 ,看到里面有使用git的版本控制工具，于是注册了一个，后来就把自己学算法的代码往上push，再后来我们三个人要开发一个安卓程序，使用Github的频次逐渐增多。
-时间过的好快，离第一次提交都一年了，这一年变动极大，从自">
+    <meta name="description" content="看代码遇到不知道的Python用法的总结.">
     
     
     
@@ -91,10 +90,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/10/30/hello-world/" title="Hello World" itemprop="url">Hello World</a>
+      <a href="/2016/10/30/python总结/" title="Python总结" itemprop="url">Python总结</a>
   </h1>
   <p class="article-time">
-    <time datetime="2016-10-30T05:01:12.000Z" itemprop="datePublished">Oct 30 2016</time>
+    <time datetime="2016-10-30T13:48:51.000Z" itemprop="datePublished">Oct 30 2016</time>
   </p>
 </header>
 	<div class="article-content">
@@ -105,47 +104,55 @@ var _hmt = _hmt || [];
 		
 		</div>
 		
-		<p>打开Github看见自己是2 Nov 2015加入的，还记得当时是学习<strong>第一行代码</strong> ,看到里面有使用git的版本控制工具，于是注册了一个，后来就把自己学算法的代码往上push，再后来我们三个人要开发一个安卓程序，使用Github的频次逐渐增多。</p>
-<p>时间过的好快，离第一次提交都一年了，这一年变动极大，从自己宅在宿舍学习安卓，Java，到Python，做Web，做爬虫，做数据分析，后来去工作，学了R，熟练了Linux，再后来学习数据结构，操作系统等基础课，然后开始刷算法，学习了机器学习一丢丢，学习了C++，用Python做了一个电影推荐系统，弄会了MySQL，然后一直到现在，又重新工作，一个FinTech公司。</p>
-<p>不仅是编程学习上，学习了很多东西，自己的成长也是很快的。还有在自己的思想上，从去年的迷茫，焦虑，痛苦，到慢慢的想开，一直到现在的沉静，释怀。虽然说做错了很多事情，但是也看开了很多事情，自己也在这个过程中体会到了成长的艰辛与快乐。</p>
-<p>不仅有成长的严肃，这一年也有旅行的快乐，6月第一次坐飞机去了厦门，厦门很可爱，楼很高，海滨公园很开心，但是没有去鼓浪屿。7月去了上海，哦国际化大都市耶！蜗牛也很好吃，很开心。8月去了武汉，我在那大桥上～宜昌，和老友撸串，看三峡，开心。10月，去了桂林，龙脊梯田，拍出来的照片比实际上好看多了，哈哈。阳朔，漓江。深圳，这座城市真的不错，海湾公园夜谈。广州第一次去玩过山车，简直太爽～然后然后然后和她就表白了(///^///)，很开心很开心。</p>
-<p>今天算是转折点吧，明天就要去北京了，不知道未来会怎么样，但是我想说 <strong><em>“Hello World”</em></strong></p>
-<p>恰有一首歌来表达我现在的心情：</p>
-<blockquote>
-<p>再见我的爱</p>
-<p>I Wanna Say GoodBye</p>
-<p>再见我的过去</p>
-<p>I Want a new life</p>
-<p>再见我的眼泪跌倒和失败</p>
-<p>再见那个年少轻狂的时代</p>
-<p>再见我的烦恼 不再孤单</p>
-<p>再见我的懦弱 不再哭喊</p>
-<p>Now I Wanna Say</p>
-<p>Hello Hello </p>
-<p>我的未来</p>
-<p>Hello Hello</p>
-</blockquote>
-<p><strong><em>写此文纪念那一年刀光剑影下疤痕累累的灵魂～</em></strong></p>
+		<p>看代码遇到不知道的Python用法的总结.<a id="more"></a></p>
+<ul>
+<li><code>complie()</code></li>
+</ul>
+<p>将source编译为代码，参数为<code>source filename mode</code>，其中mode:<code>exec</code>执行一系列的语句，<code>eval</code>执行一句，<code>single</code>执行单一交互式语句，如<code>print &quot;hello&quot;</code></p>
+<p><code>code = compile(file.read(),filepath,&#39;exec&#39;)</code></p>
+<ul>
+<li><code>exec(code,global_vars,local_vars)</code></li>
+</ul>
+<p>执行存储在字符串或者文件里面的Python语句，执行代码，并且声明全局命名空间和局部命名空间</p>
+<ul>
+<li><code>os.environ.get(&quot;STRA_ROOT&quot;,os.path.join(os.getcwd(),&quot;../..&quot;))</code></li>
+</ul>
+<p>获取环境变量，如果环境变量为空，那么返回第二个参数给的默认值</p>
+<p><code>os.path.join</code> 连接两个字符串作为path</p>
+<p><code>os.getcwd()</code> 获取当前工作目录</p>
+<ul>
+<li><code>os.path.normpath(os.path.abspath(root))</code></li>
+</ul>
+<p>首先将所输入的路径转换为绝对路径，然后根据系统环境进行规范化路径</p>
+<ul>
+<li><code>map(lambda x:os.path.join(*x),itertools.product(*paths))</code></li>
+</ul>
+<p>itertools.product 表示一个item1，item2等中的项目的笛卡尔积的元组，排列组合</p>
+<p>其中<code>*x</code>表示可选数目的参数集合,所以x就是包含所有参数的一个元组，然后将这些元组join起来编程一个路径</p>
+<ul>
+<li><code>logging.debug(&quot;load config from [%s]&quot;,cfile)</code></li>
+</ul>
+<p>后面第二个参数文档里是这样写的 args are the arguments which are merged into msg using the string formatting operator</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/成长/">成长</a><a href="/tags/生活/">生活</a>
+  <span></span> <a href="/tags/Python/">Python</a><a href="/tags/工作总结/">工作总结</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/思录集/">思录集</a>
+  <a class="article-category-link" href="/categories/Python/">Python</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2016/10/30/hello-world/" data-title="Hello World | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2016/10/30/python总结/" data-title="Python总结 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -154,19 +161,11 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/10/30/python总结/" title="Python总结">
-  <strong>New:</strong><br/>
-  <span>
-  Python总结</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/10/30/hexo与github搭建博客/"  title="Hexo与github搭建博客">
+<a href="/2016/10/30/hello-world/"  title="Hello World">
  <strong>Old:</strong><br/> 
- <span>Hexo与github搭建博客
+ <span>Hello World
 </span>
 </a>
 </div>
@@ -176,7 +175,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="Hello World" data-thread-key="hello-world" data-author-key="Kevin" data-url="http://microndgt.github.io/post/hello-world"></div>
+	<div class="ds-thread" data-title="Python总结" data-thread-key="python总结" data-author-key="Kevin" data-url="http://microndgt.github.io/post/python总结"></div>
 	
 </section>
 
