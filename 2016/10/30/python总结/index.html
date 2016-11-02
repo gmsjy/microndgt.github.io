@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -78,7 +78,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -133,13 +133,32 @@ var _hmt = _hmt || [];
 <li><code>logging.debug(&quot;load config from [%s]&quot;,cfile)</code></li>
 </ul>
 <p>后面第二个参数文档里是这样写的 args are the arguments which are merged into msg using the string formatting operator</p>
+<ul>
+<li><code>&quot;{:03d}&quot;.format(uid % 100)</code></li>
+</ul>
+<p>使用{}形式进行格式化字符串，:表示格式化字符开始，03d表示将数字类型的格式为字符串3位，多处的空用0补齐。</p>
+<p><code>os.path.join(data_root, l1, l2, &quot;{}-{}.{}&quot;.format(kind, uid, ext))</code>每一个大括号格式化一个变量</p>
+<ul>
+<li>csv模块的使用</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">file = open(path)</div><div class="line">reader = csv.reader(file)</div><div class="line">for row in reader:</div><div class="line">    # row是一个列表，每一项为一个列</div><div class="line">    print(row[0])</div><div class="line"># csv写入方法，writerow接受一个列表，作为csv的每一个列元素</div><div class="line">w = csv.writer(file)</div><div class="line">w.writerow(someList)</div></pre></td></tr></table></figure>
+<ul>
+<li>datetime变量的使用</li>
+</ul>
+<p>date是datetime变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># 将date变量转换为字符串，方法</div><div class="line">date.strftime(&quot;%Y%m%d&quot;)</div><div class="line"># 将字符串转换为datetime变量，函数</div><div class="line">datetime.datetime.strptime(timeString,&quot;%Y%m%d&quot;)</div><div class="line"># timedelta对象</div><div class="line">from datetime import timedelta</div><div class="line">day = timedelta(days=1)</div></pre></td></tr></table></figure>
+<ul>
+<li>字典的一些操作</li>
+</ul>
+<p><code>self._states.get(date,{}).get(&#39;stkasset&#39;,{})</code>也就是date键存在，则获取数据，否则返回空字典</p>
+<p><code>stks = stkasset.setdefault(symbol, [])</code>,setdefault方法就是获取键值，如果没有得到，那么将添加该键，并且设置默认值</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Python/">Python</a><a href="/tags/工作总结/">工作总结</a>
+  <span></span> <a href="/tags/Python/">Python</a><a href="/tags/编程/">编程</a><a href="/tags/工作总结/">工作总结</a>
   </div>
 
 
@@ -163,7 +182,7 @@ var _hmt = _hmt || [];
  
  <div class="prev" >
  <a href="/2016/10/31/北京的第一天/" title="北京的第一天">
-  <strong>New:</strong><br/>
+  <strong>新一篇:</strong><br/>
   <span>
   北京的第一天</span>
 </a>
@@ -172,7 +191,7 @@ var _hmt = _hmt || [];
 
 <div class="next">
 <a href="/2016/10/30/hello-world/"  title="Hello World">
- <strong>Old:</strong><br/> 
+ <strong>旧一篇:</strong><br/> 
  <span>Hello World
 </span>
 </a>
