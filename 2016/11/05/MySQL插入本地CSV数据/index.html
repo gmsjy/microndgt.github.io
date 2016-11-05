@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -78,7 +78,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -156,6 +156,22 @@ var _hmt = _hmt || [];
 </ul>
 <p>由于有两台计算机上的数据，id标号不是连续的，先后插入的时候就会出现主键重复，现在准备采用分两个表插入，然后进行合并的方式：</p>
 <p><code>insert into ability(fundId,ability_gain,ability_long,ability_medium,ability_risk,ability_short,ability_total,daily_profit,daily_profit_rate,date,fundbal,max_retracement,period_profit_rate,position_rate,shape_ratio,stk_maktval,ttimes_long,ttimes_medium,ttimes_short) select fundId,ability_gain,ability_long,ability_medium,ability_risk,ability_short,ability_total,daily_profit,daily_profit_rate,date,fundbal,max_retracement,period_profit_rate,position_rate,shape_ratio,stk_maktval,ttimes_long,ttimes_medium,ttimes_short from ability1;</code></p>
+<p>另外一种解决方法是将第二个文件的第一个字段按照之前插入的最后一条的数字，相应进行更改，使用awk命令：</p>
+<p><code>awk &#39;BEGIN{FS=&quot;,&quot;;OFS=&quot;,&quot;;ORS=&quot;\n&quot;;}{$1=NR+43146621;print $0}&#39; datatest.txt &gt; newdatatest.txt</code></p>
+<p>FS：输入字段分隔符</p>
+<p>RS：出入行分隔符</p>
+<p>OFS：输出字段分隔符</p>
+<p>ORS：表示输出行分隔符</p>
+<p>所以要记录第一个文件的插入总条数，也就是插入后id值最后一个是什么</p>
+<p>xaa:</p>
+<p>xab:</p>
+<p>xac:</p>
+<ul>
+<li>关键问题</li>
+</ul>
+<p>最后插入了很多数据后发现数据是21列，建的表是20列，晕，删除表，重新建表～</p>
+<p>又出现一个问题，之前按照文件大小将文件分割，插入数据库的时候发现，文件最后一行完整性被损坏了，所以一定要按照行来分割数据文件～</p>
+<p><code>split all_output.csv -l 46000000</code></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -187,7 +203,7 @@ var _hmt = _hmt || [];
 
 <div class="next">
 <a href="/2016/11/04/北京de第五天/"  title="北京De第五天">
- <strong>Old:</strong><br/> 
+ <strong>旧一篇:</strong><br/> 
  <span>北京De第五天
 </span>
 </a>
