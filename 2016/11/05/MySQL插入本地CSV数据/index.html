@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>北京De第五天 | Kevin&#39;s Blog</title>
+    <title>MySQL插入本地CSV数据 | Kevin&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="在北京工作已经一个星期了～">
+    <meta name="description" content="将本地的CSV文件插入到MySQL的方法以及遇到的问题～">
     
     
     
@@ -90,10 +90,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/11/04/北京de第五天/" title="北京De第五天" itemprop="url">北京De第五天</a>
+      <a href="/2016/11/05/MySQL插入本地CSV数据/" title="MySQL插入本地CSV数据" itemprop="url">MySQL插入本地CSV数据</a>
   </h1>
   <p class="article-time">
-    <time datetime="2016-11-04T15:46:53.000Z" itemprop="datePublished">Nov 4 2016</time>
+    <time datetime="2016-11-05T01:42:31.000Z" itemprop="datePublished">Nov 5 2016</time>
   </p>
 </header>
 	<div class="article-content">
@@ -104,34 +104,68 @@ var _hmt = _hmt || [];
 		
 		</div>
 		
-		<p>在北京工作已经一个星期了～<a id="more"></a></p>
-<p>今天是在北京的第五天了，从周一过来，今天周五，上班也一个周了，今天还算在正常时间下班了，不过周六还要加班。不过也就习惯了，也不是特别累吧，一切还好，自己学的东西也挺多，也挺快，但是还是想更加系统一点的学习吧～</p>
-<p>下班之后去接jiayi，快步走在路上，一切看起来都那么美好。攥着她的手，想每个冬天都为她暖手，可是她居然还要让我为她暖脚，哈哈哈＝＝，当然OK。迎着这大雾天气，去吃了一个韩式烧烤，还不错，比较喜欢吃冷面啦～吃完，顺着王府井，顺着长安街溜达，透过浓霾看着我们的未来～</p>
-<p><img src="http://7xq6lu.com1.z0.glb.clouddn.com/1.pic.jpg" alt="王府井"></p>
-<p>少了我的手臂做枕头你习不习惯～少了我的怀抱做暖炉你习不习惯。这时候就最喜欢听这首歌。离别的那一吻就问你甜不甜～</p>
-<p>爱你～</p>
-<p>To Elena</p>
-<p>晚安，北京～期待，明天～</p>
+		<p>将本地的CSV文件插入到MySQL的方法以及遇到的问题～<a id="more"></a></p>
+<ul>
+<li>命令：</li>
+</ul>
+<p><code>LOAD DATA INFILE &#39;/data/output.csv&#39; INTO TABLE ability CHARACTER SET utf8 FIELDS TERMINATED BY &#39;,&#39;;</code></p>
+<ul>
+<li>存在的问题</li>
+</ul>
+<ol>
+<li>使用<code>utf8</code>，而不是<code>utf-8</code></li>
+<li>插入的时候报错，<code>ERROR 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement</code></li>
+</ol>
+<ul>
+<li>原因</li>
+</ul>
+<p>secure_file_priv设置了指定目录，需要在指定的目录下进行数据导出</p>
+<ul>
+<li>解决</li>
+</ul>
+<p><code>mysql&gt; show variables like &#39;%secure%&#39;;</code></p>
+<p>有一项是：<code>secure_file_priv         | /var/lib/mysql-files/ |</code></p>
+<p>在这个文件夹下进行文件的读取与上传。</p>
+<ul>
+<li>分割文件</li>
+</ul>
+<p>在load的时候又出现了一个问题，这个文件夹所挂载的硬盘容量太小，文件copy不过来，于是采取了一种方法，将文件分割，命令:<code>split</code>,生成文件名为xaa,xab什么的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">＃ 以文件行数分割,每个文件行数为1000行</div><div class="line">split mylog -l 1000</div><div class="line"># 以每个文件20M分割</div><div class="line">split -b 20M logdata</div><div class="line"># 以每个文件50MB指定前缀分割</div><div class="line">split --bytes=50M logdata mydatafile</div></pre></td></tr></table></figure>
+<ul>
+<li>load csv</li>
+</ul>
+<p>在load csv的时候出现表中有主键，但是csv数据没有那一列，会报错，<code>doesn&#39;t contain data for all columns</code>,于是用Python将每一行的行数加在csv文件的第一列。</p>
+<p>这里要注意的是primary_key是从1开始，而不是0.</p>
+<ul>
+<li>一些SQL语句</li>
+</ul>
+<p>删除表:<code>drop table ability</code></p>
+<p>删除表中数据:<code>truncate table ability</code></p>
+<p>建表语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">create table if not exists ability(</div><div class="line">id int(11) not null auto_increment,</div><div class="line">fundId int(11) default null,</div><div class="line">ability_gain float(15,4) default null,</div><div class="line">primary key(id))</div><div class="line">engine=InnoDB default charset=utf8;</div></pre></td></tr></table></figure>
+<p>注意：</p>
+<p><code>utf8 not utf-8</code></p>
+<p><code>auto_increment not auto increment</code></p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/生活/">生活</a><a href="/tags/奋斗/">奋斗</a>
+  <span></span> <a href="/tags/SQL/">SQL</a><a href="/tags/编程/">编程</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/思录集/">思录集</a>
+  <a class="article-category-link" href="/categories/MySQL/">MySQL</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2016/11/04/北京de第五天/" data-title="北京De第五天 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2016/11/05/MySQL插入本地CSV数据/" data-title="MySQL插入本地CSV数据 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -140,19 +174,11 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/11/05/MySQL插入本地CSV数据/" title="MySQL插入本地CSV数据">
-  <strong>新一篇:</strong><br/>
-  <span>
-  MySQL插入本地CSV数据</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/11/04/multiprocessing的使用/"  title="Multiprocessing的使用">
+<a href="/2016/11/04/北京de第五天/"  title="北京De第五天">
  <strong>旧一篇:</strong><br/> 
- <span>Multiprocessing的使用
+ <span>北京De第五天
 </span>
 </a>
 </div>
@@ -162,7 +188,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="北京De第五天" data-thread-key="北京de第五天" data-author-key="Kevin" data-url="http://microndgt.github.io/post/北京de第五天"></div>
+	<div class="ds-thread" data-title="MySQL插入本地CSV数据" data-thread-key="MySQL插入本地CSV数据" data-author-key="Kevin" data-url="http://microndgt.github.io/post/MySQL插入本地CSV数据"></div>
 	
 </section>
 
