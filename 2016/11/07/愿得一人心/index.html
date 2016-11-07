@@ -4,12 +4,18 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>MySQL插入本地CSV数据 | Kevin&#39;s Blog</title>
+    <title>愿得一人心 | Kevin&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="将本地的CSV文件插入到MySQL的方法以及遇到的问题～">
+    <meta name="description" content="今天一切都是这么合适的点，早早下班，刚到酒店戒指就送到了，刚到灵境胡同，夫人就下课了，刚好接夫人下班。
+喏，这是我们的戒指，我们的承诺，我们的爱情～
+
+愿得一人心，白首不相离。夫人总是讲，愿得一心人。现在也变成愿得一人心了，其中意味可慢慢品味。
+最近生活很开心，早餐吃的开心舒适～
+
+工作也有成就感，">
     
     
     
@@ -90,10 +96,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/11/05/MySQL插入本地CSV数据/" title="MySQL插入本地CSV数据" itemprop="url">MySQL插入本地CSV数据</a>
+      <a href="/2016/11/07/愿得一人心/" title="愿得一人心" itemprop="url">愿得一人心</a>
   </h1>
   <p class="article-time">
-    <time datetime="2016-11-05T01:42:31.000Z" itemprop="datePublished">Nov 5 2016</time>
+    <time datetime="2016-11-07T15:33:10.000Z" itemprop="datePublished">Nov 7 2016</time>
   </p>
 </header>
 	<div class="article-content">
@@ -104,103 +110,42 @@ var _hmt = _hmt || [];
 		
 		</div>
 		
-		<p>将本地的CSV文件插入到MySQL的方法以及遇到的问题～<a id="more"></a></p>
-<ul>
-<li>命令：</li>
-</ul>
-<p><code>LOAD DATA INFILE &#39;/data/output.csv&#39; INTO TABLE ability CHARACTER SET utf8 FIELDS TERMINATED BY &#39;,&#39;;</code></p>
-<ul>
-<li>存在的问题</li>
-</ul>
-<ol>
-<li>使用<code>utf8</code>，而不是<code>utf-8</code></li>
-<li>插入的时候报错，<code>ERROR 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement</code></li>
-</ol>
-<ul>
-<li>原因</li>
-</ul>
-<p>secure_file_priv设置了指定目录，需要在指定的目录下进行数据导出</p>
-<ul>
-<li>解决</li>
-</ul>
-<p><code>mysql&gt; show variables like &#39;%secure%&#39;;</code></p>
-<p>有一项是：<code>secure_file_priv         | /var/lib/mysql-files/ |</code></p>
-<p>在这个文件夹下进行文件的读取与上传。</p>
-<ul>
-<li>分割文件</li>
-</ul>
-<p>在load的时候又出现了一个问题，这个文件夹所挂载的硬盘容量太小，文件copy不过来，于是采取了一种方法，将文件分割，命令:<code>split</code>,生成文件名为xaa,xab什么的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">＃ 以文件行数分割,每个文件行数为1000行</div><div class="line">split mylog -l 1000</div><div class="line"># 以每个文件20M分割</div><div class="line">split -b 20M logdata</div><div class="line"># 以每个文件50MB指定前缀分割</div><div class="line">split --bytes=50M logdata mydatafile</div></pre></td></tr></table></figure>
-<ul>
-<li>load csv</li>
-</ul>
-<p>在load csv的时候出现表中有主键，但是csv数据没有那一列，会报错，<code>doesn&#39;t contain data for all columns</code>,于是用Python将每一行的行数加在csv文件的第一列。</p>
-<p>这里要注意的是primary_key是从1开始，而不是0.</p>
-<ul>
-<li>一些SQL语句</li>
-</ul>
-<p>删除表:<code>drop table ability</code></p>
-<p>删除表中数据:<code>truncate table ability</code></p>
-<p>建表语句：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">create table if not exists ability(</div><div class="line">id int(11) not null auto_increment,</div><div class="line">fundId int(11) default null,</div><div class="line">ability_gain float(15,4) default null,</div><div class="line">primary key(id),</div><div class="line">index `fundId` (`fundId` asc))</div><div class="line">engine=InnoDB default charset=utf8;</div></pre></td></tr></table></figure>
-<p>注意：</p>
-<p><code>utf8 not utf-8</code></p>
-<p><code>auto_increment not auto increment</code></p>
-<ul>
-<li>修改字段</li>
-</ul>
-<p>load数据的时候遇到了这个问题，就是说out of range，于是修改为double(40,15)还是不行，后来发现此数据为2e+100,完全表示不下，于是使用字符串</p>
-<p><code>alter table ability modify column shape_rate varchar(50)</code></p>
-<ul>
-<li>合并表</li>
-</ul>
-<p>由于有两台计算机上的数据，id标号不是连续的，先后插入的时候就会出现主键重复，现在准备采用分两个表插入，然后进行合并的方式：</p>
-<p><code>insert into ability(fundId,ability_gain,ability_long,ability_medium,ability_risk,ability_short,ability_total,daily_profit,daily_profit_rate,date,fundbal,max_retracement,period_profit_rate,position_rate,shape_ratio,stk_maktval,ttimes_long,ttimes_medium,ttimes_short) select fundId,ability_gain,ability_long,ability_medium,ability_risk,ability_short,ability_total,daily_profit,daily_profit_rate,date,fundbal,max_retracement,period_profit_rate,position_rate,shape_ratio,stk_maktval,ttimes_long,ttimes_medium,ttimes_short from ability1;</code></p>
-<p>另外一种解决方法是将第二个文件的第一个字段按照之前插入的最后一条的数字，相应进行更改，使用awk命令：</p>
-<p><code>awk &#39;BEGIN{FS=&quot;,&quot;;OFS=&quot;,&quot;;ORS=&quot;\n&quot;;}{$1=NR+43146621;print $0}&#39; datatest.txt &gt; newdatatest.txt</code></p>
-<p>FS：输入字段分隔符</p>
-<p>RS：出入行分隔符</p>
-<p>OFS：输出字段分隔符</p>
-<p>ORS：表示输出行分隔符</p>
-<p>整合一下，自动化：</p>
-<p><code>lineNum=$(tail -1 /app/all_output_45/all_output.csv | awk -F &#39;,&#39; &#39;{print $1}&#39;)</code></p>
-<p><code>awk -v lineNum=&quot;$lineNum&quot; &#39;BEGIN{FS=&quot;,&quot;;OFS=&quot;,&quot;;ORS=&quot;\n&quot;;}{$1=NR+lineNum;print $0}&#39; all_output.csv &gt; new_all_output.csv</code></p>
-<p>所以要记录第一个文件的插入总条数，也就是插入后id值最后一个是什么</p>
-<p>xaa:</p>
-<p>xab:</p>
-<p>xac:</p>
-<ul>
-<li>关键问题</li>
-</ul>
-<p>最后插入了很多数据后发现数据是21列，建的表是20列，晕，删除表，重新建表～</p>
-<p>又出现一个问题，之前按照文件大小将文件分割，插入数据库的时候发现，文件最后一行完整性被损坏了，所以一定要按照行来分割数据文件～</p>
-<p><code>split all_output.csv -l 46000000</code></p>
-<p>添加索引：</p>
-<p><code>alter table ability add index (</code>fundId<code>asc)</code></p>
-<p>选择前10条数据：</p>
-<p><code>select * from ability limit 10</code></p>
-<p>添加列：</p>
-<p><code>alter table ability add column day_asset double(30,15) null after date;</code></p>
+		<p>今天一切都是这么合适的点，早早下班，刚到酒店戒指就送到了，刚到灵境胡同，夫人就下课了，刚好接夫人下班。</p>
+<p>喏，这是我们的戒指，我们的承诺，我们的爱情～</p>
+<p><img src="http://7xq6lu.com1.z0.glb.clouddn.com/%E7%88%B1%E6%83%85.jpg" alt="白首不相离"></p>
+<p>愿得一人心，白首不相离。夫人总是讲，愿得一心人。现在也变成愿得一人心了，其中意味可慢慢品味。</p>
+<p>最近生活很开心，早餐吃的开心舒适～</p>
+<p><img src="http://7xq6lu.com1.z0.glb.clouddn.com/%E6%97%A9%E9%A4%90.jpg" alt="早餐"></p>
+<p>工作也有成就感，虽然有时会累，但是每天总会有不一样。</p>
+<p><img src="http://7xq6lu.com1.z0.glb.clouddn.com/%E5%B7%A5%E4%BD%9C.jpg" alt="工作"></p>
+<p>午餐吃的也不错，今天吃的有豉汁排骨，油焖大虾，还有其他三样菜，还送了水果。最近上班也不那么忙了，也可以吃完晚餐正常下班去接夫人～</p>
+<p>晚餐也吃的很好，很开心，虽然又长胖了～</p>
+<p><img src="http://7xq6lu.com1.z0.glb.clouddn.com/%E6%99%9A%E9%A4%90.jpg" alt="晚餐"></p>
+<p>晚上呢，要么和夫人逛街，要么在家里腻着，或学习，或画画，或看电视，或一起玩。</p>
+<p>即使有未来的压力，但是一切都看起来那么幸福～</p>
+<p>也许这就是热恋的人吧～珍惜此</p>
+<p>热爱这一切～</p>
+<p>晚安～</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/SQL/">SQL</a>
+  <span></span> <a href="/tags/奋斗/">奋斗</a><a href="/tags/北京/">北京</a><a href="/tags/生活/">生活</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/MySQL/">MySQL</a>
+  <a class="article-category-link" href="/categories/爱情/">爱情</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2016/11/05/MySQL插入本地CSV数据/" data-title="MySQL插入本地CSV数据 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2016/11/07/愿得一人心/" data-title="愿得一人心 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -209,19 +154,11 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/11/06/首经贸秋景/" title="首经贸秋景">
-  <strong>New:</strong><br/>
-  <span>
-  首经贸秋景</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/11/04/北京de第五天/"  title="北京De第五天">
+<a href="/2016/11/07/Shell实现工作内容自动化/"  title="Shell实现工作内容自动化">
  <strong>Old:</strong><br/> 
- <span>北京De第五天
+ <span>Shell实现工作内容自动化
 </span>
 </a>
 </div>
@@ -231,7 +168,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="MySQL插入本地CSV数据" data-thread-key="MySQL插入本地CSV数据" data-author-key="Kevin" data-url="http://microndgt.github.io/post/MySQL插入本地CSV数据"></div>
+	<div class="ds-thread" data-title="愿得一人心" data-thread-key="愿得一人心" data-author-key="Kevin" data-url="http://microndgt.github.io/post/愿得一人心"></div>
 	
 </section>
 
