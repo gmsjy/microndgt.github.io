@@ -176,11 +176,15 @@ var _hmt = _hmt || [];
 <p>又出现一个问题，之前按照文件大小将文件分割，插入数据库的时候发现，文件最后一行完整性被损坏了，所以一定要按照行来分割数据文件～</p>
 <p><code>split all_output.csv -l 46000000</code></p>
 <p>添加索引：</p>
-<p><code>alter table ability add index (</code>fundId<code>asc)</code></p>
+<p><code>alter table ability add index (fundId asc)</code></p>
 <p>选择前10条数据：</p>
 <p><code>select * from ability limit 10</code></p>
 <p>添加列：</p>
 <p><code>alter table ability add column day_asset double(30,15) null after date;</code></p>
+<p>改变表中字段的顺序：</p>
+<p><code>alter table ability_ext fundId fundId int(11) default null after first_day_asset</code></p>
+<p>删除表中某个字段：</p>
+<p><code>alter table ability drop column day_asset</code></p>
   
 	</div>
 		<footer class="article-footer clearfix">
