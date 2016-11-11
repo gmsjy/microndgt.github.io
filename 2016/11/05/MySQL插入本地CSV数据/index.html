@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -78,7 +78,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -185,13 +185,25 @@ var _hmt = _hmt || [];
 <p><code>alter table ability_ext fundId fundId int(11) default null after first_day_asset</code></p>
 <p>删除表中某个字段：</p>
 <p><code>alter table ability drop column day_asset</code></p>
+<p>修改字段名字：</p>
+<p><code>alter table ability change fundid fundId int(11) default null;</code></p>
+<p>VIM所有行替换：</p>
+<p><code>:%s/fundid/fundId/gc</code></p>
+<p>远程连接MySQL的时候，报错：</p>
+<p>Can’t connect to MySQL server (10060)</p>
+<p>这时候解决办法如下：</p>
+<p>配置防火墙，开启3306端口，端口视情况而定</p>
+<p><code>vi /etc/sysconfig/iptables</code></p>
+<p><code>-A INPUT -m state –state NEW -m tcp -p tcp –dport 3306 -j ACCEPT（允许3306端口通过防火墙）</code></p>
+<p><code>/etc/init.d/iptables restart（重启防火墙使配置生效）</code></p>
+<p>检测方法，<code>telnet 10.234.0.45 32768</code>，如果进入界面，则说明链接成功，否则失败</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/SQL/">SQL</a><a href="/tags/编程/">编程</a>
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/SQL/">SQL</a>
   </div>
 
 
@@ -215,7 +227,7 @@ var _hmt = _hmt || [];
  
  <div class="prev" >
  <a href="/2016/11/06/首经贸秋景/" title="首经贸秋景">
-  <strong>New:</strong><br/>
+  <strong>新一篇:</strong><br/>
   <span>
   首经贸秋景</span>
 </a>
@@ -224,7 +236,7 @@ var _hmt = _hmt || [];
 
 <div class="next">
 <a href="/2016/11/04/北京de第五天/"  title="北京De第五天">
- <strong>Old:</strong><br/> 
+ <strong>旧一篇:</strong><br/> 
  <span>北京De第五天
 </span>
 </a>
