@@ -1,0 +1,484 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Pythonic高质量代码学习 | Kevin&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Kevin">
+    
+    <meta name="description" content="Python之禅，编写高质量代码，改善Python程序的91个建议的学习笔记～">
+    
+    
+    
+    
+    <link rel="alternative" href="/Tinnypp/atom.xml" title="Kevin&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/myLogo.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/myLogo.png">
+    
+
+  
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
+				<h2 class="blog-motto">编程,生活,成长</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="st-search-inpu" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/11/13/Pythonic高质量代码学习/" title="Pythonic高质量代码学习" itemprop="url">Pythonic高质量代码学习</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2016-11-13T02:37:14.000Z" itemprop="datePublished">Nov 13 2016</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		
+		</div>
+		
+		<p>Python之禅，编写高质量代码，改善Python程序的91个建议的学习笔记～<a id="more"></a></p>
+<blockquote>
+<p>写更加Pythonic的代码，比如空格，注释，空行这样合适的代码风格，以及更加Python味</p>
+</blockquote>
+<ul>
+<li>变量交换</li>
+</ul>
+<p><code>a, b = b, a</code></p>
+<ul>
+<li>安全地关闭文件描述符</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">with open(path, &apos;r&apos;) as f:</div><div class="line">	do_sth_with(f)</div></pre></td></tr></table></figure>
+<ul>
+<li>序列反向</li>
+</ul>
+<p><code>print(a[::-1])</code> or <code>print list(reversed(a)))</code></p>
+<ul>
+<li>字符串格式化</li>
+</ul>
+<p><code>print(&#39;Hello %(name)s!&#39; % {&#39;name&#39;: &#39;Tom&#39;})</code></p>
+<p>使用字典进行格式化，占位符是键名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">value = &#123;&apos;greet&apos;: &apos;Hello world&apos;, &apos;language&apos;: &apos;Python&apos;&#125;</div><div class="line">print(&apos;%(greet)s from %(language)s&apos; % value)</div></pre></td></tr></table></figure>
+<p>使用str.format()方法</p>
+<p><code>print(&#39;{greet} from {language}.&#39;.format(greet = &#39;Hello world&#39;, language = &#39;Python&#39;))</code></p>
+<p>最为Pythonic的字符串格式方法</p>
+<ul>
+<li>规范</li>
+</ul>
+<p>包和模块的命名采用小写，单数形式，短小，包通常仅作为命名空间，如只包含<code>__init__.py</code>文件</p>
+<p>尽量使用下划线法命名变量名</p>
+<ul>
+<li>PEP8</li>
+</ul>
+<p>编码风格指南，提出保持代码一致性的细节要求，包括了对代码布局，注释，命名规范等方面的要求</p>
+<p>风格检查程序PEP8</p>
+<pre><code>空格比制表符更受推荐
+逻辑之间使用空行
+两个函数之间两个空行
+导入之后有两行
+列表有多项，使用多行表示
+不要混用tab键和空格
+</code></pre><ul>
+<li>安装一个自动排版称为PEP风格的小工具</li>
+</ul>
+<ol>
+<li><code>pip install autopep8 --user -U</code></li>
+<li>Pycharm→File→settings→Tools→Extends Tools→添加</li>
+<li>Name: Autopep8</li>
+<li>Tool settings: </li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Programs：autopep8 （前提是你已经安装了哦）</div><div class="line">Parameters:--in-place --aggressive --aggressive $FilePath$</div><div class="line">Working directory:$ProjectFileDir$</div></pre></td></tr></table></figure>
+<p>Output Filters→添加，在对话框中的：Regular expression to match output中输入:<code>$FILE_PATH$\:$LINE$\:$COLUMN$\:.*</code></p>
+<p>在程序中选中代码，右键 <code>extends Tools-&gt;autopep8</code></p>
+<ul>
+<li>三元操作符</li>
+</ul>
+<p><code>print X if X &lt; Y else Y</code></p>
+<ul>
+<li>注释</li>
+</ul>
+<p>块注释，行注释，文档注释</p>
+<p>注释和代码隔开一定的距离，同时块注释之后最好多留几行空白再写代码</p>
+<p>给外部可访问的函数和方法添加文档注释，描述方法的功能，并对参数，返回值以及可能发生的异常进行说明</p>
+<ul>
+<li>添加空行使得代码布局更加优雅，合理</li>
+</ul>
+<p>在一组代码表达完一个完整的思路之后，应该用空白行进行间隔</p>
+<pre><code>二元运算符左右两边需要空格
+逗号和分号之前不需要空格
+函数的默认参数两侧不需要空格
+强调前面的操作符时候使用空格
+函数名和左括号之间，序列索引操作时候序列名和[]之间不需要空格
+</code></pre><ul>
+<li><p>编写函数的原则</p>
+<pre><code>设计尽量短小，嵌套层次不要过深
+函数申明应该合理，参数不要过多
+参数设计应该向下兼容
+一个函数只做一件事，有利于代码的复用
+</code></pre></li>
+<li><p>常量</p>
+</li>
+</ul>
+<p>通过自定义类来实现常量功能</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">class _const:</div><div class="line">	class ConstError(TypeError): pass</div><div class="line">	class ConstCaseError(ConstError): pass</div><div class="line">	</div><div class="line">	def __setattr__(self, name, value):</div><div class="line">		if self.__dict__.has_key(name):</div><div class="line">			raise self.ConstError, &quot;can&apos;t change const.%s&quot; % name</div><div class="line">		if not name.isupper():</div><div class="line">			raise self.ConstCaseError, &apos;const name &quot;%s&quot; is not all uppercase&quot; % name</div><div class="line">		self.__dict__[name] = value</div></pre></td></tr></table></figure>
+<p>在Python的内建命名空间支持一部分常量如True，最好把常量集中到一个文件中。然后在其他模块中引用常量的时候这样<code>from constant import const</code></p>
+<p>模块名字也是一个常量对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">import sys</div><div class="line">sys.modules[__name__] = _const()</div></pre></td></tr></table></figure>
+<ul>
+<li>assert发现问题</li>
+</ul>
+<p>Python3中，assert语法是这样的<code>assert(x==y, &quot;not equal&quot;)</code></p>
+<pre><code>在函数调用后，当需要确认返回值是否合理的时候可以使用断言
+当条件是业务逻辑继续下去的先决条件时候可以使用断言
+</code></pre><p>可以在自己的代码中，尝试使用下断言</p>
+<ul>
+<li>数据交换值</li>
+</ul>
+<p><code>x, y = y, x</code></p>
+<p>一般情况下Python表达式的计算顺序是从左到右，但是表达式赋值的时候表达式右边的操作数先于左边的操作数计算</p>
+<p>所以先计算右边表达式y，x，现在内存中创建元组，然后计算表达式左边，使用解压缩</p>
+<ul>
+<li>延迟计算</li>
+</ul>
+<p>在需要执行的时候才计算表达式的值</p>
+<p><code>if x and y</code> or <code>if x or y</code> or表达式为真的尽量在前面，and的话false尽量在前面</p>
+<p>比如查看是不是缩写，先去判断最后一个字符是不是点，然后再看集合中有没有值</p>
+<p><code>if w[-1] == &#39;.&#39; and w in abbreviations:
+    pass</code></p>
+<p>生成器表达式，每次需要计算的时候才通过yield产生所需要的元素</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def fib():</div><div class="line">    a, b = 0, 1</div><div class="line">    while True:</div><div class="line">        yield a</div><div class="line">        a, b = b, a + b</div></pre></td></tr></table></figure>
+<ul>
+<li>枚举</li>
+</ul>
+<p>使用collections.namedtuple</p>
+<p>使用元组名，和一个字符串元组来创建，_make通过list来创建一个对象</p>
+<p><code>Seasons = namedtuple(&#39;Seasons&#39;, (&#39;Spring&#39;, &#39;Summer&#39;, &#39;Autumn&#39;, &#39;Winter&#39;))._make(range(4))</code></p>
+<p>或者使用空格分开的字符串来创建namedtuple</p>
+<p><code>Seasons = namedtuple(&#39;Seasons&#39;, &#39;Spring Summer Autumn Winter&#39;)._make(range(4))</code></p>
+<p><code>print Seasons.Spring</code></p>
+<ul>
+<li>类型检查</li>
+</ul>
+<p>不刻意进行类型检查，而是在出错的情况下通过抛出异常来进行处理</p>
+<p>基于内建类型扩展的用户自定义类型，type函数不能准确返回结果</p>
+<p>在古典类中，所有类的实例的type值都相等</p>
+<p>约束用户的输入类型从而使之与期望的类型一致，使用类型对应的工厂函数，使用工厂函数对类型进行转换，否则可以使用isinstance()函数检测</p>
+<blockquote>
+<p>工厂函数看上去有点像函数，实质上是类，当调用时候，实际上是生成了该类型的一个实例，就像工厂生产货物一样</p>
+</blockquote>
+<ul>
+<li>尽量转换成浮点类型再做除法</li>
+</ul>
+<p>Python3中/为浮点除法, <code>96 / 100 == 0.96</code>，//是整数除法</p>
+<blockquote>
+<p>未完 44页</p>
+</blockquote>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/编程/">编程</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Python/">Python</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://microndgt.github.io/2016/11/13/Pythonic高质量代码学习/" data-title="Pythonic高质量代码学习 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/11/12/Pandas使用笔记/"  title="Pandas使用笔记">
+ <strong>Old:</strong><br/> 
+ <span>Pandas使用笔记
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="Pythonic高质量代码学习" data-thread-key="Pythonic高质量代码学习" data-author-key="Kevin" data-url="http://microndgt.github.io/post/Pythonic高质量代码学习"></div>
+	
+</section>
+
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© Kevin</span>
+		
+	<div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"microndgt"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';    //change to ds.src = '/js/embed.js'; to add useragent for duoshuo
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>
