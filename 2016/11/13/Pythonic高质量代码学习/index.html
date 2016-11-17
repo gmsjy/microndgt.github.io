@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -78,7 +78,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -237,6 +237,21 @@ var _hmt = _hmt || [];
 <li>尽量转换成浮点类型再做除法</li>
 </ul>
 <p>Python3中/为浮点除法, <code>96 / 100 == 0.96</code>，//是整数除法</p>
+<ul>
+<li>eval</li>
+</ul>
+<p><code>eval(&quot;1+1==2&quot;)</code></p>
+<p>eval函数将字符串str当成有效的表达式来求值并且返回计算结果，传入的globals参数的字典中缺少<code>__builtins__</code>时候，当前的全局命名空间将作为globals参数输入并且在表达式计算之前被解析，locals参数默认与globals相同，如果两者都省略的话，表达式将在eval调用的环境中进行</p>
+<p>安全漏洞 <code>eval(&quot;__import__(&quot;os&quot;).system(&quot;dir&quot;)</code></p>
+<p>使用os模块的system函数执行一些系统命令</p>
+<ul>
+<li>获取序列迭代的索引和值</li>
+</ul>
+<p>zip()函数，将索引和值zip到一起</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">li = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;]</div><div class="line">for i, e in zip(range(len(li)), li):</div><div class="line">	print(&quot;index:&quot;, i, &quot;element:&quot;, e)</div></pre></td></tr></table></figure>
+<p>enumerate()函数，仅在需要的时候才会产生一个(index, item)对</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">for i, e in enumerate(li):</div><div class="line">	print(&quot;index:&quot;, i, &quot;element:&quot;, e)</div></pre></td></tr></table></figure>
+<p>对于迭代器，使用next()方法获取下一个迭代元素</p>
 <blockquote>
 <p>未完 44页</p>
 </blockquote>
@@ -268,10 +283,18 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2016/11/13/数据结构与算法/" title="数据结构与算法">
+  <strong>新一篇:</strong><br/>
+  <span>
+  数据结构与算法</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2016/11/12/Pandas使用笔记/"  title="Pandas使用笔记">
- <strong>Old:</strong><br/> 
+ <strong>旧一篇:</strong><br/> 
  <span>Pandas使用笔记
 </span>
 </a>
