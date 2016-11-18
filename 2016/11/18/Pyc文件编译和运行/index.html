@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>SQL语句总结 | Kevin&#39;s Blog</title>
+    <title>Pyc文件编译和运行 | Kevin&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="记录常用的sql语句，还是非常有用的～">
+    <meta name="description" content="工作上遇到对Python源文件进行保护的事情～">
     
     
     
@@ -90,10 +90,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/11/16/SQL语句总结/" title="SQL语句总结" itemprop="url">SQL语句总结</a>
+      <a href="/2016/11/18/Pyc文件编译和运行/" title="Pyc文件编译和运行" itemprop="url">Pyc文件编译和运行</a>
   </h1>
   <p class="article-time">
-    <time datetime="2016-11-16T01:04:42.000Z" itemprop="datePublished">Nov 16 2016</time>
+    <time datetime="2016-11-18T06:56:55.000Z" itemprop="datePublished">Nov 18 2016</time>
   </p>
 </header>
 	<div class="article-content">
@@ -104,29 +104,43 @@ var _hmt = _hmt || [];
 		
 		</div>
 		
-		<p>记录常用的sql语句，还是非常有用的～<a id="more"></a></p>
-<p><code>insert into latest_avg_ability (date, ability_risk, ability_gain, ability_short, ability_medium, ability_long) select date, avg(ability_risk), avg(ability_gain), avg(ability_short), avg(ability_medium), avg(ability_long) from summary group by date;</code></p>
-<p>但是group by的属性要是唯一的，这样生成的均值应该是唯一的。</p>
+		<p>工作上遇到对Python源文件进行保护的事情～<a id="more"></a></p>
+<ul>
+<li>编译成pyc</li>
+</ul>
+<p>单个文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">import py_compile</div><div class="line">py_compile.compile(r&apos;H:/game/test.py&apos;)</div></pre></td></tr></table></figure>
+<p>多个文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">import compileall</div><div class="line">compileall.compile_dir(r&apos;D:\test&apos;)</div></pre></td></tr></table></figure>
+<p>直接使用命令运行</p>
+<p><code>python -m py_compile test.py</code></p>
+<p><code>python -O -m py_compile test.py</code></p>
+<p>-O表示优化成字节码，-m表示把后面的模块当成脚本运行，-OO表示优化的同时删除文档字符串</p>
+<p>运行之后生成的pyc文件在<code>__pycache__</code>文件夹下</p>
+<ul>
+<li>运行pyc</li>
+</ul>
+<p>直接<code>python test1.cpython-35.opt-1.pyc</code></p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/数据库/">数据库</a>
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/工作/">工作</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/SQL/">SQL</a>
+  <a class="article-category-link" href="/categories/Python/">Python</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2016/11/16/SQL语句总结/" data-title="SQL语句总结 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2016/11/18/Pyc文件编译和运行/" data-title="Pyc文件编译和运行 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -136,18 +150,18 @@ var _hmt = _hmt || [];
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/11/16/shell命令总结/" title="Shell命令总结">
+ <a href="/2016/11/18/北京の19天/" title="北京の19天">
   <strong>New:</strong><br/>
   <span>
-  Shell命令总结</span>
+  北京の19天</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2016/11/13/数据结构与算法/"  title="数据结构与算法">
+<a href="/2016/11/16/Python遇到的那些坑/"  title="Python遇到的那些坑">
  <strong>Old:</strong><br/> 
- <span>数据结构与算法
+ <span>Python遇到的那些坑
 </span>
 </a>
 </div>
@@ -157,7 +171,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="SQL语句总结" data-thread-key="SQL语句总结" data-author-key="Kevin" data-url="http://microndgt.github.io/post/SQL语句总结"></div>
+	<div class="ds-thread" data-title="Pyc文件编译和运行" data-thread-key="Pyc文件编译和运行" data-author-key="Kevin" data-url="http://microndgt.github.io/post/Pyc文件编译和运行"></div>
 	
 </section>
 
