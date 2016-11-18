@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -78,7 +78,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -252,6 +252,8 @@ var _hmt = _hmt || [];
 <p>enumerate()函数，仅在需要的时候才会产生一个(index, item)对</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">for i, e in enumerate(li):</div><div class="line">	print(&quot;index:&quot;, i, &quot;element:&quot;, e)</div></pre></td></tr></table></figure>
 <p>对于迭代器，使用next()方法获取下一个迭代元素</p>
+<p>而csv模块的reader方法产生的对象，必须使用next()函数才可以</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">reader = csv.reader(file)</div><div class="line"># 去掉header</div><div class="line">header = next(reader)</div></pre></td></tr></table></figure>
 <blockquote>
 <p>未完 44页</p>
 </blockquote>
@@ -285,7 +287,7 @@ var _hmt = _hmt || [];
  
  <div class="prev" >
  <a href="/2016/11/13/数据结构与算法/" title="数据结构与算法">
-  <strong>新一篇:</strong><br/>
+  <strong>New:</strong><br/>
   <span>
   数据结构与算法</span>
 </a>
@@ -294,7 +296,7 @@ var _hmt = _hmt || [];
 
 <div class="next">
 <a href="/2016/11/12/Pandas使用笔记/"  title="Pandas使用笔记">
- <strong>旧一篇:</strong><br/> 
+ <strong>Old:</strong><br/> 
  <span>Pandas使用笔记
 </span>
 </a>
