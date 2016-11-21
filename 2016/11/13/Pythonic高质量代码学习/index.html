@@ -258,9 +258,24 @@ var _hmt = _hmt || [];
 <p>对于迭代器，使用next()方法获取下一个迭代元素</p>
 <p>而csv模块的reader方法产生的对象，必须使用next()函数才可以</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">reader = csv.reader(file)</div><div class="line"># 去掉header</div><div class="line">header = next(reader)</div></pre></td></tr></table></figure>
-<blockquote>
-<p>未完 44页</p>
-</blockquote>
+<ul>
+<li>is与==</li>
+</ul>
+<p>id()函数来查看变量在内存中具体的存储空间</p>
+<p>is表示的是对象标志符，用来检查对象的标志符是否一致，比较两个对象在内存中是否拥有同一块内存空间,<code>id(x) == id(y)</code>。==表示的是相等，检验两个对象的值是否相等。</p>
+<p>另外Python中有字符串驻留机制，较小的字符串，为了提高性能会保留其值的一个副本，创建新的字符串的时候直接指向该副本。但是长字符串，Python内存就各自创建了对象来表示a1和b1，所以两个对象拥有相同的内容，但是对象标志符不相同，is为False但是==为True</p>
+<ul>
+<li>字符编码</li>
+</ul>
+<p>使用<code>decode(&#39;utf-8&#39;)</code>解码，然后再进行编码<code>encode(&#39;gbk&#39;)</code>，decode是将其它编码对应的字符串解码成Unicode，encode方法将Unicode编码转换成为另一种编码，Unicode作为转换过程中的中间编码</p>
+<p>python3中默认的编码是utf-8,<code>sys.getdefaultencoding()-&gt;utf-8</code>,可以在源文件中进行编码说明</p>
+<p><code># coding=utf-8</code> or <code>-*- coding: utf-8 -*-</code></p>
+<ul>
+<li>构建合理的包层次来管理module</li>
+</ul>
+<p>包下面必须有一个<code>__init__.py</code>，使包和普通股目录区分，另外这个文件可以控制模块的导入，会执行<code>__init__.py</code>，可以在该文件中定义<code>__all__</code>变量，控制需要导入的包或者模块，<code>__all__ = [&#39;Module&#39;, &#39;Module2&#39;, &#39;Subpackage&#39;]</code></p>
+<p>将关系密切的模块组织成一个包，使得项目结构更加完善和合理，增强代码的可维护性和实用性</p>
+<p>包，包涵一个或者一系列的Python文件的文件夹，作用是合理组织代码，便于维护和使用，并避免命名冲突</p>
   
 	</div>
 		<footer class="article-footer clearfix">

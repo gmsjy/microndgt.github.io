@@ -130,6 +130,8 @@ var _hmt = _hmt || [];
 <p><code>find /data/output/ -type f -name ability*.csv | wc -l</code></p>
 <p>在所有文件内容中查找有220010的行</p>
 <p><code>find /data/output/errors/ -name &#39;stk*.csv&#39; | xargs grep &#39;220010&#39;</code></p>
+<p>查找内容为空的ability文件</p>
+<p><code>find /data/output -name ability*.csv -type f －empty | wc -l</code></p>
 <ul>
 <li>vim</li>
 </ul>
