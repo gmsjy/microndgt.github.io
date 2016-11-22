@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -82,7 +82,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -152,6 +152,39 @@ var _hmt = _hmt || [];
 </ul>
 <p>计时的方法</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import timeit</div><div class="line">jointimer = timeit.Timer(&quot;join_test()&quot;, &quot;from __main__ import join_test&quot;)</div><div class="line">print(jointimer.timeit(number=100)</div></pre></td></tr></table></figure>
+<p>join方法要比＋速度快的多，所以大规模字符串处理，优先使用join而不是＋</p>
+<ul>
+<li>格式化字符串使用.format而不是%</li>
+</ul>
+<p>%号的格式化：直接格式化字符或者数值，以元组的方式格式化，字典的形式格式化</p>
+<p>format</p>
+<p>使用位置符号</p>
+<p>{0}表示第一个参数，{1}表示第二个参数</p>
+<p>使用名称</p>
+<p>{max} -&gt; .format(max=189)</p>
+<p>使用属性</p>
+<p><code>return &#39;customer({self.name}, {self.gender}, {self.phone})&#39;.format(self=self)</code></p>
+<p>格式化元组的具体项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">point = (1, 3)</div><div class="line">&apos;x:&#123;0[0]&#125;;y:&#123;0[1]&#125;&apos;.format(point)</div></pre></td></tr></table></figure>
+<p>format格式化顺序可变，可以方便作为参数传递</p>
+<ul>
+<li>可变对象和不可变对象</li>
+</ul>
+<p>每一个对象都有唯一的标志符id()，类型type()以及值</p>
+<p>默认参数在函数被调用的时候仅仅被评估一次，以后都会使用第一次评估的结果，<code>def __init__(self, course=[])</code>，将可变对象作为函数默认参数的时候需要注意对可变对象的更改会直接影响原对象，所以尽量在创建对象的时候动态生成列表</p>
+<p>切片操作相当于浅复制，<code>list3 = list1[:]</code>，如果list1中含有可变对象，同样如果list3改变了，list1也会相应改变</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">list1 = [[1,23],34,5]</div><div class="line">list3 = list1[:]</div><div class="line">list3[0][1] = 45</div><div class="line">&gt;&gt;&gt; list3</div><div class="line">[[1, 45], 34, 5]</div><div class="line">&gt;&gt;&gt; list1</div><div class="line">[[1, 45], 34, 5]</div></pre></td></tr></table></figure>
+<p>对于不可变对象，对其操作，会重新创建一个新的对象</p>
+<ul>
+<li>使用列表解析</li>
+</ul>
+<p><code>[word.strip() for word in words if word.istitle()]</code></p>
+<ul>
+<li>函数传参</li>
+</ul>
+<p><code>b＝a</code>的操作使得b与a引用同一个对象，传递的是对象的引用，<code>b=7</code>将b指向对象7</p>
+<p>赋值的时候就会重新创建一块内存，但是如果使用方法什么的操作本身内存的话就仍然还是原来的对象</p>
+<p>所以Python函数参数应该是传对象，或者是传对象的引用</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -180,10 +213,18 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2016/11/22/北京的第23天/" title="北京的第23天">
+  <strong>新一篇:</strong><br/>
+  <span>
+  北京的第23天</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2016/11/18/北京の19天/"  title="北京の19天">
- <strong>Old:</strong><br/> 
+ <strong>舊一篇:</strong><br/> 
  <span>北京の19天
 </span>
 </a>

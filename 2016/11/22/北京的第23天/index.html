@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Python总结 | Kevin&#39;s Blog</title>
+    <title>北京的第23天 | Kevin&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="看代码遇到不知道的Python用法的总结.">
+    <meta name="description" content="人生正如这四季～">
     
     
     
@@ -94,10 +94,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/10/30/python总结/" title="Python总结" itemprop="url">Python总结</a>
+      <a href="/2016/11/22/北京的第23天/" title="北京的第23天" itemprop="url">北京的第23天</a>
   </h1>
   <p class="article-time">
-    <time datetime="2016-10-30T13:48:51.000Z" itemprop="datePublished">Oct 30 2016</time>
+    <time datetime="2016-11-22T15:09:52.000Z" itemprop="datePublished">Nov 22 2016</time>
   </p>
 </header>
 	<div class="article-content">
@@ -108,74 +108,34 @@ var _hmt = _hmt || [];
 		
 		</div>
 		
-		<p>看代码遇到不知道的Python用法的总结.<a id="more"></a></p>
-<ul>
-<li><code>complie()</code></li>
-</ul>
-<p>将source编译为代码，参数为<code>source filename mode</code>，其中mode:<code>exec</code>执行一系列的语句，<code>eval</code>执行一句，<code>single</code>执行单一交互式语句，如<code>print &quot;hello&quot;</code></p>
-<p><code>code = compile(file.read(),filepath,&#39;exec&#39;)</code></p>
-<ul>
-<li><code>exec(code,global_vars,local_vars)</code></li>
-</ul>
-<p>执行存储在字符串或者文件里面的Python语句，执行代码，并且声明全局命名空间和局部命名空间</p>
-<ul>
-<li><code>os.environ.get(&quot;STRA_ROOT&quot;,os.path.join(os.getcwd(),&quot;../..&quot;))</code></li>
-</ul>
-<p>获取环境变量，如果环境变量为空，那么返回第二个参数给的默认值</p>
-<p><code>os.path.join</code> 连接两个字符串作为path</p>
-<p><code>os.getcwd()</code> 获取当前工作目录</p>
-<ul>
-<li><code>os.path.normpath(os.path.abspath(root))</code></li>
-</ul>
-<p>首先将所输入的路径转换为绝对路径，然后根据系统环境进行规范化路径</p>
-<ul>
-<li><code>map(lambda x:os.path.join(*x),itertools.product(*paths))</code></li>
-</ul>
-<p>itertools.product 表示一个item1，item2等中的项目的笛卡尔积的元组，排列组合</p>
-<p>其中<code>*x</code>表示可选数目的参数集合,所以x就是包含所有参数的一个元组，然后将这些元组join起来变成一个路径</p>
-<ul>
-<li><code>logging.debug(&quot;load config from [%s]&quot;,cfile)</code></li>
-</ul>
-<p>后面第二个参数文档里是这样写的 args are the arguments which are merged into msg using the string formatting operator</p>
-<ul>
-<li><code>&quot;{:03d}&quot;.format(uid % 100)</code></li>
-</ul>
-<p>使用{}形式进行格式化字符串，:表示格式化字符开始，03d表示将数字类型的格式为字符串3位，多处的空用0补齐。</p>
-<p><code>os.path.join(data_root, l1, l2, &quot;{}-{}.{}&quot;.format(kind, uid, ext))</code>每一个大括号格式化一个变量</p>
-<ul>
-<li>csv模块的使用</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">file = open(path)</div><div class="line">reader = csv.reader(file)</div><div class="line">for row in reader:</div><div class="line">    # row是一个列表，每一项为一个列</div><div class="line">    print(row[0])</div><div class="line"># csv写入方法，writerow接受一个列表，作为csv的每一个列元素</div><div class="line">w = csv.writer(file)</div><div class="line">w.writerow(someList)</div></pre></td></tr></table></figure>
-<ul>
-<li>datetime变量的使用</li>
-</ul>
-<p>date是datetime变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># 将date变量转换为字符串，方法</div><div class="line">date.strftime(&quot;%Y%m%d&quot;)</div><div class="line"># 将字符串转换为datetime变量，函数</div><div class="line">datetime.datetime.strptime(timeString,&quot;%Y%m%d&quot;)</div><div class="line"># timedelta对象</div><div class="line">from datetime import timedelta</div><div class="line">day = timedelta(days=1)</div></pre></td></tr></table></figure>
-<ul>
-<li>字典的一些操作</li>
-</ul>
-<p><code>self._states.get(date,{}).get(&#39;stkasset&#39;,{})</code>也就是date键存在，则获取数据，否则返回空字典</p>
-<p><code>stks = stkasset.setdefault(symbol, [])</code>,setdefault方法就是获取键值，如果没有得到，那么将添加该键，并且设置默认值</p>
+		<p>人生正如这四季～<a id="more"></a></p>
+<p>正如这世界，一年四季，春去秋来，最近北京的天气可真是冷，人也是如此，有春夏秋冬，最近我觉得似乎进入和北京一样的寒冬了。</p>
+<p>昨晚看到说巨蟹座今天可能会有问题，会没有归属感，我现在真的是这么觉得的，工作上没有，然后感情上没有，人生似乎也没有找到安全感，完全是飘在这世上。</p>
+<p>可能我就是这种没有坚定信念的人，容易变化，菜菜真的是看出我这一点了，说话没个准，其实说实话，根本原因是自己没有安全感，源自自己自卑。觉得自己长得丑，头有点大，胖，黑。。。我不知道别人眼中是什么样，真想体验一下，应该也蛮有意思的呢。对于感情也是这样，首先是不会爱人，空耽搁了菜菜那么久，然后是自己感情易变。</p>
+<p>对于读书就是这样，读着读着就不想读了，工作呢，干着干着就不想干了。都不知道自己想要什么，不能沉下心来去做同一件事情吗？</p>
+<p>有时候真想重新来过，认认真真的把所有事情都走好，虽然说现在也不后悔，但是感觉自己过的很操蛋。</p>
+<p>和夫人，突然我真的有时候不知道怎么反应，有点累，不是这份感情累了，觉得是人累了。觉得恋爱似乎自己想要的是相对的独立，然后相爱，但是肯定忍不住要轰轰烈烈，希望能好好爱她，珍惜～</p>
+<p>人生啊，茫茫人生路～且行且珍惜～明天好好工作，调整自己吧～</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python/">Python</a><a href="/tags/工作总结/">工作总结</a>
+  <span></span> <a href="/tags/奋斗/">奋斗</a><a href="/tags/北京/">北京</a><a href="/tags/生活/">生活</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/Python/">Python</a>
+  <a class="article-category-link" href="/categories/思录集/">思录集</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2016/10/30/python总结/" data-title="Python总结 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2016/11/22/北京的第23天/" data-title="北京的第23天 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -184,19 +144,11 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/10/31/北京的第一天/" title="北京的第一天">
-  <strong>新一篇:</strong><br/>
-  <span>
-  北京的第一天</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/10/30/hello-world/"  title="Hello World">
+<a href="/2016/11/20/Pythonic高质量代码学习2/"  title="Pythonic高质量代码学习2">
  <strong>舊一篇:</strong><br/> 
- <span>Hello World
+ <span>Pythonic高质量代码学习2
 </span>
 </a>
 </div>
@@ -206,7 +158,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="Python总结" data-thread-key="python总结" data-author-key="Kevin" data-url="http://microndgt.github.io/post/python总结"></div>
+	<div class="ds-thread" data-title="北京的第23天" data-thread-key="北京的第23天" data-author-key="Kevin" data-url="http://microndgt.github.io/post/北京的第23天"></div>
 	
 </section>
 
