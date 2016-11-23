@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -82,7 +82,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -183,8 +183,23 @@ var _hmt = _hmt || [];
 <li>函数传参</li>
 </ul>
 <p><code>b＝a</code>的操作使得b与a引用同一个对象，传递的是对象的引用，<code>b=7</code>将b指向对象7</p>
+<p>相当于对象是固定的，但是变量名只是存储了一个引用，当<code>b=7</code>的时候会开辟内存生成7，然后将b的引用重新与7进行关联。</p>
 <p>赋值的时候就会重新创建一块内存，但是如果使用方法什么的操作本身内存的话就仍然还是原来的对象</p>
 <p>所以Python函数参数应该是传对象，或者是传对象的引用</p>
+<ul>
+<li>默认参数可能导致的问题</li>
+</ul>
+<p>def在Python中是一个可执行的语句，当解释器执行def的时候，默认参数也会被计算，并且存在函数的<code>.func_defaults</code>属性中，所以再次调用函数的时候，默认参数不会重新计算，仍然用的以前生成的对象。</p>
+<p>如果不想让默认参数所指向的对象在所有函数调用中共享，而是在函数调用过程中动态生成，可以在定义的时候使用None对象作为占位符</p>
+<ul>
+<li>慎用变长参数</li>
+</ul>
+<p>函数定义的时候使用<code>*args</code>或者<code>**kwargs</code>，实现可变参数列表和字典形式的关键字参数列表</p>
+<p><code>*args</code>接受一个包装为元组形式的参数列表来传递非关键字参数，参数个数任意</p>
+<p><code>**kwargs</code>接受字典形式的关键字参数列表，字典的键值对分别表示不可变参数的参数名和值</p>
+<p>变长参数意味着这个函数的签名不清晰，存在多种调用方式，如果一个函数的参数列表很长，可以使用<code>*args</code>和<code>**kwargs</code>来简化函数定义，但是通常意味着这个函数可以有更好的实现方式，应该被重构。</p>
+<p>为函数添加一个装饰器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">def mydecorator(fun):</div><div class="line">    def new(*args, **kwargs):</div><div class="line">        return fun(*args, **kwargs)</div><div class="line">    return new</div></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -224,7 +239,7 @@ var _hmt = _hmt || [];
 
 <div class="next">
 <a href="/2016/11/18/北京の19天/"  title="北京の19天">
- <strong>舊一篇:</strong><br/> 
+ <strong>旧一篇:</strong><br/> 
  <span>北京の19天
 </span>
 </a>
