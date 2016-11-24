@@ -97,7 +97,7 @@ var _hmt = _hmt || [];
       <a href="/2016/11/24/Pythonic高质量代码学习3/" title="Pythonic高质量代码学习3" itemprop="url">Pythonic高质量代码学习3</a>
   </h1>
   <p class="article-time">
-    <time datetime="2016-11-24T02:09:24.000Z" itemprop="datePublished">Nov 24 2016</time>
+    <time datetime="2016-11-24T06:15:24.000Z" itemprop="datePublished">Nov 24 2016</time>
   </p>
 </header>
 	<div class="article-content">
@@ -105,7 +105,7 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#处理字符串"><span class="toc-number">1.</span> <span class="toc-text">处理字符串</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#字符串的用法"><span class="toc-number">2.</span> <span class="toc-text">字符串的用法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#性质判定"><span class="toc-number">2.1.</span> <span class="toc-text">性质判定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查找与替换"><span class="toc-number">2.2.</span> <span class="toc-text">查找与替换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分切"><span class="toc-number">2.3.</span> <span class="toc-text">分切</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变形"><span class="toc-number">2.4.</span> <span class="toc-text">变形</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删减"><span class="toc-number">2.5.</span> <span class="toc-text">删减</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sort-和sorted"><span class="toc-number">3.</span> <span class="toc-text">sort()和sorted()</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#处理字符串"><span class="toc-number">1.</span> <span class="toc-text">处理字符串</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#字符串的用法"><span class="toc-number">2.</span> <span class="toc-text">字符串的用法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#性质判定"><span class="toc-number">2.1.</span> <span class="toc-text">性质判定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查找与替换"><span class="toc-number">2.2.</span> <span class="toc-text">查找与替换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分切"><span class="toc-number">2.3.</span> <span class="toc-text">分切</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变形"><span class="toc-number">2.4.</span> <span class="toc-text">变形</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删减"><span class="toc-number">2.5.</span> <span class="toc-text">删减</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sort-和sorted"><span class="toc-number">3.</span> <span class="toc-text">sort()和sorted()</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#sorted对字典进行排序"><span class="toc-number">3.1.</span> <span class="toc-text">sorted对字典进行排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多维列表排序"><span class="toc-number">3.2.</span> <span class="toc-text">多维列表排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字典中混合list排序"><span class="toc-number">3.3.</span> <span class="toc-text">字典中混合list排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#list中混合字典排序"><span class="toc-number">3.4.</span> <span class="toc-text">list中混合字典排序</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用copy模块深拷贝对象"><span class="toc-number">4.</span> <span class="toc-text">使用copy模块深拷贝对象</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用Counter进行计数统计"><span class="toc-number">5.</span> <span class="toc-text">使用Counter进行计数统计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用字典进行统计"><span class="toc-number">5.1.</span> <span class="toc-text">使用字典进行统计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用defaultdict"><span class="toc-number">5.2.</span> <span class="toc-text">使用defaultdict</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用collections-Counter"><span class="toc-number">5.3.</span> <span class="toc-text">使用collections.Counter</span></a></li></ol></li></ol>
 		</div>
 		
 		<p>Pythonic高质量代码第四章～<a id="more"></a></p>
@@ -144,7 +144,28 @@ title() 将每一个单词首字母大写
 </code></pre><h2 id="删减"><a href="#删减" class="headerlink" title="删减"></a>删减</h2><pre><code>strip()
 lstrip()
 rstrip()
-</code></pre><h1 id="sort-和sorted"><a href="#sort-和sorted" class="headerlink" title="sort()和sorted()"></a>sort()和sorted()</h1>  
+</code></pre><blockquote>
+<p>2016-11-24 14:01</p>
+</blockquote>
+<h1 id="sort-和sorted"><a href="#sort-和sorted" class="headerlink" title="sort()和sorted()"></a>sort()和sorted()</h1><p>cmp为用户定义的任何比较函数，函数参数是两个可比较的元素，来自iterable或者list，返回-1,0,1，负数表示小于</p>
+<p>key是一个带参数的函数，用来为每个元素提取比较值，默认为None</p>
+<p>reverse表示排序结果是否反转</p>
+<p>sorted()作用于任意可迭代的对象，而sort()作用于列表</p>
+<p>sorted()函数返回一个排序后的列表，而sort()函数会直接修改原有列表，函数返回为None</p>
+<h2 id="sorted对字典进行排序"><a href="#sorted对字典进行排序" class="headerlink" title="sorted对字典进行排序"></a>sorted对字典进行排序</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">phonebook = &#123;&apos;linda&apos;: 77500, &apos;kevin&apos;: 10000, &quot;jim&quot;: 32032&#125;</div><div class="line">from operator import itemgetter</div><div class="line">sorted_pb = sorted(phonebook.items(), key=itemgetter(1))</div><div class="line">print(sorted_pb)</div></pre></td></tr></table></figure>
+<h2 id="多维列表排序"><a href="#多维列表排序" class="headerlink" title="多维列表排序"></a>多维列表排序</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">from operator import itemgetter</div><div class="line">gameresult = [[&apos;bob&apos;, 95.0, &apos;A&apos;],</div><div class="line">              [&apos;kevin&apos;, 99, &apos;A&apos;],</div><div class="line">              [&apos;jim&apos;, 98, &apos;B&apos;]]</div><div class="line">print(sorted(gameresult, key=itemgetter(2, 1), reverse=True))</div></pre></td></tr></table></figure>
+<h2 id="字典中混合list排序"><a href="#字典中混合list排序" class="headerlink" title="字典中混合list排序"></a>字典中混合list排序</h2><p><code>sorted(mydict.iteritems(), key=lambda(k,v): operator.itemgetter(1)(v))</code></p>
+<h2 id="list中混合字典排序"><a href="#list中混合字典排序" class="headerlink" title="list中混合字典排序"></a>list中混合字典排序</h2><p><code>sorted(gameresult, key=operator.itemgetter(&quot;rating&quot;, &quot;name&quot;))</code></p>
+<p>其实都可以使用lamda表达式解决</p>
+<p><code>sorted(gameresult, key=lambda a: a[&#39;rate&#39;])</code></p>
+<h1 id="使用copy模块深拷贝对象"><a href="#使用copy模块深拷贝对象" class="headerlink" title="使用copy模块深拷贝对象"></a>使用copy模块深拷贝对象</h1><p>copy.copy()仅仅拷贝对象的地址而不是对应地址指向的具体内容。在包含引用的数据结构中，当存在列表字典等可变对象的时候，仅仅拷贝了其引用地址。深拷贝不仅拷贝引用也拷贝引用所指向的对象，因此得到的对象和原对象是相互独立的。</p>
+<h1 id="使用Counter进行计数统计"><a href="#使用Counter进行计数统计" class="headerlink" title="使用Counter进行计数统计"></a>使用Counter进行计数统计</h1><h2 id="使用字典进行统计"><a href="#使用字典进行统计" class="headerlink" title="使用字典进行统计"></a>使用字典进行统计</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">count_dict = dict()</div><div class="line">for item in some_data:</div><div class="line">    if item in count_dict:</div><div class="line">        count_dict[item] += 1</div><div class="line">    else:</div><div class="line">        count_dict.setdefault(item, 1)</div></pre></td></tr></table></figure>
+<h2 id="使用defaultdict"><a href="#使用defaultdict" class="headerlink" title="使用defaultdict"></a>使用defaultdict</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">from collections import defaultdict</div><div class="line">count_dict = defaultdict(int)</div><div class="line">for item in some_data:</div><div class="line">    count_dict[item] += 1</div></pre></td></tr></table></figure>
+<h2 id="使用collections-Counter"><a href="#使用collections-Counter" class="headerlink" title="使用collections.Counter"></a>使用collections.Counter</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">from collections import Counter</div><div class="line">print Counter(some_data)</div></pre></td></tr></table></figure>
+<p>Counter支持集合操作，用来统计散列对象</p>
+<p>使用elements()方法获取Counter的key值</p>
+<p>使用most_common()方法找出前N个出现频率最高的元素以及它们的次数</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 
@@ -173,18 +194,18 @@ rstrip()
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/11/24/Pandas使用笔记/" title="Pandas使用笔记">
+ <a href="/2016/11/24/数据结构与算法/" title="数据结构与算法">
   <strong>新一篇:</strong><br/>
   <span>
-  Pandas使用笔记</span>
+  数据结构与算法</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2016/11/24/Pythonic高质量代码学习2/"  title="Pythonic高质量代码学习2">
+<a href="/2016/11/24/Pandas使用笔记/"  title="Pandas使用笔记">
  <strong>旧一篇:</strong><br/> 
- <span>Pythonic高质量代码学习2
+ <span>Pandas使用笔记
 </span>
 </a>
 </div>
