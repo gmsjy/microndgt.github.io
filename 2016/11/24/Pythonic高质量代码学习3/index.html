@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Python总结 | Kevin&#39;s Blog</title>
+    <title>Pythonic高质量代码学习3 | Kevin&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="看代码遇到不知道的Python用法的总结.">
+    <meta name="description" content="Pythonic高质量代码第四章～">
     
     
     
@@ -94,10 +94,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/10/30/python总结/" title="Python总结" itemprop="url">Python总结</a>
+      <a href="/2016/11/24/Pythonic高质量代码学习3/" title="Pythonic高质量代码学习3" itemprop="url">Pythonic高质量代码学习3</a>
   </h1>
   <p class="article-time">
-    <time datetime="2016-10-30T13:48:51.000Z" itemprop="datePublished">Oct 30 2016</time>
+    <time datetime="2016-11-24T02:09:24.000Z" itemprop="datePublished">Nov 24 2016</time>
   </p>
 </header>
 	<div class="article-content">
@@ -105,64 +105,58 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串的用法"><span class="toc-number">1.</span> <span class="toc-text">字符串的用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-性质判定"><span class="toc-number">2.</span> <span class="toc-text">1. 性质判定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-查找与替换"><span class="toc-number">3.</span> <span class="toc-text">2. 查找与替换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-分切"><span class="toc-number">4.</span> <span class="toc-text">3. 分切</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-变形"><span class="toc-number">5.</span> <span class="toc-text">4. 变形</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-删减"><span class="toc-number">6.</span> <span class="toc-text">5. 删减</span></a></li></ol>
 		</div>
 		
-		<p>看代码遇到不知道的Python用法的总结.<a id="more"></a></p>
+		<p>Pythonic高质量代码第四章～<a id="more"></a></p>
+<blockquote>
+<p>2016-11-24 10:09</p>
+</blockquote>
 <ul>
-<li><code>complie()</code></li>
+<li>处理字符串</li>
 </ul>
-<p>将source编译为代码，参数为<code>source filename mode</code>，其中mode:<code>exec</code>执行一系列的语句，<code>eval</code>执行一句，<code>single</code>执行单一交互式语句，如<code>print &quot;hello&quot;</code></p>
-<p><code>code = compile(file.read(),filepath,&#39;exec&#39;)</code></p>
-<ul>
-<li><code>exec(code,global_vars,local_vars)</code></li>
+<p>Python遇到未闭合的小括号会自动将多行代码拼接成一行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; s = (&apos;select * &apos;</div><div class="line">...     &apos;From table &apos;</div><div class="line">...     &apos;atex where &apos;</div><div class="line">...     &apos;a = 10&apos;)</div><div class="line">&gt;&gt;&gt; s</div><div class="line">&apos;select * From table atex where a = 10&apos;</div></pre></td></tr></table></figure>
+<p>判断一个变量是不是字符串应该使用<code>isinstance(s, basestring)</code>，因为basestring是str和unicode的基类</p>
+<p><code>isinstance(s, str)</code>判断是不是普通字符串</p>
+<h2 id="字符串的用法"><a href="#字符串的用法" class="headerlink" title="字符串的用法"></a>字符串的用法</h2><h2 id="1-性质判定"><a href="#1-性质判定" class="headerlink" title="1. 性质判定"></a>1. 性质判定</h2><pre><code>isalnum() 字母或者数字
+isalpha() 字母
+isdigit()
+islower()
+isupper()
+isspance()
+istitle() 每个单词都有且仅有第一个字母大写
+startswith()
+endswith()
+</code></pre><h2 id="2-查找与替换"><a href="#2-查找与替换" class="headerlink" title="2. 查找与替换"></a>2. 查找与替换</h2><pre><code>count() 查找子串在字符串中出现的次数
+find() 找不到返回-1
+index() 找不到返回valueerror
+rfind()
+rindex()
+replace(old, new, count) 不指定count则全部替换
+</code></pre><p>对于判定是否包含子串，使用in或者not in操作符</p>
+<p><code>if str.find(&quot;some&quot;) != -1:</code></p>
+<h2 id="3-分切"><a href="#3-分切" class="headerlink" title="3. 分切"></a>3. 分切</h2><pre><code>partition(sep) 返回3个元素的元组对象
+split() 
+</code></pre><p>对于split()，如果没有参数，则先去除字符串两端的空白符，然后以任意长度字符的空白符串作为界定符分切字符串。对于如果参数是一个空白符，那就是以空白符为界定符。</p>
+<h2 id="4-变形"><a href="#4-变形" class="headerlink" title="4. 变形"></a>4. 变形</h2><pre><code>lower()
+upper()
+capitalize()
+swapcase()
+title() 将每一个单词首字母大写
+</code></pre><h2 id="5-删减"><a href="#5-删减" class="headerlink" title="5. 删减"></a>5. 删减</h2><pre><code>strip()
+lstrip()
+rstrip()
+</code></pre><ul>
+<li>sort()和sorted()</li>
 </ul>
-<p>执行存储在字符串或者文件里面的Python语句，执行代码，并且声明全局命名空间和局部命名空间</p>
-<ul>
-<li><code>os.environ.get(&quot;STRA_ROOT&quot;,os.path.join(os.getcwd(),&quot;../..&quot;))</code></li>
-</ul>
-<p>获取环境变量，如果环境变量为空，那么返回第二个参数给的默认值</p>
-<p><code>os.path.join</code> 连接两个字符串作为path</p>
-<p><code>os.getcwd()</code> 获取当前工作目录</p>
-<ul>
-<li><code>os.path.normpath(os.path.abspath(root))</code></li>
-</ul>
-<p>首先将所输入的路径转换为绝对路径，然后根据系统环境进行规范化路径</p>
-<ul>
-<li><code>map(lambda x:os.path.join(*x),itertools.product(*paths))</code></li>
-</ul>
-<p>itertools.product 表示一个item1，item2等中的项目的笛卡尔积的元组，排列组合</p>
-<p>其中<code>*x</code>表示可选数目的参数集合,所以x就是包含所有参数的一个元组，然后将这些元组join起来变成一个路径</p>
-<ul>
-<li><code>logging.debug(&quot;load config from [%s]&quot;,cfile)</code></li>
-</ul>
-<p>后面第二个参数文档里是这样写的 args are the arguments which are merged into msg using the string formatting operator</p>
-<ul>
-<li><code>&quot;{:03d}&quot;.format(uid % 100)</code></li>
-</ul>
-<p>使用{}形式进行格式化字符串，:表示格式化字符开始，03d表示将数字类型的格式为字符串3位，多处的空用0补齐。</p>
-<p><code>os.path.join(data_root, l1, l2, &quot;{}-{}.{}&quot;.format(kind, uid, ext))</code>每一个大括号格式化一个变量</p>
-<ul>
-<li>csv模块的使用</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">file = open(path)</div><div class="line">reader = csv.reader(file)</div><div class="line">for row in reader:</div><div class="line">    # row是一个列表，每一项为一个列</div><div class="line">    print(row[0])</div><div class="line"># csv写入方法，writerow接受一个列表，作为csv的每一个列元素</div><div class="line">w = csv.writer(file)</div><div class="line">w.writerow(someList)</div></pre></td></tr></table></figure>
-<ul>
-<li>datetime变量的使用</li>
-</ul>
-<p>date是datetime变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># 将date变量转换为字符串，方法</div><div class="line">date.strftime(&quot;%Y%m%d&quot;)</div><div class="line"># 将字符串转换为datetime变量，函数</div><div class="line">datetime.datetime.strptime(timeString,&quot;%Y%m%d&quot;)</div><div class="line"># timedelta对象</div><div class="line">from datetime import timedelta</div><div class="line">day = timedelta(days=1)</div></pre></td></tr></table></figure>
-<ul>
-<li>字典的一些操作</li>
-</ul>
-<p><code>self._states.get(date,{}).get(&#39;stkasset&#39;,{})</code>也就是date键存在，则获取数据，否则返回空字典</p>
-<p><code>stks = stkasset.setdefault(symbol, [])</code>,setdefault方法就是获取键值，如果没有得到，那么将添加该键，并且设置默认值</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python/">Python</a><a href="/tags/工作总结/">工作总结</a>
+  <span></span> <a href="/tags/编程/">编程</a>
   </div>
 
 
@@ -175,7 +169,7 @@ var _hmt = _hmt || [];
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2016/10/30/python总结/" data-title="Python总结 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2016/11/24/Pythonic高质量代码学习3/" data-title="Pythonic高质量代码学习3 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -184,19 +178,11 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/10/31/北京的第一天/" title="北京的第一天">
-  <strong>新一篇:</strong><br/>
-  <span>
-  北京的第一天</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/10/30/hello-world/"  title="Hello World">
+<a href="/2016/11/24/Pythonic高质量代码学习2/"  title="Pythonic高质量代码学习2">
  <strong>舊一篇:</strong><br/> 
- <span>Hello World
+ <span>Pythonic高质量代码学习2
 </span>
 </a>
 </div>
@@ -206,7 +192,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="Python总结" data-thread-key="python总结" data-author-key="Kevin" data-url="http://microndgt.github.io/post/python总结"></div>
+	<div class="ds-thread" data-title="Pythonic高质量代码学习3" data-thread-key="Pythonic高质量代码学习3" data-author-key="Kevin" data-url="http://microndgt.github.io/post/Pythonic高质量代码学习3"></div>
 	
 </section>
 

@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -82,7 +82,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -94,10 +94,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/11/20/Pythonic高质量代码学习2/" title="Pythonic高质量代码学习2" itemprop="url">Pythonic高质量代码学习2</a>
+      <a href="/2016/11/24/Pythonic高质量代码学习2/" title="Pythonic高质量代码学习2" itemprop="url">Pythonic高质量代码学习2</a>
   </h1>
   <p class="article-time">
-    <time datetime="2016-11-20T08:38:45.000Z" itemprop="datePublished">Nov 20 2016</time>
+    <time datetime="2016-11-24T01:53:45.000Z" itemprop="datePublished">Nov 24 2016</time>
   </p>
 </header>
 	<div class="article-content">
@@ -200,6 +200,24 @@ var _hmt = _hmt || [];
 <p>变长参数意味着这个函数的签名不清晰，存在多种调用方式，如果一个函数的参数列表很长，可以使用<code>*args</code>和<code>**kwargs</code>来简化函数定义，但是通常意味着这个函数可以有更好的实现方式，应该被重构。</p>
 <p>为函数添加一个装饰器</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">def mydecorator(fun):</div><div class="line">    def new(*args, **kwargs):</div><div class="line">        return fun(*args, **kwargs)</div><div class="line">    return new</div></pre></td></tr></table></figure>
+<blockquote>
+<p>2016-11-24 9:53</p>
+</blockquote>
+<ul>
+<li>str()和repr()</li>
+</ul>
+<p>str()主要面向用户，其目的是可读性，返回是用户友好性和可读性较强的字符串类型。repr()面向Python解释器，开发人员。目的是准确性</p>
+<p>a 默认调用repr()函数，print(a)调用str()函数</p>
+<p>repr()返回值用eval()函数还原对象</p>
+<p>两个方法分别调用内建的<code>__str__()</code>和<code>__repr__()</code>方法，一般来说要在类中定义<code>__repr__()</code>方法，如果类中没有定义<code>__str__()</code>方法，则默认会使用<code>__repr__()</code>方法结果来返回对象的字符串表示形式。</p>
+<ul>
+<li>静态方法和类方法</li>
+</ul>
+<p><code>@staticmethod</code>和<code>@classmethod</code></p>
+<p>静态方法和类方法都可以通过类名.方法名或者实例.方法名来访问，但是静态方法没有特殊行为，如绑定，非绑定，隐式参数等规则，类方法调用使用类本身作为隐含参数</p>
+<p>在继承中，调用父类的类方法的时候，隐形传入的参数是对象所对应的类。</p>
+<p>静态方法相当于定义在类里面的函数，当该方法既不跟特定的实例相关也不跟特定的类相关，可以定义为静态方法，较之外部函数，可以有效的将代码组织起来。</p>
+<p>如果与特定的类或者实例有关，使用类方法。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -219,7 +237,7 @@ var _hmt = _hmt || [];
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2016/11/20/Pythonic高质量代码学习2/" data-title="Pythonic高质量代码学习2 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2016/11/24/Pythonic高质量代码学习2/" data-title="Pythonic高质量代码学习2 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -229,18 +247,18 @@ var _hmt = _hmt || [];
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/11/22/北京的第23天/" title="北京的第23天">
+ <a href="/2016/11/24/Pythonic高质量代码学习3/" title="Pythonic高质量代码学习3">
   <strong>新一篇:</strong><br/>
   <span>
-  北京的第23天</span>
+  Pythonic高质量代码学习3</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2016/11/18/北京の19天/"  title="北京の19天">
- <strong>旧一篇:</strong><br/> 
- <span>北京の19天
+<a href="/2016/11/23/数据结构与算法/"  title="数据结构与算法">
+ <strong>舊一篇:</strong><br/> 
+ <span>数据结构与算法
 </span>
 </a>
 </div>
