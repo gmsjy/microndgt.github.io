@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -82,7 +82,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -105,60 +105,26 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#load-csv"><span class="toc-number">1.</span> <span class="toc-text">load csv</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#存在的问题"><span class="toc-number">1.1.</span> <span class="toc-text">存在的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原因"><span class="toc-number">1.2.</span> <span class="toc-text">原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决"><span class="toc-number">1.3.</span> <span class="toc-text">解决</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分割文件"><span class="toc-number">2.</span> <span class="toc-text">分割文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#修改字段"><span class="toc-number">3.</span> <span class="toc-text">修改字段</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#合并表"><span class="toc-number">4.</span> <span class="toc-text">合并表</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#关键问题"><span class="toc-number">5.</span> <span class="toc-text">关键问题</span></a></li></ol>
 		</div>
 		
 		<p>将本地的CSV文件插入到MySQL的方法以及遇到的问题～<a id="more"></a></p>
-<ul>
-<li>命令：</li>
-</ul>
-<p><code>LOAD DATA INFILE &#39;/data/output.csv&#39; INTO TABLE ability CHARACTER SET utf8 FIELDS TERMINATED BY &#39;,&#39;;</code></p>
-<ul>
-<li>存在的问题</li>
-</ul>
-<ol>
+<h1 id="load-csv"><a href="#load-csv" class="headerlink" title="load csv"></a>load csv</h1><p><code>LOAD DATA INFILE &#39;/data/output.csv&#39; INTO TABLE ability CHARACTER SET utf8 FIELDS TERMINATED BY &#39;,&#39;;</code></p>
+<h2 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h2><ol>
 <li>使用<code>utf8</code>，而不是<code>utf-8</code></li>
 <li>插入的时候报错，<code>ERROR 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement</code></li>
+<li>在load csv的时候出现表中有主键，但是csv数据没有那一列，会报错，<code>doesn&#39;t contain data for all columns</code>,于是用Python将每一行的行数加在csv文件的第一列。</li>
 </ol>
-<ul>
-<li>原因</li>
-</ul>
-<p>secure_file_priv设置了指定目录，需要在指定的目录下进行数据导出</p>
-<ul>
-<li>解决</li>
-</ul>
-<p><code>mysql&gt; show variables like &#39;%secure%&#39;;</code></p>
+<p>这里要注意的是primary_key是从1开始，而不是0.</p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>secure_file_priv设置了指定目录，需要在指定的目录下进行数据导出</p>
+<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p><code>mysql&gt; show variables like &#39;%secure%&#39;;</code></p>
 <p>有一项是：<code>secure_file_priv         | /var/lib/mysql-files/ |</code></p>
 <p>在这个文件夹下进行文件的读取与上传。</p>
-<ul>
-<li>分割文件</li>
-</ul>
-<p>在load的时候又出现了一个问题，这个文件夹所挂载的硬盘容量太小，文件copy不过来，于是采取了一种方法，将文件分割，命令:<code>split</code>,生成文件名为xaa,xab什么的</p>
+<h1 id="分割文件"><a href="#分割文件" class="headerlink" title="分割文件"></a>分割文件</h1><p>在load的时候又出现了一个问题，这个文件夹所挂载的硬盘容量太小，文件copy不过来，于是采取了一种方法，将文件分割，命令:<code>split</code>,生成文件名为xaa,xab什么的</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">＃ 以文件行数分割,每个文件行数为1000行</div><div class="line">split mylog -l 1000</div><div class="line"># 以每个文件20M分割</div><div class="line">split -b 20M logdata</div><div class="line"># 以每个文件50MB指定前缀分割</div><div class="line">split --bytes=50M logdata mydatafile</div></pre></td></tr></table></figure>
-<ul>
-<li>load csv</li>
-</ul>
-<p>在load csv的时候出现表中有主键，但是csv数据没有那一列，会报错，<code>doesn&#39;t contain data for all columns</code>,于是用Python将每一行的行数加在csv文件的第一列。</p>
-<p>这里要注意的是primary_key是从1开始，而不是0.</p>
-<ul>
-<li>一些SQL语句</li>
-</ul>
-<p>删除表:<code>drop table ability</code></p>
-<p>删除表中数据:<code>truncate table ability</code></p>
-<p>建表语句：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">create table if not exists ability(</div><div class="line">id int(11) not null auto_increment,</div><div class="line">fundId int(11) default null,</div><div class="line">ability_gain float(15,4) default null,</div><div class="line">primary key(id),</div><div class="line">index `fundId` (`fundId` asc))</div><div class="line">engine=InnoDB default charset=utf8;</div></pre></td></tr></table></figure>
-<p>注意：</p>
-<p><code>utf8 not utf-8</code></p>
-<p><code>auto_increment not auto increment</code></p>
-<ul>
-<li>修改字段</li>
-</ul>
-<p>load数据的时候遇到了这个问题，就是说out of range，于是修改为double(40,15)还是不行，后来发现此数据为2e+100,完全表示不下，于是使用字符串</p>
+<h1 id="修改字段"><a href="#修改字段" class="headerlink" title="修改字段"></a>修改字段</h1><p>load数据的时候遇到了这个问题，就是说out of range，于是修改为double(40,15)还是不行，后来发现此数据为2e+100,完全表示不下，于是使用字符串</p>
 <p><code>alter table ability modify column shape_rate varchar(50)</code></p>
-<ul>
-<li>合并表</li>
-</ul>
-<p>由于有两台计算机上的数据，id标号不是连续的，先后插入的时候就会出现主键重复，现在准备采用分两个表插入，然后进行合并的方式：</p>
+<h1 id="合并表"><a href="#合并表" class="headerlink" title="合并表"></a>合并表</h1><p>由于有两台计算机上的数据，id标号不是连续的，先后插入的时候就会出现主键重复，现在准备采用分两个表插入，然后进行合并的方式：</p>
 <p><code>insert into ability(fundId,ability_gain,ability_long,ability_medium,ability_risk,ability_short,ability_total,daily_profit,daily_profit_rate,date,fundbal,max_retracement,period_profit_rate,position_rate,shape_ratio,stk_maktval,ttimes_long,ttimes_medium,ttimes_short) select fundId,ability_gain,ability_long,ability_medium,ability_risk,ability_short,ability_total,daily_profit,daily_profit_rate,date,fundbal,max_retracement,period_profit_rate,position_rate,shape_ratio,stk_maktval,ttimes_long,ttimes_medium,ttimes_short from ability1;</code></p>
 <p>另外一种解决方法是将第二个文件的第一个字段按照之前插入的最后一条的数字，相应进行更改，使用awk命令：</p>
 <p><code>awk &#39;BEGIN{FS=&quot;,&quot;;OFS=&quot;,&quot;;ORS=&quot;\n&quot;;}{$1=NR+43146621;print $0}&#39; datatest.txt &gt; newdatatest.txt</code></p>
@@ -173,24 +139,9 @@ var _hmt = _hmt || [];
 <p>xaa:</p>
 <p>xab:</p>
 <p>xac:</p>
-<ul>
-<li>关键问题</li>
-</ul>
-<p>最后插入了很多数据后发现数据是21列，建的表是20列，晕，删除表，重新建表～</p>
+<h1 id="关键问题"><a href="#关键问题" class="headerlink" title="关键问题"></a>关键问题</h1><p>最后插入了很多数据后发现数据是21列，建的表是20列，晕，删除表，重新建表～</p>
 <p>又出现一个问题，之前按照文件大小将文件分割，插入数据库的时候发现，文件最后一行完整性被损坏了，所以一定要按照行来分割数据文件～</p>
 <p><code>split all_output.csv -l 46000000</code></p>
-<p>添加索引：</p>
-<p><code>alter table ability add index (fundId asc)</code></p>
-<p>选择前10条数据：</p>
-<p><code>select * from ability limit 10</code></p>
-<p>添加列：</p>
-<p><code>alter table ability add column day_asset double(30,15) null after date;</code></p>
-<p>改变表中字段的顺序：</p>
-<p><code>alter table ability_ext fundId fundId int(11) default null after first_day_asset</code></p>
-<p>删除表中某个字段：</p>
-<p><code>alter table ability drop column day_asset</code></p>
-<p>修改字段名字：</p>
-<p><code>alter table ability change fundid fundId int(11) default null;</code></p>
 <p>VIM所有行替换：</p>
 <p><code>:%s/fundid/fundId/gc</code></p>
 <p>远程连接MySQL的时候，报错：</p>
@@ -207,7 +158,7 @@ var _hmt = _hmt || [];
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/SQL/">SQL</a><a href="/tags/编程/">编程</a>
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/SQL/">SQL</a>
   </div>
 
 
@@ -231,7 +182,7 @@ var _hmt = _hmt || [];
  
  <div class="prev" >
  <a href="/2016/11/06/首经贸秋景/" title="首经贸秋景">
-  <strong>新一篇:</strong><br/>
+  <strong>New:</strong><br/>
   <span>
   首经贸秋景</span>
 </a>
@@ -240,7 +191,7 @@ var _hmt = _hmt || [];
 
 <div class="next">
 <a href="/2016/11/04/北京de第五天/"  title="北京De第五天">
- <strong>旧一篇:</strong><br/> 
+ <strong>Old:</strong><br/> 
  <span>北京De第五天
 </span>
 </a>
