@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -82,7 +82,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -105,21 +105,18 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串的用法"><span class="toc-number">1.</span> <span class="toc-text">字符串的用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-性质判定"><span class="toc-number">2.</span> <span class="toc-text">1. 性质判定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-查找与替换"><span class="toc-number">3.</span> <span class="toc-text">2. 查找与替换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-分切"><span class="toc-number">4.</span> <span class="toc-text">3. 分切</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-变形"><span class="toc-number">5.</span> <span class="toc-text">4. 变形</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-删减"><span class="toc-number">6.</span> <span class="toc-text">5. 删减</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#处理字符串"><span class="toc-number">1.</span> <span class="toc-text">处理字符串</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#字符串的用法"><span class="toc-number">2.</span> <span class="toc-text">字符串的用法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#性质判定"><span class="toc-number">2.1.</span> <span class="toc-text">性质判定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查找与替换"><span class="toc-number">2.2.</span> <span class="toc-text">查找与替换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分切"><span class="toc-number">2.3.</span> <span class="toc-text">分切</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#变形"><span class="toc-number">2.4.</span> <span class="toc-text">变形</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删减"><span class="toc-number">2.5.</span> <span class="toc-text">删减</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sort-和sorted"><span class="toc-number">3.</span> <span class="toc-text">sort()和sorted()</span></a></li></ol>
 		</div>
 		
 		<p>Pythonic高质量代码第四章～<a id="more"></a></p>
 <blockquote>
 <p>2016-11-24 10:09</p>
 </blockquote>
-<ul>
-<li>处理字符串</li>
-</ul>
-<p>Python遇到未闭合的小括号会自动将多行代码拼接成一行</p>
+<h1 id="处理字符串"><a href="#处理字符串" class="headerlink" title="处理字符串"></a>处理字符串</h1><p>Python遇到未闭合的小括号会自动将多行代码拼接成一行</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; s = (&apos;select * &apos;</div><div class="line">...     &apos;From table &apos;</div><div class="line">...     &apos;atex where &apos;</div><div class="line">...     &apos;a = 10&apos;)</div><div class="line">&gt;&gt;&gt; s</div><div class="line">&apos;select * From table atex where a = 10&apos;</div></pre></td></tr></table></figure>
 <p>判断一个变量是不是字符串应该使用<code>isinstance(s, basestring)</code>，因为basestring是str和unicode的基类</p>
 <p><code>isinstance(s, str)</code>判断是不是普通字符串</p>
-<h2 id="字符串的用法"><a href="#字符串的用法" class="headerlink" title="字符串的用法"></a>字符串的用法</h2><h2 id="1-性质判定"><a href="#1-性质判定" class="headerlink" title="1. 性质判定"></a>1. 性质判定</h2><pre><code>isalnum() 字母或者数字
+<h1 id="字符串的用法"><a href="#字符串的用法" class="headerlink" title="字符串的用法"></a>字符串的用法</h1><h2 id="性质判定"><a href="#性质判定" class="headerlink" title="性质判定"></a>性质判定</h2><pre><code>isalnum() 字母或者数字
 isalpha() 字母
 isdigit()
 islower()
@@ -128,7 +125,7 @@ isspance()
 istitle() 每个单词都有且仅有第一个字母大写
 startswith()
 endswith()
-</code></pre><h2 id="2-查找与替换"><a href="#2-查找与替换" class="headerlink" title="2. 查找与替换"></a>2. 查找与替换</h2><pre><code>count() 查找子串在字符串中出现的次数
+</code></pre><h2 id="查找与替换"><a href="#查找与替换" class="headerlink" title="查找与替换"></a>查找与替换</h2><pre><code>count() 查找子串在字符串中出现的次数
 find() 找不到返回-1
 index() 找不到返回valueerror
 rfind()
@@ -136,21 +133,18 @@ rindex()
 replace(old, new, count) 不指定count则全部替换
 </code></pre><p>对于判定是否包含子串，使用in或者not in操作符</p>
 <p><code>if str.find(&quot;some&quot;) != -1:</code></p>
-<h2 id="3-分切"><a href="#3-分切" class="headerlink" title="3. 分切"></a>3. 分切</h2><pre><code>partition(sep) 返回3个元素的元组对象
+<h2 id="分切"><a href="#分切" class="headerlink" title="分切"></a>分切</h2><pre><code>partition(sep) 返回3个元素的元组对象
 split() 
 </code></pre><p>对于split()，如果没有参数，则先去除字符串两端的空白符，然后以任意长度字符的空白符串作为界定符分切字符串。对于如果参数是一个空白符，那就是以空白符为界定符。</p>
-<h2 id="4-变形"><a href="#4-变形" class="headerlink" title="4. 变形"></a>4. 变形</h2><pre><code>lower()
+<h2 id="变形"><a href="#变形" class="headerlink" title="变形"></a>变形</h2><pre><code>lower()
 upper()
 capitalize()
 swapcase()
 title() 将每一个单词首字母大写
-</code></pre><h2 id="5-删减"><a href="#5-删减" class="headerlink" title="5. 删减"></a>5. 删减</h2><pre><code>strip()
+</code></pre><h2 id="删减"><a href="#删减" class="headerlink" title="删减"></a>删减</h2><pre><code>strip()
 lstrip()
 rstrip()
-</code></pre><ul>
-<li>sort()和sorted()</li>
-</ul>
-  
+</code></pre><h1 id="sort-和sorted"><a href="#sort-和sorted" class="headerlink" title="sort()和sorted()"></a>sort()和sorted()</h1>  
 	</div>
 		<footer class="article-footer clearfix">
 
@@ -178,10 +172,18 @@ rstrip()
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2016/11/24/Pandas使用笔记/" title="Pandas使用笔记">
+  <strong>新一篇:</strong><br/>
+  <span>
+  Pandas使用笔记</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2016/11/24/Pythonic高质量代码学习2/"  title="Pythonic高质量代码学习2">
- <strong>舊一篇:</strong><br/> 
+ <strong>旧一篇:</strong><br/> 
  <span>Pythonic高质量代码学习2
 </span>
 </a>

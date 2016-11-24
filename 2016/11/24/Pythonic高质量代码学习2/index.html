@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -82,7 +82,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -105,58 +105,34 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#from-import"><span class="toc-number">1.</span> <span class="toc-text">from..import</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用with自动关闭资源"><span class="toc-number">2.</span> <span class="toc-text">使用with自动关闭资源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用else子句简化循环"><span class="toc-number">3.</span> <span class="toc-text">使用else子句简化循环</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常处理"><span class="toc-number">4.</span> <span class="toc-text">异常处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#finally可能的陷阱"><span class="toc-number">5.</span> <span class="toc-text">finally可能的陷阱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#None"><span class="toc-number">6.</span> <span class="toc-text">None</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连接字符串尽量使用join"><span class="toc-number">7.</span> <span class="toc-text">连接字符串尽量使用join</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#格式化字符串使用-format而不是"><span class="toc-number">8.</span> <span class="toc-text">格式化字符串使用.format而不是%</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可变对象和不可变对象"><span class="toc-number">9.</span> <span class="toc-text">可变对象和不可变对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用列表解析"><span class="toc-number">10.</span> <span class="toc-text">使用列表解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数传参"><span class="toc-number">11.</span> <span class="toc-text">函数传参</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#默认参数可能导致的问题"><span class="toc-number">12.</span> <span class="toc-text">默认参数可能导致的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#慎用变长参数"><span class="toc-number">13.</span> <span class="toc-text">慎用变长参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#str-和repr"><span class="toc-number">14.</span> <span class="toc-text">str()和repr()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#静态方法和类方法"><span class="toc-number">15.</span> <span class="toc-text">静态方法和类方法</span></a></li></ol>
 		</div>
 		
 		<p>编写高质量代码，改善Python程序的91个建议第三章～<a id="more"></a></p>
-<ul>
-<li>from..import</li>
-</ul>
-<p>Python有3种方式引入外部模块，<code>import</code>,<code>from..import..</code>,<code>__import__函数</code>,该函数显式的将模块的名称作为字符串传递并赋值给命名空间的变量</p>
+<h2 id="from-import"><a href="#from-import" class="headerlink" title="from..import"></a>from..import</h2><p>Python有3种方式引入外部模块，<code>import</code>,<code>from..import..</code>,<code>__import__函数</code>,该函数显式的将模块的名称作为字符串传递并赋值给命名空间的变量</p>
 <p>解决循环嵌套导入问题的一个方法是直接使用import语句</p>
-<ul>
-<li>使用with自动关闭资源</li>
-</ul>
-<p>可以使用try..finally，但是Python提供了一个更加简单的解决方案</p>
+<h2 id="使用with自动关闭资源"><a href="#使用with自动关闭资源" class="headerlink" title="使用with自动关闭资源"></a>使用with自动关闭资源</h2><p>可以使用try..finally，但是Python提供了一个更加简单的解决方案</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">with open(filename, &apos;r&apos;) as f:</div><div class="line">	f.write()</div></pre></td></tr></table></figure>
 <p>with也可以嵌套也可以多个with语句，with 语句可以在代码块执行完成后还原进入该代码块时候的现场</p>
-<ul>
-<li>使用else子句简化循环</li>
-</ul>
-<p>else子句提供了隐含的对循环是否由break语句引发循环结束的判断，else在循环正常结束的时候和循环条件不成立时候被执行，如果是break退出的就不运行</p>
+<h2 id="使用else子句简化循环"><a href="#使用else子句简化循环" class="headerlink" title="使用else子句简化循环"></a>使用else子句简化循环</h2><p>else子句提供了隐含的对循环是否由break语句引发循环结束的判断，else在循环正常结束的时候和循环条件不成立时候被执行，如果是break退出的就不运行</p>
 <p>try-except-else-finally else在try没有抛出异常的时候执行else</p>
-<ul>
-<li>异常处理</li>
-</ul>
-<p>在某些情况下使用单独的except语句，可以使用raise语句将异常情况向上层传递</p>
+<h2 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h2><p>在某些情况下使用单独的except语句，可以使用raise语句将异常情况向上层传递</p>
 <p>异常类 BaseException-&gt;Exception-&gt;</p>
 <p>如果异常能够在捕获的位置被处理，那么应该及时处理，不能处理应该以合适的方式向上层抛出，向上层传递的时候需要注意异常丢失，可以使用不带参数的raise来传递</p>
-<ul>
-<li>finally可能的陷阱</li>
-</ul>
-<p>finally语句经常用于清理工作</p>
+<h2 id="finally可能的陷阱"><a href="#finally可能的陷阱" class="headerlink" title="finally可能的陷阱"></a>finally可能的陷阱</h2><p>finally语句经常用于清理工作</p>
 <p>一般如果finally执行完毕，临时保存的异常将会再次被抛出，但是如果finally语句中产生了新的异常或者执行了return或者break语句，那么临时保存的异常将会被丢失，导致异常屏蔽</p>
 <p>另外一个陷阱就是</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">try:</div><div class="line">	if a &lt;= 0:</div><div class="line">		raise ValueError(&quot;error&quot;)</div><div class="line">	else:</div><div class="line">		return a</div><div class="line">finally:</div><div class="line">	return -1</div></pre></td></tr></table></figure>
 <p>这种形式就会使得函数最终肯定返回－1，而不是a的值～</p>
-<ul>
-<li>None</li>
-</ul>
-<p>所有赋值为None的变量都相等，None与任何其它非None的对象比较结果都是False</p>
+<h2 id="None"><a href="#None" class="headerlink" title="None"></a>None</h2><p>所有赋值为None的变量都相等，None与任何其它非None的对象比较结果都是False</p>
 <p>数据为空的形式：常量None，常量False，任何形式的数值类型0，空序列，空字典</p>
 <p>因此一般情况下，判断列表是否为空，直接用实例进行判断：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">if list1:</div><div class="line">	# 不为空</div><div class="line">	Do something</div><div class="line">else:</div><div class="line">	Do some other thing</div></pre></td></tr></table></figure>
 <p>在执行的时候会调用内部方法<code>__nonzero__()</code>来判断变量list1是否为空并返回其结果，或者使用<code>__len__()</code>方法的结果进行判断，如果该类没有上述方法，则判断结果都是True</p>
-<ul>
-<li>连接字符串尽量使用join</li>
-</ul>
-<p>计时的方法</p>
+<h2 id="连接字符串尽量使用join"><a href="#连接字符串尽量使用join" class="headerlink" title="连接字符串尽量使用join"></a>连接字符串尽量使用join</h2><p>计时的方法</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import timeit</div><div class="line">jointimer = timeit.Timer(&quot;join_test()&quot;, &quot;from __main__ import join_test&quot;)</div><div class="line">print(jointimer.timeit(number=100)</div></pre></td></tr></table></figure>
 <p>join方法要比＋速度快的多，所以大规模字符串处理，优先使用join而不是＋</p>
-<ul>
-<li>格式化字符串使用.format而不是%</li>
-</ul>
-<p>%号的格式化：直接格式化字符或者数值，以元组的方式格式化，字典的形式格式化</p>
+<h2 id="格式化字符串使用-format而不是"><a href="#格式化字符串使用-format而不是" class="headerlink" title="格式化字符串使用.format而不是%"></a>格式化字符串使用.format而不是%</h2><p>%号的格式化：直接格式化字符或者数值，以元组的方式格式化，字典的形式格式化</p>
 <p>format</p>
 <p>使用位置符号</p>
 <p>{0}表示第一个参数，{1}表示第二个参数</p>
@@ -167,34 +143,19 @@ var _hmt = _hmt || [];
 <p>格式化元组的具体项</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">point = (1, 3)</div><div class="line">&apos;x:&#123;0[0]&#125;;y:&#123;0[1]&#125;&apos;.format(point)</div></pre></td></tr></table></figure>
 <p>format格式化顺序可变，可以方便作为参数传递</p>
-<ul>
-<li>可变对象和不可变对象</li>
-</ul>
-<p>每一个对象都有唯一的标志符id()，类型type()以及值</p>
+<h2 id="可变对象和不可变对象"><a href="#可变对象和不可变对象" class="headerlink" title="可变对象和不可变对象"></a>可变对象和不可变对象</h2><p>每一个对象都有唯一的标志符id()，类型type()以及值</p>
 <p>默认参数在函数被调用的时候仅仅被评估一次，以后都会使用第一次评估的结果，<code>def __init__(self, course=[])</code>，将可变对象作为函数默认参数的时候需要注意对可变对象的更改会直接影响原对象，所以尽量在创建对象的时候动态生成列表</p>
 <p>切片操作相当于浅复制，<code>list3 = list1[:]</code>，如果list1中含有可变对象，同样如果list3改变了，list1也会相应改变</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">list1 = [[1,23],34,5]</div><div class="line">list3 = list1[:]</div><div class="line">list3[0][1] = 45</div><div class="line">&gt;&gt;&gt; list3</div><div class="line">[[1, 45], 34, 5]</div><div class="line">&gt;&gt;&gt; list1</div><div class="line">[[1, 45], 34, 5]</div></pre></td></tr></table></figure>
 <p>对于不可变对象，对其操作，会重新创建一个新的对象</p>
-<ul>
-<li>使用列表解析</li>
-</ul>
-<p><code>[word.strip() for word in words if word.istitle()]</code></p>
-<ul>
-<li>函数传参</li>
-</ul>
-<p><code>b＝a</code>的操作使得b与a引用同一个对象，传递的是对象的引用，<code>b=7</code>将b指向对象7</p>
+<h2 id="使用列表解析"><a href="#使用列表解析" class="headerlink" title="使用列表解析"></a>使用列表解析</h2><p><code>[word.strip() for word in words if word.istitle()]</code></p>
+<h2 id="函数传参"><a href="#函数传参" class="headerlink" title="函数传参"></a>函数传参</h2><p><code>b＝a</code>的操作使得b与a引用同一个对象，传递的是对象的引用，<code>b=7</code>将b指向对象7</p>
 <p>相当于对象是固定的，但是变量名只是存储了一个引用，当<code>b=7</code>的时候会开辟内存生成7，然后将b的引用重新与7进行关联。</p>
 <p>赋值的时候就会重新创建一块内存，但是如果使用方法什么的操作本身内存的话就仍然还是原来的对象</p>
 <p>所以Python函数参数应该是传对象，或者是传对象的引用</p>
-<ul>
-<li>默认参数可能导致的问题</li>
-</ul>
-<p>def在Python中是一个可执行的语句，当解释器执行def的时候，默认参数也会被计算，并且存在函数的<code>.func_defaults</code>属性中，所以再次调用函数的时候，默认参数不会重新计算，仍然用的以前生成的对象。</p>
+<h2 id="默认参数可能导致的问题"><a href="#默认参数可能导致的问题" class="headerlink" title="默认参数可能导致的问题"></a>默认参数可能导致的问题</h2><p>def在Python中是一个可执行的语句，当解释器执行def的时候，默认参数也会被计算，并且存在函数的<code>.func_defaults</code>属性中，所以再次调用函数的时候，默认参数不会重新计算，仍然用的以前生成的对象。</p>
 <p>如果不想让默认参数所指向的对象在所有函数调用中共享，而是在函数调用过程中动态生成，可以在定义的时候使用None对象作为占位符</p>
-<ul>
-<li>慎用变长参数</li>
-</ul>
-<p>函数定义的时候使用<code>*args</code>或者<code>**kwargs</code>，实现可变参数列表和字典形式的关键字参数列表</p>
+<h2 id="慎用变长参数"><a href="#慎用变长参数" class="headerlink" title="慎用变长参数"></a>慎用变长参数</h2><p>函数定义的时候使用<code>*args</code>或者<code>**kwargs</code>，实现可变参数列表和字典形式的关键字参数列表</p>
 <p><code>*args</code>接受一个包装为元组形式的参数列表来传递非关键字参数，参数个数任意</p>
 <p><code>**kwargs</code>接受字典形式的关键字参数列表，字典的键值对分别表示不可变参数的参数名和值</p>
 <p>变长参数意味着这个函数的签名不清晰，存在多种调用方式，如果一个函数的参数列表很长，可以使用<code>*args</code>和<code>**kwargs</code>来简化函数定义，但是通常意味着这个函数可以有更好的实现方式，应该被重构。</p>
@@ -203,17 +164,11 @@ var _hmt = _hmt || [];
 <blockquote>
 <p>2016-11-24 9:53</p>
 </blockquote>
-<ul>
-<li>str()和repr()</li>
-</ul>
-<p>str()主要面向用户，其目的是可读性，返回是用户友好性和可读性较强的字符串类型。repr()面向Python解释器，开发人员。目的是准确性</p>
+<h2 id="str-和repr"><a href="#str-和repr" class="headerlink" title="str()和repr()"></a>str()和repr()</h2><p>str()主要面向用户，其目的是可读性，返回是用户友好性和可读性较强的字符串类型。repr()面向Python解释器，开发人员。目的是准确性</p>
 <p>a 默认调用repr()函数，print(a)调用str()函数</p>
 <p>repr()返回值用eval()函数还原对象</p>
 <p>两个方法分别调用内建的<code>__str__()</code>和<code>__repr__()</code>方法，一般来说要在类中定义<code>__repr__()</code>方法，如果类中没有定义<code>__str__()</code>方法，则默认会使用<code>__repr__()</code>方法结果来返回对象的字符串表示形式。</p>
-<ul>
-<li>静态方法和类方法</li>
-</ul>
-<p><code>@staticmethod</code>和<code>@classmethod</code></p>
+<h2 id="静态方法和类方法"><a href="#静态方法和类方法" class="headerlink" title="静态方法和类方法"></a>静态方法和类方法</h2><p><code>@staticmethod</code>和<code>@classmethod</code></p>
 <p>静态方法和类方法都可以通过类名.方法名或者实例.方法名来访问，但是静态方法没有特殊行为，如绑定，非绑定，隐式参数等规则，类方法调用使用类本身作为隐含参数</p>
 <p>在继承中，调用父类的类方法的时候，隐形传入的参数是对象所对应的类。</p>
 <p>静态方法相当于定义在类里面的函数，当该方法既不跟特定的实例相关也不跟特定的类相关，可以定义为静态方法，较之外部函数，可以有效的将代码组织起来。</p>
@@ -257,7 +212,7 @@ var _hmt = _hmt || [];
 
 <div class="next">
 <a href="/2016/11/23/数据结构与算法/"  title="数据结构与算法">
- <strong>舊一篇:</strong><br/> 
+ <strong>旧一篇:</strong><br/> 
  <span>数据结构与算法
 </span>
 </a>

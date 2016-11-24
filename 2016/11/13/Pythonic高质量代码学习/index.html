@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -82,7 +82,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -105,43 +105,25 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#变量交换"><span class="toc-number">1.</span> <span class="toc-text">变量交换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安全地关闭文件描述符"><span class="toc-number">2.</span> <span class="toc-text">安全地关闭文件描述符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#序列反向"><span class="toc-number">3.</span> <span class="toc-text">序列反向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符串格式化"><span class="toc-number">4.</span> <span class="toc-text">字符串格式化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#规范"><span class="toc-number">5.</span> <span class="toc-text">规范</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PEP8"><span class="toc-number">6.</span> <span class="toc-text">PEP8</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装一个自动排版称为PEP风格的小工具"><span class="toc-number">7.</span> <span class="toc-text">安装一个自动排版称为PEP风格的小工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三元操作符"><span class="toc-number">8.</span> <span class="toc-text">三元操作符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注释"><span class="toc-number">9.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加空行使得代码布局更加优雅，合理"><span class="toc-number">10.</span> <span class="toc-text">添加空行使得代码布局更加优雅，合理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编写函数的原则"><span class="toc-number">11.</span> <span class="toc-text">编写函数的原则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常量"><span class="toc-number">12.</span> <span class="toc-text">常量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#assert发现问题"><span class="toc-number">13.</span> <span class="toc-text">assert发现问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据交换值"><span class="toc-number">14.</span> <span class="toc-text">数据交换值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#延迟计算"><span class="toc-number">15.</span> <span class="toc-text">延迟计算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#枚举"><span class="toc-number">16.</span> <span class="toc-text">枚举</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类型检查"><span class="toc-number">17.</span> <span class="toc-text">类型检查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#尽量转换成浮点类型再做除法"><span class="toc-number">18.</span> <span class="toc-text">尽量转换成浮点类型再做除法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#eval"><span class="toc-number">19.</span> <span class="toc-text">eval</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获取序列迭代的索引和值"><span class="toc-number">20.</span> <span class="toc-text">获取序列迭代的索引和值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#is与"><span class="toc-number">21.</span> <span class="toc-text">is与==</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字符编码"><span class="toc-number">22.</span> <span class="toc-text">字符编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#构建合理的包层次来管理module"><span class="toc-number">23.</span> <span class="toc-text">构建合理的包层次来管理module</span></a></li></ol>
 		</div>
 		
 		<p>Python之禅，编写高质量代码，改善Python程序的91个建议的学习笔记～<a id="more"></a></p>
 <blockquote>
 <p>写更加Pythonic的代码，比如空格，注释，空行这样合适的代码风格，以及更加Python味</p>
 </blockquote>
-<ul>
-<li>变量交换</li>
-</ul>
-<p><code>a, b = b, a</code></p>
-<ul>
-<li>安全地关闭文件描述符</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">with open(path, &apos;r&apos;) as f:</div><div class="line">	do_sth_with(f)</div></pre></td></tr></table></figure>
-<ul>
-<li>序列反向</li>
-</ul>
-<p><code>print(a[::-1])</code> or <code>print list(reversed(a)))</code></p>
-<ul>
-<li>字符串格式化</li>
-</ul>
-<p><code>print(&#39;Hello %(name)s!&#39; % {&#39;name&#39;: &#39;Tom&#39;})</code></p>
+<h2 id="变量交换"><a href="#变量交换" class="headerlink" title="变量交换"></a>变量交换</h2><p><code>a, b = b, a</code></p>
+<h2 id="安全地关闭文件描述符"><a href="#安全地关闭文件描述符" class="headerlink" title="安全地关闭文件描述符"></a>安全地关闭文件描述符</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">with open(path, &apos;r&apos;) as f:</div><div class="line">	do_sth_with(f)</div></pre></td></tr></table></figure>
+<h2 id="序列反向"><a href="#序列反向" class="headerlink" title="序列反向"></a>序列反向</h2><p><code>print(a[::-1])</code> or <code>print list(reversed(a)))</code></p>
+<h2 id="字符串格式化"><a href="#字符串格式化" class="headerlink" title="字符串格式化"></a>字符串格式化</h2><p><code>print(&#39;Hello %(name)s!&#39; % {&#39;name&#39;: &#39;Tom&#39;})</code></p>
 <p>使用字典进行格式化，占位符是键名</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">value = &#123;&apos;greet&apos;: &apos;Hello world&apos;, &apos;language&apos;: &apos;Python&apos;&#125;</div><div class="line">print(&apos;%(greet)s from %(language)s&apos; % value)</div></pre></td></tr></table></figure>
 <p>使用str.format()方法</p>
 <p><code>print(&#39;{greet} from {language}.&#39;.format(greet = &#39;Hello world&#39;, language = &#39;Python&#39;))</code></p>
 <p>最为Pythonic的字符串格式方法</p>
-<ul>
-<li>规范</li>
-</ul>
-<p>包和模块的命名采用小写，单数形式，短小，包通常仅作为命名空间，如只包含<code>__init__.py</code>文件</p>
+<h2 id="规范"><a href="#规范" class="headerlink" title="规范"></a>规范</h2><p>包和模块的命名采用小写，单数形式，短小，包通常仅作为命名空间，如只包含<code>__init__.py</code>文件</p>
 <p>尽量使用下划线法命名变量名</p>
-<ul>
-<li>PEP8</li>
-</ul>
-<p>编码风格指南，提出保持代码一致性的细节要求，包括了对代码布局，注释，命名规范等方面的要求</p>
+<h2 id="PEP8"><a href="#PEP8" class="headerlink" title="PEP8"></a>PEP8</h2><p>编码风格指南，提出保持代码一致性的细节要求，包括了对代码布局，注释，命名规范等方面的要求</p>
 <p>风格检查程序PEP8</p>
 <pre><code>空格比制表符更受推荐
 逻辑之间使用空行
@@ -149,10 +131,7 @@ var _hmt = _hmt || [];
 导入之后有两行
 列表有多项，使用多行表示
 不要混用tab键和空格
-</code></pre><ul>
-<li>安装一个自动排版称为PEP风格的小工具</li>
-</ul>
-<ol>
+</code></pre><h2 id="安装一个自动排版称为PEP风格的小工具"><a href="#安装一个自动排版称为PEP风格的小工具" class="headerlink" title="安装一个自动排版称为PEP风格的小工具"></a>安装一个自动排版称为PEP风格的小工具</h2><ol>
 <li><code>pip install autopep8 --user -U</code></li>
 <li>Pycharm→File→settings→Tools→Extends Tools→添加</li>
 <li>Name: Autopep8</li>
@@ -161,119 +140,71 @@ var _hmt = _hmt || [];
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Programs：autopep8 （前提是你已经安装了哦）</div><div class="line">Parameters:--in-place --aggressive --aggressive $FilePath$</div><div class="line">Working directory:$ProjectFileDir$</div></pre></td></tr></table></figure>
 <p>Output Filters→添加，在对话框中的：Regular expression to match output中输入:<code>$FILE_PATH$\:$LINE$\:$COLUMN$\:.*</code></p>
 <p>在程序中选中代码，右键 <code>extends Tools-&gt;autopep8</code></p>
-<ul>
-<li>三元操作符</li>
-</ul>
-<p><code>print X if X &lt; Y else Y</code></p>
-<ul>
-<li>注释</li>
-</ul>
-<p>块注释，行注释，文档注释</p>
+<h2 id="三元操作符"><a href="#三元操作符" class="headerlink" title="三元操作符"></a>三元操作符</h2><p><code>print X if X &lt; Y else Y</code></p>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><p>块注释，行注释，文档注释</p>
 <p>注释和代码隔开一定的距离，同时块注释之后最好多留几行空白再写代码</p>
 <p>给外部可访问的函数和方法添加文档注释，描述方法的功能，并对参数，返回值以及可能发生的异常进行说明</p>
-<ul>
-<li>添加空行使得代码布局更加优雅，合理</li>
-</ul>
-<p>在一组代码表达完一个完整的思路之后，应该用空白行进行间隔</p>
+<h2 id="添加空行使得代码布局更加优雅，合理"><a href="#添加空行使得代码布局更加优雅，合理" class="headerlink" title="添加空行使得代码布局更加优雅，合理"></a>添加空行使得代码布局更加优雅，合理</h2><p>在一组代码表达完一个完整的思路之后，应该用空白行进行间隔</p>
 <pre><code>二元运算符左右两边需要空格
 逗号和分号之前不需要空格
 函数的默认参数两侧不需要空格
 强调前面的操作符时候使用空格
 函数名和左括号之间，序列索引操作时候序列名和[]之间不需要空格
-</code></pre><ul>
-<li><p>编写函数的原则</p>
-<pre><code>设计尽量短小，嵌套层次不要过深
+</code></pre><h2 id="编写函数的原则"><a href="#编写函数的原则" class="headerlink" title="编写函数的原则"></a>编写函数的原则</h2><pre><code>设计尽量短小，嵌套层次不要过深
 函数申明应该合理，参数不要过多
 参数设计应该向下兼容
 一个函数只做一件事，有利于代码的复用
-</code></pre></li>
-<li><p>常量</p>
-</li>
-</ul>
-<p>通过自定义类来实现常量功能</p>
+</code></pre><h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><p>通过自定义类来实现常量功能</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">class _const:</div><div class="line">	class ConstError(TypeError): pass</div><div class="line">	class ConstCaseError(ConstError): pass</div><div class="line">	</div><div class="line">	def __setattr__(self, name, value):</div><div class="line">		if self.__dict__.has_key(name):</div><div class="line">			raise self.ConstError, &quot;can&apos;t change const.%s&quot; % name</div><div class="line">		if not name.isupper():</div><div class="line">			raise self.ConstCaseError, &apos;const name &quot;%s&quot; is not all uppercase&quot; % name</div><div class="line">		self.__dict__[name] = value</div></pre></td></tr></table></figure>
 <p>在Python的内建命名空间支持一部分常量如True，最好把常量集中到一个文件中。然后在其他模块中引用常量的时候这样<code>from constant import const</code></p>
 <p>模块名字也是一个常量对象</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">import sys</div><div class="line">sys.modules[__name__] = _const()</div></pre></td></tr></table></figure>
-<ul>
-<li>assert发现问题</li>
-</ul>
-<p>Python3中，assert语法是这样的<code>assert(x==y, &quot;not equal&quot;)</code></p>
+<h2 id="assert发现问题"><a href="#assert发现问题" class="headerlink" title="assert发现问题"></a>assert发现问题</h2><p>Python3中，assert语法是这样的<code>assert(x==y, &quot;not equal&quot;)</code></p>
 <pre><code>在函数调用后，当需要确认返回值是否合理的时候可以使用断言
 当条件是业务逻辑继续下去的先决条件时候可以使用断言
 </code></pre><p>可以在自己的代码中，尝试使用下断言</p>
-<ul>
-<li>数据交换值</li>
-</ul>
-<p><code>x, y = y, x</code></p>
+<h2 id="数据交换值"><a href="#数据交换值" class="headerlink" title="数据交换值"></a>数据交换值</h2><p><code>x, y = y, x</code></p>
 <p>一般情况下Python表达式的计算顺序是从左到右，但是表达式赋值的时候表达式右边的操作数先于左边的操作数计算</p>
 <p>所以先计算右边表达式y，x，现在内存中创建元组，然后计算表达式左边，使用解压缩</p>
-<ul>
-<li>延迟计算</li>
-</ul>
-<p>在需要执行的时候才计算表达式的值</p>
+<h2 id="延迟计算"><a href="#延迟计算" class="headerlink" title="延迟计算"></a>延迟计算</h2><p>在需要执行的时候才计算表达式的值</p>
 <p><code>if x and y</code> or <code>if x or y</code> or表达式为真的尽量在前面，and的话false尽量在前面</p>
 <p>比如查看是不是缩写，先去判断最后一个字符是不是点，然后再看集合中有没有值</p>
 <p><code>if w[-1] == &#39;.&#39; and w in abbreviations:
     pass</code></p>
 <p>生成器表达式，每次需要计算的时候才通过yield产生所需要的元素</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def fib():</div><div class="line">    a, b = 0, 1</div><div class="line">    while True:</div><div class="line">        yield a</div><div class="line">        a, b = b, a + b</div></pre></td></tr></table></figure>
-<ul>
-<li>枚举</li>
-</ul>
-<p>使用collections.namedtuple</p>
+<h2 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h2><p>使用collections.namedtuple</p>
 <p>使用元组名，和一个字符串元组来创建，_make通过list来创建一个对象</p>
 <p><code>Seasons = namedtuple(&#39;Seasons&#39;, (&#39;Spring&#39;, &#39;Summer&#39;, &#39;Autumn&#39;, &#39;Winter&#39;))._make(range(4))</code></p>
 <p>或者使用空格分开的字符串来创建namedtuple</p>
 <p><code>Seasons = namedtuple(&#39;Seasons&#39;, &#39;Spring Summer Autumn Winter&#39;)._make(range(4))</code></p>
 <p><code>print Seasons.Spring</code></p>
-<ul>
-<li>类型检查</li>
-</ul>
-<p>不刻意进行类型检查，而是在出错的情况下通过抛出异常来进行处理</p>
+<h2 id="类型检查"><a href="#类型检查" class="headerlink" title="类型检查"></a>类型检查</h2><p>不刻意进行类型检查，而是在出错的情况下通过抛出异常来进行处理</p>
 <p>基于内建类型扩展的用户自定义类型，type函数不能准确返回结果</p>
 <p>在古典类中，所有类的实例的type值都相等</p>
 <p>约束用户的输入类型从而使之与期望的类型一致，使用类型对应的工厂函数，使用工厂函数对类型进行转换，否则可以使用isinstance()函数检测</p>
 <blockquote>
 <p>工厂函数看上去有点像函数，实质上是类，当调用时候，实际上是生成了该类型的一个实例，就像工厂生产货物一样</p>
 </blockquote>
-<ul>
-<li>尽量转换成浮点类型再做除法</li>
-</ul>
-<p>Python3中/为浮点除法, <code>96 / 100 == 0.96</code>，//是整数除法</p>
-<ul>
-<li>eval</li>
-</ul>
-<p><code>eval(&quot;1+1==2&quot;)</code></p>
+<h2 id="尽量转换成浮点类型再做除法"><a href="#尽量转换成浮点类型再做除法" class="headerlink" title="尽量转换成浮点类型再做除法"></a>尽量转换成浮点类型再做除法</h2><p>Python3中/为浮点除法, <code>96 / 100 == 0.96</code>，//是整数除法</p>
+<h2 id="eval"><a href="#eval" class="headerlink" title="eval"></a>eval</h2><p><code>eval(&quot;1+1==2&quot;)</code></p>
 <p>eval函数将字符串str当成有效的表达式来求值并且返回计算结果，传入的globals参数的字典中缺少<code>__builtins__</code>时候，当前的全局命名空间将作为globals参数输入并且在表达式计算之前被解析，locals参数默认与globals相同，如果两者都省略的话，表达式将在eval调用的环境中进行</p>
 <p>安全漏洞 <code>eval(&quot;__import__(&quot;os&quot;).system(&quot;dir&quot;)</code></p>
 <p>使用os模块的system函数执行一些系统命令</p>
-<ul>
-<li>获取序列迭代的索引和值</li>
-</ul>
-<p>zip()函数，将索引和值zip到一起</p>
+<h2 id="获取序列迭代的索引和值"><a href="#获取序列迭代的索引和值" class="headerlink" title="获取序列迭代的索引和值"></a>获取序列迭代的索引和值</h2><p>zip()函数，将索引和值zip到一起</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">li = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;]</div><div class="line">for i, e in zip(range(len(li)), li):</div><div class="line">	print(&quot;index:&quot;, i, &quot;element:&quot;, e)</div></pre></td></tr></table></figure>
 <p>enumerate()函数，仅在需要的时候才会产生一个(index, item)对</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">for i, e in enumerate(li):</div><div class="line">	print(&quot;index:&quot;, i, &quot;element:&quot;, e)</div></pre></td></tr></table></figure>
 <p>对于迭代器，使用next()方法获取下一个迭代元素</p>
 <p>而csv模块的reader方法产生的对象，必须使用next()函数才可以</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">reader = csv.reader(file)</div><div class="line"># 去掉header</div><div class="line">header = next(reader)</div></pre></td></tr></table></figure>
-<ul>
-<li>is与==</li>
-</ul>
-<p>id()函数来查看变量在内存中具体的存储空间</p>
+<h2 id="is与"><a href="#is与" class="headerlink" title="is与=="></a>is与==</h2><p>id()函数来查看变量在内存中具体的存储空间</p>
 <p>is表示的是对象标志符，用来检查对象的标志符是否一致，比较两个对象在内存中是否拥有同一块内存空间,<code>id(x) == id(y)</code>。==表示的是相等，检验两个对象的值是否相等。</p>
 <p>另外Python中有字符串驻留机制，较小的字符串，为了提高性能会保留其值的一个副本，创建新的字符串的时候直接指向该副本。但是长字符串，Python内存就各自创建了对象来表示a1和b1，所以两个对象拥有相同的内容，但是对象标志符不相同，is为False但是==为True</p>
-<ul>
-<li>字符编码</li>
-</ul>
-<p>使用<code>decode(&#39;utf-8&#39;)</code>解码，然后再进行编码<code>encode(&#39;gbk&#39;)</code>，decode是将其它编码对应的字符串解码成Unicode，encode方法将Unicode编码转换成为另一种编码，Unicode作为转换过程中的中间编码</p>
+<h2 id="字符编码"><a href="#字符编码" class="headerlink" title="字符编码"></a>字符编码</h2><p>使用<code>decode(&#39;utf-8&#39;)</code>解码，然后再进行编码<code>encode(&#39;gbk&#39;)</code>，decode是将其它编码对应的字符串解码成Unicode，encode方法将Unicode编码转换成为另一种编码，Unicode作为转换过程中的中间编码</p>
 <p>python3中默认的编码是utf-8,<code>sys.getdefaultencoding()-&gt;utf-8</code>,可以在源文件中进行编码说明</p>
 <p><code># coding=utf-8</code> or <code>-*- coding: utf-8 -*-</code></p>
-<ul>
-<li>构建合理的包层次来管理module</li>
-</ul>
-<p>包下面必须有一个<code>__init__.py</code>，使包和普通股目录区分，另外这个文件可以控制模块的导入，会执行<code>__init__.py</code>，可以在该文件中定义<code>__all__</code>变量，控制需要导入的包或者模块，<code>__all__ = [&#39;Module&#39;, &#39;Module2&#39;, &#39;Subpackage&#39;]</code></p>
+<h2 id="构建合理的包层次来管理module"><a href="#构建合理的包层次来管理module" class="headerlink" title="构建合理的包层次来管理module"></a>构建合理的包层次来管理module</h2><p>包下面必须有一个<code>__init__.py</code>，使包和普通股目录区分，另外这个文件可以控制模块的导入，会执行<code>__init__.py</code>，可以在该文件中定义<code>__all__</code>变量，控制需要导入的包或者模块，<code>__all__ = [&#39;Module&#39;, &#39;Module2&#39;, &#39;Subpackage&#39;]</code></p>
 <p>将关系密切的模块组织成一个包，使得项目结构更加完善和合理，增强代码的可维护性和实用性</p>
 <p>包，包涵一个或者一系列的Python文件的文件夹，作用是合理组织代码，便于维护和使用，并避免命名冲突</p>
   
@@ -314,9 +245,9 @@ var _hmt = _hmt || [];
 
 
 <div class="next">
-<a href="/2016/11/12/Pandas使用笔记/"  title="Pandas使用笔记">
- <strong>舊一篇:</strong><br/> 
- <span>Pandas使用笔记
+<a href="/2016/11/11/北京的第12天/"  title="北京的第12天">
+ <strong>旧一篇:</strong><br/> 
+ <span>北京的第12天
 </span>
 </a>
 </div>
