@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Python总结 | Kevin&#39;s Blog</title>
+    <title>DA-检验心理学现象 | Kevin&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="看代码遇到不知道的Python用法的总结.">
+    <meta name="description" content="Data Analysis - P1: 检验心理学现象">
     
     
     
@@ -94,10 +94,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/10/30/python总结/" title="Python总结" itemprop="url">Python总结</a>
+      <a href="/2016/11/27/DA-检验心理学现象/" title="DA-检验心理学现象" itemprop="url">DA-检验心理学现象</a>
   </h1>
   <p class="article-time">
-    <time datetime="2016-10-30T13:48:51.000Z" itemprop="datePublished">Oct 30 2016</time>
+    <time datetime="2016-11-27T05:51:21.000Z" itemprop="datePublished">Nov 27 2016</time>
   </p>
 </header>
 	<div class="article-content">
@@ -105,77 +105,71 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#英文"><span class="toc-number">1.</span> <span class="toc-text">英文</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Preview"><span class="toc-number">2.</span> <span class="toc-text">Preview</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#相信结果"><span class="toc-number">3.</span> <span class="toc-text">相信结果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#operational-definition"><span class="toc-number">4.</span> <span class="toc-text">operational definition</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#contructs"><span class="toc-number">5.</span> <span class="toc-text">contructs</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Data"><span class="toc-number">6.</span> <span class="toc-text">Data</span></a></li></ol>
 		</div>
 		
-		<p>看代码遇到不知道的Python用法的总结.<a id="more"></a></p>
+		<p>Data Analysis - P1: 检验心理学现象<a id="more"></a></p>
+<h1 id="英文"><a href="#英文" class="headerlink" title="英文"></a>英文</h1><ol>
+<li>validity 有效性 </li>
+<li>retrieve 检索</li>
+<li>contruct 抽象概念</li>
+<li>tummy 肚子</li>
+<li>grumble 抱怨</li>
+<li>deficient 不足的</li>
+<li>ponder 考虑，沉思</li>
+<li>cortisol 皮质醇</li>
+<li>hormone 激素</li>
+<li>profanity 亵渎</li>
+<li>obesity 肥胖</li>
+<li>Body mass index 身体质量指数</li>
+<li>plausible 貌似可信的</li>
+<li>hunch 预感</li>
+<li>hypothesis 假设</li>
+<li>extraneous 外来的，没有关联的</li>
+<li>lurk 潜伏</li>
+<li>ambush 埋伏</li>
+<li>denote 表示</li>
+<li>melody 旋律</li>
+<li>interval 间隔</li>
+</ol>
+<h1 id="Preview"><a href="#Preview" class="headerlink" title="Preview"></a>Preview</h1><p>describe and analyze data</p>
+<h1 id="相信结果"><a href="#相信结果" class="headerlink" title="相信结果"></a>相信结果</h1><p>what information would help you trust these survey results?</p>
 <ul>
-<li><code>complie()</code></li>
+<li>how many people I surveyed</li>
+<li>who I surveyed</li>
+<li>how the survey was conducted</li>
 </ul>
-<p>将source编译为代码，参数为<code>source filename mode</code>，其中mode:<code>exec</code>执行一系列的语句，<code>eval</code>执行一句，<code>single</code>执行单一交互式语句，如<code>print &quot;hello&quot;</code></p>
-<p><code>code = compile(file.read(),filepath,&#39;exec&#39;)</code></p>
-<ul>
-<li><code>exec(code,global_vars,local_vars)</code></li>
-</ul>
-<p>执行存储在字符串或者文件里面的Python语句，执行代码，并且声明全局命名空间和局部命名空间</p>
-<ul>
-<li><code>os.environ.get(&quot;STRA_ROOT&quot;,os.path.join(os.getcwd(),&quot;../..&quot;))</code></li>
-</ul>
-<p>获取环境变量，如果环境变量为空，那么返回第二个参数给的默认值</p>
-<p><code>os.path.join</code> 连接两个字符串作为path</p>
-<p><code>os.getcwd()</code> 获取当前工作目录</p>
-<ul>
-<li><code>os.path.normpath(os.path.abspath(root))</code></li>
-</ul>
-<p>首先将所输入的路径转换为绝对路径，然后根据系统环境进行规范化路径</p>
-<ul>
-<li><code>map(lambda x:os.path.join(*x),itertools.product(*paths))</code></li>
-</ul>
-<p>itertools.product 表示一个item1，item2等中的项目的笛卡尔积的元组，排列组合</p>
-<p>其中<code>*x</code>表示可选数目的参数集合,所以x就是包含所有参数的一个元组，然后将这些元组join起来变成一个路径</p>
-<ul>
-<li><code>logging.debug(&quot;load config from [%s]&quot;,cfile)</code></li>
-</ul>
-<p>后面第二个参数文档里是这样写的 args are the arguments which are merged into msg using the string formatting operator</p>
-<ul>
-<li><code>&quot;{:03d}&quot;.format(uid % 100)</code></li>
-</ul>
-<p>使用{}形式进行格式化字符串，:表示格式化字符开始，03d表示将数字类型的格式为字符串3位，多处的空用0补齐。</p>
-<p><code>os.path.join(data_root, l1, l2, &quot;{}-{}.{}&quot;.format(kind, uid, ext))</code>每一个大括号格式化一个变量</p>
-<ul>
-<li>csv模块的使用</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">file = open(path)</div><div class="line">reader = csv.reader(file)</div><div class="line">for row in reader:</div><div class="line">    # row是一个列表，每一项为一个列</div><div class="line">    print(row[0])</div><div class="line"># csv写入方法，writerow接受一个列表，作为csv的每一个列元素</div><div class="line">w = csv.writer(file)</div><div class="line">w.writerow(someList)</div></pre></td></tr></table></figure>
-<ul>
-<li>datetime变量的使用</li>
-</ul>
-<p>date是datetime变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># 将date变量转换为字符串，方法</div><div class="line">date.strftime(&quot;%Y%m%d&quot;)</div><div class="line"># 将字符串转换为datetime变量，函数</div><div class="line">datetime.datetime.strptime(timeString,&quot;%Y%m%d&quot;)</div><div class="line"># timedelta对象</div><div class="line">from datetime import timedelta</div><div class="line">day = timedelta(days=1)</div></pre></td></tr></table></figure>
-<ul>
-<li>字典的一些操作</li>
-</ul>
-<p><code>self._states.get(date,{}).get(&#39;stkasset&#39;,{})</code>也就是date键存在，则获取数据，否则返回空字典</p>
-<p><code>stks = stkasset.setdefault(symbol, [])</code>,setdefault方法就是获取键值，如果没有得到，那么将添加该键，并且设置默认值</p>
+<p>they all influence the validity of our results. Three important factors.</p>
+<p>BBC face test</p>
+<h1 id="operational-definition"><a href="#operational-definition" class="headerlink" title="operational definition"></a>operational definition</h1><p>the operational definition of a googd memeory is when the percentage of faces correctly recognized and placed is higher. So we can define and measure constructs.</p>
+<h1 id="contructs"><a href="#contructs" class="headerlink" title="contructs"></a>contructs</h1><p>age: If I had put age in years, I would have defined age as number of years you’ve been living but some people might look at age as how mature you are. maturity, age in years, wisdom.</p>
+<h1 id="Data"><a href="#Data" class="headerlink" title="Data"></a>Data</h1><p>when more factors are held constant, the test is more reliable because these condition are the same for all people that took the test.</p>
+<p>sampling error, so have a good sample will better predict the population parameter.</p>
+<p><strong>x</strong>: independent variable or the predictor variable</p>
+<p><strong>y</strong>: dependent variable or the outcome</p>
+<p><strong><em>correlation does not prove causation</em></strong></p>
+<p>The Lexus and Olive Tree</p>
+<p>Golden arches theory of confict prevention</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python/">Python</a><a href="/tags/工作总结/">工作总结</a>
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/计算机科学/">计算机科学</a><a href="/tags/英文/">英文</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/Python/">Python</a>
+  <a class="article-category-link" href="/categories/数据分析/">数据分析</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2016/10/30/python总结/" data-title="Python总结 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2016/11/27/DA-检验心理学现象/" data-title="DA-检验心理学现象 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -184,19 +178,11 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/10/31/北京的第一天/" title="北京的第一天">
-  <strong>新一篇:</strong><br/>
-  <span>
-  北京的第一天</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/10/30/hello-world/"  title="Hello World">
+<a href="/2016/11/27/Data-Analysis-Project/"  title="Data Analysis Project">
  <strong>舊一篇:</strong><br/> 
- <span>Hello World
+ <span>Data Analysis Project
 </span>
 </a>
 </div>
@@ -206,7 +192,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="Python总结" data-thread-key="python总结" data-author-key="Kevin" data-url="http://microndgt.github.io/post/python总结"></div>
+	<div class="ds-thread" data-title="DA-检验心理学现象" data-thread-key="DA-检验心理学现象" data-author-key="Kevin" data-url="http://microndgt.github.io/post/DA-检验心理学现象"></div>
 	
 </section>
 
