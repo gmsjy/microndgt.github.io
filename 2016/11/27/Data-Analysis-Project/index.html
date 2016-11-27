@@ -1,0 +1,527 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Data Analysis Project | Kevin&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Kevin">
+    
+    <meta name="description" content="英文
+hone 想念，磨刀石
+wrangle 争论
+fraud 欺骗，骗子
+infamous 无耻的
+Enron 安然公司
+untangle 清理，整顿
+hurdle 障碍
+nano 纳，毫微
+specification 规格
+grapple 抓住
+authentic 真正的
+chunk 大块
+de">
+    
+    
+    
+    
+    <link rel="alternative" href="/Tinnypp/atom.xml" title="Kevin&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/myLogo.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/myLogo.png">
+    
+
+  
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
+				<h2 class="blog-motto">编程,生活,成长</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+						<li><a href="/Plan">计划</a></li>
+					
+						<li><a href="/dayPlan">每日</a></li>
+					
+					<li>
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="st-search-inpu" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/11/27/Data-Analysis-Project/" title="Data Analysis Project" itemprop="url">Data Analysis Project</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2016-11-27T01:25:30.000Z" itemprop="datePublished">Nov 27 2016</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#英文"><span class="toc-number">1.</span> <span class="toc-text">英文</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#preparation"><span class="toc-number">2.</span> <span class="toc-text">preparation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#湾区单车共享分析"><span class="toc-number">3.</span> <span class="toc-text">湾区单车共享分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">3.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用可视化交流数据发现"><span class="toc-number">3.2.</span> <span class="toc-text">使用可视化交流数据发现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据整理"><span class="toc-number">3.3.</span> <span class="toc-text">数据整理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#精简行程数据"><span class="toc-number">3.4.</span> <span class="toc-text">精简行程数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#探索性数据分析"><span class="toc-number">3.5.</span> <span class="toc-text">探索性数据分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自己执行分析"><span class="toc-number">3.6.</span> <span class="toc-text">自己执行分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#现在轮到你自己使用-usage-stats-和-usage-plot-探索新数据集，并报告你的发现了！下面是如何使用-usage-plot-函数的一些提示："><span class="toc-number">3.6.0.1.</span> <span class="toc-text">现在轮到你自己使用 usage_stats() 和 usage_plot() 探索新数据集，并报告你的发现了！下面是如何使用 usage_plot() 函数的一些提示：</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结论"><span class="toc-number">3.7.</span> <span class="toc-text">结论</span></a></li></ol></li></ol>
+		</div>
+		
+		<h1 id="英文"><a href="#英文" class="headerlink" title="英文"></a>英文</h1><ol>
+<li>hone 想念，磨刀石</li>
+<li>wrangle 争论</li>
+<li>fraud 欺骗，骗子</li>
+<li>infamous 无耻的</li>
+<li>Enron 安然公司</li>
+<li>untangle 清理，整顿</li>
+<li>hurdle 障碍</li>
+<li>nano 纳，毫微</li>
+<li>specification 规格</li>
+<li>grapple 抓住</li>
+<li>authentic 真正的</li>
+<li>chunk 大块</li>
+<li>dedication 奉献</li>
+<li>slot 位置</li>
+<li>relentless 无情的，残酷的</li>
+<li>dock 码头</li>
+</ol>
+<h1 id="preparation"><a href="#preparation" class="headerlink" title="preparation"></a>preparation</h1><ol>
+<li>stick to my schedule</li>
+<li>be relentless in searching for an answer on my own</li>
+<li>help other students</li>
+</ol>
+<h1 id="湾区单车共享分析"><a href="#湾区单车共享分析" class="headerlink" title="湾区单车共享分析"></a>湾区单车共享分析</h1><p>数据分析两个重要部分：</p>
+<ul>
+<li>数据整理</li>
+<li>探索性数据分析</li>
+</ul>
+<p>处理大量数据的时候，最好先从数据样本开始</p>
+<p><strong>取到1个月的数据子集</strong>，观察数据集的结构，pandas,<code>display(df)</code></p>
+<p><code>%w</code>为星期，weekday</p>
+<p>说明：<a href="https://github.com/udacity/data-analyst/tree/master/projects/bike_sharing" target="_blank" rel="external">点此查看此文档的英文版本</a><br>。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><blockquote>
+<p><strong>提示</strong>：诸如此类的引用部分可以为如何导航和使用 iPython notebook 提供有用说明。</p>
+</blockquote>
+<p>湾区单车共享系统（<a href="http://www.bayareabikeshare.com/" target="_blank" rel="external">Bay Area Bike Share</a>）是一家为旧金山、雷德伍德城、帕罗奥多、芒廷维尤和圣荷西的客户提供按需单车租赁的公司。使用者可在每个城市的各种车站解锁单车，然后在同城内的任何一个车站还车。使用者可通过按年订购或购买 3 日或 24 小时通票来付费。使用者的出行次数无限制，三十分钟内的行程不收取额外费用；更长行程将产生超时费。</p>
+<p>在此项目中，你将以一名数据分析师的身份执行数据的探索性分析。你将了解数据分析过程的两个重要部分：数据整理和探索性数据分析。但是在你开始查看数据前，先思考几个你需要理解的关于单车共享数据的问题，例如，如果你在 Bay Area Bike Share 工作，你会想要获得什么类型的信息来做出更明智的业务决策？或者你可以思考你是否会成为单车共享服务的使用者。哪些因素可能会影响你使用此服务的方式？</p>
+<p><strong>问题 1</strong>：至少写下两个你认为可以用数据来回答的问题。</p>
+<p><strong>答案</strong>：单车最常使用的时间段和最常使用的起始站</p>
+<blockquote>
+<p><strong>提示</strong>：如果你双击此单元格，你会看到文本发生变化，所有样式均被清除。这将允许你编辑此文本块。此文本块使用 <a href="http://daringfireball.net/projects/markdown/syntax" target="_blank" rel="external">Markdown</a> 编写，这是一种使用标题、链接、斜体和许多其他选项为文本添加样式的方式。你将在之后的纳米学位课程中了解关于 Markdown 的更多信息。按 shift + Enter 或 Shift + Return 预览此单元格。</p>
+</blockquote>
+<h2 id="使用可视化交流数据发现"><a href="#使用可视化交流数据发现" class="headerlink" title="使用可视化交流数据发现"></a>使用可视化交流数据发现</h2><p>作为一名数据分析师，有效交流发现结果的能力是这项工作的重要部分。毕竟，你的分析能力再高也得通过好的交流能力去传达。</p>
+<p>在 2014 年，Bay Area Bike Share 举行了一项<a href="http://www.bayareabikeshare.com/datachallenge-2014" target="_blank" rel="external">开放数据挑战</a>，以鼓励数据分析师基于他们的开放数据集创建可视化。你将在这个项目中创建自己的可视化，但是首先，请阅读来自 Tyler Field 的<a href="http://thfield.github.io/babs/index.html" target="_blank" rel="external">最佳分析提交得主</a>。通读整个报告并回答以下问题：</p>
+<p><strong>问题 2</strong>：在你看来，哪种可视化可提供最有趣的见解？你是否能根据 Tyler 的分析回答你在之前提出的任何问题？能或不能的原因是什么？</p>
+<p><strong>答案</strong>：heatmap。可以通过数据来得出用户使用最多的时间段是周内的早8点和晚5点，也可以通过heatmap来确定单车共享发生最多的起始和终点站。</p>
+<h2 id="数据整理"><a href="#数据整理" class="headerlink" title="数据整理"></a>数据整理</h2><p>现在是时候由你自己来探索数据了。Bay Area Bike Share 的<a href="http://www.bayareabikeshare.com/open-data" target="_blank" rel="external">开放数据</a>页中第 1 年和第 2 年的数据已提供在项目资料中；你无需下载任何其他信息。此数据由三个部分组成：第 1 年上半年（从 <code>201402</code> 开始的文件），第 1 年下半年（从 <code>201408</code> 开始的文件），以及第 2 年全年（从 <code>201508</code> 开始的文件）。每个部分关联三个主要数据文件：行程数据（展示系统中每个行程的信息）（<code>*_trip_data.csv</code>），系统中车站的信息（<code>*_station_data.csv</code>），及系统中每个城市的每日天气数据（<code>*_weather_data.csv</code>）。</p>
+<p>在处理大量数据时，最好先从数据样本开始。这样更容易检查我们的数据整理步骤是否有效，因为我们完成代码所需的时间将更少。如果我们对整个过程的进展较为满意，那就可以着手整理整个数据集啦。</p>
+<p>因为大量的数据包含在行程信息中，我们的目标应该为取行程数据的子集来进行测试。首先我们仅看看第 1 个月的单车行程数据，从 2013 年 8 月 29 日到 2013 年 9 月 30 日。下面的代码会取第一年上半年的数据，然后将第一个月的数据值写在输出文件上。此代码利用了数据按日期排序的事实（尽管需要指出的是，前两天是按行程时间而非按年月顺序排序）。</p>
+<p>首先，运行下方第一个代码单元格来加载你将在分析中使用的所有数据包和函数。然后，运行第二个代码单元格以读取第一个行程数据文件的子集，然后编写一个新文件，其中仅包含我们初步感兴趣的子集。</p>
+<blockquote>
+<p><strong>提示</strong>：你可以像格式化 Markdown 单元格那样点击单元格然后使用键盘快捷键 <strong>Shift + Enter</strong> 或 <strong>Shift + Return</strong>，来运行代码单元格。或者，也可以在选中代码单元格后点击工具栏上的 Play 按钮执行它。单元格运行时，你会在单元格左侧的消息中看到一个星号，即 <code>In [*]:</code>。在执行完成时，星号将变为一个数字，例如 <code>In [1]</code>。如果有输出，将显示 <code>Out [1]:</code>，用适当的数字来匹配“In”的数字。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 导入所有需要的包盒函数</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> csv</div><div class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</div><div class="line"><span class="keyword">from</span> babs_datacheck <span class="keyword">import</span> question_3</div><div class="line"><span class="keyword">from</span> babs_visualizations <span class="keyword">import</span> usage_stats, usage_plot</div><div class="line"><span class="keyword">from</span> IPython.display <span class="keyword">import</span> display</div><div class="line">%matplotlib inline</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 文档地址</span></div><div class="line"></div><div class="line">file_in  = <span class="string">'201402_trip_data.csv'</span></div><div class="line">file_out = <span class="string">'201309_trip_data.csv'</span></div><div class="line"></div><div class="line"><span class="keyword">with</span> open(file_out, <span class="string">'w'</span>) <span class="keyword">as</span> f_out, open(file_in, <span class="string">'r'</span>) <span class="keyword">as</span> f_in:</div><div class="line">    <span class="comment"># 设置 CSV 读写对象</span></div><div class="line">    in_reader = csv.reader(f_in)</div><div class="line">    out_writer = csv.writer(f_out)</div><div class="line"></div><div class="line">    <span class="comment"># 从 in-file 向 out-file 写入行，直到遇到特定日期</span></div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        datarow = next(in_reader)</div><div class="line">        <span class="comment"># 行程开始日期在第三列，为 m/d/yyyy HH:MM  格式</span></div><div class="line">        <span class="keyword">if</span> datarow[<span class="number">2</span>][:<span class="number">9</span>] == <span class="string">'10/1/2013'</span>:</div><div class="line">            <span class="keyword">break</span></div><div class="line">        out_writer.writerow(datarow)</div></pre></td></tr></table></figure>
+<h2 id="精简行程数据"><a href="#精简行程数据" class="headerlink" title="精简行程数据"></a>精简行程数据</h2><p>第一步是观察数据集的结构，看看我们是否需要执行任何数据整理。下面的单元格会读取你在之前单元格中创建的抽样数据文件，然后打印出表中的前几行。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sample_data = pd.read_csv(<span class="string">'201309_trip_data.csv'</span>)</div><div class="line"></div><div class="line">display(sample_data.head())</div></pre></td></tr></table></figure>
+<div><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th></th><br>      <th>Trip ID</th><br>      <th>Duration</th><br>      <th>Start Date</th><br>      <th>Start Station</th><br>      <th>Start Terminal</th><br>      <th>End Date</th><br>      <th>End Station</th><br>      <th>End Terminal</th><br>      <th>Bike #</th><br>      <th>Subscription Type</th><br>      <th>Zip Code</th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>0</th><br>      <td>4576</td><br>      <td>63</td><br>      <td>8/29/2013 14:13</td><br>      <td>South Van Ness at Market</td><br>      <td>66</td><br>      <td>8/29/2013 14:14</td><br>      <td>South Van Ness at Market</td><br>      <td>66</td><br>      <td>520</td><br>      <td>Subscriber</td><br>      <td>94127</td><br>    </tr><br>    <tr><br>      <th>1</th><br>      <td>4607</td><br>      <td>70</td><br>      <td>8/29/2013 14:42</td><br>      <td>San Jose City Hall</td><br>      <td>10</td><br>      <td>8/29/2013 14:43</td><br>      <td>San Jose City Hall</td><br>      <td>10</td><br>      <td>661</td><br>      <td>Subscriber</td><br>      <td>95138</td><br>    </tr><br>    <tr><br>      <th>2</th><br>      <td>4130</td><br>      <td>71</td><br>      <td>8/29/2013 10:16</td><br>      <td>Mountain View City Hall</td><br>      <td>27</td><br>      <td>8/29/2013 10:17</td><br>      <td>Mountain View City Hall</td><br>      <td>27</td><br>      <td>48</td><br>      <td>Subscriber</td><br>      <td>97214</td><br>    </tr><br>    <tr><br>      <th>3</th><br>      <td>4251</td><br>      <td>77</td><br>      <td>8/29/2013 11:29</td><br>      <td>San Jose City Hall</td><br>      <td>10</td><br>      <td>8/29/2013 11:30</td><br>      <td>San Jose City Hall</td><br>      <td>10</td><br>      <td>26</td><br>      <td>Subscriber</td><br>      <td>95060</td><br>    </tr><br>    <tr><br>      <th>4</th><br>      <td>4299</td><br>      <td>83</td><br>      <td>8/29/2013 12:02</td><br>      <td>South Van Ness at Market</td><br>      <td>66</td><br>      <td>8/29/2013 12:04</td><br>      <td>Market at 10th</td><br>      <td>67</td><br>      <td>319</td><br>      <td>Subscriber</td><br>      <td>94103</td><br>    </tr><br>  </tbody><br></table><br></div>
+
+
+<p>在这个探索环节，我们将精简出影响出行次数的行程数据中的因素。首先将注意力放在几个选定列：行程持续时间、开始时间、起始车站、终止车站及订购类型。开始时间将分为年、月和小时部分。我们将添加一列作为星期几，并将起始车站和终止车站转变为起始和终止城市。</p>
+<p>现在我们来解决整理过程的最后部分。运行下面的代码单元格，看看车站信息的结构，然后观察代码将如何创建车站城市映射。注意车站映射设立为一个函数 <code>create_station_mapping()</code>。因为可随时间推移可添加更多车站或进行删除，在我们准备好开始探索时，此函数将允许我们在数据的所有三个部分结合车站信息。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 显示车站数据文档的前几行数据。</span></div><div class="line">station_info = pd.read_csv(<span class="string">'201402_station_data.csv'</span>)</div><div class="line">display(station_info.head())</div><div class="line"></div><div class="line"><span class="comment"># 这个函数会稍后被另一个函数调用，以创建映射。</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">create_station_mapping</span><span class="params">(station_data)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    Create a mapping from station IDs to cities, returning the</div><div class="line">    result as a dictionary.</div><div class="line">    """</div><div class="line">    station_map = &#123;&#125;</div><div class="line">    <span class="keyword">for</span> data_file <span class="keyword">in</span> station_data:</div><div class="line">        <span class="keyword">with</span> open(data_file, <span class="string">'r'</span>) <span class="keyword">as</span> f_in:</div><div class="line">            <span class="comment"># 设置 csv 读取对象 - 注意，我们使用的是 DictReader，他会将</span></div><div class="line">            <span class="comment"># 文档第一行作为表头，即每一行的字典键值</span></div><div class="line">            weather_reader = csv.DictReader(f_in)</div><div class="line"></div><div class="line">            <span class="keyword">for</span> row <span class="keyword">in</span> weather_reader:</div><div class="line">                station_map[row[<span class="string">'station_id'</span>]] = row[<span class="string">'landmark'</span>]</div><div class="line">    <span class="keyword">return</span> station_map</div></pre></td></tr></table></figure>
+<div><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th></th><br>      <th>station_id</th><br>      <th>name</th><br>      <th>lat</th><br>      <th>long</th><br>      <th>dockcount</th><br>      <th>landmark</th><br>      <th>installation</th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>0</th><br>      <td>2</td><br>      <td>San Jose Diridon Caltrain Station</td><br>      <td>37.329732</td><br>      <td>-121.901782</td><br>      <td>27</td><br>      <td>San Jose</td><br>      <td>8/6/2013</td><br>    </tr><br>    <tr><br>      <th>1</th><br>      <td>3</td><br>      <td>San Jose Civic Center</td><br>      <td>37.330698</td><br>      <td>-121.888979</td><br>      <td>15</td><br>      <td>San Jose</td><br>      <td>8/5/2013</td><br>    </tr><br>    <tr><br>      <th>2</th><br>      <td>4</td><br>      <td>Santa Clara at Almaden</td><br>      <td>37.333988</td><br>      <td>-121.894902</td><br>      <td>11</td><br>      <td>San Jose</td><br>      <td>8/6/2013</td><br>    </tr><br>    <tr><br>      <th>3</th><br>      <td>5</td><br>      <td>Adobe on Almaden</td><br>      <td>37.331415</td><br>      <td>-121.893200</td><br>      <td>19</td><br>      <td>San Jose</td><br>      <td>8/5/2013</td><br>    </tr><br>    <tr><br>      <th>4</th><br>      <td>6</td><br>      <td>San Pedro Square</td><br>      <td>37.336721</td><br>      <td>-121.894074</td><br>      <td>15</td><br>      <td>San Jose</td><br>      <td>8/7/2013</td><br>    </tr><br>  </tbody><br></table><br></div>
+
+
+<p>现在你可以使用映射到来精简行程数据到上述选定列。这将在下面的 <code>summarise_data()</code> 函数中执行。作为此函数的部分，将使用 <code>datetime</code> 模块从原始数据文件解析作为 <code>datetime</code> 对象 (<code>strptime</code>) 的时间戳字符串，该字符串可随后输出为不同的字符串格式 (<code>strftime</code>)。解析的对象也有很多属性和方法来快速获取</p>
+<p>要完成 <code>summarise_data()</code> 函数，你将需要先完成两个任务。首先，你需要执行一个运算将行程持续时间的单位从秒转化为分钟。（一分钟为 60 秒）。第二，你需要为年、月、小时和星期几创建列。你可参阅 <a href="https://docs.python.org/2/library/datetime.html#datetime-objects" target="_blank" rel="external">datetime 模块中的 datetime 对象文档</a>。<strong>请找到合适的属性和方法来完成下面的代码</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">summarise_data</span><span class="params">(trip_in, station_data, trip_out)</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    This function takes trip and station information and outputs a new</div><div class="line">    data file with a condensed summary of major trip information. The</div><div class="line">    trip_in and station_data arguments will be lists of data files for</div><div class="line">    the trip and station information, respectively, while trip_out</div><div class="line">    specifies the location to which the summarized data will be written.</div><div class="line">    """</div><div class="line">    <span class="comment"># 生成车站字典 - 城市映射</span></div><div class="line">    station_map = create_station_mapping(station_data)</div><div class="line">    </div><div class="line">    <span class="keyword">with</span> open(trip_out, <span class="string">'w'</span>) <span class="keyword">as</span> f_out:</div><div class="line">        <span class="comment"># 设置 csv 写入对象       </span></div><div class="line">        out_colnames = [<span class="string">'duration'</span>, <span class="string">'start_date'</span>, <span class="string">'start_year'</span>,</div><div class="line">                        <span class="string">'start_month'</span>, <span class="string">'start_hour'</span>, <span class="string">'weekday'</span>,</div><div class="line">                        <span class="string">'start_city'</span>, <span class="string">'end_city'</span>, <span class="string">'subscription_type'</span>]        </div><div class="line">        trip_writer = csv.DictWriter(f_out, fieldnames = out_colnames)</div><div class="line">        trip_writer.writeheader()</div><div class="line">        </div><div class="line">        <span class="keyword">for</span> data_file <span class="keyword">in</span> trip_in:</div><div class="line">            <span class="keyword">with</span> open(data_file, <span class="string">'r'</span>) <span class="keyword">as</span> f_in:</div><div class="line">                <span class="comment"># 设置 csv 读取对象</span></div><div class="line">                trip_reader = csv.DictReader(f_in)</div><div class="line"></div><div class="line">                <span class="comment"># 从每行数据中收集和处理</span></div><div class="line">                <span class="keyword">for</span> row <span class="keyword">in</span> trip_reader:</div><div class="line">                    new_point = &#123;&#125;</div><div class="line">                    </div><div class="line">                    <span class="comment"># 转换持续时间单位：从秒到分</span></div><div class="line">                    <span class="comment">### 问题 3a: 在下方加入数学运算   ###</span></div><div class="line">                    <span class="comment">### 将持续时间从秒转换为分       ###</span></div><div class="line">                    new_point[<span class="string">'duration'</span>] = float(row[<span class="string">'Duration'</span>]) / <span class="number">60</span></div><div class="line">                    </div><div class="line">                    <span class="comment"># 将 datestrings 存储进不同的列 </span></div><div class="line">                    <span class="comment">### 问题 3b: 在下方空格中填入以生成 ###</span></div><div class="line">                    <span class="comment">### 预期的时间值                 ###</span></div><div class="line">                    trip_date = datetime.strptime(row[<span class="string">'Start Date'</span>], <span class="string">'%m/%d/%Y %H:%M'</span>)</div><div class="line">                    new_point[<span class="string">'start_date'</span>]  = trip_date.strftime(<span class="string">'%Y-%m-%d'</span>)</div><div class="line">                    new_point[<span class="string">'start_year'</span>]  = trip_date.strftime(<span class="string">'%Y'</span>)</div><div class="line">                    new_point[<span class="string">'start_month'</span>] = trip_date.strftime(<span class="string">'%m'</span>)</div><div class="line">                    new_point[<span class="string">'start_hour'</span>]  = trip_date.strftime(<span class="string">'%H'</span>)</div><div class="line">                    new_point[<span class="string">'weekday'</span>]     = trip_date.strftime(<span class="string">'%w'</span>)</div><div class="line">                    </div><div class="line">                    <span class="comment"># 基于起始城市重新映射起始站点</span></div><div class="line">                    new_point[<span class="string">'start_city'</span>] = station_map[row[<span class="string">'Start Terminal'</span>]]</div><div class="line">                    new_point[<span class="string">'end_city'</span>] = station_map[row[<span class="string">'End Terminal'</span>]]</div><div class="line">                    <span class="comment"># 定阅者的两个不同列名称</span></div><div class="line">                    <span class="keyword">if</span> <span class="string">'Subscription Type'</span> <span class="keyword">in</span> row:</div><div class="line">                        new_point[<span class="string">'subscription_type'</span>] = row[<span class="string">'Subscription Type'</span>]</div><div class="line">                    <span class="keyword">else</span>:</div><div class="line">                        new_point[<span class="string">'subscription_type'</span>] = row[<span class="string">'Subscriber Type'</span>]</div><div class="line"></div><div class="line">                    <span class="comment"># 导出处理完成的信息</span></div><div class="line">                    trip_writer.writerow(new_point)</div></pre></td></tr></table></figure>
+<p><strong>问题 3</strong>：运行下面的代码块以调用你在上文单元格中完成的 <code>summarise_data()</code> 函数。它会提取 <code>trip_in</code> 和 <code>station_data</code> 变量中所列文件包含的数据，然后在 <code>trip_out</code> 变量中指定的位置编写新的文件。如果你正确执行了数据整理，下面的代码块会打印出 <code>dataframe</code> 的前几行，并显示一条消息确认数据点计数是正确的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 运行我们上面写的程序来处理数据</span></div><div class="line">station_data = [<span class="string">'201402_station_data.csv'</span>]</div><div class="line">trip_in = [<span class="string">'201309_trip_data.csv'</span>]</div><div class="line">trip_out = <span class="string">'201309_trip_summary.csv'</span></div><div class="line">summarise_data(trip_in, station_data, trip_out)</div><div class="line"></div><div class="line"><span class="comment"># 载入数据文件并打印开头几行</span></div><div class="line">sample_data = pd.read_csv(trip_out)</div><div class="line">display(sample_data.head())</div><div class="line"></div><div class="line"><span class="comment"># 通过统计匹配不同时间特征的数据点来验证 dataframe </span></div><div class="line">question_3(sample_data)</div></pre></td></tr></table></figure>
+<div><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th></th><br>      <th>duration</th><br>      <th>start_date</th><br>      <th>start_year</th><br>      <th>start_month</th><br>      <th>start_hour</th><br>      <th>weekday</th><br>      <th>start_city</th><br>      <th>end_city</th><br>      <th>subscription_type</th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>0</th><br>      <td>1.050000</td><br>      <td>2013-08-29</td><br>      <td>2013</td><br>      <td>8</td><br>      <td>14</td><br>      <td>4</td><br>      <td>San Francisco</td><br>      <td>San Francisco</td><br>      <td>Subscriber</td><br>    </tr><br>    <tr><br>      <th>1</th><br>      <td>1.166667</td><br>      <td>2013-08-29</td><br>      <td>2013</td><br>      <td>8</td><br>      <td>14</td><br>      <td>4</td><br>      <td>San Jose</td><br>      <td>San Jose</td><br>      <td>Subscriber</td><br>    </tr><br>    <tr><br>      <th>2</th><br>      <td>1.183333</td><br>      <td>2013-08-29</td><br>      <td>2013</td><br>      <td>8</td><br>      <td>10</td><br>      <td>4</td><br>      <td>Mountain View</td><br>      <td>Mountain View</td><br>      <td>Subscriber</td><br>    </tr><br>    <tr><br>      <th>3</th><br>      <td>1.283333</td><br>      <td>2013-08-29</td><br>      <td>2013</td><br>      <td>8</td><br>      <td>11</td><br>      <td>4</td><br>      <td>San Jose</td><br>      <td>San Jose</td><br>      <td>Subscriber</td><br>    </tr><br>    <tr><br>      <th>4</th><br>      <td>1.383333</td><br>      <td>2013-08-29</td><br>      <td>2013</td><br>      <td>8</td><br>      <td>12</td><br>      <td>4</td><br>      <td>San Francisco</td><br>      <td>San Francisco</td><br>      <td>Subscriber</td><br>    </tr><br>  </tbody><br></table><br></div>
+
+
+<pre><code>All counts are as expected!
+</code></pre><blockquote>
+<p><strong>提示</strong>：如果你保存了 jupyter Notebook，运行数据块的输出也将被保存。但是，你的工作空间的状态会在每次开启新会话时重置。请确保你从之前的会话中运行了所有必要的代码块，以在继续上次中断的工作前重建变量和函数。</p>
+</blockquote>
+<h2 id="探索性数据分析"><a href="#探索性数据分析" class="headerlink" title="探索性数据分析"></a>探索性数据分析</h2><p>现在你已在一个文件中保存了一些数据，那么我们来看看数据的某些初步趋势。<code>babs_visualizations.py</code> 脚本中已编写了一些代码，用来帮助你汇总和可视化数据；它们已导出为函数 <code>usage_stats()</code> 和 <code>usage_plot()</code>。在此部分，我们将了解这些函数的一些用途，你将在项目的最后部分自行使用这些函数。首先，运行以下单元格来加载数据，然后使用 <code>usage_stats()</code> 函数查看该服务运营的第一个月的总行程数，以及关于行程持续时间的一些统计数据。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">trip_data = pd.read_csv(<span class="string">'201309_trip_summary.csv'</span>)</div><div class="line"></div><div class="line">usage_stats(trip_data)</div></pre></td></tr></table></figure>
+<pre><code>There are 27345 data points in the dataset.
+The average duration of trips is 27.60 minutes.
+The median trip duration is 10.72 minutes.
+25% of trips are shorter than 6.82 minutes.
+25% of trips are longer than 17.28 minutes.
+
+
+
+
+
+array([  6.81666667,  10.71666667,  17.28333333])
+</code></pre><p>你会看到第一个月共有超过 27,000 次行程，且平均行程持续时间大于行程持续时间中值（即 50% 的行程短于它，而 50% 的行程长于它的点）。事实上，平均值大于 75% 的最短持续时间。这个现象非常有意思，我们稍后再看。</p>
+<p>首先我们来看看这些行程如何按订购类型区分。要对数据进行直观的了解，一个简单的方式是将它绘制成图。为此我们将使用 <code>usage_plot()</code> 函数。这个函数的第二个参数允许我们算出选定变量的行程的总数，在一个图中显示信息。下面的表达式将展示共有多少客户和订购者行程。现在就来试试吧！</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">usage_plot(trip_data, <span class="string">'subscription_type'</span>)</div></pre></td></tr></table></figure>
+<p><img src="/source/img/output_16_0.png" alt="png"></p>
+<p>看起来在第一个月，订购者的行程比客户的行程多大约 50%。现在我们来尝试一个不同的变量。来看看行程的持续时间状况如何？</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">usage_plot(trip_data, <span class="string">'duration'</span>)</div></pre></td></tr></table></figure>
+<p><img src="/source/img/output_18_0.png" alt="png"></p>
+<p>看起来挺奇怪的，不是吗？看看 x 轴的持续时间值。大多数骑行时间都是 30 分钟或更少，因为单个行程的额外时间要收取超时费。第一个柱子跨度显示的持续时间达到了约 1000 分钟，或超过 16 个小时。根据我们从 <code>usage_stats()</code> 获得的统计数据，某些行程的持续时间非常长，导致平均值远远高于中值：这个图的效果非常夸张，对我们用处不大。</p>
+<p>在探索数据时，你经常需要使用可视化函数参数来使数据更易于理解。这里就要用到 <code>usage_plot()</code> 函数的第三个参数。可为数据点设置过滤器，作为一系列条件。首先我们限制为不足 60 分钟的行程。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">usage_plot(trip_data, <span class="string">'duration'</span>, [<span class="string">'duration &lt; 60'</span>])</div></pre></td></tr></table></figure>
+<p><img src="/source/img/output_20_0.png" alt="png"></p>
+<p>这样看起来就好多啦！你可以看到大多数行程实际上持续时间都不足 30 分钟，但你还可以通过其他方法来使展示效果更好。因为最短持续时间非 0，左侧的柱子稍高于 0。我们想要找到 30 分钟的明确边界，这样如果一些柱子尺寸和边界对应某些分钟点时，图上就看起来清晰多了。好消息是你可以使用可选的“boundary”和“bin_width”参数调整图。通过将“boundary”设置为 0，其中一个柱边界（这里为最左侧的柱子）将从 0 开始，而不是最短行程持续时间。以及通过将“bin_width”设为 5，每个柱子将以 5 分钟时间间隔总计时间点。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">usage_plot(trip_data, <span class="string">'duration'</span>, [<span class="string">'duration &lt; 60'</span>], boundary = <span class="number">0</span>, bin_width = <span class="number">5</span>)</div></pre></td></tr></table></figure>
+<p><img src="/source/img/output_22_0.png" alt="png"></p>
+<p><strong>问题 4</strong>：哪个 5 分钟行程持续时间显示了最多的出行次数？这个范围内大约有多少次出行？</p>
+<p><strong>答案</strong>：5-10分钟，大约有9000次出行</p>
+<p>像这样的视觉调整虽然较小，但是却对你理解数据和向他人传达你的发现大有帮助。</p>
+<h2 id="自己执行分析"><a href="#自己执行分析" class="headerlink" title="自己执行分析"></a>自己执行分析</h2><p>现在你已使用数据集的小样本完成了一些探索，是时候更进一步，将所有数据整理到一个文件中并看看你能发现什么趋势。下面的代码将使用与之前一样的 <code>summarise_data()</code> 函数来处理数据。在运行下面的单元格后，你便将所有的数据处理到了一个数据文件中。注意该函数在运行时不会显示任何输出，而且要花费较长的时间才能完成，因为你现在使用的数据比之前的样本数据多。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">station_data = [<span class="string">'201402_station_data.csv'</span>,</div><div class="line">                <span class="string">'201408_station_data.csv'</span>,</div><div class="line">                <span class="string">'201508_station_data.csv'</span> ]</div><div class="line">trip_in = [<span class="string">'201402_trip_data.csv'</span>,</div><div class="line">           <span class="string">'201408_trip_data.csv'</span>,</div><div class="line">           <span class="string">'201508_trip_data.csv'</span> ]</div><div class="line">trip_out = <span class="string">'babs_y1_y2_summary.csv'</span></div><div class="line"></div><div class="line"><span class="comment"># 该程序将输入站点和行程信息并将新数据输出至指定文件</span></div><div class="line">summarise_data(trip_in, station_data, trip_out)</div></pre></td></tr></table></figure>
+<p>由于 <code>summarise_data()</code> 函数已创建了一个独立文件，因此无需再次运行上面的单元格，即使你关掉 notebook 并开启一个新会话。你可以直接在数据集中加载，然后从那里进行探索。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">trip_data = pd.read_csv(<span class="string">'babs_y1_y2_summary.csv'</span>)</div><div class="line">display(trip_data.head())</div></pre></td></tr></table></figure>
+<div><br><table border="1" class="dataframe"><br>  <thead><br>    <tr style="text-align: right;"><br>      <th></th><br>      <th>duration</th><br>      <th>start_date</th><br>      <th>start_year</th><br>      <th>start_month</th><br>      <th>start_hour</th><br>      <th>weekday</th><br>      <th>start_city</th><br>      <th>end_city</th><br>      <th>subscription_type</th><br>    </tr><br>  </thead><br>  <tbody><br>    <tr><br>      <th>0</th><br>      <td>1.050000</td><br>      <td>2013-08-29</td><br>      <td>2013</td><br>      <td>8</td><br>      <td>14</td><br>      <td>4</td><br>      <td>San Francisco</td><br>      <td>San Francisco</td><br>      <td>Subscriber</td><br>    </tr><br>    <tr><br>      <th>1</th><br>      <td>1.166667</td><br>      <td>2013-08-29</td><br>      <td>2013</td><br>      <td>8</td><br>      <td>14</td><br>      <td>4</td><br>      <td>San Jose</td><br>      <td>San Jose</td><br>      <td>Subscriber</td><br>    </tr><br>    <tr><br>      <th>2</th><br>      <td>1.183333</td><br>      <td>2013-08-29</td><br>      <td>2013</td><br>      <td>8</td><br>      <td>10</td><br>      <td>4</td><br>      <td>Mountain View</td><br>      <td>Mountain View</td><br>      <td>Subscriber</td><br>    </tr><br>    <tr><br>      <th>3</th><br>      <td>1.283333</td><br>      <td>2013-08-29</td><br>      <td>2013</td><br>      <td>8</td><br>      <td>11</td><br>      <td>4</td><br>      <td>San Jose</td><br>      <td>San Jose</td><br>      <td>Subscriber</td><br>    </tr><br>    <tr><br>      <th>4</th><br>      <td>1.383333</td><br>      <td>2013-08-29</td><br>      <td>2013</td><br>      <td>8</td><br>      <td>12</td><br>      <td>4</td><br>      <td>San Francisco</td><br>      <td>San Francisco</td><br>      <td>Subscriber</td><br>    </tr><br>  </tbody><br></table><br></div>
+
+
+<h4 id="现在轮到你自己使用-usage-stats-和-usage-plot-探索新数据集，并报告你的发现了！下面是如何使用-usage-plot-函数的一些提示："><a href="#现在轮到你自己使用-usage-stats-和-usage-plot-探索新数据集，并报告你的发现了！下面是如何使用-usage-plot-函数的一些提示：" class="headerlink" title="现在轮到你自己使用 usage_stats() 和 usage_plot() 探索新数据集，并报告你的发现了！下面是如何使用 usage_plot() 函数的一些提示："></a>现在轮到你自己使用 <code>usage_stats()</code> 和 <code>usage_plot()</code> 探索新数据集，并报告你的发现了！下面是如何使用 <code>usage_plot()</code> 函数的一些提示：</h4><ul>
+<li>第一个参数（必须）：加载的 dataframe，将从这里分析数据。</li>
+<li><p>第二个参数（必须）：区分出行次数的变量。</p>
+</li>
+<li><p>第三个参数（可选）：数据过滤器，限制将计数的数据点。过滤器应作为一系列条件提供，每个元素应该为采用以下格式的一个字符串：<code>&#39;&lt;field&gt; &lt;op&gt; &lt;value&gt;&#39;</code>，使用以下任意一个运算符：&gt;、&lt;、&gt;=、&lt;=、==、!=。数据点必须满足所有条件才能计算在内或可视化。例如，<code>[&quot;duration &lt; 15&quot;, &quot;start_city == &#39;San Francisco&#39;&quot;]</code> 仅保留起始点为旧金山，且持续时间不足 15 分钟的行程。</p>
+</li>
+</ul>
+<p>如果数据在数值变量上进行拆分（从而创建一个直方图），可使用关键字设置一些附加参数。</p>
+<ul>
+<li>“n_bins” 指定成果图中柱子的数量（默认为 10 条）。</li>
+<li>“bin_width” 指定每个柱子的宽（默认为用数据范围除以柱子的数量）。”n_bins” 和 “bin_width” 不可同时使用。</li>
+<li>“boundary” 指定一个柱边界的位置；另一个柱边界将放在那个值的附近（这可能导致绘制多余的柱子）。此参数可以与 “n_bins” 和 “bin_width” 参数一起使用。</li>
+</ul>
+<p>你也可以对 <code>usage_stats()</code> 函数添加一些自定义。该函数的第二个参数可用于设置过滤器条件，如同用 <code>usage_plot()</code> 设置一样。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">usage_stats(trip_data)</div></pre></td></tr></table></figure>
+<pre><code>There are 669959 data points in the dataset.
+The average duration of trips is 18.47 minutes.
+The median trip duration is 8.62 minutes.
+25% of trips are shorter than 5.73 minutes.
+25% of trips are longer than 12.58 minutes.
+
+
+
+
+
+array([  5.73333333,   8.61666667,  12.58333333])
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">usage_plot(trip_data, <span class="string">'start_hour'</span>)</div></pre></td></tr></table></figure>
+<p><img src="/source/img/output_30_0.png" alt="png"></p>
+<p>使用上面的函数探索一些不同的变量，并记录你发现的一些趋势。如果你想用其他方式或多个方式探索数据集，可自行创建更多的单元格。</p>
+<blockquote>
+<p><strong>提示</strong>: 要向 notebook 添加更多单元格，你可以使用上面的菜单栏中的“在上方插入单元格”和“在下方插入单元格”选项。工具栏中也有添加新单元格的图标，以及用于在文档中上下移动单元格的附加图标。默认情况下，新单元格为代码式；你也可以从单元格菜单或工具栏中的下拉菜单中指定单元格类型（代码式或 Markdown）。</p>
+</blockquote>
+<p>完成探索后，将你认为最有趣的两个可视化复制到下方的单元格中，然后用几句话回答以下问题，说明你的发现及你选择这些数字的原因。确保调整柱子的数量或限制，使它们有效传达数据发现。可自行用从 <code>usage_stats()</code> 中生成的任何额外数字进行补充，或放置多个可视化来支持你的观察。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">usage_plot(trip_data, <span class="string">'weekday'</span>, n_bins=<span class="number">7</span>)</div></pre></td></tr></table></figure>
+<p><img src="/source/img/output_32_0.png" alt="png"></p>
+<p><strong>问题 5a</strong>：上述可视化有何有趣之处？你为什么选择它</p>
+<p><strong>答案</strong>：可以看出大部分使用自行车的用户是在周内使用，所以可以看出多数用户是使用自行车上班</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Final Plot 2</span></div><div class="line">usage_plot(trip_data, <span class="string">'start_hour'</span>, [<span class="string">'weekday &lt; 6'</span> <span class="keyword">and</span> <span class="string">'weekday &gt; 0'</span>], bin_width=<span class="number">1</span>)</div></pre></td></tr></table></figure>
+<p><img src="/source/img/output_34_0.png" alt="png"></p>
+<p><strong>问题 5b</strong>：上述可视化有何有趣之处？你为什么选择它</p>
+<p><strong>答案</strong>：可以从这张图看出来，在周内的8-9时间段和17-18时间段使用自行车最多，基本上是在上下班时间。</p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>恭喜你完成了此项目！这只是数据分析过程的一个样本：从生成问题、整理数据到探索数据。通常，在数据分析过程的这个点，你可能想要通过执行统计检验或将数据拟合到一个模型进行预测，来对我们的数据得出结论。还有很多可以对数据执行的潜在分析，但仅靠这里所给的有限代码无法完成。除了结果轴上的出行次数，你还可以观察具有影响的其他特征，如行程持续时间。我们还未研究过天气数据与单车使用之间的联系。</p>
+<p><strong>问题 6</strong>：思考你可以应用数据科学技术的一个话题或兴趣领域。你希望从所选主题中学到什么？</p>
+<p><strong>答案</strong>: 希望在金融领域来应用数据科学技术，分析投资用户的行为以及进行相关分析。希望学到分析数据的流程和常用的模型，以及可视化表达的方法。</p>
+<blockquote>
+<p><strong>提示</strong>：若想与他人分享我们的分析结果，除了向他们提供 jupyter Notebook (.ipynb) 文件的副本外，我们还可以将 Notebook 输出导出为一种甚至那些未安装 Python 的人都能打开的形式。从左上方的“文件”菜单，前往“下载为”子菜单。然后你可以选择一个可以更普遍查看的格式，例如 HTML (.html) 或 PDF (.pdf)。你可能需要额外软件包或软件来执行这些导出。</p>
+</blockquote>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/计算机科学/">计算机科学</a><a href="/tags/英文/">英文</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/数据分析/">数据分析</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://microndgt.github.io/2016/11/27/Data-Analysis-Project/" data-title="Data Analysis Project | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/11/26/北京的第27天/"  title="北京的第27天">
+ <strong>Old:</strong><br/> 
+ <span>北京的第27天
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="Data Analysis Project" data-thread-key="Data-Analysis-Project" data-author-key="Kevin" data-url="http://microndgt.github.io/post/Data-Analysis-Project"></div>
+	
+</section>
+
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© Kevin</span>
+		
+	<div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"microndgt"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';    //change to ds.src = '/js/embed.js'; to add useragent for duoshuo
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>
