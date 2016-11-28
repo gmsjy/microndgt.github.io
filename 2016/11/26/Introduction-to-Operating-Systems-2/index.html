@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -82,7 +82,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -105,7 +105,7 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#英文"><span class="toc-number">1.</span> <span class="toc-text">英文</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lesson-Preview"><span class="toc-number">2.</span> <span class="toc-text">Lesson Preview</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Visual-Metaphor"><span class="toc-number">3.</span> <span class="toc-text">Visual Metaphor</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#What-is-an-Operating-System"><span class="toc-number">4.</span> <span class="toc-text">What is an Operating System?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Operating-System-Defination"><span class="toc-number">5.</span> <span class="toc-text">Operating System Defination</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Operating-System-Components-Quiz"><span class="toc-number">6.</span> <span class="toc-text">Operating System Components Quiz</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#英文"><span class="toc-number">1.</span> <span class="toc-text">英文</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Lesson-Preview"><span class="toc-number">2.</span> <span class="toc-text">Lesson Preview</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Visual-Metaphor"><span class="toc-number">3.</span> <span class="toc-text">Visual Metaphor</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#What-is-an-Operating-System"><span class="toc-number">4.</span> <span class="toc-text">What is an Operating System?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Operating-System-Defination"><span class="toc-number">5.</span> <span class="toc-text">Operating System Defination</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Operating-System-Components-Quiz"><span class="toc-number">6.</span> <span class="toc-text">Operating System Components Quiz</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Abstraction-or-Arbitration"><span class="toc-number">7.</span> <span class="toc-text">Abstraction or Arbitration</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#OS-Elements"><span class="toc-number">8.</span> <span class="toc-text">OS Elements</span></a></li></ol>
 		</div>
 		
 		<p>Part 2: Introduction to Operating Systems!<a id="more"></a></p>
@@ -115,6 +115,8 @@ var _hmt = _hmt || [];
 <li>correspond 符合，一致</li>
 <li>reside 住，居住</li>
 <li>intuitive 直觉的</li>
+<li>morsel 小节</li>
+<li>proliferation 增值</li>
 </ol>
 <h1 id="Lesson-Preview"><a href="#Lesson-Preview" class="headerlink" title="Lesson Preview"></a>Lesson Preview</h1><ul>
 <li>what is an operating system</li>
@@ -158,6 +160,25 @@ var _hmt = _hmt || [];
 <p>the OS doesn’t directly manage the cache.</p>
 <p>the web browser does not have direct control over underlying hardware.</p>
 <p>scheduler is responsible for distributing the access to the processing element, CPU, among all of the applications that share that platform.</p>
+<h1 id="Abstraction-or-Arbitration"><a href="#Abstraction-or-Arbitration" class="headerlink" title="Abstraction or Arbitration"></a>Abstraction or Arbitration</h1><p>an abstraction, where the operating system simplifies something about the underlying hardware or arbitration, where the operating system manages the underlying hardware</p>
+<p>the ability to interchangeably access different types of storage devices like hard disks or ssds is again an example of an abstraction.</p>
+<h1 id="OS-Elements"><a href="#OS-Elements" class="headerlink" title="OS Elements"></a>OS Elements</h1><p>an operating system supports a number of higher-level abstractions, and then a number of key mechanisms that operate on top of these instructions.</p>
+<p>Abstractions:</p>
+<ul>
+<li>process, thread, file, socket, memory page</li>
+</ul>
+<p>mechanisms:</p>
+<ul>
+<li>create, schedule, open, write, allocate</li>
+</ul>
+<p>policies: to determine how these mechanisms will be used to manage the underlying hardware</p>
+<ul>
+<li>least-recently used(LRU), earliest deadline first(EDF)</li>
+</ul>
+<p>one of the responsibilities of the operating system is to manage resources like memory.</p>
+<p>the operating system uses a memory page as an abstraction. and this abstraction corresponds to some addressable region of memory of some fixed size.</p>
+<p>mechanism, allocate the page in DRAM, and map the page to the address piece of the process.</p>
+<p>policies, the pages that have been least recently used over a period of time are the ones that will no longer be in physical memory, and instead will be copied on this.</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -188,7 +209,7 @@ var _hmt = _hmt || [];
  
  <div class="prev" >
  <a href="/2016/11/26/Python遇到的那些坑/" title="Python遇到的那些坑">
-  <strong>新一篇:</strong><br/>
+  <strong>New:</strong><br/>
   <span>
   Python遇到的那些坑</span>
 </a>
@@ -197,7 +218,7 @@ var _hmt = _hmt || [];
 
 <div class="next">
 <a href="/2016/11/24/Introduction-to-Operating-Systems/"  title="Introduction to Operating Systems">
- <strong>舊一篇:</strong><br/> 
+ <strong>Old:</strong><br/> 
  <span>Introduction to Operating Systems
 </span>
 </a>
