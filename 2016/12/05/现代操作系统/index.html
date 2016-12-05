@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Shell命令总结 | Kevin&#39;s Blog</title>
+    <title>现代操作系统 | Kevin&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="工作中遇到的shell命令总结～">
+    <meta name="description" content="系统调用">
     
     
     
@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -82,7 +82,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -94,10 +94,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/11/24/shell命令总结/" title="Shell命令总结" itemprop="url">Shell命令总结</a>
+      <a href="/2016/12/05/现代操作系统/" title="现代操作系统" itemprop="url">现代操作系统</a>
   </h1>
   <p class="article-time">
-    <time datetime="2016-11-24T10:15:57.000Z" itemprop="datePublished">Nov 24 2016</time>
+    <time datetime="2016-12-05T01:51:28.000Z" itemprop="datePublished">Dec 5 2016</time>
   </p>
 </header>
 	<div class="article-content">
@@ -105,80 +105,29 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#awk"><span class="toc-number">1.</span> <span class="toc-text">awk</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#重新生成id"><span class="toc-number">1.1.</span> <span class="toc-text">重新生成id</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#打印出前两个字段"><span class="toc-number">1.2.</span> <span class="toc-text">打印出前两个字段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获取含有inf的id"><span class="toc-number">1.3.</span> <span class="toc-text">获取含有inf的id</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用if语句"><span class="toc-number">1.4.</span> <span class="toc-text">使用if语句</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sort"><span class="toc-number">2.</span> <span class="toc-text">sort</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#find"><span class="toc-number">3.</span> <span class="toc-text">find</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#vim"><span class="toc-number">4.</span> <span class="toc-text">vim</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sed"><span class="toc-number">5.</span> <span class="toc-text">sed</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#系统调用"><span class="toc-number">1.</span> <span class="toc-text">系统调用</span></a></li></ol>
 		</div>
 		
-		<p>工作中遇到的shell命令总结～<a id="more"></a></p>
-<h1 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h1><h2 id="重新生成id"><a href="#重新生成id" class="headerlink" title="重新生成id"></a>重新生成id</h2><p><code>awk &#39;BEGIN{FS=&quot;,&quot;;OFS=&quot;,&quot;;}{$1=NR;print $0}&#39; summary.csv &gt; summary_ex.csv</code></p>
-<h2 id="打印出前两个字段"><a href="#打印出前两个字段" class="headerlink" title="打印出前两个字段"></a>打印出前两个字段</h2><p><code>awk &#39;BEGIN{FS=&quot;,&quot;;OFS=&quot;,&quot;;}{print $1,$2}&#39; summary.csv &gt; summary_ex.csv</code></p>
-<h2 id="获取含有inf的id"><a href="#获取含有inf的id" class="headerlink" title="获取含有inf的id"></a>获取含有inf的id</h2><p><code>cat summary.csv | grep inf | awk -F &#39;,&#39; &#39;{print $2}&#39; &gt; inf_ids.txt</code></p>
-<h2 id="使用if语句"><a href="#使用if语句" class="headerlink" title="使用if语句"></a>使用if语句</h2><p>第三个不为空，但是第四个为空</p>
-<p><code>cat find_result.txt | awk -F &#39;,&#39; &#39;{if(!($3==&quot;&quot;) &amp;&amp; $4==&quot;&quot;){print $0}&#39; | awk -F &#39;,&#39; &#39;{if($1==20160624){print $0}}&#39; | wc -l</code></p>
-<p>不匹配正则表达式，不匹配数字</p>
-<p><code>cat find_result.txt | awk -F &#39;,&#39; &#39;{if($3!~&quot;[0-9]&quot;) &amp;&amp; $4==&quot;&quot;){print $0}&#39; | awk -F &#39;,&#39; &#39;{if($1==20160624){print $0}}&#39; | wc -l</code></p>
-<h1 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h1><p>根据第一个字段，分隔符是, 按数字排序</p>
-<p><code>sort -t , -k1 -n summary_ex.csv &gt; summary_ex_sort.csv</code></p>
-<h1 id="find"><a href="#find" class="headerlink" title="find"></a>find</h1><p>查找此类文件有多少个</p>
-<p><code>find /data/output/ -type f -name ability*.csv | wc -l</code></p>
-<p>在所有文件内容中查找有220010的行</p>
-<p><code>find /data/output/errors/ -name &#39;stk*.csv&#39; | xargs grep &#39;220010&#39;</code></p>
-<p>查找内容为空的ability文件</p>
-<p><code>find /data/output -name ability*.csv -type f －empty | wc -l</code></p>
-<h1 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h1><p><code>:%s/app/data/gc</code> 全文提醒替换</p>
-<h1 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h1><p>删除grep出的特定行,形成新文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">for id in $(cat inf_ids.txt)</div><div class="line">do</div><div class="line">    sed -i “/$id/d” summary.csv</div><div class="line">done</div></pre></td></tr></table></figure>
-<p>将新生成的文件贴到某个文件末尾</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">for line in $(cat summary.csv)</div><div class="line">do</div><div class="line">	sed -i &quot;\$a $line&quot; summary_45.csv</div><div class="line">done</div></pre></td></tr></table></figure>
-<p>其实这样就OK了。。</p>
-<p><code>cat test1 test2 &gt; test3</code></p>
-<p><code>cat test2 &gt;&gt; test1</code> 使用追加</p>
-<p>接下来重新生成id</p>
-<p><code>-e</code> 以选项中指定的script来处理输入的文本文件</p>
-<p>在文件第四行后面添加一行,a表示新增，在下一行</p>
-<p><code>sed -e 4a\newLine testfile</code></p>
-<p>删除第2-5行,不加-e也是可以的，记得加单引号</p>
-<p><code>cat -n /etc/passwd | sed &#39;2,5d&#39;</code></p>
-<p>删除到最后一行</p>
-<p><code>cat -n /etc/passwd | sed &#39;3,$d&#39;</code></p>
-<p>i表示插入，在目前的上一行</p>
-<p><code>cat -n /etc/passwd | sed &#39;2i drink tea&#39;</code></p>
-<p>反斜杠加入多行</p>
-<p><code>cat -n /etc/passwd | sed &#39;2a drink tea or ...\drink beer?&#39;</code></p>
-<p>c表示取代</p>
-<p><code>cat -n /etc/passwd | sed &#39;2,5c no 2-5 number&#39;</code></p>
-<p>p显示</p>
-<p><code>cat -n /etc/passwd | sed -n &#39;5,7p&#39;</code></p>
-<p>显示特定关键字的行,-n表示仅打印包含模板的行</p>
-<p><code>cat -n /etc/passwd | sed &#39;/root/p&#39;</code></p>
-<p>删除所有包含关键字的行，其他行输出</p>
-<p><code>cat -n /etc/passwd | sed &#39;/root/d&#39;</code></p>
-<p>数据搜寻并且执行命令</p>
-<p><code>cat -n /etc/passwd | sed -n &#39;/root/{s/bash/blueshell/;p}&#39;</code></p>
-<p>多点编辑</p>
-<p><code>cat -n /etc/passwd | sed -e &#39;3,$d&#39; -e &#39;s/bash/blueshell/&#39;</code></p>
-<p>-i 直接修改文件内容</p>
-<p><code>sed -i &#39;s/\.$/\!/g&#39; regular.txt</code></p>
-<p><code>sed -i &#39;$a # This is a test&#39; regular.txt</code></p>
-  
+		<h1 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h1>  
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Shell/">Shell</a>
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/计算机科学/">计算机科学</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  <a class="article-category-link" href="/categories/操作系统/">操作系统</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2016/11/24/shell命令总结/" data-title="Shell命令总结 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2016/12/05/现代操作系统/" data-title="现代操作系统 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -188,18 +137,18 @@ var _hmt = _hmt || [];
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/11/24/Introduction-to-Operating-Systems/" title="Introduction to Operating Systems">
-  <strong>新一篇:</strong><br/>
+ <a href="/2016/12/05/LeetCode/" title="LeetCode">
+  <strong>New:</strong><br/>
   <span>
-  Introduction to Operating Systems</span>
+  LeetCode</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2016/11/24/SQL语句总结/"  title="SQL语句总结">
- <strong>旧一篇:</strong><br/> 
- <span>SQL语句总结
+<a href="/2016/12/02/shell命令总结/"  title="Shell命令总结">
+ <strong>Old:</strong><br/> 
+ <span>Shell命令总结
 </span>
 </a>
 </div>
@@ -209,7 +158,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="Shell命令总结" data-thread-key="shell命令总结" data-author-key="Kevin" data-url="http://microndgt.github.io/post/shell命令总结"></div>
+	<div class="ds-thread" data-title="现代操作系统" data-thread-key="现代操作系统" data-author-key="Kevin" data-url="http://microndgt.github.io/post/现代操作系统"></div>
 	
 </section>
 
