@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>MySQL插入本地CSV数据 | Kevin&#39;s Blog</title>
+    <title>数据分析 | Kevin&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="将本地的CSV文件插入到MySQL的方法以及遇到的问题～">
+    <meta name="description" content="利用Python进行数据分析!">
     
     
     
@@ -92,10 +92,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/11/05/MySQL插入本地CSV数据/" title="MySQL插入本地CSV数据" itemprop="url">MySQL插入本地CSV数据</a>
+      <a href="/2016/12/09/数据分析/" title="数据分析" itemprop="url">数据分析</a>
   </h1>
   <p class="article-time">
-    <time datetime="2016-11-05T01:42:31.000Z" itemprop="datePublished">Nov 5 2016</time>
+    <time datetime="2016-12-08T23:10:26.000Z" itemprop="datePublished">Dec 9 2016</time>
   </p>
 </header>
 	<div class="article-content">
@@ -103,73 +103,49 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#load-csv"><span class="toc-number">1.</span> <span class="toc-text">load csv</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#存在的问题"><span class="toc-number">1.1.</span> <span class="toc-text">存在的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原因"><span class="toc-number">1.2.</span> <span class="toc-text">原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决"><span class="toc-number">1.3.</span> <span class="toc-text">解决</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分割文件"><span class="toc-number">2.</span> <span class="toc-text">分割文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#修改字段"><span class="toc-number">3.</span> <span class="toc-text">修改字段</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#合并表"><span class="toc-number">4.</span> <span class="toc-text">合并表</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#关键问题"><span class="toc-number">5.</span> <span class="toc-text">关键问题</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#数据"><span class="toc-number">1.</span> <span class="toc-text">数据</span></a></li></ol>
 		</div>
 		
-		<p>将本地的CSV文件插入到MySQL的方法以及遇到的问题～<a id="more"></a></p>
-<h1 id="load-csv"><a href="#load-csv" class="headerlink" title="load csv"></a>load csv</h1><p><code>LOAD DATA INFILE &#39;/data/output.csv&#39; INTO TABLE ability CHARACTER SET utf8 FIELDS TERMINATED BY &#39;,&#39;;</code></p>
-<h2 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h2><ol>
-<li>使用<code>utf8</code>，而不是<code>utf-8</code></li>
-<li>插入的时候报错，<code>ERROR 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement</code></li>
-<li>在load csv的时候出现表中有主键，但是csv数据没有那一列，会报错，<code>doesn&#39;t contain data for all columns</code>,于是用Python将每一行的行数加在csv文件的第一列。</li>
-</ol>
-<p>这里要注意的是primary_key是从1开始，而不是0.</p>
-<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>secure_file_priv设置了指定目录，需要在指定的目录下进行数据导出</p>
-<h2 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h2><p><code>mysql&gt; show variables like &#39;%secure%&#39;;</code></p>
-<p>有一项是：<code>secure_file_priv         | /var/lib/mysql-files/ |</code></p>
-<p>在这个文件夹下进行文件的读取与上传。</p>
-<h1 id="分割文件"><a href="#分割文件" class="headerlink" title="分割文件"></a>分割文件</h1><p>在load的时候又出现了一个问题，这个文件夹所挂载的硬盘容量太小，文件copy不过来，于是采取了一种方法，将文件分割，命令:<code>split</code>,生成文件名为xaa,xab什么的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">＃ 以文件行数分割,每个文件行数为1000行</div><div class="line">split mylog -l 1000</div><div class="line"># 以每个文件20M分割</div><div class="line">split -b 20M logdata</div><div class="line"># 以每个文件50MB指定前缀分割</div><div class="line">split --bytes=50M logdata mydatafile</div></pre></td></tr></table></figure>
-<h1 id="修改字段"><a href="#修改字段" class="headerlink" title="修改字段"></a>修改字段</h1><p>load数据的时候遇到了这个问题，就是说out of range，于是修改为double(40,15)还是不行，后来发现此数据为2e+100,完全表示不下，于是使用字符串</p>
-<p><code>alter table ability modify column shape_rate varchar(50)</code></p>
-<h1 id="合并表"><a href="#合并表" class="headerlink" title="合并表"></a>合并表</h1><p>由于有两台计算机上的数据，id标号不是连续的，先后插入的时候就会出现主键重复，现在准备采用分两个表插入，然后进行合并的方式：</p>
-<p><code>insert into ability(fundId,ability_gain,ability_long,ability_medium,ability_risk,ability_short,ability_total,daily_profit,daily_profit_rate,date,fundbal,max_retracement,period_profit_rate,position_rate,shape_ratio,stk_maktval,ttimes_long,ttimes_medium,ttimes_short) select fundId,ability_gain,ability_long,ability_medium,ability_risk,ability_short,ability_total,daily_profit,daily_profit_rate,date,fundbal,max_retracement,period_profit_rate,position_rate,shape_ratio,stk_maktval,ttimes_long,ttimes_medium,ttimes_short from ability1;</code></p>
-<p>另外一种解决方法是将第二个文件的第一个字段按照之前插入的最后一条的数字，相应进行更改，使用awk命令：</p>
-<p><code>awk &#39;BEGIN{FS=&quot;,&quot;;OFS=&quot;,&quot;;ORS=&quot;\n&quot;;}{$1=NR+43146621;print $0}&#39; datatest.txt &gt; newdatatest.txt</code></p>
-<p>FS：输入字段分隔符</p>
-<p>RS：出入行分隔符</p>
-<p>OFS：输出字段分隔符</p>
-<p>ORS：表示输出行分隔符</p>
-<p>整合一下，自动化：</p>
-<p><code>lineNum=$(tail -1 /app/all_output_45/all_output.csv | awk -F &#39;,&#39; &#39;{print $1}&#39;)</code></p>
-<p><code>awk -v lineNum=&quot;$lineNum&quot; &#39;BEGIN{FS=&quot;,&quot;;OFS=&quot;,&quot;;ORS=&quot;\n&quot;;}{$1=NR+lineNum;print $0}&#39; all_output.csv &gt; new_all_output.csv</code></p>
-<p>所以要记录第一个文件的插入总条数，也就是插入后id值最后一个是什么</p>
-<p>xaa:</p>
-<p>xab:</p>
-<p>xac:</p>
-<h1 id="关键问题"><a href="#关键问题" class="headerlink" title="关键问题"></a>关键问题</h1><p>最后插入了很多数据后发现数据是21列，建的表是20列，晕，删除表，重新建表～</p>
-<p>又出现一个问题，之前按照文件大小将文件分割，插入数据库的时候发现，文件最后一行完整性被损坏了，所以一定要按照行来分割数据文件～</p>
-<p><code>split all_output.csv -l 46000000</code></p>
-<p>VIM所有行替换：</p>
-<p><code>:%s/fundid/fundId/gc</code></p>
-<p>远程连接MySQL的时候，报错：</p>
-<p>Can’t connect to MySQL server (10060)</p>
-<p>这时候解决办法如下：</p>
-<p>配置防火墙，开启3306端口，端口视情况而定</p>
-<p><code>vi /etc/sysconfig/iptables</code></p>
-<p><code>-A INPUT -m state –state NEW -m tcp -p tcp –dport 3306 -j ACCEPT（允许3306端口通过防火墙）</code></p>
-<p><code>/etc/init.d/iptables restart（重启防火墙使配置生效）</code></p>
-<p>检测方法，<code>telnet 10.234.0.45 32768</code>，如果进入界面，则说明链接成功，否则失败</p>
+		<p>利用Python进行数据分析!<a id="more"></a></p>
+<h1 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h1><p>结构化数据，包括</p>
+<ul>
+<li>多维数组</li>
+<li>表格型数据</li>
+<li>关键列互相联系的多个表</li>
+<li>间隔平均或者不平均的时间序列</li>
+<li>也可以将数据集的特征提取为某种结构化形式</li>
+</ul>
+<p>计数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">from collections import defaultdict</div><div class="line">def get_counts(sequence):</div><div class="line">    counts = defaultdict(int)</div><div class="line">    for x in sequence:</div><div class="line">        counts[x] += 1</div><div class="line">    return counts</div></pre></td></tr></table></figure>
+<p>Series对象有一个value_counts方法,<code>tz_counts = frame[&#39;tz&#39;].value_counts()</code></p>
+<p>给记录中未知或者缺失的值填上一个替代值，fillna函数可以替换缺失值NA，未知值(空字符串)可以通过布尔型数组索引加以替换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">clean_tz = frame[&apos;tz&apos;].fillna(&apos;Missing&apos;)</div><div class="line">clean_tz[clean_tz == &apos;&apos;] = &apos;Unknow&apos;</div></pre></td></tr></table></figure>
+<p>按Windows和非Windows用户对时区统计信息进行分解，因为agent有缺失，所以首先进行移除工作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cframe = frame[frame.a.notnull()]</div><div class="line">operating_system = np.where(cframe[&apos;a&apos;].str.contains(&apos;Windows&apos;), &apos;Windows&apos;, &apos;Not Windows&apos;)</div></pre></td></tr></table></figure>
+<p>接下来使用时区和新得到的操作系统列表对数据进行分组</p>
+<p><code>by_tz_os = cframe.groupby([&#39;tz&#39;, operating_system])</code></p>
+<p>通过size对分组结果进行计数，利用unstack对计数结果进行重塑</p>
+<p><code>agg_counts = by_tz_os.size().unstack().fillna(0)</code></p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/SQL/">SQL</a>
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/pandas/">pandas</a><a href="/tags/Python/">Python</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/MySQL/">MySQL</a>
+  <a class="article-category-link" href="/categories/数据分析/">数据分析</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2016/11/05/MySQL插入本地CSV数据/" data-title="MySQL插入本地CSV数据 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2016/12/09/数据分析/" data-title="数据分析 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -178,19 +154,11 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/11/06/New-Plan/" title="New Plan">
-  <strong>新一篇:</strong><br/>
-  <span>
-  New Plan</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/11/04/multiprocessing的使用/"  title="Multiprocessing的使用">
+<a href="/2016/12/08/Pandas使用笔记/"  title="Pandas使用笔记">
  <strong>舊一篇:</strong><br/> 
- <span>Multiprocessing的使用
+ <span>Pandas使用笔记
 </span>
 </a>
 </div>
@@ -200,7 +168,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="MySQL插入本地CSV数据" data-thread-key="MySQL插入本地CSV数据" data-author-key="Kevin" data-url="http://microndgt.github.io/post/MySQL插入本地CSV数据"></div>
+	<div class="ds-thread" data-title="数据分析" data-thread-key="数据分析" data-author-key="Kevin" data-url="http://microndgt.github.io/post/数据分析"></div>
 	
 </section>
 
