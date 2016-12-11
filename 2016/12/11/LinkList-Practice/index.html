@@ -1,0 +1,349 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>LinkList Practice | Kevin&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Kevin">
+    
+    <meta name="description" content="单链表的练习，另外有一个查找链表中间元素的算法!">
+    
+    
+    
+    
+    <link rel="alternative" href="/Tinnypp/atom.xml" title="Kevin&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/myLogo.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/myLogo.png">
+    
+
+  
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
+				<h2 class="blog-motto">编程,生活,成长</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="st-search-inpu" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/12/11/LinkList-Practice/" title="LinkList Practice" itemprop="url">LinkList Practice</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2016-12-11T08:44:34.000Z" itemprop="datePublished">Dec 11 2016</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		
+		</div>
+		
+		<p>单链表的练习，另外有一个查找链表中间元素的算法!<a id="more"></a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div></pre></td><td class="code"><pre><div class="line">/*************************************************************************</div><div class="line">	&gt; File Name: LinkList.c</div><div class="line">	&gt; Author: </div><div class="line">	&gt; Mail: </div><div class="line">	&gt; Created Time: 日 12/11 11:34:10 2016</div><div class="line"> ************************************************************************/</div><div class="line"></div><div class="line">#include&lt;stdio.h&gt;</div><div class="line">#include&lt;stdlib.h&gt;</div><div class="line">#include&lt;time.h&gt;</div><div class="line"></div><div class="line">typedef struct Node&#123;</div><div class="line">    int data;</div><div class="line">    struct Node *next;</div><div class="line">&#125;Node,*pNode;</div><div class="line"></div><div class="line">void showLinkList(pNode LinkList);</div><div class="line">int createLinkList(pNode LinkList, int n);</div><div class="line">int lengthLinkList(pNode LinkList);</div><div class="line">int midLinkList(pNode LinkList);</div><div class="line">int destroyLinkList(pNode LinkList);</div><div class="line">int insertLinkList(pNode LinkList, int pos, int ele);</div><div class="line">int deleteLinkList(pNode LinkList, int pos, int *ele);</div><div class="line"></div><div class="line">int main()&#123;</div><div class="line">    printf(&quot;0 - check LinkList\n1 - create LinkList\n2 - length of LinkList\n3 - mid data\n4 - destroy LinkList\n5 - insert element\n6 - delete element\n9 - exit\n&quot;);</div><div class="line">    int choose;</div><div class="line">    int pos;</div><div class="line">    int length;</div><div class="line">    int midData;</div><div class="line">    int insert_ele;</div><div class="line">    int ele;</div><div class="line">    int n;</div><div class="line">    //头结点</div><div class="line">    pNode LinkList = (pNode)malloc(sizeof(Node));</div><div class="line">    LinkList-&gt;next = NULL;</div><div class="line">    srand((unsigned)time(NULL));</div><div class="line">    printf(&quot;please choose one:&quot;);</div><div class="line">    scanf(&quot;%d&quot;, &amp;choose);</div><div class="line">    while(choose != 9)&#123;</div><div class="line">        switch(choose)&#123;</div><div class="line">            case 0:</div><div class="line">                showLinkList(LinkList);</div><div class="line">                break;</div><div class="line">            case 1:</div><div class="line">                printf(&quot;enter in how many links do you want:&quot;);</div><div class="line">                scanf(&quot;%d&quot;, &amp;n);</div><div class="line">                createLinkList(LinkList, n);</div><div class="line">                showLinkList(LinkList);</div><div class="line">                break;</div><div class="line">            case 2:</div><div class="line">                length = lengthLinkList(LinkList);</div><div class="line">                printf(&quot;length of LinkList is %d\n&quot;, length);</div><div class="line">                break;</div><div class="line">            case 3:</div><div class="line">                midData = midLinkList(LinkList);</div><div class="line">                printf(&quot;mid data of LinkList is %d\n&quot;, midData);</div><div class="line">                break;</div><div class="line">            case 4:</div><div class="line">                destroyLinkList(LinkList);</div><div class="line">                printf(&quot;already destroy\n&quot;);</div><div class="line">                showLinkList(LinkList);</div><div class="line">                break;</div><div class="line">            case 5:</div><div class="line">                printf(&quot;enter ele to insert and pos:&quot;);</div><div class="line">                scanf(&quot;%d %d&quot;, &amp;insert_ele, &amp;pos);</div><div class="line">                insertLinkList(LinkList, pos, insert_ele);</div><div class="line">                showLinkList(LinkList);</div><div class="line">                break;</div><div class="line">            case 6:</div><div class="line">                printf(&quot;enter pos to delete:&quot;);</div><div class="line">                scanf(&quot;%d&quot;, &amp;pos);</div><div class="line">                deleteLinkList(LinkList, pos, &amp;ele);</div><div class="line">                showLinkList(LinkList);</div><div class="line">                break;</div><div class="line">            default:</div><div class="line">                printf(&quot;enter an number 0-6 and 9 to exit!\n&quot;);</div><div class="line">        &#125;</div><div class="line">    printf(&quot;0 - check LinkList\n1 - create LinkList\n2 - length of LinkList\n3 - mid data\n4 - destroy LinkList\n5 - insert element\n6 - delete element\n9 - exit\n&quot;);</div><div class="line">    printf(&quot;please choose one:&quot;);</div><div class="line">    scanf(&quot;%d&quot;, &amp;choose);</div><div class="line">    &#125;</div><div class="line">    return 0;</div><div class="line">&#125;</div><div class="line"></div><div class="line">void showLinkList(pNode LinkList)&#123;</div><div class="line">    //LinkList指向第一个结点</div><div class="line">    printf(&quot;start-&gt;&quot;);</div><div class="line">    pNode p = LinkList;</div><div class="line">    while(p-&gt;next != NULL)&#123;</div><div class="line">        p = p-&gt;next;</div><div class="line">        printf(&quot;data:%d&quot;, p-&gt;data);</div><div class="line">        printf(&quot;-&gt;&quot;);</div><div class="line">    &#125;</div><div class="line">    printf(&quot;end\n&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">int createLinkList(pNode LinkList, int n)&#123;</div><div class="line">    if (n &lt;= 0 )&#123;</div><div class="line">        return -1;</div><div class="line">    &#125;</div><div class="line">    pNode p = LinkList;</div><div class="line">    pNode q = NULL;</div><div class="line">    int i;</div><div class="line">    int data;</div><div class="line">    printf(&quot;creating...\n&quot;);</div><div class="line">    for(i = 0; i &lt;n; i++)&#123;</div><div class="line">        printf(&quot;creating %d Node\n&quot;, i+1);</div><div class="line">        q = (pNode)malloc(sizeof(Node));</div><div class="line">        data = rand() % 101;</div><div class="line">        q-&gt;data = data;</div><div class="line">        q-&gt;next = NULL;</div><div class="line">        p-&gt;next = q;</div><div class="line">        p = q;</div><div class="line">    &#125;</div><div class="line">    return 0;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int lengthLinkList(pNode LinkList)&#123;</div><div class="line">    if(LinkList-&gt;next == NULL)&#123;</div><div class="line">        return -1;</div><div class="line">    &#125;</div><div class="line">    pNode p = LinkList;</div><div class="line">    int count;</div><div class="line">    while(p-&gt;next != NULL)&#123;</div><div class="line">        p = p-&gt;next;</div><div class="line">        count ++;</div><div class="line">    &#125;</div><div class="line">    return count;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int midLinkList(pNode LinkList)&#123;</div><div class="line">    //快慢指针</div><div class="line">    pNode p = LinkList;</div><div class="line">    pNode q = LinkList;</div><div class="line">    while(p-&gt;next != NULL)&#123;</div><div class="line">        if (p-&gt;next-&gt;next != NULL)&#123;</div><div class="line">            p = p-&gt;next-&gt;next;</div><div class="line">            q = q-&gt;next;</div><div class="line">        &#125;else&#123;</div><div class="line">            p = p-&gt;next;</div><div class="line">            q = q-&gt;next;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return q-&gt;data;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int destroyLinkList(pNode LinkList)&#123;</div><div class="line">    pNode p = LinkList;</div><div class="line">    if(p == NULL || p-&gt;next == NULL)&#123;</div><div class="line">        return -1;</div><div class="line">    &#125;</div><div class="line">    p = p-&gt;next;</div><div class="line">    pNode q = NULL;</div><div class="line">    while(p-&gt;next != NULL)&#123;</div><div class="line">        q = p-&gt;next;</div><div class="line">        free(p);</div><div class="line">        p = q;</div><div class="line">    &#125;</div><div class="line">    return 0;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int insertLinkList(pNode LinkList, int pos, int ele)&#123;</div><div class="line">    if(pos &lt; 0 || pos &gt; lengthLinkList(LinkList))&#123;</div><div class="line">        return -1;</div><div class="line">    &#125;</div><div class="line">    pNode p = LinkList;</div><div class="line">    int i;</div><div class="line">    //首先获取到插入位置前一个元素</div><div class="line">    for(i=1;i&lt;pos;i++)&#123;</div><div class="line">        p = p-&gt;next;</div><div class="line">    &#125;</div><div class="line">    pNode q = (pNode)malloc(sizeof(Node));</div><div class="line">    q-&gt;data = ele;</div><div class="line">    q-&gt;next = p-&gt;next;</div><div class="line">    p-&gt;next = q;</div><div class="line">    return 0;</div><div class="line">&#125;</div><div class="line">        </div><div class="line">int deleteLinkList(pNode LinkList, int pos, int *ele)&#123;</div><div class="line">    if(pos &lt; 0 || pos &gt; lengthLinkList(LinkList))&#123;</div><div class="line">        return -1;</div><div class="line">    &#125;</div><div class="line">    //同样获取到前一个元素</div><div class="line">    pNode p = LinkList;</div><div class="line">    int i;</div><div class="line">    for(i=1; i&lt;pos; i++)&#123;</div><div class="line">        p = p-&gt;next;</div><div class="line">    &#125;</div><div class="line">    pNode q = p-&gt;next;</div><div class="line">    *ele = q-&gt;data;</div><div class="line">    p-&gt;next = p-&gt;next-&gt;next;</div><div class="line">    free(q);</div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/C/">C</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/数据结构与算法/">数据结构与算法</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://microndgt.github.io/2016/12/11/LinkList-Practice/" data-title="LinkList Practice | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/12/11/C语言总结/"  title="C语言总结">
+ <strong>Old:</strong><br/> 
+ <span>C语言总结
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="LinkList Practice" data-thread-key="LinkList-Practice" data-author-key="Kevin" data-url="http://microndgt.github.io/post/LinkList-Practice"></div>
+	
+</section>
+
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© Kevin</span>
+		
+	<div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"microndgt"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';    //change to ds.src = '/js/embed.js'; to add useragent for duoshuo
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>
