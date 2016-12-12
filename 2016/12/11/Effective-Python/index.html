@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>C语言总结 | Kevin&#39;s Blog</title>
+    <title>Effective Python | Kevin&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="没有搞清楚的C语言概念总结!">
+    <meta name="description" content="Python进阶之路～">
     
     
     
@@ -90,10 +90,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/12/11/C语言总结/" title="C语言总结" itemprop="url">C语言总结</a>
+      <a href="/2016/12/11/Effective-Python/" title="Effective Python" itemprop="url">Effective Python</a>
   </h1>
   <p class="article-time">
-    <time datetime="2016-12-11T03:43:04.000Z" itemprop="datePublished">Dec 11 2016</time>
+    <time datetime="2016-12-11T08:55:57.000Z" itemprop="datePublished">Dec 11 2016</time>
   </p>
 </header>
 	<div class="article-content">
@@ -101,35 +101,49 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#结构体"><span class="toc-number">1.</span> <span class="toc-text">结构体</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PEP8风格指南"><span class="toc-number">1.</span> <span class="toc-text">PEP8风格指南</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#bytes-str与unicode的区别"><span class="toc-number">2.</span> <span class="toc-text">bytes, str与unicode的区别</span></a></li></ol>
 		</div>
 		
-		<p>没有搞清楚的C语言概念总结!<a id="more"></a></p>
-<h1 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">typedef struct Node&#123;</div><div class="line">    int data;</div><div class="line">    struct Node *next;</div><div class="line">&#125;mNode, *pNode;</div></pre></td></tr></table></figure>
-<p><code>Node</code>是结构名，这个名字主要是为了在结构体中包含自己为成员变量的时候使用</p>
-<p><code>mNode</code>是<code>struct Node</code>的别名，两者名字可以相同</p>
-<p><code>pNode</code>是<code>struct Node *</code>的别名</p>
-<p>等价于<code>typedef struct Node mNode</code>和<code>typedef struct Node *pNode</code></p>
+		<p>Python进阶之路～<a id="more"></a></p>
+<h1 id="PEP8风格指南"><a href="#PEP8风格指南" class="headerlink" title="PEP8风格指南"></a>PEP8风格指南</h1><ul>
+<li>使用空格来表示缩进，而不是制表符</li>
+<li>占据多行的长表达式，除了首行之外的其余各行都应该在通常的缩进级别上再加4个空格</li>
+<li>函数，变量，属性应该用小写字母来拼写，各单词之前以下划线相连</li>
+<li>受保护的实例属性，用单个下划线开头</li>
+<li>私有的实例属性，用两个下划线开头</li>
+<li>类与异常，使用每个单词首字母大写的形式命名，<code>CatCat</code></li>
+<li>采用内联形式的否定词，<code>if a is not b</code></li>
+<li>通过<code>if not somelist</code> or <code>if somelist</code>来对是否为空值进行检测</li>
+<li>如果以相对名称来编写import语句，<code>from . import foo</code></li>
+<li>import顺序，标准库，第三方模块，自用模块，按字母排序</li>
+</ul>
+<h1 id="bytes-str与unicode的区别"><a href="#bytes-str与unicode的区别" class="headerlink" title="bytes, str与unicode的区别"></a>bytes, str与unicode的区别</h1><p>Python3有两种表示字符序列的类型，bytes和str，前者包含原始的8位值，后者实例包含Unicode字符</p>
+<p>要想把Unicode字符转换成二进制数据，使用encode方法，想将二进制数据转换成Unicode字符，使用decode方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;&apos;€20&apos;.encode(&apos;iso-8859-15&apos;)</div><div class="line">b&apos;\xa420&apos;</div><div class="line">&gt;&gt;&gt; b&apos;\xa420&apos;.decode(&apos;iso-8859-15&apos;)</div><div class="line">&apos;€20&apos;</div></pre></td></tr></table></figure>
+<p>程序的核心部分使用Unicode字符类型，外部进行解码编码操作</p>
+<p>创建两个函数，切换字符类型，使得转换后的数据符合开发者的预期</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">def to_str(bytes_or_str):</div><div class="line">    if isinstance(bytes_or_str, bytes):</div><div class="line">        value = bytes_or_str.decode(&apos;utf-8&apos;)</div><div class="line">    else:</div><div class="line">        value = bytes_or_str</div><div class="line">    return value</div><div class="line">def to_bytes(bytes_or_str):</div><div class="line">    if isinstance(bytes_or_str, str):</div><div class="line">        value = bytes_or_str.encode(&apos;utf-8&apos;)</div><div class="line">    else:</div><div class="line">        value = bytes_or_str</div><div class="line">    return value</div></pre></td></tr></table></figure>
+<p>在Python3中，str和bytes永远不会等价，另外通过内置的open函数获取了函数句柄，那么该句柄酒会采用默认的utf-8编码格式操作文件，而在Python2中默认编码格式是二进制形式，所以写入或者读取二进制数据使用<code>wb</code> or <code>rb</code>模式</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/编程/">编程</a>
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python/">Python</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/C/">C</a>
+  <a class="article-category-link" href="/categories/Python/">Python</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2016/12/11/C语言总结/" data-title="C语言总结 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2016/12/11/Effective-Python/" data-title="Effective Python | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -139,18 +153,18 @@ var _hmt = _hmt || [];
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/12/11/LinkList-Practice/" title="LinkList Practice">
+ <a href="/2016/12/11/数据结构与算法/" title="数据结构与算法">
   <strong>New:</strong><br/>
   <span>
-  LinkList Practice</span>
+  数据结构与算法</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2016/12/09/数据分析/"  title="数据分析">
+<a href="/2016/12/11/LinkList-Practice/"  title="LinkList Practice">
  <strong>Old:</strong><br/> 
- <span>数据分析
+ <span>LinkList Practice
 </span>
 </a>
 </div>
@@ -160,7 +174,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="C语言总结" data-thread-key="C语言总结" data-author-key="Kevin" data-url="http://microndgt.github.io/post/C语言总结"></div>
+	<div class="ds-thread" data-title="Effective Python" data-thread-key="Effective-Python" data-author-key="Kevin" data-url="http://microndgt.github.io/post/Effective-Python"></div>
 	
 </section>
 
