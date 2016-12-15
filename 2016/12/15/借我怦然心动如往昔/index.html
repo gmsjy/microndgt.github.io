@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Multiprocessing的使用 | Kevin&#39;s Blog</title>
+    <title>借我怦然心动如往昔 | Kevin&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="Python多进程编程问题解决笔记～">
+    <meta name="description" content="借我说我出口的旦旦誓言">
     
     
     
@@ -90,10 +90,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/11/04/multiprocessing的使用/" title="Multiprocessing的使用" itemprop="url">Multiprocessing的使用</a>
+      <a href="/2016/12/15/借我怦然心动如往昔/" title="借我怦然心动如往昔" itemprop="url">借我怦然心动如往昔</a>
   </h1>
   <p class="article-time">
-    <time datetime="2016-11-04T01:23:44.000Z" itemprop="datePublished">Nov 4 2016</time>
+    <time datetime="2016-12-15T13:11:14.000Z" itemprop="datePublished">Dec 15 2016</time>
   </p>
 </header>
 	<div class="article-content">
@@ -104,54 +104,42 @@ var _hmt = _hmt || [];
 		
 		</div>
 		
-		<p>Python多进程编程问题解决笔记～<a id="more"></a></p>
-<p>工作中遇到了一个多进程编程的东西，使用multiprocessing模块的Pool.apply_async()方法，但是无法正常启动，后来将其换成Pool.apply()方法，即可正常运行。其中大有蹊跷，详细研究后才发现是这个原因。。。</p>
-<p>首先介绍这几个函数</p>
-<ul>
-<li><code>apply(func[,args[,kwds]])</code></li>
-</ul>
-<p>apply用于传递不定参数，同python中的apply函数一致，主进程会阻塞于函数，也就是说使用apply方法不需要考虑主进程是不是会退出，它会一直运行到所有进程结束运行后才退出。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">for x in gen_list(l):</div><div class="line">    result = pool.apply(pool_test, (x,))</div><div class="line">    print &apos;main process&apos;</div></pre></td></tr></table></figure>
-<ul>
-<li><code>apply_async(func[,args[,kwds[,callback]]])</code></li>
-</ul>
-<p>与apply用法一致，但它是非阻塞的且支持结果返回后进行回调。非阻塞的所以主进程循环运行过程中不等待apply_async的返回结果，在主进程结束后，即使子进程还未返回整个程序也会就退出。因此我们必须在主进程中使用pool.close与pool.join来防止主进程退出。注意join方法一定要在close或terminate之后调用。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">for x in gen_list(l):</div><div class="line">    pool.apply_async(pool_test, (x, ))</div><div class="line">    print &apos;main_process&apos;</div><div class="line">pool.close()</div><div class="line">pool.join()</div></pre></td></tr></table></figure>
-<ul>
-<li>问题所在</li>
-</ul>
-<p>而自己之前的代码是这样的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">if sys.argv[1] == &quot;mp&quot;:</div><div class="line">    func = run_mp</div><div class="line">elif sys.argv[1] == &quot;ulist&quot;:</div><div class="line">    path = sys.argv[2]</div><div class="line">	for u in open(path):</div><div class="line">		searchTheDigestID(u.strip())</div><div class="line">		pool.apply_async(run_directly,(u,))</div><div class="line">	# 加上这个</div><div class="line">	# pool.close()</div><div class="line">	# pool.join()</div><div class="line">	exit(0)</div><div class="line">run_from_dir()</div><div class="line">pool.close()</div><div class="line">pool.join()</div></pre></td></tr></table></figure>
-<p>问题就很明显了：在执行完主进程，主进程就退出了，所以就要在主进程调用后，加上close()和join()，然后就完美解决了</p>
-<ul>
-<li>多进程的几个例子</li>
-</ul>
-<p>新建单一进程</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">import multiprocessing</div><div class="line">import time</div><div class="line">def func(msg):</div><div class="line">  for i in xrange(3):</div><div class="line">    print msg</div><div class="line">    time.sleep(1)</div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">  p = multiprocessing.Process(target=func, args=(&quot;hello&quot;, ))</div><div class="line">  p.start()</div><div class="line">  p.join()</div><div class="line">  print &quot;Sub-process done.&quot;</div></pre></td></tr></table></figure>
-<p>使用进程池，跑满多核CPU，使用apply_async，如果使用apply则是使用阻塞版本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">import multiprocessing</div><div class="line">import time</div><div class="line">def func(msg):</div><div class="line">  for i in xrange(3):</div><div class="line">    print msg</div><div class="line">    time.sleep(1)</div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">  pool = multiprocessing.Pool(processes=4)</div><div class="line">  for i in xrange(10):</div><div class="line">    msg = &quot;hello %d&quot; %(i)</div><div class="line">    pool.apply_async(func, (msg, ))</div><div class="line">  # 注意这里</div><div class="line">  pool.close()</div><div class="line">  pool.join()</div><div class="line">  print &quot;Sub-process(es) done.&quot;</div></pre></td></tr></table></figure>
-<p>使用Pool，并且关心结果</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">import multiprocessing</div><div class="line">import time</div><div class="line">def func(msg):</div><div class="line">  for i in xrange(3):</div><div class="line">    print msg</div><div class="line">    time.sleep(1)</div><div class="line">  return &quot;done &quot; + msg</div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">  pool = multiprocessing.Pool(processes=4)</div><div class="line">  result = []</div><div class="line">  for i in xrange(10):</div><div class="line">    msg = &quot;hello %d&quot; %(i)</div><div class="line">    result.append(pool.apply_async(func, (msg, )))</div><div class="line">  pool.close()</div><div class="line">  pool.join()</div><div class="line">  for res in result:</div><div class="line">    print res.get()</div><div class="line">  print &quot;Sub-process(es) done.&quot;</div></pre></td></tr></table></figure>
+		<p>借我说我出口的旦旦誓言<a id="more"></a></p>
+<p>最近几天一直坚持下班后回酒店练keep，练完一身汗，洗个澡，超级舒服，然后爬到床上看看视频，学会习，思考思考人生，回忆后悔一下过往，追忆似水年华，感叹韶光易逝。</p>
+<p>我的未来，未来未来，未知到来。quit掉PhD，来创业公司来撸代码，将来会是怎样？在一起分手在一起要分手，我的将来那个她是谁？</p>
+<p>不知道为何，自从经历了这一切之后，再也提不起精神，曾经自己也可以眼中只有那一个人四年如一日，从来没有疲惫过，哪怕到分手的那一天，还想着等她考完试等着她，我们说好的不分手。</p>
+<p>现在现在，还没有过几个月，心里早已疲惫不堪，不想动没有想念，甚至连分手的想法都没有，心里平静的像一滩死海，不会再爱了吗？？！</p>
+<blockquote>
+<p>借我亡命天涯的勇敢</p>
+<p>借我说得出口的旦旦誓言</p>
+<p>借我孤绝如初见</p>
+<p>借我生猛与莽撞不问明天</p>
+<p>借我一束光照亮黯淡</p>
+<p>借我笑颜灿烂如春天</p>
+<p>借我怦然心动如往昔</p>
+<p>借我安适的清晨与傍晚</p>
+<p>静看光阴荏苒</p>
+</blockquote>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python/">Python</a>
+  <span></span> <a href="/tags/北京/">北京</a><a href="/tags/生活/">生活</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/Python/">Python</a>
+  <a class="article-category-link" href="/categories/思录集/">思录集</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2016/11/04/multiprocessing的使用/" data-title="Multiprocessing的使用 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2016/12/15/借我怦然心动如往昔/" data-title="借我怦然心动如往昔 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -160,19 +148,11 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/11/05/MySQL插入本地CSV数据/" title="MySQL插入本地CSV数据">
-  <strong>新一篇:</strong><br/>
-  <span>
-  MySQL插入本地CSV数据</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/11/03/English-Time-1/"  title="English Time 1">
+<a href="/2016/12/14/数据结构与算法/"  title="数据结构与算法">
  <strong>旧一篇:</strong><br/> 
- <span>English Time 1
+ <span>数据结构与算法
 </span>
 </a>
 </div>
@@ -182,7 +162,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="Multiprocessing的使用" data-thread-key="multiprocessing的使用" data-author-key="Kevin" data-url="http://microndgt.github.io/post/multiprocessing的使用"></div>
+	<div class="ds-thread" data-title="借我怦然心动如往昔" data-thread-key="借我怦然心动如往昔" data-author-key="Kevin" data-url="http://microndgt.github.io/post/借我怦然心动如往昔"></div>
 	
 </section>
 
