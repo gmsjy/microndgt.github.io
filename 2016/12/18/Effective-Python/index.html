@@ -1,0 +1,394 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Effective Python | Kevin&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Kevin">
+    
+    <meta name="description" content="Python进阶之路～">
+    
+    
+    
+    
+    <link rel="alternative" href="/Tinnypp/atom.xml" title="Kevin&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/myLogo.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/myLogo.png">
+    
+
+  
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
+				<h2 class="blog-motto">编程,生活,成长</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="st-search-inpu" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/12/18/Effective-Python/" title="Effective Python" itemprop="url">Effective Python</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2016-12-18T04:55:57.000Z" itemprop="datePublished">Dec 18 2016</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PEP8风格指南"><span class="toc-number">1.</span> <span class="toc-text">PEP8风格指南</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#bytes-str与unicode的区别"><span class="toc-number">2.</span> <span class="toc-text">bytes, str与unicode的区别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#用辅助函数来取代复杂的表达式"><span class="toc-number">3.</span> <span class="toc-text">用辅助函数来取代复杂的表达式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#切割序列的方法"><span class="toc-number">4.</span> <span class="toc-text">切割序列的方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#单次切片操作内，不要同时指定start-end和stride"><span class="toc-number">5.</span> <span class="toc-text">单次切片操作内，不要同时指定start,end和stride</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#用列表推导来取代map和filter"><span class="toc-number">6.</span> <span class="toc-text">用列表推导来取代map和filter</span></a></li></ol>
+		</div>
+		
+		<p>Python进阶之路～<a id="more"></a></p>
+<h1 id="PEP8风格指南"><a href="#PEP8风格指南" class="headerlink" title="PEP8风格指南"></a>PEP8风格指南</h1><ul>
+<li>使用空格来表示缩进，而不是制表符</li>
+<li>占据多行的长表达式，除了首行之外的其余各行都应该在通常的缩进级别上再加4个空格</li>
+<li>函数，变量，属性应该用小写字母来拼写，各单词之前以下划线相连</li>
+<li>受保护的实例属性，用单个下划线开头</li>
+<li>私有的实例属性，用两个下划线开头</li>
+<li>类与异常，使用每个单词首字母大写的形式命名，<code>CatCat</code></li>
+<li>采用内联形式的否定词，<code>if a is not b</code></li>
+<li>通过<code>if not somelist</code> or <code>if somelist</code>来对是否为空值进行检测</li>
+<li>如果以相对名称来编写import语句，<code>from . import foo</code></li>
+<li>import顺序，标准库，第三方模块，自用模块，按字母排序</li>
+</ul>
+<h1 id="bytes-str与unicode的区别"><a href="#bytes-str与unicode的区别" class="headerlink" title="bytes, str与unicode的区别"></a>bytes, str与unicode的区别</h1><p>Python3有两种表示字符序列的类型，bytes和str，前者包含原始的8位值，后者实例包含Unicode字符</p>
+<p>要想把Unicode字符转换成二进制数据，使用encode方法，想将二进制数据转换成Unicode字符，使用decode方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;&apos;€20&apos;.encode(&apos;iso-8859-15&apos;)</div><div class="line">b&apos;\xa420&apos;</div><div class="line">&gt;&gt;&gt; b&apos;\xa420&apos;.decode(&apos;iso-8859-15&apos;)</div><div class="line">&apos;€20&apos;</div></pre></td></tr></table></figure>
+<p>程序的核心部分使用Unicode字符类型，外部进行解码编码操作</p>
+<p>创建两个函数，切换字符类型，使得转换后的数据符合开发者的预期</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">def to_str(bytes_or_str):</div><div class="line">    if isinstance(bytes_or_str, bytes):</div><div class="line">        value = bytes_or_str.decode(&apos;utf-8&apos;)</div><div class="line">    else:</div><div class="line">        value = bytes_or_str</div><div class="line">    return value</div><div class="line">def to_bytes(bytes_or_str):</div><div class="line">    if isinstance(bytes_or_str, str):</div><div class="line">        value = bytes_or_str.encode(&apos;utf-8&apos;)</div><div class="line">    else:</div><div class="line">        value = bytes_or_str</div><div class="line">    return value</div></pre></td></tr></table></figure>
+<p>在Python3中，str和bytes永远不会等价，另外通过内置的open函数获取了函数句柄，那么该句柄酒会采用默认的utf-8编码格式操作文件，而在Python2中默认编码格式是二进制形式，所以写入或者读取二进制数据使用<code>wb</code> or <code>rb</code>模式</p>
+<blockquote>
+<p>2016-12-18 12:00</p>
+</blockquote>
+<h1 id="用辅助函数来取代复杂的表达式"><a href="#用辅助函数来取代复杂的表达式" class="headerlink" title="用辅助函数来取代复杂的表达式"></a>用辅助函数来取代复杂的表达式</h1><p><code>red = int(my_values.get(&#39;red&#39;, [&#39;&#39;])[0] or 0)</code></p>
+<p>这种写法过于复杂，可以这样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">red = my_values.get(&apos;red&apos;, [&apos;&apos;])</div><div class="line">red = int(red[0]) if red[0] else 0</div></pre></td></tr></table></figure>
+<p>但是还可以写成辅助函数，这样可以通用，如果频繁使用这种逻辑，那么更应该这么做</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">def get_first_int(values, key, default=0):</div><div class="line">    found = values.get(key, [&apos;&apos;])</div><div class="line">    if found[0]:</div><div class="line">        found = int(found[0])</div><div class="line">    else:</div><div class="line">        found = default</div><div class="line">    return found</div></pre></td></tr></table></figure>
+<p>如果表达式变的比较复杂，那么就应该考虑将其拆成小块，并且把这些逻辑移入辅助函数中，让代码更加易读。</p>
+<p>使用if/else表达式，要比or或者and这样的boolean表达式更加清晰。</p>
+<h1 id="切割序列的方法"><a href="#切割序列的方法" class="headerlink" title="切割序列的方法"></a>切割序列的方法</h1><p>切割列表的时候，start或者end索引越界也不会出现问题，<code>first_twenty_items = a[:20]</code>或者<code>last_twenty_items = a[-20:]</code></p>
+<p>对原列表进行切割之后，会产生另外一份全新的列表，在切割后得到的新列表上进行修改，不会影响原来列表，当然如果列表中含有可变元素，则除外。</p>
+<p>在赋值的时候对左侧列表使用切割操作，会把该列表处在指定范围内的对象替换为新值。列表会根据新值的个数相应的扩张或者收缩。</p>
+<p><code>a[2:7] = [99, 22, 14]</code></p>
+<p>这样就将5个元素变成了3个元素</p>
+<p><code>a[:] = [101, 102, 103]</code></p>
+<p>这样会用右侧的新值复制一份，替换左侧列表全部内容，但是不会重新分配新的列表。</p>
+<h1 id="单次切片操作内，不要同时指定start-end和stride"><a href="#单次切片操作内，不要同时指定start-end和stride" class="headerlink" title="单次切片操作内，不要同时指定start,end和stride"></a>单次切片操作内，不要同时指定start,end和stride</h1><p>常见技巧，把从字节形式存储的字符串反转过来，<code>x[::-1]</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">w = &apos;谢谢&apos; # unicode字符</div><div class="line">x = w.encode(&apos;utf-8&apos;) # 编码成二进制数据</div><div class="line">y = x[::-1] # 反转</div><div class="line">z = y.decode(&apos;utf-8&apos;) # 解码成unicode字符</div><div class="line"># 会出现错误</div></pre></td></tr></table></figure>
+<p>尽量使用stride为正数，且不带start或者end索引的切割操作，尽量避免使用负数做stride</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 可以多次切割</div><div class="line">b = a[::2]</div><div class="line">c = b[1:-1]</div></pre></td></tr></table></figure>
+<h1 id="用列表推导来取代map和filter"><a href="#用列表推导来取代map和filter" class="headerlink" title="用列表推导来取代map和filter"></a>用列表推导来取代map和filter</h1><p><code>even_squares = [x**2 for x in a if x % 2 == 0]</code></p>
+<p>也可以使用map和filter</p>
+<p><code>alt = map(lambda x: x**2, filter(lambda x: x % 2 == 0, a))</code></p>
+<p>字典推导式</p>
+<p><code>rank_dict = {rank: name for name, rank in chile_ranks.item()}</code></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python/">Python</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Python/">Python</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://microndgt.github.io/2016/12/18/Effective-Python/" data-title="Effective Python | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/12/15/数据结构与算法/"  title="数据结构与算法">
+ <strong>Old:</strong><br/> 
+ <span>数据结构与算法
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="Effective Python" data-thread-key="Effective-Python" data-author-key="Kevin" data-url="http://microndgt.github.io/post/Effective-Python"></div>
+	
+</section>
+
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© Kevin</span>
+		
+	<div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"microndgt"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';    //change to ds.src = '/js/embed.js'; to add useragent for duoshuo
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>
