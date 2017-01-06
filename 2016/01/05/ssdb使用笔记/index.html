@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Hexo与github搭建博客 | Kevin&#39;s Blog</title>
+    <title>Ssdb使用笔记 | Kevin&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="hexo的一些常用使用方法和配置">
+    <meta name="description" content="ssdb是工作要使用到的一个数据库，记录一下安装步骤以及常用用法。">
     
     
     
@@ -90,10 +90,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/10/30/hexo与github搭建博客/" title="Hexo与github搭建博客" itemprop="url">Hexo与github搭建博客</a>
+      <a href="/2016/01/05/ssdb使用笔记/" title="Ssdb使用笔记" itemprop="url">Ssdb使用笔记</a>
   </h1>
   <p class="article-time">
-    <time datetime="2016-10-29T16:00:00.000Z" itemprop="datePublished">Oct 30 2016</time>
+    <time datetime="2016-01-05T06:10:00.000Z" itemprop="datePublished">Jan 5 2016</time>
   </p>
 </header>
 	<div class="article-content">
@@ -101,78 +101,67 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据库操作"><span class="toc-number">2.</span> <span class="toc-text">数据库操作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用pyssdb"><span class="toc-number">3.</span> <span class="toc-text">使用pyssdb</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#命令"><span class="toc-number">4.</span> <span class="toc-text">命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#list"><span class="toc-number">4.1.</span> <span class="toc-text">list</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hashmap"><span class="toc-number">4.2.</span> <span class="toc-text">hashmap</span></a></li></ol></li></ol>
 		</div>
 		
-		<p>hexo的一些常用使用方法和配置<a id="more"></a></p>
-<p>使用hexo和github搭建一个自己的博客。Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。</p>
-<ul>
-<li>我使用的平台是Mac，首先安装node.js</li>
-</ul>
-<p><code>brew install node.js</code></p>
-<ul>
-<li>接下来安装hexo</li>
-</ul>
-<p><code>npm install hexo-cli -g</code></p>
-<ul>
-<li>安装好之后，安装git的依赖</li>
-</ul>
-<p><code>npm install hexo-deployer-git --save</code></p>
-<ul>
-<li>然后开始初始一个博客</li>
-</ul>
-<p><code>hexo init blog</code></p>
-<ul>
-<li>常用的一些命令</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">hexo g == hexo generate</div><div class="line">hexo s == hexo server</div><div class="line">hexo d == hexo deploy</div><div class="line">hexo n &quot;name&quot; == hexo new &quot;name&quot;</div><div class="line">hexo clean</div></pre></td></tr></table></figure>
-<ul>
-<li>接下来创建一篇新的文章</li>
-</ul>
-<p><code>hexo n &quot;hello world&quot;</code></p>
-<p>注意这个地方，最好不要大写，因为deploy后会把资源文件大小转换成小写，但是URL还是用大写，所以会造成404-Not Found。</p>
-<ul>
-<li>修改全局配置文件<code>_config.yml</code></li>
-</ul>
-<p>可以修改博客名字，描述等东西，最下面修改部署方式，使用git</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">	type: git  #注意冒号后面有空格</div><div class="line">	repo: </div><div class="line">	branch:</div></pre></td></tr></table></figure>
-<ul>
-<li>更改主题</li>
-</ul>
-<p>可以在git上面下载主题，直接放入themes文件夹下面就可以了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd blog/themes</div><div class="line">git clone ***</div></pre></td></tr></table></figure>
-<p>修改主题的配置文件<code>_config.yml</code>，调一些属性</p>
-<ul>
-<li>添加新页面</li>
-</ul>
-<p>比如关于我页面</p>
-<p><code>hexo new page &quot;about&quot;</code></p>
-<p>将会生成<code>source/about/index.md</code>，修改这个文件就可以了</p>
-<p>最后修改配置文件<code>_config.yml</code>，添加<code>关于: /about</code></p>
-<ul>
-<li>主页文章显示摘要</li>
-</ul>
-<p>编辑md文件的时候，在作为摘要的文字后面添加<code>&lt;!--more--&gt;</code>，这样在主页上就只会显示文章的摘要了。</p>
+		<p>ssdb是工作要使用到的一个数据库，记录一下安装步骤以及常用用法。<a id="more"></a></p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget --no-check-certificate https://github.com/ideawu/ssdb/archive/master.zip</div><div class="line">unzip master</div><div class="line">cd ssdb-master</div><div class="line">make</div></pre></td></tr></table></figure>
+<p>这时报错：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ERROR! autoconf required! install autoconf first</div><div class="line"></div><div class="line">Makefile:4: build_config.mk: No such file or directory</div><div class="line">make: *** No rule to make target `build_config.mk&apos;.  Stop.</div></pre></td></tr></table></figure>
+<p>安装<code>autoconf</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install autoconf</div></pre></td></tr></table></figure>
+<p>安装完成后继续编译</p>
+<p><code>make &amp;&amp; make install</code></p>
+<p>然后启动ssdb服务，<code>-d</code>是deamon模式，服务后台运行</p>
+<p><code>./ssdb-server -d ./ssdb.conf</code></p>
+<p>使用ssdb数据库</p>
+<p><code>./tools/ssdb-cli -h localhost -p 8888</code></p>
+<p>关闭数据库</p>
+<p><code>./ssdb-server ./ssdb.conf -s stop</code></p>
+<h1 id="数据库操作"><a href="#数据库操作" class="headerlink" title="数据库操作"></a>数据库操作</h1><p>字符串类型<code>s</code>，列表类型<code>q</code>，哈希类型<code>h</code>，有序集合类型<code>z</code></p>
+<p>数据库存在哪些键：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">keys 字符串类型</div><div class="line">qlist 列表类型</div><div class="line">hlist 哈希类型</div><div class="line">zlist 有序集合类型</div></pre></td></tr></table></figure>
+<p>前两个参数用于确定键的范围，第三个参数用于返回最大个数，为必需参数。<code>keys &#39;&#39; &#39;&#39; 10</code></p>
+<h1 id="使用pyssdb"><a href="#使用pyssdb" class="headerlink" title="使用pyssdb"></a>使用pyssdb</h1><p>在PyCharm中安装pyssdb</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">c = pyssdb.Client()</div><div class="line">print(c.hgetall(&apos;logasset_10005050&apos;))</div><div class="line">print(c.hget(&apos;logasset_10005050&apos;, &apos;20160102&apos;))</div></pre></td></tr></table></figure>
+<h1 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h1><h2 id="list"><a href="#list" class="headerlink" title="list"></a>list</h2><p><code>qpush_front name item1 item2...</code></p>
+<p><code>qpush_back name item1 item2...</code></p>
+<p><code>qpush name item1 item2...</code></p>
+<p><code>qpop_front name size</code> pop out one or more elements from the head of a queue</p>
+<p><code>qpop_back name size</code> pop out one or more elements from the tail of a queue</p>
+<p><code>qfront name</code> return the first element of a queue</p>
+<p><code>qback name</code> return the last element of a queue</p>
+<p><code>qget name index</code> return the element a the specified index</p>
+<p><code>qrange name offset limit</code> returns a portion of elements from the queue at the specified range[offset, offset+limit]</p>
+<p><code>qlist name_start name_end limit</code> list names in range(name_start, name_end)</p>
+<p><code>qslice name begin end</code> returns a portion of elements from the queue at the specified range[begin,end]</p>
+<h2 id="hashmap"><a href="#hashmap" class="headerlink" title="hashmap"></a>hashmap</h2><p><code>hset name key value</code> set the string value in argument as value of the key of a hashmap</p>
+<p><code>hget name key</code> get the value related to the specified key of a hashmap</p>
+<p><code>hexists name key</code> verify if the specified key exists in a hashmap</p>
+<p><code>hsize name</code> return the number of key-value pairs in the hashmap</p>
+<p><code>hkeys name key_start key_end</code> list keys of a hashmap in range(key_start, key_end)</p>
+<p><code>hgetall name</code> returns the whole hash, as an array of strings indexed by strings</p>
+<p><code>hscan name key_start key_end limit</code> list key-value pairs of a hashmap with keys in range(key_start, key_end)</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/博客/">博客</a><a href="/tags/github/">github</a>
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/NoSQL/">NoSQL</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/博客/">博客</a>
+  <a class="article-category-link" href="/categories/编程/">编程</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2016/10/30/hexo与github搭建博客/" data-title="Hexo与github搭建博客 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2016/01/05/ssdb使用笔记/" data-title="Ssdb使用笔记 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -182,28 +171,20 @@ var _hmt = _hmt || [];
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/10/30/hello-world/" title="Hello World">
+ <a href="/2016/10/30/hexo与github搭建博客/" title="Hexo与github搭建博客">
   <strong>New:</strong><br/>
   <span>
-  Hello World</span>
+  Hexo与github搭建博客</span>
 </a>
 </div>
 
-
-<div class="next">
-<a href="/2016/01/05/ssdb使用笔记/"  title="Ssdb使用笔记">
- <strong>Old:</strong><br/> 
- <span>Ssdb使用笔记
-</span>
-</a>
-</div>
 
 </nav>
 
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="Hexo与github搭建博客" data-thread-key="hexo与github搭建博客" data-author-key="Kevin" data-url="http://microndgt.github.io/post/hexo与github搭建博客"></div>
+	<div class="ds-thread" data-title="Ssdb使用笔记" data-thread-key="ssdb使用笔记" data-author-key="Kevin" data-url="http://microndgt.github.io/post/ssdb使用笔记"></div>
 	
 </section>
 
