@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -78,7 +78,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -179,7 +179,7 @@ var _hmt = _hmt || [];
 <h1 id="尽量用异常来表示特殊情况，而不是返回None"><a href="#尽量用异常来表示特殊情况，而不是返回None" class="headerlink" title="尽量用异常来表示特殊情况，而不是返回None"></a>尽量用异常来表示特殊情况，而不是返回None</h1><p>因为None和空值，0都属于False，但是None产生的原因比较特殊，所以不要直接返回None，而是说明产生这种情况的原因，或者表示操作是否成功。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def divide(a, b):</div><div class="line">    try:</div><div class="line">        return True, a / b</div><div class="line">    except ZeroDivisionError:</div><div class="line">        return False, None</div></pre></td></tr></table></figure>
 <p>另外一种方法就是不返回None，而是将异常抛给上一级，这样没有异常，则返回值正常，否则处理异常</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">def divide(a, b):</div><div class="line">    try:</div><div class="line">        return a / b</div><div class="line">    except ZeroDivisionError:</div><div class="line">        raise ValueError(&apos;Invalid inputs&apos;) from e</div><div class="line">```  </div><div class="line"></div><div class="line">&gt; 2016-1-7 9:32</div><div class="line"></div><div class="line">用super初始化父类</div><div class="line">===</div><div class="line"></div><div class="line">初始化父类的传统方式，是在子类里用子类实例直接调用父类的`__init__`方法</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">def divide(a, b):</div><div class="line">    try:</div><div class="line">        return a / b</div><div class="line">    except ZeroDivisionError:</div><div class="line">        raise ValueError(&apos;Invalid inputs&apos;) from e</div><div class="line">```  </div><div class="line"></div><div class="line"></div><div class="line">用super初始化父类</div><div class="line">===</div><div class="line"></div><div class="line">&gt; 2016-1-7 9:32</div><div class="line"></div><div class="line">初始化父类的传统方式，是在子类里用子类实例直接调用父类的`__init__`方法</div></pre></td></tr></table></figure>
 <p>class MyBaseClass(object):<br>    def <strong>init</strong>(self, value):<br>        self.value = value</p>
 <p>class MyChildClass(MyBaseClass):<br>    def <strong>init</strong>(self):<br>        MyBaseClass.<strong>init</strong>(self, 5)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">但是如果子类受到了多重继承的影响，那么直接调用超类的`__init__`方法，那么可能会产生无法预知的行为，还有一个问题就是它的调用顺序并不固定</div><div class="line"></div><div class="line">还有一个问题是菱形继承中，子类继承自两个单独的超类，那两个超类又继承自同一个公共基类，这种继承会使得公共基类多次执行其`__init__`方法</div><div class="line"></div><div class="line">super函数，定义了方法解析顺序MRO，MRO以标准的流程来安排超类之间的初始化顺序，保证钻石顶部的公共基类的方法只会运行一次。</div><div class="line"></div><div class="line">Python 2</div></pre></td></tr></table></figure></p>
 <p>class TimesFiveClass(MyBaseClass):<br>    def <strong>init</strong>(self, value):<br>        super(TimesFiveClass, self).<strong>init</strong>(value)<br>        self.value *= 5</p>
@@ -237,7 +237,7 @@ var _hmt = _hmt || [];
 
 <div class="next">
 <a href="/2017/01/05/群体性孤独/"  title="群体性孤独">
- <strong>Old:</strong><br/> 
+ <strong>舊一篇:</strong><br/> 
  <span>群体性孤独
 </span>
 </a>
