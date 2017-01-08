@@ -1,0 +1,387 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Python Cookbook之模块和包 | Kevin&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Kevin">
+    
+    <meta name="description" content="模块和包是任何大型项目的核心，本文核心是如何组织包，将大型的模块分解成多个文件，以及创建命名空间包">
+    
+    
+    
+    
+    <link rel="alternative" href="/Tinnypp/atom.xml" title="Kevin&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/myLogo.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/myLogo.png">
+    
+
+  
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
+				<h2 class="blog-motto">编程,生活,成长</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="st-search-inpu" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/01/08/Python-Cookbook之模块和包/" title="Python Cookbook之模块和包" itemprop="url">Python Cookbook之模块和包</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2017-01-08T14:49:13.000Z" itemprop="datePublished">Jan 8 2017</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#把模块按层次结构组织成包"><span class="toc-number">1.</span> <span class="toc-text">把模块按层次结构组织成包</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对所有符号的导入进行精确控制"><span class="toc-number">2.</span> <span class="toc-text">对所有符号的导入进行精确控制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#用相对名称来导入包中的子模块"><span class="toc-number">3.</span> <span class="toc-text">用相对名称来导入包中的子模块</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将模块分解成多个文件"><span class="toc-number">4.</span> <span class="toc-text">将模块分解成多个文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#让各个目录下的代码在统一的命名空间下"><span class="toc-number">5.</span> <span class="toc-text">让各个目录下的代码在统一的命名空间下</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#重新加载模块"><span class="toc-number">6.</span> <span class="toc-text">重新加载模块</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#让目录或者zip文件成为可运行的脚本"><span class="toc-number">7.</span> <span class="toc-text">让目录或者zip文件成为可运行的脚本</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#读取包中的数据文件"><span class="toc-number">8.</span> <span class="toc-text">读取包中的数据文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#添加目录到sys-path中"><span class="toc-number">9.</span> <span class="toc-text">添加目录到sys.path中</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#PYTHONPATH环境变量添加"><span class="toc-number">9.1.</span> <span class="toc-text">PYTHONPATH环境变量添加</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建-pth文件"><span class="toc-number">9.2.</span> <span class="toc-text">创建.pth文件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用字符串给定的名称来导入模块"><span class="toc-number">10.</span> <span class="toc-text">使用字符串给定的名称来导入模块</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#安装只为自己使用的包"><span class="toc-number">11.</span> <span class="toc-text">安装只为自己使用的包</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#发布自定义的包"><span class="toc-number">12.</span> <span class="toc-text">发布自定义的包</span></a></li></ol>
+		</div>
+		
+		<p>模块和包是任何大型项目的核心，本文核心是如何组织包，将大型的模块分解成多个文件，以及创建命名空间包<a id="more"></a></p>
+<h1 id="把模块按层次结构组织成包"><a href="#把模块按层次结构组织成包" class="headerlink" title="把模块按层次结构组织成包"></a>把模块按层次结构组织成包</h1><p>只要把代码按照所希望的方式在文件系统上进行组织，并且确保每个目录中都定义了一个<code>__init__.py</code>文件即可</p>
+<p><code>__init__.py</code>文件的目的是包含可选的初始化代码，当遇到软件包中不同层次的模块时候会触发运行，比如<code>import graphics</code>文件<code>graphics/__init__.py</code>会被导入并形成graphics命名空间中的内容</p>
+<p>一般情况该文件留空即可，但是某些情况下是需要包含代码的，比如可以使用<code>__init__.py</code>来自动加载子模块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">from . import jpg</div><div class="line">from . import png</div></pre></td></tr></table></figure>
+<p>这样只需要一句单独的<code>import graphics.formats</code>就可以导入jpg和png模块了</p>
+<h1 id="对所有符号的导入进行精确控制"><a href="#对所有符号的导入进行精确控制" class="headerlink" title="对所有符号的导入进行精确控制"></a>对所有符号的导入进行精确控制</h1><p>在模块中定义一个变量<code>__all__</code>，用来显式列出可以导出的符号名，一般也不这么做。</p>
+<h1 id="用相对名称来导入包中的子模块"><a href="#用相对名称来导入包中的子模块" class="headerlink" title="用相对名称来导入包中的子模块"></a>用相对名称来导入包中的子模块</h1><p>在软件包中的子模块中导入同一个包中其他的子模块，使用相对名称来导入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">from . import grok</div><div class="line">from ..B import bar</div></pre></td></tr></table></figure>
+<p>也可以使用给出完整的绝对名称来导入<code>from mypackage.A import grok</code></p>
+<p>使用相对导入会好一点，但是不允许跳出定义包的那个目录，另外使用相对导入必须模块位于一个合适的包中才可以，<strong><em>位于脚本顶层目录的模块不能使用相对导入，并且如果包的某个部分是直接以脚本形式执行的，这种情况也不能使用相对导入</em></strong></p>
+<p>但是可以使用<code>-m</code>选项使得相对导入可以正常工作<code>python -m mypackage/A/spam.py</code></p>
+<h1 id="将模块分解成多个文件"><a href="#将模块分解成多个文件" class="headerlink" title="将模块分解成多个文件"></a>将模块分解成多个文件</h1><p>将模块转换为包，这样就可以分解成多个单独的文件，将模块mymodule.py替换成目录mymodule，然后每个文件中包含一个类的定义，最后在<code>__init__.py</code>中将这些文件绑定在一起</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">from .a import A</div><div class="line">from .b import B</div></pre></td></tr></table></figure>
+<p>这样mypackage包就在逻辑上成为了一个单独的模块</p>
+<p>但是这样做会一次性将所有需要的组件都导入进来，所以采用一种惰性导入的方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">def A():</div><div class="line">    from .a import A</div><div class="line">    return A()</div><div class="line">def B():</div><div class="line">    from .b import B</div><div class="line">    return B()</div></pre></td></tr></table></figure>
+<h1 id="让各个目录下的代码在统一的命名空间下"><a href="#让各个目录下的代码在统一的命名空间下" class="headerlink" title="让各个目录下的代码在统一的命名空间下"></a>让各个目录下的代码在统一的命名空间下</h1><p>定义一个顶层的Python包，把它作为命名空间来管理大量单独维护的子模块，对于打算合并在一起的组件，这些目录中的<code>__init__.py</code>文件需要忽略</p>
+<p><code>foo-package/spam/blah.py</code>和<code>bar-package/spam/grok.py</code>在这两个目录里，spam作为公共的命名空间，并且不含有<code>__init__.py</code>文件，将这两个目录都加入Python的模块查询路径中，就可以把不同的包目录合并在一起</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">import sys</div><div class="line">sys.path.extend([&apos;foo-package&apos;, &apos;bar-package&apos;])</div><div class="line">import spam.blah.py</div><div class="line">import spam.grok.py</div></pre></td></tr></table></figure>
+<p>这里使用了命名空间包的特性，就是用来合并不同目录下的代码，把他们放在统一的命名空间下进行管理，因为没有<code>__init__.py</code>，所以解释器开始创建一个列表，然后把所有包含有这个包名的目录都囊括在内，此时就创建除了一个特殊的命名空间包模块。</p>
+<h1 id="重新加载模块"><a href="#重新加载模块" class="headerlink" title="重新加载模块"></a>重新加载模块</h1><p>使用<code>imp.reload()</code>实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import spam</div><div class="line">import imp</div><div class="line">imp.load(spam)</div></pre></td></tr></table></figure>
+<p>这样就会使得已经导入到程序中的模块得到更新，但是<code>from module import name</code>这样语句定义的是不会更新的。所以在生产环境中应该要避免重新加载模块。</p>
+<h1 id="让目录或者zip文件成为可运行的脚本"><a href="#让目录或者zip文件成为可运行的脚本" class="headerlink" title="让目录或者zip文件成为可运行的脚本"></a>让目录或者zip文件成为可运行的脚本</h1><p>如果程序已经由很多文件组成了，则可以把他们放在专属目录下，然后添加一个<code>__main__.py</code>，这样就可以在顶层目录下运行Python解释器，解释器就会把<code>__main__.py</code>作为主程序来执行，在把代码打包成zip文件也是可以执行的<code>python3 myapp.zip</code>，这个方法是一种打包规模较大的Python应用程序的可行方法</p>
+<h1 id="读取包中的数据文件"><a href="#读取包中的数据文件" class="headerlink" title="读取包中的数据文件"></a>读取包中的数据文件</h1><p>读取包中的一个数据文件，因为运行的时候无法知道Python解释器的当前工作目录在哪里，所以必须得用绝对路径来读取文件，这样就太麻烦了，所以使用<code>pkgutil</code>模块来读取文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">import pkgutil</div><div class="line">data = pkgutil.get_data(__package__, &apos;somedata.dat&apos;)</div></pre></td></tr></table></figure>
+<p>所以无论包以什么样的形式安装到了哪里，都可以使用这个函数来获取数据文件，第一个参数是包含有包名的字符串，可以直接提供这个字符串，或者使用<code>__package__</code>，第二个参数是获取的文件相对于包的名称</p>
+<h1 id="添加目录到sys-path中"><a href="#添加目录到sys-path中" class="headerlink" title="添加目录到sys.path中"></a>添加目录到<code>sys.path</code>中</h1><h2 id="PYTHONPATH环境变量添加"><a href="#PYTHONPATH环境变量添加" class="headerlink" title="PYTHONPATH环境变量添加"></a>PYTHONPATH环境变量添加</h2><p><code>env PYTHONPATH=/some/dir:/other/dir python3</code></p>
+<h2 id="创建-pth文件"><a href="#创建-pth文件" class="headerlink" title="创建.pth文件"></a>创建<code>.pth</code>文件</h2><p>放在Python的其中一个site-packages目录中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/some/dir</div><div class="line">/other/dir</div></pre></td></tr></table></figure>
+<p>使用<code>__file__</code>变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import sys</div><div class="line">from os.path import abspath, join, dirname</div><div class="line">sys.path.insert(0, abspath(dirname(&apos;__file__&apos;), &apos;src&apos;))</div></pre></td></tr></table></figure>
+<h1 id="使用字符串给定的名称来导入模块"><a href="#使用字符串给定的名称来导入模块" class="headerlink" title="使用字符串给定的名称来导入模块"></a>使用字符串给定的名称来导入模块</h1><p>使用<code>importlib.import_module()</code>函数手动导入模块，这个函数会把模块对象作为结果返回</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import importlib</div><div class="line">math = importlib.import_module(&apos;math&apos;)</div><div class="line">math.sin(2)</div></pre></td></tr></table></figure>
+<p>同时也可以实现相对导入<code>b = importlib.import_module(&#39;.b&#39;, __package__)</code></p>
+<p>也可以使用内建的<code>__import__()</code>函数进行导入，但是上面的方法更容易使用些</p>
+<h1 id="安装只为自己使用的包"><a href="#安装只为自己使用的包" class="headerlink" title="安装只为自己使用的包"></a>安装只为自己使用的包</h1><p>在安装命令后面添加<code>--user</code>选项即可<code>python3 setup.py install --user</code></p>
+<h1 id="发布自定义的包"><a href="#发布自定义的包" class="headerlink" title="发布自定义的包"></a>发布自定义的包</h1><p>编写setup.py文件</p>
+<p>distutils - Python自带的基本安装工具<code>from distutils.core import setup</code></p>
+<p>下来创建<code>MANIFEST.in</code>文件，列出包含在包中的非源代码文件</p>
+<p>然后<code>python3 setup.py sdist</code>创建源代码级的分发包</p>
+<p>另外一个包管理工具<code>setuptools</code></p>
+<p><a href="http://blog.csdn.net/pfm685757/article/details/48651389#t3" target="_blank" rel="external">http://blog.csdn.net/pfm685757/article/details/48651389#t3</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python/">Python</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://microndgt.github.io/2017/01/08/Python-Cookbook之模块和包/" data-title="Python Cookbook之模块和包 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/01/07/Effective-Python/"  title="Effective Python">
+ <strong>旧一篇:</strong><br/> 
+ <span>Effective Python
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="Python Cookbook之模块和包" data-thread-key="Python-Cookbook之模块和包" data-author-key="Kevin" data-url="http://microndgt.github.io/post/Python-Cookbook之模块和包"></div>
+	
+</section>
+
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© Kevin</span>
+		
+	<div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"microndgt"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';    //change to ds.src = '/js/embed.js'; to add useragent for duoshuo
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>
