@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>SQL语句总结 | Kevin&#39;s Blog</title>
+    <title>Effective Python 部署 | Kevin&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="记录常用的sql语句，还是非常有用的～">
+    <meta name="description" content="Effective Python 的最后部分。">
     
     
     
@@ -90,10 +90,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/11/24/SQL语句总结/" title="SQL语句总结" itemprop="url">SQL语句总结</a>
+      <a href="/2017/01/12/Effective-Python-部署/" title="Effective Python 部署" itemprop="url">Effective Python 部署</a>
   </h1>
   <p class="article-time">
-    <time datetime="2016-11-24T07:01:42.000Z" itemprop="datePublished">Nov 24 2016</time>
+    <time datetime="2017-01-12T11:37:10.000Z" itemprop="datePublished">Jan 12 2017</time>
   </p>
 </header>
 	<div class="article-content">
@@ -101,49 +101,51 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#建表"><span class="toc-number">1.</span> <span class="toc-text">建表</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#插入"><span class="toc-number">2.</span> <span class="toc-text">插入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Load-by-csv"><span class="toc-number">3.</span> <span class="toc-text">Load by csv</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#小操作"><span class="toc-number">4.</span> <span class="toc-text">小操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#删除表"><span class="toc-number">4.1.</span> <span class="toc-text">删除表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除表中数据"><span class="toc-number">4.2.</span> <span class="toc-text">删除表中数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改字段"><span class="toc-number">4.3.</span> <span class="toc-text">修改字段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加索引"><span class="toc-number">4.4.</span> <span class="toc-text">添加索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#选择前10条数据"><span class="toc-number">4.5.</span> <span class="toc-text">选择前10条数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加列"><span class="toc-number">4.6.</span> <span class="toc-text">添加列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#改变表中字段的顺序"><span class="toc-number">4.7.</span> <span class="toc-text">改变表中字段的顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除表中某个字段"><span class="toc-number">4.8.</span> <span class="toc-text">删除表中某个字段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改字段名字"><span class="toc-number">4.9.</span> <span class="toc-text">修改字段名字</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#用适当的方式打破循环依赖关系"><span class="toc-number">1.</span> <span class="toc-text">用适当的方式打破循环依赖关系</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#用虚拟环境隔离项目，并重建其依赖关系"><span class="toc-number">2.</span> <span class="toc-text">用虚拟环境隔离项目，并重建其依赖关系</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#重建项目的依赖关系"><span class="toc-number">2.1.</span> <span class="toc-text">重建项目的依赖关系</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#考虑使用模块级别的代码来配置不同的部署环境"><span class="toc-number">3.</span> <span class="toc-text">考虑使用模块级别的代码来配置不同的部署环境</span></a></li></ol>
 		</div>
 		
-		<p>记录常用的sql语句，还是非常有用的～<a id="more"></a></p>
-<h1 id="建表"><a href="#建表" class="headerlink" title="建表"></a>建表</h1><p>建表语句：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">create table if not exists ability(</div><div class="line">id int(11) not null auto_increment,</div><div class="line">fundId int(11) default null,</div><div class="line">ability_gain float(15,4) default null,</div><div class="line">primary key(id),</div><div class="line">index `fundId` (`fundId` asc))</div><div class="line">engine=InnoDB default charset=utf8;</div></pre></td></tr></table></figure>
-<p>注意：</p>
-<p><code>utf8 not utf-8</code></p>
-<p><code>auto_increment not auto increment</code></p>
-<h1 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h1><p><code>insert into latest_avg_ability (date, ability_risk, ability_gain, ability_short, ability_medium, ability_long) select date, avg(ability_risk), avg(ability_gain), avg(ability_short), avg(ability_medium), avg(ability_long) from summary group by date;</code></p>
-<p>但是group by的属性要是唯一的，这样生成的均值应该是唯一的。</p>
-<h1 id="Load-by-csv"><a href="#Load-by-csv" class="headerlink" title="Load by csv"></a>Load by csv</h1><p><code>LOAD DATA INFILE &#39;/data/output.csv&#39; INTO TABLE ability CHARACTER SET utf8 FIELDS TERMINATED BY &#39;,&#39;;</code></p>
-<p>在load csv的时候出现表中有主键，但是csv数据没有那一列，会报错，<code>doesn&#39;t contain data for all columns</code>,于是用Python将每一行的行数加在csv文件的第一列。</p>
-<p>这里要注意的是primary_key是从1开始，而不是0.</p>
-<h1 id="小操作"><a href="#小操作" class="headerlink" title="小操作"></a>小操作</h1><h2 id="删除表"><a href="#删除表" class="headerlink" title="删除表"></a>删除表</h2><p><code>drop table ability</code></p>
-<h2 id="删除表中数据"><a href="#删除表中数据" class="headerlink" title="删除表中数据"></a>删除表中数据</h2><p><code>truncate table ability</code></p>
-<h2 id="修改字段"><a href="#修改字段" class="headerlink" title="修改字段"></a>修改字段</h2><p><code>alter table ability modify column shape_rate varchar(50)</code></p>
-<h2 id="添加索引"><a href="#添加索引" class="headerlink" title="添加索引"></a>添加索引</h2><p><code>alter table ability add index (fundId asc)</code></p>
-<h2 id="选择前10条数据"><a href="#选择前10条数据" class="headerlink" title="选择前10条数据"></a>选择前10条数据</h2><p><code>select * from ability limit 10</code></p>
-<h2 id="添加列"><a href="#添加列" class="headerlink" title="添加列"></a>添加列</h2><p><code>alter table ability add column day_asset double(30,15) null after date;</code></p>
-<h2 id="改变表中字段的顺序"><a href="#改变表中字段的顺序" class="headerlink" title="改变表中字段的顺序"></a>改变表中字段的顺序</h2><p><code>alter table ability_ext fundId fundId int(11) default null after first_day_asset</code></p>
-<h2 id="删除表中某个字段"><a href="#删除表中某个字段" class="headerlink" title="删除表中某个字段"></a>删除表中某个字段</h2><p><code>alter table ability drop column day_asset</code></p>
-<h2 id="修改字段名字"><a href="#修改字段名字" class="headerlink" title="修改字段名字"></a>修改字段名字</h2><p><code>alter table ability change fundid fundId int(11) default null;</code></p>
+		<p>Effective Python 的最后部分。<a id="more"></a></p>
+<h1 id="用适当的方式打破循环依赖关系"><a href="#用适当的方式打破循环依赖关系" class="headerlink" title="用适当的方式打破循环依赖关系"></a>用适当的方式打破循环依赖关系</h1><p>Python系统在执行import语句时的详细机制，引入模块时候，Python会按照深度优先的顺序执行下列操作</p>
+<ol>
+<li>在由sys.path所指定的路径中，搜寻待引入的模块</li>
+<li>从模块中加载代码，并且保证这段代码能够正确编译</li>
+<li>创建与该模块相对应的空对象</li>
+<li>把这个空的模块对象，添加到sys.modules里面</li>
+<li>运行模块对象中的代码，以定义其内容</li>
+</ol>
+<p>某些属性必须等Python系统把对应的代码执行完毕之后，才可以具有完整的定义，但是，包含该属性的模块，却只需要等Python系统执行完第四步，就可以用import语句引入并且添加到sys.modules</p>
+<p>解决这个问题的最佳方案，就是重构代码，将要重复用到的数据结构定义出来，然后app与dialog模块都引入这个工具模块，这样以避免出现循环依赖关系。</p>
+<p>三种解决办法：</p>
+<ol>
+<li>调整引入顺序</li>
+<li><p>先引入，再配置，最后运行</p>
+<p>只在模块中给出函数，类和常量的定义，而不要在引入的时候真正运行那些函数。在main模块中，分三个阶段来执行代码，首先引入所有的模块，然后配置他们，最后执行程序中的第一个动作。</p>
+</li>
+<li><p>动态引入</p>
+<p>在函数或者方法内部使用import语句，程序会等到真正需要运行相关代码时候，才会触发模块的引入操作，所以称为动态引入。但是有可能重复引入，这样也不好。</p>
+</li>
+</ol>
+<h1 id="用虚拟环境隔离项目，并重建其依赖关系"><a href="#用虚拟环境隔离项目，并重建其依赖关系" class="headerlink" title="用虚拟环境隔离项目，并重建其依赖关系"></a>用虚拟环境隔离项目，并重建其依赖关系</h1><p>使用pyvenv工具，提供了一套虚拟环境。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">which python</div><div class="line">python --version</div><div class="line"># 创建虚拟环境</div><div class="line">pyvenv /temp/myproject</div><div class="line">cd /tmp/myproject</div><div class="line">source bin/activate</div><div class="line">pip install pytz</div><div class="line">deactivate</div></pre></td></tr></table></figure>
+<h2 id="重建项目的依赖关系"><a href="#重建项目的依赖关系" class="headerlink" title="重建项目的依赖关系"></a>重建项目的依赖关系</h2><p><code>pip freeze</code> 使用这个命令，生成<code>requirements.txt</code>将开发环境软件包的依赖关系，明确的保存到文件中。</p>
+<p>然后<code>pip install -r /tmp/requirements.txt</code></p>
+<h1 id="考虑使用模块级别的代码来配置不同的部署环境"><a href="#考虑使用模块级别的代码来配置不同的部署环境" class="headerlink" title="考虑使用模块级别的代码来配置不同的部署环境"></a>考虑使用模块级别的代码来配置不同的部署环境</h1><p>想让Python程序付诸使用，必须从开发环境部署到生产环境中，要将Python程序产品化，令其能够稳定的运行在实际环境中。</p>
+<p>编写<code>__main__.py</code>文件</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/数据库/">数据库</a>
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python/">Python</a>
   </div>
 
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/SQL/">SQL</a>
-</div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2016/11/24/SQL语句总结/" data-title="SQL语句总结 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2017/01/12/Effective-Python-部署/" data-title="Effective Python 部署 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -152,19 +154,11 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/11/24/Introduction-to-Operating-Systems/" title="Introduction to Operating Systems">
-  <strong>New:</strong><br/>
-  <span>
-  Introduction to Operating Systems</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/11/24/Pythonic高质量代码学习3/"  title="Pythonic高质量代码学习3">
+<a href="/2017/01/11/Effective-Python-并发与并行/"  title="Effective Python 并发与并行">
  <strong>Old:</strong><br/> 
- <span>Pythonic高质量代码学习3
+ <span>Effective Python 并发与并行
 </span>
 </a>
 </div>
@@ -174,7 +168,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="SQL语句总结" data-thread-key="SQL语句总结" data-author-key="Kevin" data-url="http://microndgt.github.io/post/SQL语句总结"></div>
+	<div class="ds-thread" data-title="Effective Python 部署" data-thread-key="Effective-Python-部署" data-author-key="Kevin" data-url="http://microndgt.github.io/post/Effective-Python-部署"></div>
 	
 </section>
 
