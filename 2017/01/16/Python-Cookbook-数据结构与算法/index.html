@@ -1,0 +1,369 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Python Cookbook 数据结构与算法 | Kevin&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Kevin">
+    
+    <meta name="description" content="collections.deque的用法双端队列，可以用这个队列来保存有限的历史记录，形成一个简单的队列结构，如果不指定队列的大小，就会得到一个无界限的队列。
+创建：q = deque(maxlen=3) 建立固定大小的队列
+方法：append, appendleft, pop, popleft
+1">
+    
+    
+    
+    
+    <link rel="alternative" href="/Tinnypp/atom.xml" title="Kevin&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/myLogo.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/myLogo.png">
+    
+
+  
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
+				<h2 class="blog-motto">编程,生活,成长</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="st-search-inpu" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/01/16/Python-Cookbook-数据结构与算法/" title="Python Cookbook 数据结构与算法" itemprop="url">Python Cookbook 数据结构与算法</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2017-01-16T13:18:44.000Z" itemprop="datePublished">Jan 16 2017</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#collections-deque的用法"><span class="toc-number">1.</span> <span class="toc-text">collections.deque的用法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#heapq模块的用法"><span class="toc-number">2.</span> <span class="toc-text">heapq模块的用法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#用heapq模块实现优先级队列"><span class="toc-number">3.</span> <span class="toc-text">用heapq模块实现优先级队列</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用defaultdict类实现一键多值字典"><span class="toc-number">4.</span> <span class="toc-text">使用defaultdict类实现一键多值字典</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用zip将字典的键和值翻转过来"><span class="toc-number">5.</span> <span class="toc-text">使用zip将字典的键和值翻转过来</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#keys-和items-方法都支持集合操作"><span class="toc-number">6.</span> <span class="toc-text">keys()和items()方法都支持集合操作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#从序列中去除重复元素"><span class="toc-number">7.</span> <span class="toc-text">从序列中去除重复元素</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#寻找序列中出现次数最多的元素"><span class="toc-number">8.</span> <span class="toc-text">寻找序列中出现次数最多的元素</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用itemgetter来对字典列表排序"><span class="toc-number">9.</span> <span class="toc-text">使用itemgetter来对字典列表排序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用attrgetter来对类进行排序"><span class="toc-number">10.</span> <span class="toc-text">使用attrgetter来对类进行排序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#itertools的groupby函数对数据进行分组"><span class="toc-number">11.</span> <span class="toc-text">itertools的groupby函数对数据进行分组</span></a></li></ol>
+		</div>
+		
+		<h1 id="collections-deque的用法"><a href="#collections-deque的用法" class="headerlink" title="collections.deque的用法"></a>collections.deque的用法</h1><p>双端队列，可以用这个队列来保存有限的历史记录，形成一个简单的队列结构，如果不指定队列的大小，就会得到一个无界限的队列。</p>
+<p>创建：<code>q = deque(maxlen=3)</code> 建立固定大小的队列</p>
+<p>方法：append, appendleft, pop, popleft</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">from collections import deque</div><div class="line"></div><div class="line">def search(lines, pattern, history=5):</div><div class="line">	previous_line = deque(maxlen=history)</div><div class="line">	count = 0</div><div class="line">	for li in lines:</div><div class="line">		if pattern in li:</div><div class="line">			yield li, previous_line</div><div class="line">		previous_line.append(li)</div><div class="line"></div><div class="line">with open(&quot;test.txt&quot;) as f:</div><div class="line">	for line, prevlines in search(f, &quot;python&quot;):</div><div class="line">		for pline in prevlines:</div><div class="line">			print(pline,end=&quot;&quot;)</div><div class="line">		print(line,end=&apos;&apos;)</div><div class="line">		print(&apos;-&apos; * 20)</div></pre></td></tr></table></figure>
+<h1 id="heapq模块的用法"><a href="#heapq模块的用法" class="headerlink" title="heapq模块的用法"></a>heapq模块的用法</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import heapq</div><div class="line">start2 = time.time()</div><div class="line">for index, ele in enumerate(heapq.nsmallest(3, targetList)):</div><div class="line">	print(&quot;the %d st min value is %d&quot; % (index+1, ele))</div><div class="line">stop2 = time.time()</div></pre></td></tr></table></figure>
+<p>如果查找的元素个数相对比较小，使用nlargest(), nsmallest()比较合适，如果查找唯一的话，使用min(), max()比较合适，如果N大小和集合大小相近，则先排序，sorted(items)[:N]</p>
+<h1 id="用heapq模块实现优先级队列"><a href="#用heapq模块实现优先级队列" class="headerlink" title="用heapq模块实现优先级队列"></a>用heapq模块实现优先级队列</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">import heapq</div><div class="line">class PriorityQueue:</div><div class="line">	def __init__(self):</div><div class="line">		self._queue = []</div><div class="line">		self._index = 0</div><div class="line">	def push(self, item, priority):</div><div class="line">		# 元组比较大小,按照第一个元素来进行,如果优先级相同,按照插入顺序也就是</div><div class="line">		# 第二个元素决定顺序</div><div class="line">		heapq.heappush(self._queue, (-priority, self._index, item))</div><div class="line">		self._index += 1</div><div class="line">	def pop(self):</div><div class="line">		# 返回最小的元素，取出插入元组的最后一个项</div><div class="line">		return heapq.heappop(self._queue)[-1]</div><div class="line">class Item:</div><div class="line">	def __init__(self, name):</div><div class="line">		self.name = name</div><div class="line">	def __repr__(self):</div><div class="line">		return &apos;Item(&#123;&#125;)&apos;.format(self.name)</div><div class="line">q = PriorityQueue()</div><div class="line">q.push(Item(&apos;root&apos;), 5)</div><div class="line">q.push(Item(&apos;Elena&apos;), 3)</div><div class="line">q.push(Item(&apos;Kevin&apos;), 4)</div><div class="line">q.push(Item(&apos;group&apos;), 1)</div><div class="line">q.push(Item(&apos;other&apos;), 1)</div><div class="line">print(q.pop())</div><div class="line">print(q.pop())</div><div class="line">print(q.pop())</div><div class="line">print(q.pop())</div><div class="line">print(q.pop())</div></pre></td></tr></table></figure>
+<h1 id="使用defaultdict类实现一键多值字典"><a href="#使用defaultdict类实现一键多值字典" class="headerlink" title="使用defaultdict类实现一键多值字典"></a>使用defaultdict类实现一键多值字典</h1><p>一个键映射多个值，需要将多个值放到另外的容器里，如列表，集合。</p>
+<p>使用collections中的defaultdict构造这样的字典，它会自动初始化每个key刚开始对应的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">from collections import defaultdict</div><div class="line">d = defaultdict(list)</div><div class="line">d[&apos;a&apos;].append(1)</div><div class="line">d[&apos;a&apos;].append(2)</div><div class="line">d[&apos;b&apos;].append(4)</div><div class="line">for key, value in d.items():</div><div class="line">	print(key, &quot; and &quot;, value)</div><div class="line">d = defaultdict(set)</div><div class="line">d[&apos;a&apos;].add(1)</div><div class="line">d[&apos;a&apos;].add(3)</div><div class="line">d[&apos;b&apos;].add(4)</div><div class="line">for key, value in d.items():</div><div class="line">	print(key, &quot; and &quot;, value)</div></pre></td></tr></table></figure>
+<p>defaultdict会自动为将要访问的键创建映射实体，另外一个是字典的setdefault方法</p>
+<p><code>d.setdefault(&#39;a&#39;, []).append(1)</code></p>
+<h1 id="使用zip将字典的键和值翻转过来"><a href="#使用zip将字典的键和值翻转过来" class="headerlink" title="使用zip将字典的键和值翻转过来"></a>使用zip将字典的键和值翻转过来</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">d = &#123;&#125;</div><div class="line">d[&apos;a&apos;] = 5</div><div class="line">d[&apos;b&apos;] = 3</div><div class="line">d[&apos;c&apos;] = 6</div><div class="line">d[&apos;d&apos;] = 2</div><div class="line"># 求最小值,返回的是一个只能访问一次的迭代器</div><div class="line">min_value = min(zip(d.values(), d.keys()))</div><div class="line">print(min_value)</div><div class="line"># sorted默认是按照第一个元素进行排序的</div><div class="line">d_sorted = sorted(zip(d.values(), d.keys()))</div><div class="line">print(d_sorted)</div><div class="line"># 要改变的话,指定key</div><div class="line">d_sorted_1 = sorted(d.items(), key=lambda x: x[1])</div><div class="line">print(d_sorted_1)</div></pre></td></tr></table></figure>
+<h1 id="keys-和items-方法都支持集合操作"><a href="#keys-和items-方法都支持集合操作" class="headerlink" title="keys()和items()方法都支持集合操作"></a>keys()和items()方法都支持集合操作</h1><p>这两个方法返回了<code>keys-view</code>对象，其中暴露了键或者键值，但是values()方法不支持集合操作，因为value可能是重复的，不是唯一的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">print(d.keys() &amp; e.keys())</div><div class="line">print(d.keys() - e.keys())</div><div class="line">print(d.items() &amp; e.items())</div><div class="line">c = &#123;key: d[key] for key in d.keys() - &#123;&apos;z&apos;, &apos;b&apos;&#125;&#125;</div><div class="line">print(c)</div></pre></td></tr></table></figure>
+<h1 id="从序列中去除重复元素"><a href="#从序列中去除重复元素" class="headerlink" title="从序列中去除重复元素"></a>从序列中去除重复元素</h1><p>如果一个对象是可哈希的，那么在它的生存期内必须是不可变的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">def dedupe(items, key=None):</div><div class="line">	seen = set()</div><div class="line">	for item in items:</div><div class="line">		val = item if key is None else key(item)</div><div class="line">		if val not in seen:</div><div class="line">			yield item</div><div class="line">			seen.add(val)</div><div class="line">a = [ &#123;&apos;x&apos;: 1, &apos;y&apos;: 2&#125;, &#123;&apos;x&apos;: 1, &apos;y&apos;: 2&#125;]</div><div class="line"># 将值转换成元组,hashable</div><div class="line">print(list(dedupe(a, key=lambda d: (d[&apos;x&apos;], d[&apos;y&apos;]))))</div></pre></td></tr></table></figure>
+<h1 id="寻找序列中出现次数最多的元素"><a href="#寻找序列中出现次数最多的元素" class="headerlink" title="寻找序列中出现次数最多的元素"></a>寻找序列中出现次数最多的元素</h1><p>使用collections里面的Counter类，可以给该对象提供任何可哈希的对象序列作为输入，是一个字典，在元素和它们出现的次数之间做了映射。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">from collections import Counter</div><div class="line">word_counts = Counter(words)</div><div class="line">top_three = word_counts.most_common(3)</div><div class="line">print(top_three)</div><div class="line">record = &quot;32323432435435235326253435436546547643&quot;</div><div class="line">from collections import Counter</div><div class="line">record = list(record)</div><div class="line">counts = Counter(record)</div><div class="line">top_five = counts.most_common(5)</div><div class="line">print(top_five)</div><div class="line">print(counts[&apos;3&apos;])</div><div class="line">more = list(&quot;43542354&quot;)</div><div class="line">counts.update(more)</div><div class="line">print(counts[&apos;3&apos;])</div><div class="line"># Counter对象支持数学运算</div><div class="line">counts1 = Counter(more)</div><div class="line">print(counts + counts1)</div></pre></td></tr></table></figure>
+<h1 id="使用itemgetter来对字典列表排序"><a href="#使用itemgetter来对字典列表排序" class="headerlink" title="使用itemgetter来对字典列表排序"></a>使用itemgetter来对字典列表排序</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">rows = [</div><div class="line">	&#123;&apos;fname&apos;: &apos;Brian&apos;, &apos;lname&apos;: &apos;Jones&apos;, &apos;uid&apos;: 1003&#125;,</div><div class="line">	&#123;&apos;fname&apos;: &apos;Kevin&apos;, &apos;lname&apos;: &apos;Du&apos;, &apos;uid&apos;: 1000&#125;</div><div class="line">]</div><div class="line">from operator import itemgetter</div><div class="line">＃ 类似一个方法，通过itemgetter的到rows的属性fname作为key，item表示项，和后面的attr属性有所区别，属性则用于类</div><div class="line">rows_by_fname = sorted(rows, key=itemgetter(&apos;fname&apos;))</div><div class="line">print(rows_by_fname)</div><div class="line">rows_by_lname = sorted(rows, key=itemgetter(&apos;lname&apos;))</div><div class="line">print(rows_by_lname)</div><div class="line">rows_by_nameid = sorted(rows, key=itemgetter(&apos;lname&apos;, &apos;uid&apos;))</div><div class="line">print(rows_by_nameid)</div><div class="line"># 也可以使用lambda表达式代替</div><div class="line">rows_by_fname = sorted(rows, key=lambda r: r[&apos;fname&apos;])</div><div class="line"># 但是使用itemgetter更快一些</div><div class="line">print(rows_by_fname)</div><div class="line"># 也适用于min和max函数</div></pre></td></tr></table></figure>
+<h1 id="使用attrgetter来对类进行排序"><a href="#使用attrgetter来对类进行排序" class="headerlink" title="使用attrgetter来对类进行排序"></a>使用attrgetter来对类进行排序</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">class User:</div><div class="line">	def __init__(self, user_id):</div><div class="line">		self.user_id = user_id</div><div class="line">	def __repr__(self):</div><div class="line">		return &apos;User(&#123;&#125;)&apos;.format(self.user_id)</div><div class="line"></div><div class="line">def sort_notcompare():</div><div class="line">	users = [User(23), User(3), User(99)]</div><div class="line">	print(users)</div><div class="line">	print(sorted(users, key=lambda a: a.user_id))</div><div class="line"></div><div class="line">from operator import attrgetter</div><div class="line">users = [User(23), User(3), User(99), User(43)]</div><div class="line">print(users)</div><div class="line">print(sorted(users, key=attrgetter(&apos;user_id&apos;)))</div><div class="line">sort_notcompare()</div></pre></td></tr></table></figure>
+<h1 id="itertools的groupby函数对数据进行分组"><a href="#itertools的groupby函数对数据进行分组" class="headerlink" title="itertools的groupby函数对数据进行分组"></a>itertools的groupby函数对数据进行分组</h1><p>itertools.groupby()函数扫描整个序列并且查找连续相同的值的元素序列，每次迭代的时候返回一个值和一个迭代器对象，这个迭代器对象可以生成元素值全部等于上面那个值的组中所有对象。但是必须根据指定的字段将数据排序，groupby函数仅仅检查连续的元素。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">from operator import itemgetter</div><div class="line">from itertools import groupby</div><div class="line">rows = [</div><div class="line">	&#123;&apos;date&apos;: &apos;01/01&apos;, &apos;item&apos;: 1&#125;,</div><div class="line">	&#123;&apos;date&apos;: &apos;02/01&apos;, &apos;item&apos;: 2&#125;,</div><div class="line">	&#123;&apos;date&apos;: &apos;01/01&apos;, &apos;item&apos;: 2&#125;</div><div class="line">]</div><div class="line"># 首先进行排序</div><div class="line"># 或者使用itemgetter, 用于字典</div><div class="line">rows.sort(key=itemgetter(&apos;date&apos;))</div><div class="line">print(rows)</div><div class="line">rows.sort(key=lambda x: x[&apos;item&apos;])</div><div class="line"># 返回值以及分组的组</div><div class="line">for date, item in groupby(rows, key=lambda x: x[&apos;item&apos;]):</div><div class="line">	print(date)</div><div class="line">	for i in item:</div><div class="line">		print(&quot; &quot;,i)</div></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python-Cookbook/">Python_Cookbook</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://microndgt.github.io/2017/01/16/Python-Cookbook-数据结构与算法/" data-title="Python Cookbook 数据结构与算法 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/01/12/Effective-Python-部署/"  title="Effective Python 部署">
+ <strong>Old:</strong><br/> 
+ <span>Effective Python 部署
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="Python Cookbook 数据结构与算法" data-thread-key="Python-Cookbook-数据结构与算法" data-author-key="Kevin" data-url="http://microndgt.github.io/post/Python-Cookbook-数据结构与算法"></div>
+	
+</section>
+
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© Kevin</span>
+		
+	<div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"microndgt"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';    //change to ds.src = '/js/embed.js'; to add useragent for duoshuo
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>
