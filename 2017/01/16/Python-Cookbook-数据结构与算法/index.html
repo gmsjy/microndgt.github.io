@@ -9,10 +9,7 @@
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="collections.deque的用法双端队列，可以用这个队列来保存有限的历史记录，形成一个简单的队列结构，如果不指定队列的大小，就会得到一个无界限的队列。
-创建：q = deque(maxlen=3) 建立固定大小的队列
-方法：append, appendleft, pop, popleft
-1">
+    <meta name="description" content="Python基本的数据结构与算法">
     
     
     
@@ -107,7 +104,8 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#collections-deque的用法"><span class="toc-number">1.</span> <span class="toc-text">collections.deque的用法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#heapq模块的用法"><span class="toc-number">2.</span> <span class="toc-text">heapq模块的用法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#用heapq模块实现优先级队列"><span class="toc-number">3.</span> <span class="toc-text">用heapq模块实现优先级队列</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用defaultdict类实现一键多值字典"><span class="toc-number">4.</span> <span class="toc-text">使用defaultdict类实现一键多值字典</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用zip将字典的键和值翻转过来"><span class="toc-number">5.</span> <span class="toc-text">使用zip将字典的键和值翻转过来</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#keys-和items-方法都支持集合操作"><span class="toc-number">6.</span> <span class="toc-text">keys()和items()方法都支持集合操作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#从序列中去除重复元素"><span class="toc-number">7.</span> <span class="toc-text">从序列中去除重复元素</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#寻找序列中出现次数最多的元素"><span class="toc-number">8.</span> <span class="toc-text">寻找序列中出现次数最多的元素</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用itemgetter来对字典列表排序"><span class="toc-number">9.</span> <span class="toc-text">使用itemgetter来对字典列表排序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用attrgetter来对类进行排序"><span class="toc-number">10.</span> <span class="toc-text">使用attrgetter来对类进行排序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#itertools的groupby函数对数据进行分组"><span class="toc-number">11.</span> <span class="toc-text">itertools的groupby函数对数据进行分组</span></a></li></ol>
 		</div>
 		
-		<h1 id="collections-deque的用法"><a href="#collections-deque的用法" class="headerlink" title="collections.deque的用法"></a>collections.deque的用法</h1><p>双端队列，可以用这个队列来保存有限的历史记录，形成一个简单的队列结构，如果不指定队列的大小，就会得到一个无界限的队列。</p>
+		<p>Python基本的数据结构与算法<a id="more"></a></p>
+<h1 id="collections-deque的用法"><a href="#collections-deque的用法" class="headerlink" title="collections.deque的用法"></a>collections.deque的用法</h1><p>双端队列，可以用这个队列来保存有限的历史记录，形成一个简单的队列结构，如果不指定队列的大小，就会得到一个无界限的队列。</p>
 <p>创建：<code>q = deque(maxlen=3)</code> 建立固定大小的队列</p>
 <p>方法：append, appendleft, pop, popleft</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">from collections import deque</div><div class="line"></div><div class="line">def search(lines, pattern, history=5):</div><div class="line">	previous_line = deque(maxlen=history)</div><div class="line">	count = 0</div><div class="line">	for li in lines:</div><div class="line">		if pattern in li:</div><div class="line">			yield li, previous_line</div><div class="line">		previous_line.append(li)</div><div class="line"></div><div class="line">with open(&quot;test.txt&quot;) as f:</div><div class="line">	for line, prevlines in search(f, &quot;python&quot;):</div><div class="line">		for pline in prevlines:</div><div class="line">			print(pline,end=&quot;&quot;)</div><div class="line">		print(line,end=&apos;&apos;)</div><div class="line">		print(&apos;-&apos; * 20)</div></pre></td></tr></table></figure>
@@ -153,6 +151,14 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2017/01/19/Python-Cookbook字符串和文本/" title="Python Cookbook字符串和文本">
+  <strong>New:</strong><br/>
+  <span>
+  Python Cookbook字符串和文本</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2017/01/12/Effective-Python-部署/"  title="Effective Python 部署">

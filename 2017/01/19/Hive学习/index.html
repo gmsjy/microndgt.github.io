@@ -1,0 +1,383 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Hive学习 | Kevin&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Kevin">
+    
+    <meta name="description" content="大数据之Hive的数据操作以及开发">
+    
+    
+    
+    
+    <link rel="alternative" href="/Tinnypp/atom.xml" title="Kevin&#39;s Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/myLogo.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/myLogo.png">
+    
+
+  
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
+				<h2 class="blog-motto">编程,生活,成长</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="st-search-inpu" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/01/19/Hive学习/" title="Hive学习" itemprop="url">Hive学习</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2017-01-19T07:26:16.000Z" itemprop="datePublished">Jan 19 2017</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据仓库简介"><span class="toc-number">1.1.</span> <span class="toc-text">数据仓库简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据仓库的结构和建立过程"><span class="toc-number">1.2.</span> <span class="toc-text">数据仓库的结构和建立过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OLTP应用和OLAP应用"><span class="toc-number">1.3.</span> <span class="toc-text">OLTP应用和OLAP应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据仓库中的数据模型"><span class="toc-number">1.4.</span> <span class="toc-text">数据仓库中的数据模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hive"><span class="toc-number">1.5.</span> <span class="toc-text">Hive</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hive的体系结构"><span class="toc-number">2.</span> <span class="toc-text">Hive的体系结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hive的元数据"><span class="toc-number">2.1.</span> <span class="toc-text">Hive的元数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HQL的执行过程"><span class="toc-number">2.2.</span> <span class="toc-text">HQL的执行过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hive的体系结构-1"><span class="toc-number">2.3.</span> <span class="toc-text">Hive的体系结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hive安装和管理"><span class="toc-number">2.4.</span> <span class="toc-text">Hive安装和管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hive的数据模型和操作"><span class="toc-number">2.5.</span> <span class="toc-text">Hive的数据模型和操作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hive的数据导入到数据仓库"><span class="toc-number">3.</span> <span class="toc-text">Hive的数据导入到数据仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#load语句执行数据导入"><span class="toc-number">3.1.</span> <span class="toc-text">load语句执行数据导入</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>大数据之Hive的数据操作以及开发<a id="more"></a></p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Hive是基于Hadoop的一个数据仓库工具，通过它可以实现将结构化的数据文件映射为一张数据库表，并且提供简单的sql查询功能，同时将sql语句转换为MapReduce任务进行运行</p>
+<p>Hive是构建在hadoop HDFS上的一个数据仓库</p>
+<h2 id="数据仓库简介"><a href="#数据仓库简介" class="headerlink" title="数据仓库简介"></a>数据仓库简介</h2><p>有别于普通的数据库，数据仓库是一个面向主题的，集成的，不可更新的，随时间不变化的数据集合，它用于支持企业或组织的决策分析处理</p>
+<p>面向主题：用户关注的具体方面</p>
+<p>集成的：来自分散性的数据，进行加工和处理后进入数据仓库</p>
+<p>不可更新：主要用于决策分析，主要涉及操作，数据查询</p>
+<h2 id="数据仓库的结构和建立过程"><a href="#数据仓库的结构和建立过程" class="headerlink" title="数据仓库的结构和建立过程"></a>数据仓库的结构和建立过程</h2><p>数据源：业务数据系统，文档资料，其他数据</p>
+<p>数据存储及管理：抽取，转换，装载，Extract,Transform,load，满足格式的数据</p>
+<p>数据仓库引擎：为数据查询等提供服务</p>
+<p>前端展示：数据查询，数据报表，数据分析，各类应用</p>
+<h2 id="OLTP应用和OLAP应用"><a href="#OLTP应用和OLAP应用" class="headerlink" title="OLTP应用和OLAP应用"></a>OLTP应用和OLAP应用</h2><p>OLTP:连接事务处理，面对事务，操作频率高，银行转账</p>
+<p>OLAP:连接分析处理，Online analysis process, 商品推荐系统,面对的是查询操作</p>
+<h2 id="数据仓库中的数据模型"><a href="#数据仓库中的数据模型" class="headerlink" title="数据仓库中的数据模型"></a>数据仓库中的数据模型</h2><p>面向主题的模型</p>
+<p>星形模型：商品信息-&gt;客户信息，订单信息，促销信息，生产信息，物流信息</p>
+<p>雪花模型：客户也可以分很多信息，家庭信息，地址信息，教育背景信息，财务信息</p>
+<h2 id="Hive"><a href="#Hive" class="headerlink" title="Hive"></a>Hive</h2><p>Hive是构建在hadoop HDFS上的一个数据仓库基础架构</p>
+<p>可以用来进行数据提取转化加载ETL</p>
+<p>定义了简单的类似SQL查询语言，称为HQL它允许熟悉SQL的用户查询数据</p>
+<p>允许MapReduce开发者的开发自定义的mapper和reducer来处理内建的mapper和reducer无法完成的复杂分析工作</p>
+<p>Hive是SQL解析引擎，将SQL语句转移成M/R job然后在hadoop执行</p>
+<p>Hive的表其实是HDFS的目录/文件</p>
+<h1 id="Hive的体系结构"><a href="#Hive的体系结构" class="headerlink" title="Hive的体系结构"></a>Hive的体系结构</h1><h2 id="Hive的元数据"><a href="#Hive的元数据" class="headerlink" title="Hive的元数据"></a>Hive的元数据</h2><p>将元数据存储在数据库中(metastore)，支持mysql，derby等数据库，默认是derby数据库。</p>
+<p>元数据包括表的名字，表的列和分区及其属性，表的属性是否为外部表，表的数据所在目录</p>
+<h2 id="HQL的执行过程"><a href="#HQL的执行过程" class="headerlink" title="HQL的执行过程"></a>HQL的执行过程</h2><p>解释器，编译器和优化器完成HQL查询语句从词法分析，语法分析，编译，优化以及查询计划的生成，生成的查询计划存储在HDFS中，并在随后由MapReduce调用执行</p>
+<p>select-&gt;解析器，词法分析-&gt;编译器，生成HQL的执行计划-&gt;优化器，生成最佳的执行计划-&gt;执行</p>
+<h2 id="Hive的体系结构-1"><a href="#Hive的体系结构-1" class="headerlink" title="Hive的体系结构"></a>Hive的体系结构</h2><ul>
+<li>Hadoop</li>
+<li>元数据存储</li>
+</ul>
+<p>linux-&gt;hadoop-&gt;hive</p>
+<p>hadoop: DataNode数据节点，NameNode名称节点，JobTracker任务调度器</p>
+<p>hive：Hive Driver驱动包括编译器，解析器，优化器。访问接口：CLI,ODBC,Web Console只可以查询。元数据metastore</p>
+<h2 id="Hive安装和管理"><a href="#Hive安装和管理" class="headerlink" title="Hive安装和管理"></a>Hive安装和管理</h2><h2 id="Hive的数据模型和操作"><a href="#Hive的数据模型和操作" class="headerlink" title="Hive的数据模型和操作"></a>Hive的数据模型和操作</h2><h1 id="Hive的数据导入到数据仓库"><a href="#Hive的数据导入到数据仓库" class="headerlink" title="Hive的数据导入到数据仓库"></a>Hive的数据导入到数据仓库</h1><h2 id="load语句执行数据导入"><a href="#load语句执行数据导入" class="headerlink" title="load语句执行数据导入"></a>load语句执行数据导入</h2><p><code>LOAD DATA [LOCAL] INPATH &#39;filepath&#39; [OVERWRITE] INTO TABLE tablename [PARTITION (partcol1=vall, partcol2=val2)]</code></p>
+<p>PARTITION当是分区表</p>
+<p>load命令，Sqoop组件导入</p>
+<p>数据查询 HQL语句</p>
+<p>Hive的Java客户端和自定义函数</p>
+<p>Hive的体系结构和基本操作</p>
+<p>Java编程</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Hive/">Hive</a>
+  </div>
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://microndgt.github.io/2017/01/19/Hive学习/" data-title="Hive学习 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/01/19/Python-Cookbook字符串和文本/"  title="Python Cookbook字符串和文本">
+ <strong>Old:</strong><br/> 
+ <span>Python Cookbook字符串和文本
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="Hive学习" data-thread-key="Hive学习" data-author-key="Kevin" data-url="http://microndgt.github.io/post/Hive学习"></div>
+	
+</section>
+
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© Kevin</span>
+		
+	<div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"microndgt"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';    //change to ds.src = '/js/embed.js'; to add useragent for duoshuo
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>
