@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -78,7 +78,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -101,7 +101,7 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#针对任意多的分隔符拆分字符串"><span class="toc-number">1.</span> <span class="toc-text">针对任意多的分隔符拆分字符串</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在字符串开头或者结尾处做文本匹配"><span class="toc-number">2.</span> <span class="toc-text">在字符串开头或者结尾处做文本匹配</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#文本模式的匹配和查找"><span class="toc-number">3.</span> <span class="toc-text">文本模式的匹配和查找</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查找和替换文本"><span class="toc-number">4.</span> <span class="toc-text">查找和替换文本</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#以不区分大小写的方式对文本做查找和替换"><span class="toc-number">5.</span> <span class="toc-text">以不区分大小写的方式对文本做查找和替换</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实现最短匹配的正则表达式"><span class="toc-number">6.</span> <span class="toc-text">实现最短匹配的正则表达式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将Unicode文本统一表示成规范形式"><span class="toc-number">7.</span> <span class="toc-text">将Unicode文本统一表示成规范形式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#从字符串中去掉不需要的字符"><span class="toc-number">8.</span> <span class="toc-text">从字符串中去掉不需要的字符</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#针对任意多的分隔符拆分字符串"><span class="toc-number">1.</span> <span class="toc-text">针对任意多的分隔符拆分字符串</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在字符串开头或者结尾处做文本匹配"><span class="toc-number">2.</span> <span class="toc-text">在字符串开头或者结尾处做文本匹配</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#文本模式的匹配和查找"><span class="toc-number">3.</span> <span class="toc-text">文本模式的匹配和查找</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查找和替换文本"><span class="toc-number">4.</span> <span class="toc-text">查找和替换文本</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#以不区分大小写的方式对文本做查找和替换"><span class="toc-number">5.</span> <span class="toc-text">以不区分大小写的方式对文本做查找和替换</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实现最短匹配的正则表达式"><span class="toc-number">6.</span> <span class="toc-text">实现最短匹配的正则表达式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将Unicode文本统一表示成规范形式"><span class="toc-number">7.</span> <span class="toc-text">将Unicode文本统一表示成规范形式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#从字符串中去掉不需要的字符"><span class="toc-number">8.</span> <span class="toc-text">从字符串中去掉不需要的字符</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#文本过滤与清理"><span class="toc-number">9.</span> <span class="toc-text">文本过滤与清理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#字符串对齐"><span class="toc-number">10.</span> <span class="toc-text">字符串对齐</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#合并拼接字符串"><span class="toc-number">11.</span> <span class="toc-text">合并拼接字符串</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#内嵌变量的字符串"><span class="toc-number">12.</span> <span class="toc-text">内嵌变量的字符串</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#文本分词"><span class="toc-number">13.</span> <span class="toc-text">文本分词</span></a></li></ol>
 		</div>
 		
 		<p>拆分字符串，搜索，替换，词法分析以及解析，正则表达式。<a id="more"></a></p>
@@ -142,6 +142,36 @@ var _hmt = _hmt || [];
 <p>如果要对里面的空格执行某些操作，应该使用其他技巧比如replace()方法或者正则表达式替换</p>
 <p>经常遇到的情况是去除字符的操作和某些迭代操作结合起来，生成器表达式</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">with open(filename) as f:</div><div class="line">    lines = (line.strip() for line in f)</div><div class="line">    for line in line:</div><div class="line">        ...</div></pre></td></tr></table></figure>
+<h1 id="文本过滤与清理"><a href="#文本过滤与清理" class="headerlink" title="文本过滤与清理"></a>文本过滤与清理</h1><p>感觉非常好用啊，使用<code>str.translate()</code>方法，首先创建一个转换表格，然后使用这个方法对字符串进行转换。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># ord函数返回ASC值</div><div class="line">remap = &#123;</div><div class="line">  ord(&apos;\t&apos;): &apos; &apos;,</div><div class="line">  ord(&apos;\f&apos;): &apos; &apos;,</div><div class="line">  ord(&apos;\r&apos;): None # 直接被删除</div><div class="line">&#125;</div><div class="line"># 调用translate方法</div><div class="line">a = s.translate(remap)</div></pre></td></tr></table></figure>
+<p>删除所有的和音符，使用NFD可以将字符串分解成单个字符，标准化称为分解形式字符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cmb_chrs = dict.fromkeys(c for c in range(sys.maxunicode) if unicodedata.combining(chr(c)))</div><div class="line">b = unicodedata.normalize(&apos;NFD&apos;, a)</div><div class="line">b.translate(cmb_chrs)</div></pre></td></tr></table></figure>
+<p>一般使用replace方法比较快，但是涉及任何复杂字符对字符的重新映射或者是删除操作的话，translate方法会比较快</p>
+<h1 id="字符串对齐"><a href="#字符串对齐" class="headerlink" title="字符串对齐"></a>字符串对齐</h1><p>使用ljust(),rjust(),center()方法，并且可以接受一个可选的填充字符,<code>text.rjust(20, &#39;=&#39;)</code></p>
+<p>format函数也可以用来对齐字符串<code>format(text, &#39;&gt;20&#39;)</code> 右对齐，或者指定一个非空格填充字符，<code>format(text, &#39;=&gt;20&#39;)</code></p>
+<p>格式化多个值，<code>&#39;&#39;{:&gt;10s} {:&gt;10s}&#39;.format(&#39;hello&#39;, &#39;world&#39;)&#39;</code></p>
+<p>可以格式化任何值，<code>x = 1.234</code>, <code>format(x, &#39;&gt;10&#39;)</code></p>
+<p>优先选用format()函数或者方法</p>
+<h1 id="合并拼接字符串"><a href="#合并拼接字符串" class="headerlink" title="合并拼接字符串"></a>合并拼接字符串</h1><p>如果要合并的字符串在一个序列中，最快的方式就是join()方法，如果是合并少数的几个字符串，使用加号就可以了。</p>
+<p>如果只是将两个字面字符串合并起来，只需要简单的放在一起就OK, <code>a = &#39;Hello&#39; &#39;World&#39;</code></p>
+<p>使用生成器表达式：<code>&#39;,&#39;.join(str(d) for d in data)</code></p>
+<p>注意不必要的字符串连接操作：<code>print(a, b, c, sep=&quot;:&quot;)</code>，这样更加优雅</p>
+<h1 id="内嵌变量的字符串"><a href="#内嵌变量的字符串" class="headerlink" title="内嵌变量的字符串"></a>内嵌变量的字符串</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">s = &apos;&#123;name&#125; has &#123;n&#125; message&apos;</div><div class="line">s.format(name=&quot;kevin&quot;, n=34)</div></pre></td></tr></table></figure>
+<p>如果要被替换的变量能在变量域中找到，可以结合使用format_map()和vars(),vars()返回了一个字典</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">name = &quot;kevin&quot;</div><div class="line">n = 5</div><div class="line">s.format_map(vars())</div></pre></td></tr></table></figure>
+<p>vars()也适用于对象实例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a = Info(&apos;kevin&apos;, 30)</div><div class="line"># 其中Info类中含有相应的属性名字为name和n</div><div class="line">s.format_map(vars(a))</div></pre></td></tr></table></figure>
+<p>定义一个含有<code>__missing__()</code>方法的字典对象这样就可以避免KeyError</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class safesub(dict):</div><div class="line">    # 定义如何处理缺失值</div><div class="line">    def __missing__(self, key):</div><div class="line">        return &apos;&#123;&apos; + key + &apos;&#125;&apos;</div><div class="line">s.format_map(safesub(vars()))</div><div class="line"># 这样即使不存在这个键也不会报错</div></pre></td></tr></table></figure>
+<p>可以进一步封装成工具函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import sys</div><div class="line">def sub(text):</div><div class="line">    return text.format_map(safesub(sys._getframe(1).f_locals))</div></pre></td></tr></table></figure>
+<p><code>sys._getframe(1)</code>返回调用者的栈帧，从中访问属性<code>f_locals</code>来获得局部变量，是一个复制调用函数本地变量的字典，对它的操作不回覆盖和改变调用者本地变量的值。</p>
+<h1 id="文本分词"><a href="#文本分词" class="headerlink" title="文本分词"></a>文本分词</h1><p>有一个字符串，想从左到右将其解析为标记流</p>
+<p>第一步是利用命名捕获组的正则表达式定义所有可能的标记，包括空格：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">import re</div><div class="line">NAME = r&apos;(?P&lt;NAME&gt;[a-zA-Z_][a-zA-Z_0-9]*)&apos;</div><div class="line"># ?P&lt;TOKENNAME&gt;用于给一个模式命名</div><div class="line">NUM = r&apos;(?P&lt;NUM&gt;\d+)&apos;</div><div class="line">PLUS = r&apos;(?P&lt;PLUS&gt;\+)&apos;</div><div class="line">TIMES = r&apos;(?P&lt;TIMES&gt;\*)&apos;</div><div class="line">EQ = r&apos;(?P&lt;EQ&gt;=)&apos;</div><div class="line">WS = r&apos;(?P&lt;WS&gt;\s+)&apos;</div><div class="line">master_pat = re.compile(r&apos;|&apos;.join([NAME, NUM, PLUS, TIMES, EQ, WS]))</div></pre></td></tr></table></figure>
+<p>第二步，使用scanner()方法，创建一个scanner对象，在这个对象上不断调用match()方法会一步步扫描目标文本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">scanner = master_pat.scanner(&apos;foo = 42&apos;)</div><div class="line"># 重复之</div><div class="line">scanner.match().groups()</div></pre></td></tr></table></figure>
+<p>要点在于必须确认使用正则表达式制定了所有输入中可能出现的文本序列。另外分词顺序也是有影响的，re模块会按照制定好的顺序去做匹配，因此另一个模式恰好是另一个更长模式的子字符串，需要确定长模式在前面。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -167,7 +197,7 @@ var _hmt = _hmt || [];
  
  <div class="prev" >
  <a href="/2017/01/19/Hive学习/" title="Hive学习">
-  <strong>New:</strong><br/>
+  <strong>新一篇:</strong><br/>
   <span>
   Hive学习</span>
 </a>
@@ -176,7 +206,7 @@ var _hmt = _hmt || [];
 
 <div class="next">
 <a href="/2017/01/16/Python-Cookbook-数据结构与算法/"  title="Python Cookbook 数据结构与算法">
- <strong>Old:</strong><br/> 
+ <strong>舊一篇:</strong><br/> 
  <span>Python Cookbook 数据结构与算法
 </span>
 </a>
