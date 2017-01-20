@@ -101,16 +101,16 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#从在单个计算机运行解耦"><span class="toc-number">1.</span> <span class="toc-text">从在单个计算机运行解耦</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Use-distributed-architecture-to-solve-problems"><span class="toc-number">2.</span> <span class="toc-text">Use distributed architecture to solve problems</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Scalability-Basics"><span class="toc-number">1.</span> <span class="toc-text">Scalability Basics</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#从在单个计算机运行解耦"><span class="toc-number">1.1.</span> <span class="toc-text">从在单个计算机运行解耦</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Use-distributed-architecture-to-solve-problems"><span class="toc-number">1.2.</span> <span class="toc-text">Use distributed architecture to solve problems</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Google-App-Engine"><span class="toc-number">1.3.</span> <span class="toc-text">Google App Engine</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#really-check"><span class="toc-number">1.4.</span> <span class="toc-text">really check</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Getting-Started"><span class="toc-number">2.</span> <span class="toc-text">Getting Started</span></a></li></ol>
 		</div>
 		
 		<p>Developing Scalable Apps in Python!<a id="more"></a></p>
-<p>在Google基础结构上运行的应用，缩放，scale，可缩放应用</p>
+<h1 id="Scalability-Basics"><a href="#Scalability-Basics" class="headerlink" title="Scalability Basics"></a>Scalability Basics</h1><p>在Google基础结构上运行的应用，缩放，scale，可缩放应用</p>
 <p>the race for scalability 可伸缩性争用</p>
 <p>optimize software, change software to run on more servers -&gt; scalable architecture</p>
-<h1 id="从在单个计算机运行解耦"><a href="#从在单个计算机运行解耦" class="headerlink" title="从在单个计算机运行解耦"></a>从在单个计算机运行解耦</h1><p>将向外扩展架构设计为将应用扩展到单一计算机范围之外，因此还需要扩展此分布式架构(distributed architecture)， 而不是共享架构(share architecture)，有道理，不能用共享的，这样扩展的时候共享资源就会称为瓶颈，分布式应用最好也不要有共享的数据，这样会导致通信，处理起来比较麻烦。虚拟机(virtual machine)</p>
+<h2 id="从在单个计算机运行解耦"><a href="#从在单个计算机运行解耦" class="headerlink" title="从在单个计算机运行解耦"></a>从在单个计算机运行解耦</h2><p>将向外扩展架构设计为将应用扩展到单一计算机范围之外，因此还需要扩展此分布式架构(distributed architecture)， 而不是共享架构(share architecture)，有道理，不能用共享的，这样扩展的时候共享资源就会称为瓶颈，分布式应用最好也不要有共享的数据，这样会导致通信，处理起来比较麻烦。虚拟机(virtual machine)</p>
 <p>key step to building a scalable system is your need to decouple it from executing on a single computer. You design a scale out architecture as your application scales outside the scope of a single computer and this distributed architecture needs to be socalled, share nothing architecture. Meaning, that it must not depend on any shared resources that can become the bottleneck, this way if your application needs a scale, you can just provide more computer to provide the additional capacity required. That means, you can run your application on. All the things. And to get even more flexibility the concept of virtual machines was born which enables you to decouple a physical machine from the application execution machine. This had great flexibility gain since the infrastructure turned virtual you would now run your scale out application on several virtual machines instead of physical computers. You can now scale indefinitely by adding these standard building blocks of performance that your application can utilize and you have decomposed(分解) your application from the specific execution machine. So how do you design your application to be able to scale like this?</p>
-<h1 id="Use-distributed-architecture-to-solve-problems"><a href="#Use-distributed-architecture-to-solve-problems" class="headerlink" title="Use distributed architecture to solve problems"></a>Use distributed architecture to solve problems</h1><p>plain virtual machines</p>
+<h2 id="Use-distributed-architecture-to-solve-problems"><a href="#Use-distributed-architecture-to-solve-problems" class="headerlink" title="Use distributed architecture to solve problems"></a>Use distributed architecture to solve problems</h2><p>plain virtual machines</p>
 <p>First of all, virtual machines are nowadays a standard offering by any cloud service provider. This called IaaS, or infrastructure(基础设施) as a Service. This is because a computer and therefore also a virtual machine can be considered infrastructure today.And achieve unlimited scalability by distributing the execution(分布式计算) of our application, across these virtual machines.</p>
 <p>creating this architecture for your application is a very complicated and resource intensive problem(资源密集型问题).</p>
 <ul>
@@ -119,12 +119,17 @@ var _hmt = _hmt || [];
 <li>Web Server. Powerful</li>
 <li>Distributed Database where you can read and write data, from all of your virtual machines.</li>
 <li>A distributed file system, where you can read and write data which is accessible from all your virtual machines.</li>
-<li>Application monitoring, with a consolidated view(统一实图) of any problems occurring in your distributed execution environment.</li>
+<li>Application monitoring, with a consolidated view(统一视图) of any problems occurring in your distributed execution environment.</li>
 <li>Availability including data replication, hardware software resilience(恢复力), geographic disaster recovery strategies. Back ups, recovery, automatic fail overs, et cetera.</li>
 <li>Security set up and management(安全设置和管理) in your distributed execution environment</li>
 <li>load balancing. How to spread the load across the VMs, including application level session management(应用级会话管理分布负载).</li>
 </ul>
-  
+<h2 id="Google-App-Engine"><a href="#Google-App-Engine" class="headerlink" title="Google App Engine"></a>Google App Engine</h2><p>App Engine is a development and deployment platform that takes care of many things for your application.</p>
+<p>internet services, server side applications.</p>
+<h2 id="really-check"><a href="#really-check" class="headerlink" title="really check"></a>really check</h2><p>since App Engine provides services to control the execution environment, it also has to set up programming languages it supports. Python, Java, PHP, and GO. And since App Engine is an execution container, it also means that there are specific versions of these languages that are supported.</p>
+<p><strong><em>it’s important to remember there are trade-offs with any framework or platform you use.</em></strong></p>
+<p>outro(结尾)</p>
+<h1 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h1>  
 	</div>
 		<footer class="article-footer clearfix">
 
