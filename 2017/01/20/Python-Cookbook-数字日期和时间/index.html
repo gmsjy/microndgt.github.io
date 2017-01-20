@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>用Python开发可规模化的应用 | Kevin&#39;s Blog</title>
+    <title>Python Cookbook 数字日期和时间 | Kevin&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="Developing Scalable Apps in Python!">
+    <meta name="description" content="执行分数，数组或者日期和时间运算，就需要更多工作，不过这里着重关注日期和时间的运算，毕竟工作上对时间处理还是比较多的。">
     
     
     
@@ -90,10 +90,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/01/20/用Python开发可规模化的应用/" title="用Python开发可规模化的应用" itemprop="url">用Python开发可规模化的应用</a>
+      <a href="/2017/01/20/Python-Cookbook-数字日期和时间/" title="Python Cookbook 数字日期和时间" itemprop="url">Python Cookbook 数字日期和时间</a>
   </h1>
   <p class="article-time">
-    <time datetime="2017-01-20T00:47:38.000Z" itemprop="datePublished">Jan 20 2017</time>
+    <time datetime="2017-01-20T03:20:22.000Z" itemprop="datePublished">Jan 20 2017</time>
   </p>
 </header>
 	<div class="article-content">
@@ -101,41 +101,41 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Scalability-Basics"><span class="toc-number">1.</span> <span class="toc-text">Scalability Basics</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#从在单个计算机运行解耦"><span class="toc-number">1.1.</span> <span class="toc-text">从在单个计算机运行解耦</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Use-distributed-architecture-to-solve-problems"><span class="toc-number">1.2.</span> <span class="toc-text">Use distributed architecture to solve problems</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Google-App-Engine"><span class="toc-number">1.3.</span> <span class="toc-text">Google App Engine</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#really-check"><span class="toc-number">1.4.</span> <span class="toc-text">really check</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Getting-Started"><span class="toc-number">2.</span> <span class="toc-text">Getting Started</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#数字的四舍五入"><span class="toc-number">1.</span> <span class="toc-text">数字的四舍五入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#精确的浮点数运算"><span class="toc-number">2.</span> <span class="toc-text">精确的浮点数运算</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数字的格式化输出"><span class="toc-number">3.</span> <span class="toc-text">数字的格式化输出</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二八十六进制整数"><span class="toc-number">4.</span> <span class="toc-text">二八十六进制整数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#无穷大和NaN"><span class="toc-number">5.</span> <span class="toc-text">无穷大和NaN</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分数运算"><span class="toc-number">6.</span> <span class="toc-text">分数运算</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#大型数组运算"><span class="toc-number">7.</span> <span class="toc-text">大型数组运算</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#随机选择"><span class="toc-number">8.</span> <span class="toc-text">随机选择</span></a></li></ol>
 		</div>
 		
-		<p>Developing Scalable Apps in Python!<a id="more"></a></p>
-<h1 id="Scalability-Basics"><a href="#Scalability-Basics" class="headerlink" title="Scalability Basics"></a>Scalability Basics</h1><p>在Google基础结构上运行的应用，缩放，scale，可缩放应用</p>
-<p>the race for scalability 可伸缩性争用</p>
-<p>optimize software, change software to run on more servers -&gt; scalable architecture</p>
-<h2 id="从在单个计算机运行解耦"><a href="#从在单个计算机运行解耦" class="headerlink" title="从在单个计算机运行解耦"></a>从在单个计算机运行解耦</h2><p>将向外扩展架构设计为将应用扩展到单一计算机范围之外，因此还需要扩展此分布式架构(distributed architecture)， 而不是共享架构(share architecture)，有道理，不能用共享的，这样扩展的时候共享资源就会称为瓶颈，分布式应用最好也不要有共享的数据，这样会导致通信，处理起来比较麻烦。虚拟机(virtual machine)</p>
-<p>key step to building a scalable system is your need to decouple it from executing on a single computer. You design a scale out architecture as your application scales outside the scope of a single computer and this distributed architecture needs to be socalled, share nothing architecture. Meaning, that it must not depend on any shared resources that can become the bottleneck, this way if your application needs a scale, you can just provide more computer to provide the additional capacity required. That means, you can run your application on. All the things. And to get even more flexibility the concept of virtual machines was born which enables you to decouple a physical machine from the application execution machine. This had great flexibility gain since the infrastructure turned virtual you would now run your scale out application on several virtual machines instead of physical computers. You can now scale indefinitely by adding these standard building blocks of performance that your application can utilize and you have decomposed(分解) your application from the specific execution machine. So how do you design your application to be able to scale like this?</p>
-<h2 id="Use-distributed-architecture-to-solve-problems"><a href="#Use-distributed-architecture-to-solve-problems" class="headerlink" title="Use distributed architecture to solve problems"></a>Use distributed architecture to solve problems</h2><p>plain virtual machines</p>
-<p>First of all, virtual machines are nowadays a standard offering by any cloud service provider. This called IaaS, or infrastructure(基础设施) as a Service. This is because a computer and therefore also a virtual machine can be considered infrastructure today.And achieve unlimited scalability by distributing the execution(分布式计算) of our application, across these virtual machines.</p>
-<p>creating this architecture for your application is a very complicated and resource intensive problem(资源密集型问题).</p>
-<ul>
-<li>VM Management. Starting and stopping the virtual machine.</li>
-<li>Software Management</li>
-<li>Web Server. Powerful</li>
-<li>Distributed Database where you can read and write data, from all of your virtual machines.</li>
-<li>A distributed file system, where you can read and write data which is accessible from all your virtual machines.</li>
-<li>Application monitoring, with a consolidated view(统一视图) of any problems occurring in your distributed execution environment.</li>
-<li>Availability including data replication, hardware software resilience(恢复力), geographic disaster recovery strategies. Back ups, recovery, automatic fail overs, et cetera.</li>
-<li>Security set up and management(安全设置和管理) in your distributed execution environment</li>
-<li>load balancing. How to spread the load across the VMs, including application level session management(应用级会话管理分布负载).</li>
-</ul>
-<h2 id="Google-App-Engine"><a href="#Google-App-Engine" class="headerlink" title="Google App Engine"></a>Google App Engine</h2><p>App Engine is a development and deployment platform that takes care of many things for your application.</p>
-<p>internet services, server side applications.</p>
-<h2 id="really-check"><a href="#really-check" class="headerlink" title="really check"></a>really check</h2><p>since App Engine provides services to control the execution environment, it also has to set up programming languages it supports. Python, Java, PHP, and GO. And since App Engine is an execution container, it also means that there are specific versions of these languages that are supported.</p>
-<p><strong><em>it’s important to remember there are trade-offs with any framework or platform you use.</em></strong></p>
-<p>outro(结尾)</p>
-<h1 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h1>  
+		<p>执行分数，数组或者日期和时间运算，就需要更多工作，不过这里着重关注日期和时间的运算，毕竟工作上对时间处理还是比较多的。<a id="more"></a></p>
+<h1 id="数字的四舍五入"><a href="#数字的四舍五入" class="headerlink" title="数字的四舍五入"></a>数字的四舍五入</h1><p><code>round(value, ndigits)</code> 比如 <code>round(1.231, 1)</code> 为1.2，如果在中间的话，返回离它最近的偶数，1.5和2.5都会返回2，并且ndigits可以是负数，这样舍入运算作用在十位，百位和千位上。</p>
+<p>如果不允许小误差，那么使用decimal模块。</p>
+<h1 id="精确的浮点数运算"><a href="#精确的浮点数运算" class="headerlink" title="精确的浮点数运算"></a>精确的浮点数运算</h1><p>精确但是有性能损失，使用decimal模块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">from decimal import Decimal</div><div class="line">a = Decimal(&apos;4.2&apos;)</div><div class="line">b = Decimal(&apos;2.1&apos;)</div><div class="line">print(a + b) # 6.3</div></pre></td></tr></table></figure>
+<p>decimal可以允许你控制计算的数字位数和四舍五入运算。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 创建本地上下文并且更改它的设置</div><div class="line">with localcontext() as ctx:</div><div class="line">    ctx.prec = 3 # 位数</div><div class="line">print(a / b)</div></pre></td></tr></table></figure></p>
+<p>之前遇到的情况是这样的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">nums = [1.23e+18, 1, -1.23e+18]</div><div class="line">sum(nums)</div><div class="line"># 可以使用math.fsum()提供的更精确计算能力来解决</div><div class="line">import math</div><div class="line">math.fsum(nums)</div></pre></td></tr></table></figure>
+<p>处理金融数据的时候会用到decimal模块</p>
+<h1 id="数字的格式化输出"><a href="#数字的格式化输出" class="headerlink" title="数字的格式化输出"></a>数字的格式化输出</h1><p>控制数字位数，对齐，千位分隔符和其他细节</p>
+<p>格式化输出单个数字的时候，可以使用内置的format()函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">x = 1234.56789</div><div class="line">format(x, &apos;0.2f&apos;)</div><div class="line">format(x, &apos;&gt;10.1f&apos;) # 右对齐宽度10</div><div class="line">format(x, &apos;~10.1f&apos;) # 居中</div><div class="line">format(x, &apos;,&apos;) # 千位符</div></pre></td></tr></table></figure>
+<p>指定宽度和精度的一般形式是<code>&#39;[&lt;&gt;^]?width[,]?(.digits)?&#39;</code>，同样的格式也用在字符串的format()方法中</p>
+<p><code>the value is {:0,.2f}.format(x)</code></p>
+<p>格式化值会根据指定数字的位数，和round函数采用同样的规则</p>
+<h1 id="二八十六进制整数"><a href="#二八十六进制整数" class="headerlink" title="二八十六进制整数"></a>二八十六进制整数</h1><p><code>bin(x)</code>和<code>oct(x)</code>和<code>hex(x)</code>，如果不想显示前缀的话，使用format函数，<code>format(x, &#39;b&#39;)</code> 和 <code>format(x, &#39;o&#39;)</code>和<code>format(x, &#39;x&#39;)</code></p>
+<p>将不同进制转换整数字符串，使用带有进制的int()函数<code>int(&#39;4d2&#39;, 16)</code>或者<code>int(&#39;0010&#39;, 2)</code>表示16进制，2进制</p>
+<h1 id="无穷大和NaN"><a href="#无穷大和NaN" class="headerlink" title="无穷大和NaN"></a>无穷大和NaN</h1><p>使用<code>float()</code>来创建它们</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a = float(&apos;inf&apos;)</div><div class="line">b = float(&apos;-inf&apos;)</div><div class="line">c = float(&apos;nan&apos;)</div></pre></td></tr></table></figure>
+<p>使用<code>math.isinf()</code>和<code>math.isnan()</code>函数来测试值是否存在,也可以使用<code>numpy.isinf()</code>或者<code>numpy.isnan()</code></p>
+<p>NaN值会在所有操作中传播，而不会产生异常</p>
+<h1 id="分数运算"><a href="#分数运算" class="headerlink" title="分数运算"></a>分数运算</h1><p>fractions模块可以用来执行包含分数的数学运算</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">from fractions import Fraction</div><div class="line">a = Fraction(5, 4)</div><div class="line">b = Fraction(7, 16)</div><div class="line">print(a + b)</div><div class="line">float(a + b)</div></pre></td></tr></table></figure>
+<h1 id="大型数组运算"><a href="#大型数组运算" class="headerlink" title="大型数组运算"></a>大型数组运算</h1><p>使用NumPy库，提供一个数组对象，更适合用来进行数学运算，底层实现中，NumPy数组使用了C或者Fortran语言的机制分配内存，它们是一个非常大的连续的并且由同类型数据组成的内存区域。<code>import numpy as np</code></p>
+<p>同时NumPy库有矩阵对象来进行线性代数运算</p>
+<h1 id="随机选择"><a href="#随机选择" class="headerlink" title="随机选择"></a>随机选择</h1>  
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Python/">Python</a><a href="/tags/Udacity/">Udacity</a>
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python-Cookbook/">Python_Cookbook</a>
   </div>
 
 
@@ -143,7 +143,7 @@ var _hmt = _hmt || [];
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2017/01/20/用Python开发可规模化的应用/" data-title="用Python开发可规模化的应用 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2017/01/20/Python-Cookbook-数字日期和时间/" data-title="Python Cookbook 数字日期和时间 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -152,19 +152,11 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/01/20/Python-Cookbook-数字日期和时间/" title="Python Cookbook 数字日期和时间">
-  <strong>新一篇:</strong><br/>
-  <span>
-  Python Cookbook 数字日期和时间</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/01/19/Hive学习/"  title="Hive学习">
+<a href="/2017/01/20/用Python开发可规模化的应用/"  title="用Python开发可规模化的应用">
  <strong>旧一篇:</strong><br/> 
- <span>Hive学习
+ <span>用Python开发可规模化的应用
 </span>
 </a>
 </div>
@@ -174,7 +166,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="用Python开发可规模化的应用" data-thread-key="用Python开发可规模化的应用" data-author-key="Kevin" data-url="http://microndgt.github.io/post/用Python开发可规模化的应用"></div>
+	<div class="ds-thread" data-title="Python Cookbook 数字日期和时间" data-thread-key="Python-Cookbook-数字日期和时间" data-author-key="Kevin" data-url="http://microndgt.github.io/post/Python-Cookbook-数字日期和时间"></div>
 	
 </section>
 
