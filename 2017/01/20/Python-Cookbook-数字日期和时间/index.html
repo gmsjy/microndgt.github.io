@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -78,7 +78,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -101,7 +101,7 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#数字的四舍五入"><span class="toc-number">1.</span> <span class="toc-text">数字的四舍五入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#精确的浮点数运算"><span class="toc-number">2.</span> <span class="toc-text">精确的浮点数运算</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数字的格式化输出"><span class="toc-number">3.</span> <span class="toc-text">数字的格式化输出</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二八十六进制整数"><span class="toc-number">4.</span> <span class="toc-text">二八十六进制整数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#无穷大和NaN"><span class="toc-number">5.</span> <span class="toc-text">无穷大和NaN</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分数运算"><span class="toc-number">6.</span> <span class="toc-text">分数运算</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#大型数组运算"><span class="toc-number">7.</span> <span class="toc-text">大型数组运算</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#随机选择"><span class="toc-number">8.</span> <span class="toc-text">随机选择</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#数字的四舍五入"><span class="toc-number">1.</span> <span class="toc-text">数字的四舍五入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#精确的浮点数运算"><span class="toc-number">2.</span> <span class="toc-text">精确的浮点数运算</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数字的格式化输出"><span class="toc-number">3.</span> <span class="toc-text">数字的格式化输出</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二八十六进制整数"><span class="toc-number">4.</span> <span class="toc-text">二八十六进制整数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#无穷大和NaN"><span class="toc-number">5.</span> <span class="toc-text">无穷大和NaN</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分数运算"><span class="toc-number">6.</span> <span class="toc-text">分数运算</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#大型数组运算"><span class="toc-number">7.</span> <span class="toc-text">大型数组运算</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#随机选择"><span class="toc-number">8.</span> <span class="toc-text">随机选择</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基本的日期与时间转换"><span class="toc-number">9.</span> <span class="toc-text">基本的日期与时间转换</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#最后一个周五的日期"><span class="toc-number">10.</span> <span class="toc-text">最后一个周五的日期</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#计算当前月份的日期范围"><span class="toc-number">11.</span> <span class="toc-text">计算当前月份的日期范围</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#字符串转换为日期"><span class="toc-number">12.</span> <span class="toc-text">字符串转换为日期</span></a></li></ol>
 		</div>
 		
 		<p>执行分数，数组或者日期和时间运算，就需要更多工作，不过这里着重关注日期和时间的运算，毕竟工作上对时间处理还是比较多的。<a id="more"></a></p>
@@ -129,7 +129,27 @@ var _hmt = _hmt || [];
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">from fractions import Fraction</div><div class="line">a = Fraction(5, 4)</div><div class="line">b = Fraction(7, 16)</div><div class="line">print(a + b)</div><div class="line">float(a + b)</div></pre></td></tr></table></figure>
 <h1 id="大型数组运算"><a href="#大型数组运算" class="headerlink" title="大型数组运算"></a>大型数组运算</h1><p>使用NumPy库，提供一个数组对象，更适合用来进行数学运算，底层实现中，NumPy数组使用了C或者Fortran语言的机制分配内存，它们是一个非常大的连续的并且由同类型数据组成的内存区域。<code>import numpy as np</code></p>
 <p>同时NumPy库有矩阵对象来进行线性代数运算</p>
-<h1 id="随机选择"><a href="#随机选择" class="headerlink" title="随机选择"></a>随机选择</h1>  
+<h1 id="随机选择"><a href="#随机选择" class="headerlink" title="随机选择"></a>随机选择</h1><p>从一个序列中随机抽选一个元素，使用<code>random.choice()</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import random</div><div class="line">values = [1, 2, 3, 4, 5, 6]</div><div class="line">random.choice(values)</div></pre></td></tr></table></figure>
+<p>提取N个不同元素的样本来作进一步操作，<code>random.sample(values, 2)</code></p>
+<p>打乱序列中元素顺序，<code>random.shuffle(values)</code>，原地修改顺序</p>
+<p>生成随机整数，<code>random.randint(0, 10)</code> 包括0和10</p>
+<p>生成0到1范围内均匀分布的浮点书，使用<code>random.random()</code></p>
+<p>通过<code>random.seed()</code>函数修改初始化种子，<code>random.seed(12345)</code></p>
+<h1 id="基本的日期与时间转换"><a href="#基本的日期与时间转换" class="headerlink" title="基本的日期与时间转换"></a>基本的日期与时间转换</h1><p>使用datetime模块，表示一个时间段，创建一个timedelta实例，<code>a = timedelta(days=2)</code></p>
+<p>创建一个datetime实例<code>a = datetime(2012, 9, 23)</code></p>
+<p><code>now = datetime.today()</code>，并且datetime会自动处理闰年</p>
+<p>使用<code>dateutil</code>模块处理时区，模糊时间范围，节假日计算，使用<code>dateutil.relativedelta</code>来计算间距日期</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">from dateutil.relativedelta import relativedelta</div><div class="line">a = datetime(2017, 1, 21)</div><div class="line">a + relativedelta(years=-1)</div></pre></td></tr></table></figure>
+<h1 id="最后一个周五的日期"><a href="#最后一个周五的日期" class="headerlink" title="最后一个周五的日期"></a>最后一个周五的日期</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">from datetime import datetime, timedelta</div><div class="line">weekdays = [&apos;Monday&apos;, &apos;Tuesday&apos;, &apos;Wednesday&apos;, &apos;Thursday&apos;,</div><div class="line">            &apos;Friday&apos;, &apos;Saturday&apos;, &apos;Sunday&apos;]</div><div class="line">def get_previous_byday(dayname, start_date=None):</div><div class="line">    if start_date is None:</div><div class="line">        start_date = datetime.today()</div><div class="line">    day_num = start_date.weekday() # 返回序号，周一是第一个0</div><div class="line">    day_num_target = weekdays.index(dayname)</div><div class="line">    # 这里因为有两种情况，一种是现在日期序号大于或者等于target的，这样直接减就好，比如周三2减去周二1等于1，说明上一个周二离现在1天</div><div class="line">    ＃ 另外一种情况是日期序号小于的，这样直接减就是负的，并且肯定是上一个星期的，但是不足7天，所以7加上这个差</div><div class="line">    days_ago = (7 + day_num - day_num_target) % 7</div><div class="line">    if days_ago == 0:</div><div class="line">        days_ago = 7</div><div class="line">    target_date = start_date - timedelta(days=days_ago)</div><div class="line">    return target_date</div></pre></td></tr></table></figure>
+<p>可以使用dateutil模块中的relativedelta()函数执行同样的计算</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">from dateutil.relativedelta import relativedelta</div><div class="line">d = datetime.now()</div><div class="line">print(d + relativedelta(weekday=FR))</div><div class="line">print(d + relativedelta(weekday=FR(-1)))</div></pre></td></tr></table></figure>
+<h1 id="计算当前月份的日期范围"><a href="#计算当前月份的日期范围" class="headerlink" title="计算当前月份的日期范围"></a>计算当前月份的日期范围</h1><p><code>calendar.monthrange(year, month)</code>返回该月第一天的weekday和这个月的天数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">def get_month_range(start_date=None):</div><div class="line">    if start_date is None:</div><div class="line">        # 计算出对应月份第一天的日期</div><div class="line">        start_date = date.today().replace(day=1)</div><div class="line">    _, days_in_month = calendar.monthrange(start_date.year, start_date.month)</div><div class="line">    end_date = start_date + timedelta(days=days_in_month)</div><div class="line">    return (start_date, end_date)</div><div class="line">a_day = timedelta(days=1)</div><div class="line">first_day, last_day = get_month_range()</div><div class="line"># 结束日期不包含在日期范围内</div><div class="line">while first_day &lt; last_day:</div><div class="line">    print(first_day)</div><div class="line">    first_day += a_day</div><div class="line"># 或者定义一个生成器</div><div class="line">def date_range(start, stop, step):</div><div class="line">    while start &lt; stop:</div><div class="line">        yield start</div><div class="line">        start += step</div></pre></td></tr></table></figure>
+<h1 id="字符串转换为日期"><a href="#字符串转换为日期" class="headerlink" title="字符串转换为日期"></a>字符串转换为日期</h1><p>使用<code>datetime.strptime()</code>方法的性能还是很低的，所以如果知道了日期字符串的确切形式，可以自己实现解析方案来获取更好的性能</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">from datetime import datetime</div><div class="line">def parse_ymd(s):</div><div class="line">    year_s, mon_s, day_s = s.split(&apos;-&apos;)</div><div class="line">    return datetime(int(year_s), int(mon_s), int(day_s))</div></pre></td></tr></table></figure>
+<p>速度比<code>datetime.strptime()</code>快7倍多，6666，把capacity项目的都改过来了</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 
@@ -155,7 +175,7 @@ var _hmt = _hmt || [];
 
 <div class="next">
 <a href="/2017/01/20/用Python开发可规模化的应用/"  title="用Python开发可规模化的应用">
- <strong>旧一篇:</strong><br/> 
+ <strong>Old:</strong><br/> 
  <span>用Python开发可规模化的应用
 </span>
 </a>
