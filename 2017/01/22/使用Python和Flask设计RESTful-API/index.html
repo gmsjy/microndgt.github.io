@@ -4,12 +4,17 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Shell命令总结 | Kevin&#39;s Blog</title>
+    <title>使用Python和Flask设计RESTful API | Kevin&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="工作中遇到的shell命令总结～">
+    <meta name="description" content="REST(REpresentational State Transfer表现层状态迁移)web services和web APIs
+
+客户端－服务器，两者隔离
+无状态，一种服务器不会存储客户端上一次请求的信息用来下一次使用
+可缓存，服务器明示客户端请求能否缓存
+分层系统，客户端和服务器通信应该以一种">
     
     
     
@@ -90,10 +95,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/12/02/shell命令总结/" title="Shell命令总结" itemprop="url">Shell命令总结</a>
+      <a href="/2017/01/22/使用Python和Flask设计RESTful-API/" title="使用Python和Flask设计RESTful API" itemprop="url">使用Python和Flask设计RESTful API</a>
   </h1>
   <p class="article-time">
-    <time datetime="2016-12-02T07:57:57.000Z" itemprop="datePublished">Dec 2 2016</time>
+    <time datetime="2017-01-22T03:25:20.000Z" itemprop="datePublished">Jan 22 2017</time>
   </p>
 </header>
 	<div class="article-content">
@@ -101,86 +106,43 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#清除cache"><span class="toc-number">1.</span> <span class="toc-text">清除cache</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#awk"><span class="toc-number">2.</span> <span class="toc-text">awk</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#重新生成id"><span class="toc-number">2.1.</span> <span class="toc-text">重新生成id</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#打印出前两个字段"><span class="toc-number">2.2.</span> <span class="toc-text">打印出前两个字段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获取含有inf的id"><span class="toc-number">2.3.</span> <span class="toc-text">获取含有inf的id</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用if语句"><span class="toc-number">2.4.</span> <span class="toc-text">使用if语句</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sort"><span class="toc-number">3.</span> <span class="toc-text">sort</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#find"><span class="toc-number">4.</span> <span class="toc-text">find</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#vim"><span class="toc-number">5.</span> <span class="toc-text">vim</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sed"><span class="toc-number">6.</span> <span class="toc-text">sed</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#REST-REpresentational-State-Transfer表现层状态迁移"><span class="toc-number">1.</span> <span class="toc-text">REST(REpresentational State Transfer表现层状态迁移)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RESTful-的-web-service"><span class="toc-number">2.</span> <span class="toc-text">RESTful 的 web service</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设计一个web-service"><span class="toc-number">3.</span> <span class="toc-text">设计一个web service</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用Python和Flask实现RESTful-services"><span class="toc-number">4.</span> <span class="toc-text">使用Python和Flask实现RESTful services</span></a></li></ol>
 		</div>
 		
-		<p>工作中遇到的shell命令总结～<a id="more"></a></p>
-<h1 id="清除cache"><a href="#清除cache" class="headerlink" title="清除cache"></a>清除cache</h1><p>在运行程序过程中，<code>free -h</code>发现cache占用太大，于是：</p>
+		<h1 id="REST-REpresentational-State-Transfer表现层状态迁移"><a href="#REST-REpresentational-State-Transfer表现层状态迁移" class="headerlink" title="REST(REpresentational State Transfer表现层状态迁移)"></a>REST(REpresentational State Transfer表现层状态迁移)</h1><p>web services和web APIs</p>
 <ul>
-<li><code>sync</code> 保存数据</li>
-<li><code>echo 1 &gt; /proc/sys/vm/drop_caches</code></li>
+<li>客户端－服务器，两者隔离</li>
+<li>无状态，一种服务器不会存储客户端上一次请求的信息用来下一次使用</li>
+<li>可缓存，服务器明示客户端请求能否缓存</li>
+<li>分层系统，客户端和服务器通信应该以一种标准方式，中间层代替服务器做出相应，客户端不需要做任何变动</li>
+<li>统一接口，通信方法必须是统一的</li>
+<li>按需编码：服务器可以提供可执行代码的脚本，为客户端在它们的环境中执行</li>
 </ul>
-<p>这样之后即可清除内存中的cache占用</p>
-<h1 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h1><h2 id="重新生成id"><a href="#重新生成id" class="headerlink" title="重新生成id"></a>重新生成id</h2><p><code>awk &#39;BEGIN{FS=&quot;,&quot;;OFS=&quot;,&quot;;}{$1=NR;print $0}&#39; summary.csv &gt; summary_ex.csv</code></p>
-<h2 id="打印出前两个字段"><a href="#打印出前两个字段" class="headerlink" title="打印出前两个字段"></a>打印出前两个字段</h2><p><code>awk &#39;BEGIN{FS=&quot;,&quot;;OFS=&quot;,&quot;;}{print $1,$2}&#39; summary.csv &gt; summary_ex.csv</code></p>
-<h2 id="获取含有inf的id"><a href="#获取含有inf的id" class="headerlink" title="获取含有inf的id"></a>获取含有inf的id</h2><p><code>cat summary.csv | grep inf | awk -F &#39;,&#39; &#39;{print $2}&#39; &gt; inf_ids.txt</code></p>
-<h2 id="使用if语句"><a href="#使用if语句" class="headerlink" title="使用if语句"></a>使用if语句</h2><p>第三个不为空，但是第四个为空</p>
-<p><code>cat find_result.txt | awk -F &#39;,&#39; &#39;{if(!($3==&quot;&quot;) &amp;&amp; $4==&quot;&quot;){print $0}&#39; | awk -F &#39;,&#39; &#39;{if($1==20160624){print $0}}&#39; | wc -l</code></p>
-<p>不匹配正则表达式，不匹配数字</p>
-<p><code>cat find_result.txt | awk -F &#39;,&#39; &#39;{if($3!~&quot;[0-9]&quot;) &amp;&amp; $4==&quot;&quot;){print $0}&#39; | awk -F &#39;,&#39; &#39;{if($1==20160624){print $0}}&#39; | wc -l</code></p>
-<h1 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h1><p>根据第一个字段，分隔符是, 按数字排序</p>
-<p><code>sort -t , -k1 -n summary_ex.csv &gt; summary_ex_sort.csv</code></p>
-<h1 id="find"><a href="#find" class="headerlink" title="find"></a>find</h1><p>查找此类文件有多少个</p>
-<p><code>find /data/output/ -type f -name ability*.csv | wc -l</code></p>
-<p>在所有文件内容中查找有220010的行</p>
-<p><code>find /data/output/errors/ -name &#39;stk*.csv&#39; | xargs grep &#39;220010&#39;</code></p>
-<p>查找内容为空的ability文件</p>
-<p><code>find /data/output -name ability*.csv -type f －empty | wc -l</code></p>
-<h1 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h1><p><code>:%s/app/data/gc</code> 全文提醒替换</p>
-<h1 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h1><p>删除grep出的特定行,形成新文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">for id in $(cat inf_ids.txt)</div><div class="line">do</div><div class="line">    sed -i “/$id/d” summary.csv</div><div class="line">done</div></pre></td></tr></table></figure>
-<p>将新生成的文件贴到某个文件末尾</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">for line in $(cat summary.csv)</div><div class="line">do</div><div class="line">	sed -i &quot;\$a $line&quot; summary_45.csv</div><div class="line">done</div></pre></td></tr></table></figure>
-<p>其实这样就OK了。。</p>
-<p><code>cat test1 test2 &gt; test3</code></p>
-<p><code>cat test2 &gt;&gt; test1</code> 使用追加</p>
-<p>接下来重新生成id</p>
-<p><code>-e</code> 以选项中指定的script来处理输入的文本文件</p>
-<p>在文件第四行后面添加一行,a表示新增，在下一行</p>
-<p><code>sed -e 4a\newLine testfile</code></p>
-<p>删除第2-5行,不加-e也是可以的，记得加单引号</p>
-<p><code>cat -n /etc/passwd | sed &#39;2,5d&#39;</code></p>
-<p>删除到最后一行</p>
-<p><code>cat -n /etc/passwd | sed &#39;3,$d&#39;</code></p>
-<p>i表示插入，在目前的上一行</p>
-<p><code>cat -n /etc/passwd | sed &#39;2i drink tea&#39;</code></p>
-<p>反斜杠加入多行</p>
-<p><code>cat -n /etc/passwd | sed &#39;2a drink tea or ...\drink beer?&#39;</code></p>
-<p>c表示取代</p>
-<p><code>cat -n /etc/passwd | sed &#39;2,5c no 2-5 number&#39;</code></p>
-<p>p显示</p>
-<p><code>cat -n /etc/passwd | sed -n &#39;5,7p&#39;</code></p>
-<p>显示特定关键字的行,-n表示仅打印包含模板的行</p>
-<p><code>cat -n /etc/passwd | sed &#39;/root/p&#39;</code></p>
-<p>删除所有包含关键字的行，其他行输出</p>
-<p><code>cat -n /etc/passwd | sed &#39;/root/d&#39;</code></p>
-<p>数据搜寻并且执行命令</p>
-<p><code>cat -n /etc/passwd | sed -n &#39;/root/{s/bash/blueshell/;p}&#39;</code></p>
-<p>多点编辑</p>
-<p><code>cat -n /etc/passwd | sed -e &#39;3,$d&#39; -e &#39;s/bash/blueshell/&#39;</code></p>
-<p>-i 直接修改文件内容</p>
-<p><code>sed -i &#39;s/\.$/\!/g&#39; regular.txt</code></p>
-<p><code>sed -i &#39;$a # This is a test&#39; regular.txt</code></p>
+<h1 id="RESTful-的-web-service"><a href="#RESTful-的-web-service" class="headerlink" title="RESTful 的 web service"></a>RESTful 的 web service</h1><p>核心是资源，资源可以用URI表示，客户端使用HTTP协议定义的方法来发送请求到这些URIs，当然可能会导致这些被访问的资源状态改变</p>
+<p><code>GET,POST,PUT,DELETE</code></p>
+<p>REST设计不需要特定的数据格式，在请求中数据可以以JSON形式，或者作为url中查询参数项。</p>
+<h1 id="设计一个web-service"><a href="#设计一个web-service" class="headerlink" title="设计一个web service"></a>设计一个web service</h1><p>其实就是一个标识资源被展示出来以及它们是怎样受不同的请求方法影响。</p>
+<p>首先设计URL: <code>http://[hostname]/todo/api/v1.0</code>，在URL中包含应用名称有助于提供一个命名空间以便区分同一系统上的其他服务，包含版本号能够帮助以后的更新，如果新版本中存在新的和潜在不兼容的功能，可以不影响依赖于旧的功能的应用程序。</p>
+<p>现在从前端过来的也就是指令信息，然后发送给服务器，计算之后返回数据信息，主要在于要将这些数据格式化成json格式，把指令从json变成python可用的。</p>
+<p>有这么几项，一个是登陆，密码验证之类。另外一个是开始计算，返回数据，已完成百分比，耗费时间。另外一个是返回summary数据，输入id的话返回对应的ability或者其他数据，这块也就是数据查询功能，看查询类型了</p>
+<p>擦，在虚拟环境指定Python3也是不容易啊，<code>virtualenv backend -p /usr/local/bin/python3</code>使用用户安装的python3，貌似anaconda的Python3用不了</p>
+<h1 id="使用Python和Flask实现RESTful-services"><a href="#使用Python和Flask实现RESTful-services" class="headerlink" title="使用Python和Flask实现RESTful services"></a>使用Python和Flask实现RESTful services</h1><p>使用ssdb数据库</p>
+<p>最后使用了<code>flask-restful</code></p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Shell/">Shell</a>
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python/">Python</a>
   </div>
 
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux/">Linux</a>
-</div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2016/12/02/shell命令总结/" data-title="Shell命令总结 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2017/01/22/使用Python和Flask设计RESTful-API/" data-title="使用Python和Flask设计RESTful API | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -190,18 +152,18 @@ var _hmt = _hmt || [];
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2016/12/05/现代操作系统/" title="现代操作系统">
+ <a href="/2017/01/23/Python-Cookbook-函数/" title="Python Cookbook 函数">
   <strong>新一篇:</strong><br/>
   <span>
-  现代操作系统</span>
+  Python Cookbook 函数</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2016/11/27/DA-检验心理学现象/"  title="DA-检验心理学现象">
+<a href="/2017/01/20/Python-Cookbook-数字日期和时间/"  title="Python Cookbook 数字日期和时间">
  <strong>旧一篇:</strong><br/> 
- <span>DA-检验心理学现象
+ <span>Python Cookbook 数字日期和时间
 </span>
 </a>
 </div>
@@ -211,7 +173,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="Shell命令总结" data-thread-key="shell命令总结" data-author-key="Kevin" data-url="http://microndgt.github.io/post/shell命令总结"></div>
+	<div class="ds-thread" data-title="使用Python和Flask设计RESTful API" data-thread-key="使用Python和Flask设计RESTful-API" data-author-key="Kevin" data-url="http://microndgt.github.io/post/使用Python和Flask设计RESTful-API"></div>
 	
 </section>
 

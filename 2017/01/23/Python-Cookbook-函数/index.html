@@ -4,12 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Shell命令总结 | Kevin&#39;s Blog</title>
+    <title>Python Cookbook 函数 | Kevin&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="工作中遇到的shell命令总结～">
+    <meta name="description" content="默认参数，任意数量参数，强制关键字参数，注解和闭包。">
     
     
     
@@ -90,10 +90,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/12/02/shell命令总结/" title="Shell命令总结" itemprop="url">Shell命令总结</a>
+      <a href="/2017/01/23/Python-Cookbook-函数/" title="Python Cookbook 函数" itemprop="url">Python Cookbook 函数</a>
   </h1>
   <p class="article-time">
-    <time datetime="2016-12-02T07:57:57.000Z" itemprop="datePublished">Dec 2 2016</time>
+    <time datetime="2017-01-23T06:34:34.000Z" itemprop="datePublished">Jan 23 2017</time>
   </p>
 </header>
 	<div class="article-content">
@@ -101,86 +101,40 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#清除cache"><span class="toc-number">1.</span> <span class="toc-text">清除cache</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#awk"><span class="toc-number">2.</span> <span class="toc-text">awk</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#重新生成id"><span class="toc-number">2.1.</span> <span class="toc-text">重新生成id</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#打印出前两个字段"><span class="toc-number">2.2.</span> <span class="toc-text">打印出前两个字段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获取含有inf的id"><span class="toc-number">2.3.</span> <span class="toc-text">获取含有inf的id</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用if语句"><span class="toc-number">2.4.</span> <span class="toc-text">使用if语句</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sort"><span class="toc-number">3.</span> <span class="toc-text">sort</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#find"><span class="toc-number">4.</span> <span class="toc-text">find</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#vim"><span class="toc-number">5.</span> <span class="toc-text">vim</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sed"><span class="toc-number">6.</span> <span class="toc-text">sed</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#可接受任意数量参数的函数"><span class="toc-number">1.</span> <span class="toc-text">可接受任意数量参数的函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#强制关键字参数"><span class="toc-number">2.</span> <span class="toc-text">强制关键字参数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#给函数参数增加元信息"><span class="toc-number">3.</span> <span class="toc-text">给函数参数增加元信息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#定义有默认参数的函数"><span class="toc-number">4.</span> <span class="toc-text">定义有默认参数的函数</span></a></li></ol>
 		</div>
 		
-		<p>工作中遇到的shell命令总结～<a id="more"></a></p>
-<h1 id="清除cache"><a href="#清除cache" class="headerlink" title="清除cache"></a>清除cache</h1><p>在运行程序过程中，<code>free -h</code>发现cache占用太大，于是：</p>
-<ul>
-<li><code>sync</code> 保存数据</li>
-<li><code>echo 1 &gt; /proc/sys/vm/drop_caches</code></li>
-</ul>
-<p>这样之后即可清除内存中的cache占用</p>
-<h1 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h1><h2 id="重新生成id"><a href="#重新生成id" class="headerlink" title="重新生成id"></a>重新生成id</h2><p><code>awk &#39;BEGIN{FS=&quot;,&quot;;OFS=&quot;,&quot;;}{$1=NR;print $0}&#39; summary.csv &gt; summary_ex.csv</code></p>
-<h2 id="打印出前两个字段"><a href="#打印出前两个字段" class="headerlink" title="打印出前两个字段"></a>打印出前两个字段</h2><p><code>awk &#39;BEGIN{FS=&quot;,&quot;;OFS=&quot;,&quot;;}{print $1,$2}&#39; summary.csv &gt; summary_ex.csv</code></p>
-<h2 id="获取含有inf的id"><a href="#获取含有inf的id" class="headerlink" title="获取含有inf的id"></a>获取含有inf的id</h2><p><code>cat summary.csv | grep inf | awk -F &#39;,&#39; &#39;{print $2}&#39; &gt; inf_ids.txt</code></p>
-<h2 id="使用if语句"><a href="#使用if语句" class="headerlink" title="使用if语句"></a>使用if语句</h2><p>第三个不为空，但是第四个为空</p>
-<p><code>cat find_result.txt | awk -F &#39;,&#39; &#39;{if(!($3==&quot;&quot;) &amp;&amp; $4==&quot;&quot;){print $0}&#39; | awk -F &#39;,&#39; &#39;{if($1==20160624){print $0}}&#39; | wc -l</code></p>
-<p>不匹配正则表达式，不匹配数字</p>
-<p><code>cat find_result.txt | awk -F &#39;,&#39; &#39;{if($3!~&quot;[0-9]&quot;) &amp;&amp; $4==&quot;&quot;){print $0}&#39; | awk -F &#39;,&#39; &#39;{if($1==20160624){print $0}}&#39; | wc -l</code></p>
-<h1 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h1><p>根据第一个字段，分隔符是, 按数字排序</p>
-<p><code>sort -t , -k1 -n summary_ex.csv &gt; summary_ex_sort.csv</code></p>
-<h1 id="find"><a href="#find" class="headerlink" title="find"></a>find</h1><p>查找此类文件有多少个</p>
-<p><code>find /data/output/ -type f -name ability*.csv | wc -l</code></p>
-<p>在所有文件内容中查找有220010的行</p>
-<p><code>find /data/output/errors/ -name &#39;stk*.csv&#39; | xargs grep &#39;220010&#39;</code></p>
-<p>查找内容为空的ability文件</p>
-<p><code>find /data/output -name ability*.csv -type f －empty | wc -l</code></p>
-<h1 id="vim"><a href="#vim" class="headerlink" title="vim"></a>vim</h1><p><code>:%s/app/data/gc</code> 全文提醒替换</p>
-<h1 id="sed"><a href="#sed" class="headerlink" title="sed"></a>sed</h1><p>删除grep出的特定行,形成新文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">for id in $(cat inf_ids.txt)</div><div class="line">do</div><div class="line">    sed -i “/$id/d” summary.csv</div><div class="line">done</div></pre></td></tr></table></figure>
-<p>将新生成的文件贴到某个文件末尾</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">for line in $(cat summary.csv)</div><div class="line">do</div><div class="line">	sed -i &quot;\$a $line&quot; summary_45.csv</div><div class="line">done</div></pre></td></tr></table></figure>
-<p>其实这样就OK了。。</p>
-<p><code>cat test1 test2 &gt; test3</code></p>
-<p><code>cat test2 &gt;&gt; test1</code> 使用追加</p>
-<p>接下来重新生成id</p>
-<p><code>-e</code> 以选项中指定的script来处理输入的文本文件</p>
-<p>在文件第四行后面添加一行,a表示新增，在下一行</p>
-<p><code>sed -e 4a\newLine testfile</code></p>
-<p>删除第2-5行,不加-e也是可以的，记得加单引号</p>
-<p><code>cat -n /etc/passwd | sed &#39;2,5d&#39;</code></p>
-<p>删除到最后一行</p>
-<p><code>cat -n /etc/passwd | sed &#39;3,$d&#39;</code></p>
-<p>i表示插入，在目前的上一行</p>
-<p><code>cat -n /etc/passwd | sed &#39;2i drink tea&#39;</code></p>
-<p>反斜杠加入多行</p>
-<p><code>cat -n /etc/passwd | sed &#39;2a drink tea or ...\drink beer?&#39;</code></p>
-<p>c表示取代</p>
-<p><code>cat -n /etc/passwd | sed &#39;2,5c no 2-5 number&#39;</code></p>
-<p>p显示</p>
-<p><code>cat -n /etc/passwd | sed -n &#39;5,7p&#39;</code></p>
-<p>显示特定关键字的行,-n表示仅打印包含模板的行</p>
-<p><code>cat -n /etc/passwd | sed &#39;/root/p&#39;</code></p>
-<p>删除所有包含关键字的行，其他行输出</p>
-<p><code>cat -n /etc/passwd | sed &#39;/root/d&#39;</code></p>
-<p>数据搜寻并且执行命令</p>
-<p><code>cat -n /etc/passwd | sed -n &#39;/root/{s/bash/blueshell/;p}&#39;</code></p>
-<p>多点编辑</p>
-<p><code>cat -n /etc/passwd | sed -e &#39;3,$d&#39; -e &#39;s/bash/blueshell/&#39;</code></p>
-<p>-i 直接修改文件内容</p>
-<p><code>sed -i &#39;s/\.$/\!/g&#39; regular.txt</code></p>
-<p><code>sed -i &#39;$a # This is a test&#39; regular.txt</code></p>
+		<p>默认参数，任意数量参数，强制关键字参数，注解和闭包。<a id="more"></a></p>
+<h1 id="可接受任意数量参数的函数"><a href="#可接受任意数量参数的函数" class="headerlink" title="可接受任意数量参数的函数"></a>可接受任意数量参数的函数</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">def avg(first, *rest):</div><div class="line">    # 传入相当于一个序列</div><div class="line">    return (first + sum(rest)) / (1 + len(rest))</div></pre></td></tr></table></figure>
+<p>任意数量的关键字参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">def make_element(name, value, **attrs):</div><div class="line">    keyvals = [&apos; %s = &quot;%s&quot; &apos; % item for item in attrs.items()]</div></pre></td></tr></table></figure>
+<p>任意数量的位置参数和关键字参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">def anyargs(*args, **kwargs):</div><div class="line">    print(args)</div><div class="line">    print(kwargs)</div></pre></td></tr></table></figure>
+<h1 id="强制关键字参数"><a href="#强制关键字参数" class="headerlink" title="强制关键字参数"></a>强制关键字参数</h1><p>将强制关键字参数放到某个<em>参数，或者单个</em>后面就可以</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">def recv(maxsize, *, block):</div><div class="line">    pass</div><div class="line">recv(1024, block=True)</div><div class="line">def mininum(*values, clip=None):</div><div class="line">    pass</div><div class="line">mininum(1, 5, 2, clip=0)</div></pre></td></tr></table></figure>
+<p>使用强制关键字参数可以使得对调用者友好，并且也比<code>**kwargs</code>友好，因为help输出的时候更容易理解</p>
+<h1 id="给函数参数增加元信息"><a href="#给函数参数增加元信息" class="headerlink" title="给函数参数增加元信息"></a>给函数参数增加元信息</h1><p>增加额外信息，这样使用者就知道函数应该怎样使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">def add(x:int, y:int) -&gt; int:</div><div class="line">    return x + y</div></pre></td></tr></table></figure>
+<p>并不会类型检查，一般加上简单的注解，通常使用类或者字符串会更好</p>
+<h1 id="定义有默认参数的函数"><a href="#定义有默认参数的函数" class="headerlink" title="定义有默认参数的函数"></a>定义有默认参数的函数</h1><p>定义一个有可选参数的函数直接在函数定义中给参数指定一个默认值，并且放到参数列表最后就可以了。</p>
+<p>如果默认参数是一个可以修改的容器比如列表，使用None作为默认值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">def spam(a, b=None):</div><div class="line">    if b is None:</div><div class="line">        b = []</div></pre></td></tr></table></figure>
+<p>默认值仅仅在函数定义的时候赋值一次，默认参数的值应该是不可变的对象，并且在测试None值的时候使用is操作符。<code>if a is None:</code></p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Shell/">Shell</a>
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python-Cookbook/">Python_Cookbook</a>
   </div>
 
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/Linux/">Linux</a>
-</div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2016/12/02/shell命令总结/" data-title="Shell命令总结 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2017/01/23/Python-Cookbook-函数/" data-title="Python Cookbook 函数 | Kevin&#39;s Blog" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -189,19 +143,11 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/12/05/现代操作系统/" title="现代操作系统">
-  <strong>新一篇:</strong><br/>
-  <span>
-  现代操作系统</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/11/27/DA-检验心理学现象/"  title="DA-检验心理学现象">
+<a href="/2017/01/22/使用Python和Flask设计RESTful-API/"  title="使用Python和Flask设计RESTful API">
  <strong>旧一篇:</strong><br/> 
- <span>DA-检验心理学现象
+ <span>使用Python和Flask设计RESTful API
 </span>
 </a>
 </div>
@@ -211,7 +157,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="Shell命令总结" data-thread-key="shell命令总结" data-author-key="Kevin" data-url="http://microndgt.github.io/post/shell命令总结"></div>
+	<div class="ds-thread" data-title="Python Cookbook 函数" data-thread-key="Python-Cookbook-函数" data-author-key="Kevin" data-url="http://microndgt.github.io/post/Python-Cookbook-函数"></div>
 	
 </section>
 
