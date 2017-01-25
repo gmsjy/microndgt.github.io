@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -78,7 +78,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -101,7 +101,7 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#可接受任意数量参数的函数"><span class="toc-number">1.</span> <span class="toc-text">可接受任意数量参数的函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#强制关键字参数"><span class="toc-number">2.</span> <span class="toc-text">强制关键字参数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#给函数参数增加元信息"><span class="toc-number">3.</span> <span class="toc-text">给函数参数增加元信息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#定义有默认参数的函数"><span class="toc-number">4.</span> <span class="toc-text">定义有默认参数的函数</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#可接受任意数量参数的函数"><span class="toc-number">1.</span> <span class="toc-text">可接受任意数量参数的函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#强制关键字参数"><span class="toc-number">2.</span> <span class="toc-text">强制关键字参数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#给函数参数增加元信息"><span class="toc-number">3.</span> <span class="toc-text">给函数参数增加元信息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#定义有默认参数的函数"><span class="toc-number">4.</span> <span class="toc-text">定义有默认参数的函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#匿名函数捕获变量值"><span class="toc-number">5.</span> <span class="toc-text">匿名函数捕获变量值</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#减少可调用对象的参数个数"><span class="toc-number">6.</span> <span class="toc-text">减少可调用对象的参数个数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将单方法的类转换成函数"><span class="toc-number">7.</span> <span class="toc-text">将单方法的类转换成函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#带额外状态信息的回调函数"><span class="toc-number">8.</span> <span class="toc-text">带额外状态信息的回调函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#访问闭包中定义的变量"><span class="toc-number">9.</span> <span class="toc-text">访问闭包中定义的变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#内联回调函数"><span class="toc-number">10.</span> <span class="toc-text">内联回调函数</span></a></li></ol>
 		</div>
 		
 		<p>默认参数，任意数量参数，强制关键字参数，注解和闭包。<a id="more"></a></p>
@@ -120,6 +120,38 @@ var _hmt = _hmt || [];
 <p>如果默认参数是一个可以修改的容器比如列表，使用None作为默认值</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">def spam(a, b=None):</div><div class="line">    if b is None:</div><div class="line">        b = []</div></pre></td></tr></table></figure>
 <p>默认值仅仅在函数定义的时候赋值一次，默认参数的值应该是不可变的对象，并且在测试None值的时候使用is操作符。<code>if a is None:</code></p>
+<h1 id="匿名函数捕获变量值"><a href="#匿名函数捕获变量值" class="headerlink" title="匿名函数捕获变量值"></a>匿名函数捕获变量值</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">x = 10</div><div class="line">a = lambda y: x + y</div><div class="line">x = 20</div><div class="line">b = lambda y: x + y</div></pre></td></tr></table></figure>
+<p><code>a(10)</code>和<code>b(10)</code>的结果都是30，因为lambda表达式中x是一个自由变量，在运行的时候绑定值，也就是说，在调用lambda表达式的时候，x的值是执行时的值，和函数的默认参数定义是不一样的。</p>
+<p>如果想让某个匿名函数在定义的时候捕获到值，可以将那个参数值定义成默认参数</p>
+<p><code>a = lambda y, x=x: x + y</code></p>
+<h1 id="减少可调用对象的参数个数"><a href="#减少可调用对象的参数个数" class="headerlink" title="减少可调用对象的参数个数"></a>减少可调用对象的参数个数</h1><p>有一个被其他python代码使用的callable对象，可能是一个回调函数或者是一个处理器，但是参数过多的时候，可能导致调用出错。对这就是为什么我的多进程调用没有作用，可能这个是一方面原因，另外一方面原因就是传入的是可变对象。</p>
+<p>使用<code>functools.partial()</code>允许给一个或者多个参数设置固定的值，减少接下来被调用时候的参数个数。</p>
+<p>一个例子，partial用来微调其他库函数所使用的回调函数的参数:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">def output_result(result, log=None):</div><div class="line">    if log is not None:</div><div class="line">        log.debug(&apos;Got: %r&apos;, result)</div><div class="line">def add(x, y):</div><div class="line">    return x + y</div><div class="line">if __name__ == &apos;__main__&apos;:</div><div class="line">    import logging</div><div class="line">    from multiprocessing import Pool</div><div class="line">    from functools import partial</div><div class="line">    logging.basicConfig(level=logging.DEBUG)</div><div class="line">    log = logging.getLogger(&apos;test&apos;)</div><div class="line">    p = Pool()</div><div class="line">    p.apply_async(add, (3, 4), callback=partial(outoutput_result, log=log))</div><div class="line">    p.close()</div><div class="line">    p.join()</div></pre></td></tr></table></figure>
+<h1 id="将单方法的类转换成函数"><a href="#将单方法的类转换成函数" class="headerlink" title="将单方法的类转换成函数"></a>将单方法的类转换成函数</h1><p>可以使用闭包将单个方法的类转换成函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopen</div><div class="line">class UrlTemplate:</div><div class="line">    def __init__(self, template):</div><div class="line">        self.template = template</div><div class="line">    def open(self, **kwargs):</div><div class="line">        return urlopen(self.template.format_map(kwargs))</div></pre></td></tr></table></figure>
+<p>可以使用闭包来代替:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">def urltemplate(template):</div><div class="line">    def opener(**kwargs):</div><div class="line">        return urlopen(template.format_map(kwargs))</div><div class="line">    return opener</div></pre></td></tr></table></figure>
+<p>经典啊！使用单方法类的原因是需要存储某些额外的状态来给方法使用，但是使用内部函数或者闭包更优雅，一个闭包就是一个函数，只不过在函数内部带上了一个额外的变量环境。闭包关键特点是它会记住自己被定义时的环境。</p>
+<p>任何时候遇到需要给某个函数增加额外的状态信息的问题，都可以考虑使用闭包。</p>
+<h1 id="带额外状态信息的回调函数"><a href="#带额外状态信息的回调函数" class="headerlink" title="带额外状态信息的回调函数"></a>带额外状态信息的回调函数</h1><p>代码需要依赖到回调函数的使用，并且需要让回调函数拥有额外的状态值，以便在它的内部使用。</p>
+<p>回调函数的使用，仅仅接受一个参数，不能再传入其他信息。</p>
+<p>为了让回调函数访问外部信息，一种方法是使用绑定方法来代替一个简单函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class ResultHandler:</div><div class="line">    def __init__(self):</div><div class="line">        self.sequence = 0</div><div class="line">    def handler(self, result):</div><div class="line">        self.sequence += 1</div><div class="line">        print(self.sequence, result)</div></pre></td></tr></table></figure>
+<p>先创建实例，然后使用它的handler()绑定方法作为回调函数</p>
+<p><code>apply_async(add, (2, 3), callback=r.handler)</code></p>
+<p>可以使用闭包捕获状态值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">def make_handler():</div><div class="line">    sequence = 0</div><div class="line">    def handler(result):</div><div class="line">        nonlocal sequence</div><div class="line">        sequence += 1</div><div class="line">        print(sequence, result)</div><div class="line">    return handler</div></pre></td></tr></table></figure>
+<p>使用协程来储存状态值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">def make_handler():</div><div class="line">    sequence = 0</div><div class="line">    while True:</div><div class="line">        result = yield</div><div class="line">        sequence += 1</div><div class="line">        print(sequence, result)</div></pre></td></tr></table></figure>
+<p>使用send方法作为回调函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">handler=make_handler()</div><div class="line">next(handler) ＃必须的，走到yield</div><div class="line">apply_async(add, (2, 3), callback=handler.send)</div></pre></td></tr></table></figure>
+<h1 id="访问闭包中定义的变量"><a href="#访问闭包中定义的变量" class="headerlink" title="访问闭包中定义的变量"></a>访问闭包中定义的变量</h1><p>扩展函数中的某个闭包，允许其能访问和修改函数的内部变量，通过编写访问函数并将其作为函数属性绑定到闭包上实现这个目的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">def sample():</div><div class="line">    n = 0</div><div class="line">    def func():</div><div class="line">        print(&apos;n=&apos;, n)</div><div class="line">    def get_n():</div><div class="line">        return n</div><div class="line">    def set_n(value):</div><div class="line">        nonlocal n</div><div class="line">        n = value</div><div class="line">    fuuc.get_n = get_n</div><div class="line">    func.set_n = set_n</div><div class="line">    return func</div><div class="line">f = sample()</div><div class="line">f()</div><div class="line">f.set_n(10)</div><div class="line">f.get_n()</div></pre></td></tr></table></figure>
+<p>函数属性可以使用简单的方式将访问方法绑定到闭包函数上。</p>
+<h1 id="内联回调函数"><a href="#内联回调函数" class="headerlink" title="内联回调函数"></a>内联回调函数</h1><p>回调函数可能会找不清楚程序控制流，所以使用内联回调函数可以看起来像一个普通的执行序列。</p>
+<p>使用生成器和协程可以使得回调函数内联在某个函数中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">from queue import Queue</div><div class="line">from functools import wraps</div><div class="line"># 使用functools.wraps可以保证装饰器不会对被装饰函数造成影响，原函数返回内部函数，这样原函数的名字变成了内部函数，所以把原函数的名字等属性复制到内部函数中，这样的话依赖函数签名的代码就不会执行出错。</div><div class="line">class Async:</div><div class="line">    def __init__(self, func, args):</div><div class="line">        self.func = func</div><div class="line">        self.args = args</div><div class="line">def inlined_async(func):</div><div class="line">    @wraps(func)</div><div class="line">    def wrapper(*args):</div><div class="line">        # 这里相当于初始化生成器</div><div class="line">        f = func(*args)</div><div class="line">        result_queue = Queue()</div><div class="line">        result_queue.put(None)</div><div class="line">        while True:</div><div class="line">            result = result_queue.get()</div><div class="line">            try:</div><div class="line">                # 第一次发送None，作为必须的next，走到yield,下次来就会把计算结果发送过去，作为r，然后print，然后走向下一个yield</div><div class="line">                a = f.send(result)</div><div class="line">                # 返回a是Async对象，也就是yield之后的对象</div><div class="line">                apply_async(a.func, a.args, callback=result_queue.put)</div><div class="line">            except StopIteration:</div><div class="line">                break</div><div class="line">    return wrapper</div><div class="line">def add(x, y):</div><div class="line">    return x + y</div><div class="line">@inlined_async</div><div class="line">def test():</div><div class="line">    r = yield Async(add, (2, 3))</div><div class="line">    print(r)</div><div class="line">    r = yield Async(add, (&apos;hello&apos;, &apos;world&apos;))</div><div class="line">    print(r)</div><div class="line">    for n in range(10):</div><div class="line">        r = yield Async(add, (n, n))</div></pre></td></tr></table></figure>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -146,7 +178,7 @@ var _hmt = _hmt || [];
 
 <div class="next">
 <a href="/2017/01/22/使用Python和Flask设计RESTful-API/"  title="使用Python和Flask设计RESTful API">
- <strong>旧一篇:</strong><br/> 
+ <strong>Old:</strong><br/> 
  <span>使用Python和Flask设计RESTful API
 </span>
 </a>
