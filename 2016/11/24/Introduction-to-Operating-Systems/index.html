@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -78,7 +78,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -124,7 +124,7 @@ var _hmt = _hmt || [];
 <li>proctor 学监</li>
 <li>analogy 类比</li>
 </ol>
-<h1 id="C-programming-examples"><a href="#C-programming-examples" class="headerlink" title="C programming examples"></a>C programming examples</h1><h2 id="using-rand-function"><a href="#using-rand-function" class="headerlink" title="using rand() function"></a>using rand() function</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">#include &lt;stdlib.h&gt;</div><div class="line"></div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">   int i, n;</div><div class="line">   time_t t;</div><div class="line">   </div><div class="line">   n = 5;</div><div class="line">   </div><div class="line">   /* Intializes random number generator */</div><div class="line">   srand((unsigned) time(&amp;t));</div><div class="line"></div><div class="line">   /* Print 5 random numbers from 0 to 49 */</div><div class="line">   for( i = 0 ; i &lt; n ; i++ ) </div><div class="line">   &#123;</div><div class="line">      printf(&quot;%d\n&quot;, rand() % 50);</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   return(0);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="C-programming-examples"><a href="#C-programming-examples" class="headerlink" title="C programming examples"></a>C programming examples</h1><h2 id="using-rand-function"><a href="#using-rand-function" class="headerlink" title="using rand() function"></a>using rand() function</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">#include &lt;stdio.h&gt;</div><div class="line">#include &lt;stdlib.h&gt;</div><div class="line"></div><div class="line">int main()</div><div class="line">&#123;</div><div class="line">   int i, n;</div><div class="line">   time_t t;</div><div class="line"></div><div class="line">   n = 5;</div><div class="line"></div><div class="line">   /* Intializes random number generator */</div><div class="line">   srand((unsigned) time(&amp;t));</div><div class="line"></div><div class="line">   /* Print 5 random numbers from 0 to 49 */</div><div class="line">   for( i = 0 ; i &lt; n ; i++ )</div><div class="line">   &#123;</div><div class="line">      printf(&quot;%d\n&quot;, rand() % 50);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   return(0);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="string-functions"><a href="#string-functions" class="headerlink" title="string functions"></a>string functions</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">strlen()    Get length of a string.</div><div class="line">strcpy()    Copy one string to another.</div><div class="line">strcat()    Link together (concatenate) two strings.</div><div class="line">strcmp()    Compare two strings.</div><div class="line">strchr()    Find character in string.</div><div class="line">strstr()    Find string in string.</div><div class="line">strlwr()    Convert string to lowercase.</div><div class="line">strupr()    Convert string to uppercase.</div></pre></td></tr></table></figure>
 <h2 id="time-and-date-in-C"><a href="#time-and-date-in-C" class="headerlink" title="time and date in C"></a>time and date in C</h2><p>include the time.h header file from the standard C library</p>
 <p>time() returns the type time_t</p>
@@ -135,7 +135,7 @@ var _hmt = _hmt || [];
 <li>why are operating systems needed?</li>
 <li>how are operating systems designed and implemented?</li>
 </ul>
-<p>os abstractions, mechanisms, and policies for </p>
+<p>os abstractions, mechanisms, and policies for</p>
 <ul>
 <li>processes and process management</li>
 <li>threads and concurrency</li>
@@ -163,7 +163,7 @@ var _hmt = _hmt || [];
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/计算机科学/">计算机科学</a><a href="/tags/英文/">英文</a>
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/计算机科学/">计算机科学</a>
   </div>
 
 
@@ -187,7 +187,7 @@ var _hmt = _hmt || [];
  
  <div class="prev" >
  <a href="/2016/11/26/Introduction-to-Operating-Systems-2/" title="Introduction to Operating Systems 2">
-  <strong>新一篇:</strong><br/>
+  <strong>New:</strong><br/>
   <span>
   Introduction to Operating Systems 2</span>
 </a>
@@ -196,7 +196,7 @@ var _hmt = _hmt || [];
 
 <div class="next">
 <a href="/2016/11/24/SQL语句总结/"  title="SQL语句总结">
- <strong>旧一篇:</strong><br/> 
+ <strong>Old:</strong><br/> 
  <span>SQL语句总结
 </span>
 </a>

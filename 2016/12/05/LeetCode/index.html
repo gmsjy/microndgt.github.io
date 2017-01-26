@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -78,7 +78,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -119,19 +119,20 @@ var _hmt = _hmt || [];
 <p>深度优先搜索的第一次实战应用，看来那本啊哈算法书，确实不错啊，真正的理解了深度优先搜索。</p>
 <p>深度优先搜索，因为是递归，所以一直到头才会停止，然后会搜索到所有的可能性，当然广度优先搜索也可以吧，将所有能遍历的位置都遍历到。</p>
 <p>深度优先搜索，有这么几个要点，终止条件，因为是递归函数，然后调用之进行遍历搜索，可以使用一个标记数组来确定这个位置是否已经遍历过，如果遍历过，那么下一次不再遍历。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">class Solution(object):</div><div class="line">    def __init__(self):</div><div class="line">        self.rsize = 0</div><div class="line">        self.csize = 0</div><div class="line">        self.direction = [[0, 1], [0, -1], [-1, 0], [1, 0]]</div><div class="line">        self.visited = []</div><div class="line">        </div><div class="line">    def dfs(self, board, i, j):</div><div class="line">        # 终止条件</div><div class="line">        if i &lt; 0 or i &gt; self.rsize - 1 or j &lt; 0 or j &gt; self.csize - 1 or board[i][j] == &apos;.&apos; or self.visited[i][j]:</div><div class="line">            return</div><div class="line">        self.visited[i][j] = 1</div><div class="line">        # 遍历所有可能性</div><div class="line">        for direct in self.direction:</div><div class="line">            # 遍历该节点周围所有的X节点</div><div class="line">            self.dfs(board, i + direct[0], j + direct[1])</div><div class="line">    </div><div class="line">    def countBattleships(self, board):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type board: List[List[str]]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        self.rsize = len(board)</div><div class="line">        self.csize = len(board[0])</div><div class="line">        self.visited = [[0 for j in range(self.csize)] for i in range(self.rsize)]</div><div class="line">        count = 0</div><div class="line">        for i in range(self.rsize):</div><div class="line">            for j in range(self.csize):</div><div class="line">                # 当找到X时候进行深度优先搜索并且进行标记，找到一个船</div><div class="line">                if board[i][j] == &apos;X&apos; and not self.visited[i][j]:</div><div class="line">                    count += 1</div><div class="line">                    self.dfs(board, i, j)</div><div class="line">        return count</div></pre></td></tr></table></figure>  
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">class Solution(object):</div><div class="line">    def __init__(self):</div><div class="line">        self.rsize = 0</div><div class="line">        self.csize = 0</div><div class="line">        self.direction = [[0, 1], [0, -1], [-1, 0], [1, 0]]</div><div class="line">        self.visited = []</div><div class="line"></div><div class="line">    def dfs(self, board, i, j):</div><div class="line">        # 终止条件</div><div class="line">        if i &lt; 0 or i &gt; self.rsize - 1 or j &lt; 0 or j &gt; self.csize - 1 or board[i][j] == &apos;.&apos; or self.visited[i][j]:</div><div class="line">            return</div><div class="line">        self.visited[i][j] = 1</div><div class="line">        # 遍历所有可能性</div><div class="line">        for direct in self.direction:</div><div class="line">            # 遍历该节点周围所有的X节点</div><div class="line">            self.dfs(board, i + direct[0], j + direct[1])</div><div class="line"></div><div class="line">    def countBattleships(self, board):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type board: List[List[str]]</div><div class="line">        :rtype: int</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        self.rsize = len(board)</div><div class="line">        self.csize = len(board[0])</div><div class="line">        self.visited = [[0 for j in range(self.csize)] for i in range(self.rsize)]</div><div class="line">        count = 0</div><div class="line">        for i in range(self.rsize):</div><div class="line">            for j in range(self.csize):</div><div class="line">                # 当找到X时候进行深度优先搜索并且进行标记，找到一个船</div><div class="line">                if board[i][j] == &apos;X&apos; and not self.visited[i][j]:</div><div class="line">                    count += 1</div><div class="line">                    self.dfs(board, i, j)</div><div class="line">        return count</div></pre></td></tr></table></figure>
+  
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/计算机科学/">计算机科学</a><a href="/tags/英文/">英文</a><a href="/tags/数据结构与算法/">数据结构与算法</a>
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/计算机科学/">计算机科学</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+  <a class="article-category-link" href="/categories/数据结构与算法/">数据结构与算法</a>
 </div>
 
 
@@ -149,7 +150,7 @@ var _hmt = _hmt || [];
  
  <div class="prev" >
  <a href="/2016/12/08/Pandas使用笔记/" title="Pandas使用笔记">
-  <strong>新一篇:</strong><br/>
+  <strong>New:</strong><br/>
   <span>
   Pandas使用笔记</span>
 </a>
@@ -158,7 +159,7 @@ var _hmt = _hmt || [];
 
 <div class="next">
 <a href="/2016/12/05/现代操作系统/"  title="现代操作系统">
- <strong>旧一篇:</strong><br/> 
+ <strong>Old:</strong><br/> 
  <span>现代操作系统
 </span>
 </a>

@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -78,7 +78,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -101,7 +101,7 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#读写csv数据"><span class="toc-number">1.</span> <span class="toc-text">读写csv数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#read-csv"><span class="toc-number">1.1.</span> <span class="toc-text">read_csv()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#to-csv"><span class="toc-number">1.2.</span> <span class="toc-text">to_csv()</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据框操作"><span class="toc-number">2.</span> <span class="toc-text">数据框操作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#10-mins-to-pandas"><span class="toc-number">3.</span> <span class="toc-text">10 mins to pandas</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#排序"><span class="toc-number">4.</span> <span class="toc-text">排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对单列数据进行排序"><span class="toc-number">4.1.</span> <span class="toc-text">对单列数据进行排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对多列数据进行排序"><span class="toc-number">4.2.</span> <span class="toc-text">对多列数据进行排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获得最小的前10项"><span class="toc-number">4.3.</span> <span class="toc-text">获得最小的前10项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获得最大的前10项"><span class="toc-number">4.4.</span> <span class="toc-text">获得最大的前10项</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#筛选"><span class="toc-number">5.</span> <span class="toc-text">筛选</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#单列数据筛选并且排序"><span class="toc-number">5.1.</span> <span class="toc-text">单列数据筛选并且排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多列数据筛选并且排序"><span class="toc-number">5.2.</span> <span class="toc-text">多列数据筛选并且排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#按筛选条件求和"><span class="toc-number">5.3.</span> <span class="toc-text">按筛选条件求和</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#按筛选条件计数"><span class="toc-number">5.4.</span> <span class="toc-text">按筛选条件计数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#按筛选条件计算均值"><span class="toc-number">5.5.</span> <span class="toc-text">按筛选条件计算均值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#按筛选条件获取最大值和最小值"><span class="toc-number">5.6.</span> <span class="toc-text">按筛选条件获取最大值和最小值</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#loc-ix-iloc区别"><span class="toc-number">6.</span> <span class="toc-text">loc ix iloc区别</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#loc-通过行标签索引行数据"><span class="toc-number">6.1.</span> <span class="toc-text">loc-通过行标签索引行数据 </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iloc-通过行号获取行数据"><span class="toc-number">6.2.</span> <span class="toc-text">iloc-通过行号获取行数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ix-前两种的混合索引"><span class="toc-number">6.3.</span> <span class="toc-text">ix-前两种的混合索引</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Ipython"><span class="toc-number">7.</span> <span class="toc-text">Ipython</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#快捷键"><span class="toc-number">7.1.</span> <span class="toc-text">快捷键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#交互式调试器"><span class="toc-number">7.2.</span> <span class="toc-text">交互式调试器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试代码执行时间-time和-timeit"><span class="toc-number">7.3.</span> <span class="toc-text">测试代码执行时间%time和%timeit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本性能分析-prun和-run-p"><span class="toc-number">7.4.</span> <span class="toc-text">基本性能分析%prun和%run -p</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#读写csv数据"><span class="toc-number">1.</span> <span class="toc-text">读写csv数据</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#read-csv"><span class="toc-number">1.1.</span> <span class="toc-text">read_csv()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#to-csv"><span class="toc-number">1.2.</span> <span class="toc-text">to_csv()</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据框操作"><span class="toc-number">2.</span> <span class="toc-text">数据框操作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#10-mins-to-pandas"><span class="toc-number">3.</span> <span class="toc-text">10 mins to pandas</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#排序"><span class="toc-number">4.</span> <span class="toc-text">排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#对单列数据进行排序"><span class="toc-number">4.1.</span> <span class="toc-text">对单列数据进行排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#对多列数据进行排序"><span class="toc-number">4.2.</span> <span class="toc-text">对多列数据进行排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获得最小的前10项"><span class="toc-number">4.3.</span> <span class="toc-text">获得最小的前10项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获得最大的前10项"><span class="toc-number">4.4.</span> <span class="toc-text">获得最大的前10项</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#筛选"><span class="toc-number">5.</span> <span class="toc-text">筛选</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#单列数据筛选并且排序"><span class="toc-number">5.1.</span> <span class="toc-text">单列数据筛选并且排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多列数据筛选并且排序"><span class="toc-number">5.2.</span> <span class="toc-text">多列数据筛选并且排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#按筛选条件求和"><span class="toc-number">5.3.</span> <span class="toc-text">按筛选条件求和</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#按筛选条件计数"><span class="toc-number">5.4.</span> <span class="toc-text">按筛选条件计数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#按筛选条件计算均值"><span class="toc-number">5.5.</span> <span class="toc-text">按筛选条件计算均值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#按筛选条件获取最大值和最小值"><span class="toc-number">5.6.</span> <span class="toc-text">按筛选条件获取最大值和最小值</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#loc-ix-iloc区别"><span class="toc-number">6.</span> <span class="toc-text">loc ix iloc区别</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#loc-通过行标签索引行数据"><span class="toc-number">6.1.</span> <span class="toc-text">loc-通过行标签索引行数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iloc-通过行号获取行数据"><span class="toc-number">6.2.</span> <span class="toc-text">iloc-通过行号获取行数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ix-前两种的混合索引"><span class="toc-number">6.3.</span> <span class="toc-text">ix-前两种的混合索引</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Ipython"><span class="toc-number">7.</span> <span class="toc-text">Ipython</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#快捷键"><span class="toc-number">7.1.</span> <span class="toc-text">快捷键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#交互式调试器"><span class="toc-number">7.2.</span> <span class="toc-text">交互式调试器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试代码执行时间-time和-timeit"><span class="toc-number">7.3.</span> <span class="toc-text">测试代码执行时间%time和%timeit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#基本性能分析-prun和-run-p"><span class="toc-number">7.4.</span> <span class="toc-text">基本性能分析%prun和%run -p</span></a></li></ol></li></ol>
 		</div>
 		
 		<p>看来工作上需要什么，才有驱动力去学习什么～<a id="more"></a></p>
@@ -171,7 +171,7 @@ var _hmt = _hmt || [];
 <h2 id="按筛选条件计数"><a href="#按筛选条件计数" class="headerlink" title="按筛选条件计数"></a>按筛选条件计数</h2><p><code>lc.loc[lc[&quot;grade&quot;] == &quot;B&quot;].loan_amnt.count()</code></p>
 <h2 id="按筛选条件计算均值"><a href="#按筛选条件计算均值" class="headerlink" title="按筛选条件计算均值"></a>按筛选条件计算均值</h2><p><code>lc.loc[lc[&quot;grade&quot;] == &quot;B&quot;].loan_amnt.mean()</code></p>
 <h2 id="按筛选条件获取最大值和最小值"><a href="#按筛选条件获取最大值和最小值" class="headerlink" title="按筛选条件获取最大值和最小值"></a>按筛选条件获取最大值和最小值</h2><p><code>lc.loc[lc[&quot;grade&quot;] ==  &quot;B&quot;].loan_amnt.max()</code></p>
-<h1 id="loc-ix-iloc区别"><a href="#loc-ix-iloc区别" class="headerlink" title="loc ix iloc区别"></a>loc ix iloc区别</h1><h2 id="loc-通过行标签索引行数据"><a href="#loc-通过行标签索引行数据" class="headerlink" title="loc-通过行标签索引行数据 "></a>loc-通过行标签索引行数据 </h2><ul>
+<h1 id="loc-ix-iloc区别"><a href="#loc-ix-iloc区别" class="headerlink" title="loc ix iloc区别"></a>loc ix iloc区别</h1><h2 id="loc-通过行标签索引行数据"><a href="#loc-通过行标签索引行数据" class="headerlink" title="loc-通过行标签索引行数据"></a>loc-通过行标签索引行数据</h2><ul>
 <li>loc[1]表示索引的是第一行</li>
 <li>loc[‘d’]表示索引的是第’d’行</li>
 <li>loc可以获取多行数据 <code>df.loc[&#39;d&#39;:]</code></li>
@@ -221,13 +221,13 @@ var _hmt = _hmt || [];
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/pandas/">pandas</a><a href="/tags/数据分析/">数据分析</a>
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python/">Python</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/Python/">Python</a>
+  <a class="article-category-link" href="/categories/数据分析/">数据分析</a>
 </div>
 
 
@@ -245,7 +245,7 @@ var _hmt = _hmt || [];
  
  <div class="prev" >
  <a href="/2016/12/09/数据分析/" title="数据分析">
-  <strong>新一篇:</strong><br/>
+  <strong>New:</strong><br/>
   <span>
   数据分析</span>
 </a>
@@ -254,7 +254,7 @@ var _hmt = _hmt || [];
 
 <div class="next">
 <a href="/2016/12/05/LeetCode/"  title="LeetCode">
- <strong>旧一篇:</strong><br/> 
+ <strong>Old:</strong><br/> 
  <span>LeetCode
 </span>
 </a>

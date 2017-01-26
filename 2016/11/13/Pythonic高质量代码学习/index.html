@@ -58,7 +58,7 @@ var _hmt = _hmt || [];
 				<h1 class="site-name"><a href="/" title="Kevin&#39;s Blog">Kevin&#39;s Blog</a></h1>
 				<h2 class="blog-motto">编程,生活,成长</h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
 			</a></div>
 			<nav class="animated">
 				<ul>
@@ -78,7 +78,7 @@ var _hmt = _hmt || [];
 						</form>
 					
 					</li>
-                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div></li>-->
 
 				</ul>
 			</nav>	
@@ -131,7 +131,7 @@ var _hmt = _hmt || [];
 <li><code>pip install autopep8 --user -U</code></li>
 <li>Pycharm→File→settings→Tools→Extends Tools→添加</li>
 <li>Name: Autopep8</li>
-<li>Tool settings: </li>
+<li>Tool settings:</li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Programs：autopep8 （前提是你已经安装了哦）</div><div class="line">Parameters:--in-place --aggressive --aggressive $FilePath$</div><div class="line">Working directory:$ProjectFileDir$</div></pre></td></tr></table></figure>
 <p>Output Filters→添加，在对话框中的：Regular expression to match output中输入:<code>$FILE_PATH$\:$LINE$\:$COLUMN$\:.*</code></p>
@@ -151,7 +151,7 @@ var _hmt = _hmt || [];
 参数设计应该向下兼容
 一个函数只做一件事，有利于代码的复用
 </code></pre><h2 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h2><p>通过自定义类来实现常量功能</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">class _const:</div><div class="line">	class ConstError(TypeError): pass</div><div class="line">	class ConstCaseError(ConstError): pass</div><div class="line">	</div><div class="line">	def __setattr__(self, name, value):</div><div class="line">		if self.__dict__.has_key(name):</div><div class="line">			raise self.ConstError, &quot;can&apos;t change const.%s&quot; % name</div><div class="line">		if not name.isupper():</div><div class="line">			raise self.ConstCaseError, &apos;const name &quot;%s&quot; is not all uppercase&quot; % name</div><div class="line">		self.__dict__[name] = value</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">class _const:</div><div class="line">	class ConstError(TypeError): pass</div><div class="line">	class ConstCaseError(ConstError): pass</div><div class="line"></div><div class="line">	def __setattr__(self, name, value):</div><div class="line">		if self.__dict__.has_key(name):</div><div class="line">			raise self.ConstError, &quot;can&apos;t change const.%s&quot; % name</div><div class="line">		if not name.isupper():</div><div class="line">			raise self.ConstCaseError, &apos;const name &quot;%s&quot; is not all uppercase&quot; % name</div><div class="line">		self.__dict__[name] = value</div></pre></td></tr></table></figure>
 <p>在Python的内建命名空间支持一部分常量如True，最好把常量集中到一个文件中。然后在其他模块中引用常量的时候这样<code>from constant import const</code></p>
 <p>模块名字也是一个常量对象</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">import sys</div><div class="line">sys.modules[__name__] = _const()</div></pre></td></tr></table></figure>
@@ -233,7 +233,7 @@ var _hmt = _hmt || [];
  
  <div class="prev" >
  <a href="/2016/11/18/Pyc文件编译和运行/" title="Pyc文件编译和运行">
-  <strong>新一篇:</strong><br/>
+  <strong>New:</strong><br/>
   <span>
   Pyc文件编译和运行</span>
 </a>
@@ -242,7 +242,7 @@ var _hmt = _hmt || [];
 
 <div class="next">
 <a href="/2016/11/07/Shell实现工作内容自动化/"  title="Shell实现工作内容自动化">
- <strong>旧一篇:</strong><br/> 
+ <strong>Old:</strong><br/> 
  <span>Shell实现工作内容自动化
 </span>
 </a>
