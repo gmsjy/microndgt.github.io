@@ -176,10 +176,10 @@
     <link href="http://microndgt.github.io/2017/01/20/Python%E6%95%B0%E5%AD%97%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4/"/>
     <id>http://microndgt.github.io/2017/01/20/Python数字日期和时间/</id>
     <published>2017-01-20T03:20:22.000Z</published>
-    <updated>2017-01-27T05:18:43.000Z</updated>
+    <updated>2017-01-27T05:41:38.000Z</updated>
     
     <content type="html"><![CDATA[<p>执行分数，数组或者日期和时间运算，就需要更多工作，不过这里着重关注日期和时间的运算，毕竟工作上对时间处理还是比较多的。</p>
-<h1 id="数字的四舍五入"><a href="#数字的四舍五入" class="headerlink" title="数字的四舍五入"></a>数字的四舍五入</h1><p><code>round(value, ndigits)</code> 比如 <code>round(1.231, 1)</code> 为1.2，如果在中间的话，返回离它最近的偶数，1.5和2.5都会返回2，并且ndigits可以是负数，这样舍入运算作用在十位，百位和千位上。</p>
+<h1 id="数字的四舍五入"><a href="#数字的四舍五入" class="headerlink" title="数字的四舍五入"></a>数字的四舍五入</h1><p><code>round(value, ndigits)</code>比如<code>round(1.231, 1)</code>为1.2，如果在中间的话，返回离它最近的偶数，1.5和2.5都会返回2，并且ndigits可以是负数，这样舍入运算作用在十位，百位和千位上。</p>
 <p>如果不允许小误差，那么使用decimal模块。</p>
 <h1 id="精确的浮点数运算"><a href="#精确的浮点数运算" class="headerlink" title="精确的浮点数运算"></a>精确的浮点数运算</h1><p>精确但是有性能损失，使用decimal模块</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">from decimal import Decimal</div><div class="line">a = Decimal(&apos;4.2&apos;)</div><div class="line">b = Decimal(&apos;2.1&apos;)</div><div class="line">print(a + b) # 6.3</div></pre></td></tr></table></figure>
