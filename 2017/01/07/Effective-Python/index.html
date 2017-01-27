@@ -9,7 +9,14 @@
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="Python进阶之路～">
+    <meta name="description" content="Python进阶之路～
+PEP8风格指南
+使用空格来表示缩进，而不是制表符
+占据多行的长表达式，除了首行之外的其余各行都应该在通常的缩进级别上再加4个空格
+函数，变量，属性应该用小写字母来拼写，各单词之前以下划线相连
+受保护的实例属性，用单个下划线开头
+私有的实例属性，用两个下划线开头
+类与异常，使">
     
     
     
@@ -104,7 +111,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PEP8风格指南"><span class="toc-number">1.</span> <span class="toc-text">PEP8风格指南</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#bytes-str与unicode的区别"><span class="toc-number">2.</span> <span class="toc-text">bytes, str与unicode的区别</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#用辅助函数来取代复杂的表达式"><span class="toc-number">3.</span> <span class="toc-text">用辅助函数来取代复杂的表达式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#切割序列的方法"><span class="toc-number">4.</span> <span class="toc-text">切割序列的方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#单次切片操作内，不要同时指定start-end和stride"><span class="toc-number">5.</span> <span class="toc-text">单次切片操作内，不要同时指定start,end和stride</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#用列表推导来取代map和filter"><span class="toc-number">6.</span> <span class="toc-text">用列表推导来取代map和filter</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用生成器表达式来改写数据量较大的列表推导"><span class="toc-number">7.</span> <span class="toc-text">使用生成器表达式来改写数据量较大的列表推导</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#尽量使用enumerate代替range"><span class="toc-number">8.</span> <span class="toc-text">尽量使用enumerate代替range</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#用zip函数同时遍历两个迭代器"><span class="toc-number">9.</span> <span class="toc-text">用zip函数同时遍历两个迭代器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#for和while循环后面的else块"><span class="toc-number">10.</span> <span class="toc-text">for和while循环后面的else块</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#合理使用try-except-else-finally"><span class="toc-number">11.</span> <span class="toc-text">合理使用try/except/else/finally</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#finally"><span class="toc-number">11.1.</span> <span class="toc-text">finally</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#else"><span class="toc-number">11.2.</span> <span class="toc-text">else</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#尽量用异常来表示特殊情况，而不是返回None"><span class="toc-number">12.</span> <span class="toc-text">尽量用异常来表示特殊情况，而不是返回None</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#用super初始化父类"><span class="toc-number">13.</span> <span class="toc-text">用super初始化父类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#继承collections-abc以实现自定义的容器类型"><span class="toc-number">14.</span> <span class="toc-text">继承collections.abc以实现自定义的容器类型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在重视精确度的场合，应该使用decimal"><span class="toc-number">15.</span> <span class="toc-text">在重视精确度的场合，应该使用decimal</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#为每个函数，类和模块编写文档字符串"><span class="toc-number">16.</span> <span class="toc-text">为每个函数，类和模块编写文档字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#模块"><span class="toc-number">16.1.</span> <span class="toc-text">模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#类"><span class="toc-number">16.2.</span> <span class="toc-text">类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数"><span class="toc-number">16.3.</span> <span class="toc-text">函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#用包来安排模块，并提供稳固的API"><span class="toc-number">17.</span> <span class="toc-text">用包来安排模块，并提供稳固的API</span></a></li></ol>
 		</div>
 		
-		<p>Python进阶之路～<a id="more"></a></p>
+		<p>Python进阶之路～</p>
 <h1 id="PEP8风格指南"><a href="#PEP8风格指南" class="headerlink" title="PEP8风格指南"></a>PEP8风格指南</h1><ul>
 <li>使用空格来表示缩进，而不是制表符</li>
 <li>占据多行的长表达式，除了首行之外的其余各行都应该在通常的缩进级别上再加4个空格</li>

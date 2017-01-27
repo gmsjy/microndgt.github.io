@@ -58,9 +58,9 @@
     <link href="http://microndgt.github.io/2017/01/23/Python%E5%87%BD%E6%95%B0/"/>
     <id>http://microndgt.github.io/2017/01/23/Python函数/</id>
     <published>2017-01-23T06:34:34.000Z</published>
-    <updated>2017-01-27T05:10:31.000Z</updated>
+    <updated>2017-01-27T05:20:00.000Z</updated>
     
-    <content type="html"><![CDATA[<p>默认参数，任意数量参数，强制关键字参数，注解和闭包。<a id="more"></a></p>
+    <content type="html"><![CDATA[<p>默认参数，任意数量参数，强制关键字参数，注解和闭包。</p>
 <h1 id="可接受任意数量参数的函数"><a href="#可接受任意数量参数的函数" class="headerlink" title="可接受任意数量参数的函数"></a>可接受任意数量参数的函数</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">def avg(first, *rest):</div><div class="line">    # 传入相当于一个序列</div><div class="line">    return (first + sum(rest)) / (1 + len(rest))</div></pre></td></tr></table></figure>
 <p>任意数量的关键字参数</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">def make_element(name, value, **attrs):</div><div class="line">    keyvals = [&apos; %s = &quot;%s&quot; &apos; % item for item in attrs.items()]</div></pre></td></tr></table></figure>
@@ -112,7 +112,8 @@
     
     <summary type="html">
     
-      &lt;p&gt;默认参数，任意数量参数，强制关键字参数，注解和闭包。
+      &lt;p&gt;默认参数，任意数量参数，强制关键字参数，注解和闭包。&lt;/p&gt;
+&lt;h1 id=&quot;可接受任意数量参数的函数&quot;&gt;&lt;a href=&quot;#可接受任意数量参数的函数&quot; class=&quot;headerlink&quot; title=&quot;可接受任意数量参数的函数&quot;&gt;&lt;/a&gt;可接受任意数量参数的函数&lt;/h1
     
     </summary>
     
@@ -175,9 +176,9 @@
     <link href="http://microndgt.github.io/2017/01/20/Python%E6%95%B0%E5%AD%97%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4/"/>
     <id>http://microndgt.github.io/2017/01/20/Python数字日期和时间/</id>
     <published>2017-01-20T03:20:22.000Z</published>
-    <updated>2017-01-27T05:11:27.000Z</updated>
+    <updated>2017-01-27T05:18:43.000Z</updated>
     
-    <content type="html"><![CDATA[<p>执行分数，数组或者日期和时间运算，就需要更多工作，不过这里着重关注日期和时间的运算，毕竟工作上对时间处理还是比较多的。<a id="more"></a></p>
+    <content type="html"><![CDATA[<p>执行分数，数组或者日期和时间运算，就需要更多工作，不过这里着重关注日期和时间的运算，毕竟工作上对时间处理还是比较多的。</p>
 <h1 id="数字的四舍五入"><a href="#数字的四舍五入" class="headerlink" title="数字的四舍五入"></a>数字的四舍五入</h1><p><code>round(value, ndigits)</code> 比如 <code>round(1.231, 1)</code> 为1.2，如果在中间的话，返回离它最近的偶数，1.5和2.5都会返回2，并且ndigits可以是负数，这样舍入运算作用在十位，百位和千位上。</p>
 <p>如果不允许小误差，那么使用decimal模块。</p>
 <h1 id="精确的浮点数运算"><a href="#精确的浮点数运算" class="headerlink" title="精确的浮点数运算"></a>精确的浮点数运算</h1><p>精确但是有性能损失，使用decimal模块</p>
@@ -227,7 +228,8 @@
     
     <summary type="html">
     
-      &lt;p&gt;执行分数，数组或者日期和时间运算，就需要更多工作，不过这里着重关注日期和时间的运算，毕竟工作上对时间处理还是比较多的。
+      &lt;p&gt;执行分数，数组或者日期和时间运算，就需要更多工作，不过这里着重关注日期和时间的运算，毕竟工作上对时间处理还是比较多的。&lt;/p&gt;
+&lt;h1 id=&quot;数字的四舍五入&quot;&gt;&lt;a href=&quot;#数字的四舍五入&quot; class=&quot;headerlink&quot; title=&quot;数字的四舍五入&quot;&gt;&lt;/
     
     </summary>
     
@@ -247,9 +249,9 @@
     <link href="http://microndgt.github.io/2017/01/20/%E7%94%A8Python%E5%BC%80%E5%8F%91%E5%8F%AF%E8%A7%84%E6%A8%A1%E5%8C%96%E7%9A%84%E5%BA%94%E7%94%A8/"/>
     <id>http://microndgt.github.io/2017/01/20/用Python开发可规模化的应用/</id>
     <published>2017-01-20T00:47:38.000Z</published>
-    <updated>2017-01-26T04:05:37.000Z</updated>
+    <updated>2017-01-27T05:22:43.000Z</updated>
     
-    <content type="html"><![CDATA[<p>Developing Scalable Apps in Python!<a id="more"></a></p>
+    <content type="html"><![CDATA[<p>Developing Scalable Apps in Python!</p>
 <h1 id="Scalability-Basics"><a href="#Scalability-Basics" class="headerlink" title="Scalability Basics"></a>Scalability Basics</h1><p>在Google基础结构上运行的应用，缩放，scale，可缩放应用</p>
 <p>the race for scalability 可伸缩性争用</p>
 <p>optimize software, change software to run on more servers -&gt; scalable architecture</p>
@@ -283,7 +285,8 @@
     
     <summary type="html">
     
-      &lt;p&gt;Developing Scalable Apps in Python!
+      &lt;p&gt;Developing Scalable Apps in Python!&lt;/p&gt;
+&lt;h1 id=&quot;Scalability-Basics&quot;&gt;&lt;a href=&quot;#Scalability-Basics&quot; class=&quot;headerlink&quot; title=&quot;Scalability B
     
     </summary>
     
@@ -303,9 +306,9 @@
     <link href="http://microndgt.github.io/2017/01/19/Hive%E5%AD%A6%E4%B9%A0/"/>
     <id>http://microndgt.github.io/2017/01/19/Hive学习/</id>
     <published>2017-01-19T07:26:16.000Z</published>
-    <updated>2017-01-26T03:59:15.000Z</updated>
+    <updated>2017-01-27T05:24:21.000Z</updated>
     
-    <content type="html"><![CDATA[<p>大数据之Hive的数据操作以及开发<a id="more"></a></p>
+    <content type="html"><![CDATA[<p>大数据之Hive的数据操作以及开发</p>
 <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Hive是基于Hadoop的一个数据仓库工具，通过它可以实现将结构化的数据文件映射为一张数据库表，并且提供简单的sql查询功能，同时将sql语句转换为MapReduce任务进行运行</p>
 <p>Hive是构建在hadoop HDFS上的一个数据仓库</p>
 <h2 id="数据仓库简介"><a href="#数据仓库简介" class="headerlink" title="数据仓库简介"></a>数据仓库简介</h2><p>有别于普通的数据库，数据仓库是一个面向主题的，集成的，不可更新的，随时间不变化的数据集合，它用于支持企业或组织的决策分析处理</p>
@@ -349,7 +352,8 @@
     
     <summary type="html">
     
-      &lt;p&gt;大数据之Hive的数据操作以及开发
+      &lt;p&gt;大数据之Hive的数据操作以及开发&lt;/p&gt;
+&lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;p&gt;Hive是基于Hadoop的一个数据仓库工具，通过它可以实现将结构化的数据文件映射为一张数
     
     </summary>
     
@@ -365,9 +369,9 @@
     <link href="http://microndgt.github.io/2017/01/19/Python%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E6%96%87%E6%9C%AC/"/>
     <id>http://microndgt.github.io/2017/01/19/Python字符串和文本/</id>
     <published>2017-01-19T00:40:59.000Z</published>
-    <updated>2017-01-27T05:11:53.000Z</updated>
+    <updated>2017-01-27T05:21:20.000Z</updated>
     
-    <content type="html"><![CDATA[<p>拆分字符串，搜索，替换，词法分析以及解析，正则表达式。<a id="more"></a></p>
+    <content type="html"><![CDATA[<p>拆分字符串，搜索，替换，词法分析以及解析，正则表达式.</p>
 <h1 id="针对任意多的分隔符拆分字符串"><a href="#针对任意多的分隔符拆分字符串" class="headerlink" title="针对任意多的分隔符拆分字符串"></a>针对任意多的分隔符拆分字符串</h1><p>普通字符串的split方法只能处理单个的分隔符，如果要处理多个分隔符，使用<code>re.split()</code>，返回结果仍然是列表</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">line = &apos;asdf fjdk; afed, fjek,asdf&apos;</div><div class="line">import re</div><div class="line">re.split(r&apos;[;,\s]\s*&apos;, line&apos;)</div><div class="line"># \s表示空格，*表示匹配前方0次或者多次</div></pre></td></tr></table></figure>
 <p>如果使用捕获组，匹配的文本也会包含在最终结果中，捕获组中加入或<code>|</code>符号</p>
@@ -439,7 +443,8 @@
     
     <summary type="html">
     
-      &lt;p&gt;拆分字符串，搜索，替换，词法分析以及解析，正则表达式。
+      &lt;p&gt;拆分字符串，搜索，替换，词法分析以及解析，正则表达式.&lt;/p&gt;
+&lt;h1 id=&quot;针对任意多的分隔符拆分字符串&quot;&gt;&lt;a href=&quot;#针对任意多的分隔符拆分字符串&quot; class=&quot;headerlink&quot; title=&quot;针对任意多的分隔符拆分字符串&quot;&gt;&lt;/a&gt;针对任意多的分隔符
     
     </summary>
     
@@ -459,9 +464,9 @@
     <link href="http://microndgt.github.io/2017/01/16/Python%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
     <id>http://microndgt.github.io/2017/01/16/Python数据结构与算法/</id>
     <published>2017-01-16T13:18:44.000Z</published>
-    <updated>2017-01-27T05:11:11.000Z</updated>
+    <updated>2017-01-27T05:19:44.000Z</updated>
     
-    <content type="html"><![CDATA[<p>Python基本的数据结构与算法<a id="more"></a></p>
+    <content type="html"><![CDATA[<p>Python基本的数据结构与算法</p>
 <h1 id="collections-deque的用法"><a href="#collections-deque的用法" class="headerlink" title="collections.deque的用法"></a>collections.deque的用法</h1><p>双端队列，可以用这个队列来保存有限的历史记录，形成一个简单的队列结构，如果不指定队列的大小，就会得到一个无界限的队列。</p>
 <p>创建：<code>q = deque(maxlen=3)</code> 建立固定大小的队列</p>
 <p>方法：append, appendleft, pop, popleft</p>
@@ -489,7 +494,8 @@
     
     <summary type="html">
     
-      &lt;p&gt;Python基本的数据结构与算法
+      &lt;p&gt;Python基本的数据结构与算法&lt;/p&gt;
+&lt;h1 id=&quot;collections-deque的用法&quot;&gt;&lt;a href=&quot;#collections-deque的用法&quot; class=&quot;headerlink&quot; title=&quot;collections.deque的用法&quot;&gt;&lt;/a&gt;co
     
     </summary>
     
@@ -509,9 +515,9 @@
     <link href="http://microndgt.github.io/2017/01/12/Effective-Python-%E9%83%A8%E7%BD%B2/"/>
     <id>http://microndgt.github.io/2017/01/12/Effective-Python-部署/</id>
     <published>2017-01-12T11:37:10.000Z</published>
-    <updated>2017-01-27T02:15:32.000Z</updated>
+    <updated>2017-01-27T05:22:09.000Z</updated>
     
-    <content type="html"><![CDATA[<p>Effective Python 的最后部分。<a id="more"></a></p>
+    <content type="html"><![CDATA[<p>Effective Python 的最后部分。</p>
 <h1 id="用适当的方式打破循环依赖关系"><a href="#用适当的方式打破循环依赖关系" class="headerlink" title="用适当的方式打破循环依赖关系"></a>用适当的方式打破循环依赖关系</h1><p>Python系统在执行import语句时的详细机制，引入模块时候，Python会按照深度优先的顺序执行下列操作</p>
 <ol>
 <li>在由sys.path所指定的路径中，搜寻待引入的模块</li>
@@ -542,7 +548,8 @@
     
     <summary type="html">
     
-      &lt;p&gt;Effective Python 的最后部分。
+      &lt;p&gt;Effective Python 的最后部分。&lt;/p&gt;
+&lt;h1 id=&quot;用适当的方式打破循环依赖关系&quot;&gt;&lt;a href=&quot;#用适当的方式打破循环依赖关系&quot; class=&quot;headerlink&quot; title=&quot;用适当的方式打破循环依赖关系&quot;&gt;&lt;/a&gt;用适当的方式打破循环依赖关
     
     </summary>
     
@@ -560,9 +567,9 @@
     <link href="http://microndgt.github.io/2017/01/11/Effective-Python-%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%B9%B6%E8%A1%8C/"/>
     <id>http://microndgt.github.io/2017/01/11/Effective-Python-并发与并行/</id>
     <published>2017-01-11T11:20:40.000Z</published>
-    <updated>2017-01-27T02:15:26.000Z</updated>
+    <updated>2017-01-27T05:23:55.000Z</updated>
     
-    <content type="html"><![CDATA[<p>看书学习后对以前不懂的概念越发的清晰了。<a id="more"></a></p>
+    <content type="html"><![CDATA[<p>看书学习后对以前不懂的概念越发的清晰了.</p>
 <p>并发是操作系统会在各程序之间迅速切换，使其都有机会运行在这一个处理器上，这种交错执行程序的方式，叫做并发。而并行是指，计算机是在同一时间做着不同的事情，多个核心的计算机，能够同时执行多个程序，使得这些程序能够在同一时刻向前推进。</p>
 <h1 id="用subprocess管理子进程"><a href="#用subprocess管理子进程" class="headerlink" title="用subprocess管理子进程"></a>用subprocess管理子进程</h1><p>由Python所启动的多个子进程，是可以平行运作的。最简单的子进程管理模块就是subprocess模块</p>
 <p>用Popen构造器来启动进程，然后使用communicate方法来读取子进程的输出信息，并等待其终止</p>
@@ -581,7 +588,8 @@
     
     <summary type="html">
     
-      &lt;p&gt;看书学习后对以前不懂的概念越发的清晰了。
+      &lt;p&gt;看书学习后对以前不懂的概念越发的清晰了.&lt;/p&gt;
+&lt;p&gt;并发是操作系统会在各程序之间迅速切换，使其都有机会运行在这一个处理器上，这种交错执行程序的方式，叫做并发。而并行是指，计算机是在同一时间做着不同的事情，多个核心的计算机，能够同时执行多个程序，使得这些程序能够在同一时刻
     
     </summary>
     
@@ -599,9 +607,9 @@
     <link href="http://microndgt.github.io/2017/01/10/Python%E5%AE%9E%E7%94%A8%E8%84%9A%E6%9C%AC%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86/"/>
     <id>http://microndgt.github.io/2017/01/10/Python实用脚本系统管理/</id>
     <published>2017-01-10T10:09:36.000Z</published>
-    <updated>2017-01-27T05:10:56.000Z</updated>
+    <updated>2017-01-27T05:19:50.000Z</updated>
     
-    <content type="html"><![CDATA[<p> 系统任务的自动化处理，解析命令行选项，操纵文件系统中的文件，获取有用的系统配置数据<a id="more"></a></p>
+    <content type="html"><![CDATA[<p> 系统任务的自动化处理，解析命令行选项，操纵文件系统中的文件，获取有用的系统配置数据</p>
 <h1 id="通过重定向，管道或者输入文件来作为脚本的输入"><a href="#通过重定向，管道或者输入文件来作为脚本的输入" class="headerlink" title=" 通过重定向，管道或者输入文件来作为脚本的输入"></a> 通过重定向，管道或者输入文件来作为脚本的输入</h1><p> 接受任意一种对用户来说最为方便的输入机制，从命令中产生输出给脚本，把文件重定向到脚本，或者是在命令行中传递一个或者一列文件名给脚本。</p>
 <blockquote>
 <p>是可以将需要传入部分文件的那个东西，只设置一个-p bool参数，然后为True的时候重定向有用</p>
@@ -634,7 +642,8 @@
     
     <summary type="html">
     
-      &lt;p&gt; 系统任务的自动化处理，解析命令行选项，操纵文件系统中的文件，获取有用的系统配置数据
+      &lt;p&gt; 系统任务的自动化处理，解析命令行选项，操纵文件系统中的文件，获取有用的系统配置数据&lt;/p&gt;
+&lt;h1 id=&quot;通过重定向，管道或者输入文件来作为脚本的输入&quot;&gt;&lt;a href=&quot;#通过重定向，管道或者输入文件来作为脚本的输入&quot; class=&quot;headerlink&quot; title
     
     </summary>
     
@@ -654,9 +663,9 @@
     <link href="http://microndgt.github.io/2017/01/08/Python%E6%A8%A1%E5%9D%97%E5%92%8C%E5%8C%85/"/>
     <id>http://microndgt.github.io/2017/01/08/Python模块和包/</id>
     <published>2017-01-08T14:49:13.000Z</published>
-    <updated>2017-01-27T05:11:39.000Z</updated>
+    <updated>2017-01-27T05:19:55.000Z</updated>
     
-    <content type="html"><![CDATA[<p>模块和包是任何大型项目的核心，本文核心是如何组织包，将大型的模块分解成多个文件，以及创建命名空间包<a id="more"></a></p>
+    <content type="html"><![CDATA[<p>模块和包是任何大型项目的核心，本文核心是如何组织包，将大型的模块分解成多个文件，以及创建命名空间包</p>
 <h1 id="git问题处理"><a href="#git问题处理" class="headerlink" title="git问题处理"></a>git问题处理</h1><p><code>hexo d</code>提交的时候出现</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git.exe pull --progress --no-rebase -v &quot;origin&quot;</div><div class="line"></div><div class="line">fatal: unable to access &apos;https://github.com/konsumer/arduinoscope.git/&apos;: error setting certificate verify locations:</div><div class="line">CAfile: D:\Program Files\Git\mingw64/bin/curl-ca-bundle.crt</div><div class="line">CApath: none</div></pre></td></tr></table></figure>
 <p>输入<code>git config --system http.sslverify false</code>解决问题</p>
@@ -707,7 +716,8 @@
     
     <summary type="html">
     
-      &lt;p&gt;模块和包是任何大型项目的核心，本文核心是如何组织包，将大型的模块分解成多个文件，以及创建命名空间包
+      &lt;p&gt;模块和包是任何大型项目的核心，本文核心是如何组织包，将大型的模块分解成多个文件，以及创建命名空间包&lt;/p&gt;
+&lt;h1 id=&quot;git问题处理&quot;&gt;&lt;a href=&quot;#git问题处理&quot; class=&quot;headerlink&quot; title=&quot;git问题处理&quot;&gt;&lt;/a&gt;git问题处理&lt;
     
     </summary>
     
@@ -727,9 +737,9 @@
     <link href="http://microndgt.github.io/2017/01/07/Effective-Python/"/>
     <id>http://microndgt.github.io/2017/01/07/Effective-Python/</id>
     <published>2017-01-07T01:41:57.000Z</published>
-    <updated>2017-01-27T02:15:35.000Z</updated>
+    <updated>2017-01-27T05:22:16.000Z</updated>
     
-    <content type="html"><![CDATA[<p>Python进阶之路～<a id="more"></a></p>
+    <content type="html"><![CDATA[<p>Python进阶之路～</p>
 <h1 id="PEP8风格指南"><a href="#PEP8风格指南" class="headerlink" title="PEP8风格指南"></a>PEP8风格指南</h1><ul>
 <li>使用空格来表示缩进，而不是制表符</li>
 <li>占据多行的长表达式，除了首行之外的其余各行都应该在通常的缩进级别上再加4个空格</li>
@@ -845,7 +855,9 @@
     
     <summary type="html">
     
-      &lt;p&gt;Python进阶之路～
+      &lt;p&gt;Python进阶之路～&lt;/p&gt;
+&lt;h1 id=&quot;PEP8风格指南&quot;&gt;&lt;a href=&quot;#PEP8风格指南&quot; class=&quot;headerlink&quot; title=&quot;PEP8风格指南&quot;&gt;&lt;/a&gt;PEP8风格指南&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;使用空格来表示缩进，而不是制表符&lt;/li&gt;
     
     </summary>
     
@@ -863,9 +875,9 @@
     <link href="http://microndgt.github.io/2017/01/05/%E7%BE%A4%E4%BD%93%E6%80%A7%E5%AD%A4%E7%8B%AC/"/>
     <id>http://microndgt.github.io/2017/01/05/群体性孤独/</id>
     <published>2017-01-05T10:52:38.000Z</published>
-    <updated>2017-01-26T01:10:39.000Z</updated>
+    <updated>2017-01-27T05:25:51.000Z</updated>
     
-    <content type="html"><![CDATA[<p><code>you will rock!</code> 网易公开课 <a id="more"></a></p>
+    <content type="html"><![CDATA[<p><code>you will rock!</code> 网易公开课</p>
 <p>Along Together</p>
 <p>Hiding from each other</p>
 <p>Goldilocks effect: not too close, not too far, just right</p>
@@ -890,7 +902,10 @@
     
     <summary type="html">
     
-      &lt;p&gt;&lt;code&gt;you will rock!&lt;/code&gt; 网易公开课
+      &lt;p&gt;&lt;code&gt;you will rock!&lt;/code&gt; 网易公开课&lt;/p&gt;
+&lt;p&gt;Along Together&lt;/p&gt;
+&lt;p&gt;Hiding from each other&lt;/p&gt;
+&lt;p&gt;Goldilocks effect: not too close, not too fa
     
     </summary>
     
@@ -908,9 +923,9 @@
     <link href="http://microndgt.github.io/2017/01/05/SSDB%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/"/>
     <id>http://microndgt.github.io/2017/01/05/SSDB使用笔记/</id>
     <published>2017-01-05T06:10:00.000Z</published>
-    <updated>2017-01-27T02:16:50.000Z</updated>
+    <updated>2017-01-27T05:27:13.000Z</updated>
     
-    <content type="html"><![CDATA[<p>ssdb是工作要使用到的一个数据库，记录一下安装步骤以及常用用法。<a id="more"></a></p>
+    <content type="html"><![CDATA[<p>ssdb是工作要使用到的一个数据库，记录一下安装步骤以及常用用法。</p>
 <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget --no-check-certificate https://github.com/ideawu/ssdb/archive/master.zip</div><div class="line">unzip master</div><div class="line">cd ssdb-master</div><div class="line">make</div></pre></td></tr></table></figure>
 <p>这时报错：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ERROR! autoconf required! install autoconf first</div><div class="line"></div><div class="line">Makefile:4: build_config.mk: No such file or directory</div><div class="line">make: *** No rule to make target `build_config.mk&apos;.  Stop.</div></pre></td></tr></table></figure>
@@ -952,7 +967,8 @@
     
     <summary type="html">
     
-      &lt;p&gt;ssdb是工作要使用到的一个数据库，记录一下安装步骤以及常用用法。
+      &lt;p&gt;ssdb是工作要使用到的一个数据库，记录一下安装步骤以及常用用法。&lt;/p&gt;
+&lt;h1 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h1&gt;&lt;figure class=&quot;highlight plain&quot;&gt;
     
     </summary>
     
@@ -968,21 +984,15 @@
     <link href="http://microndgt.github.io/2016/12/15/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
     <id>http://microndgt.github.io/2016/12/15/数据结构与算法/</id>
     <published>2016-12-15T13:56:38.000Z</published>
-    <updated>2017-01-26T03:56:42.000Z</updated>
+    <updated>2017-01-27T05:39:09.000Z</updated>
     
-    <content type="html"><![CDATA[<p>线性表～<a id="more"></a></p>
-<blockquote>
-<p>2016-11-23 23:37</p>
-</blockquote>
-<h1 id="算法效率"><a href="#算法效率" class="headerlink" title="算法效率"></a>算法效率</h1><p>事后统计方法：利用计时器进行比较，需要事先编制测试程序</p>
-<p>事前分析估算：依据统计方法对算法进行估算</p>
-<p>所耗时间取决以下因素：算法的好坏和问题的输入规模</p>
+    <content type="html"><![CDATA[<p>线性表</p>
+<h1 id="算法效率"><a href="#算法效率" class="headerlink" title="算法效率"></a>算法效率</h1><p>事后统计方法: 利用计时器进行比较，需要事先编制测试程序</p>
+<p>事前分析估算: 依据统计方法对算法进行估算</p>
+<p>所耗时间取决以下因素:算法的好坏与问题的输入规模</p>
 <p>算法复杂度侧重研究算法随着输入规模扩大增长量的一个抽象，不计那些循环索引的递增和循环终止条件，变量声明，打印结果的操作，重要的是把基本操作的数量和输入模式相关联起来。</p>
-<p>函数的渐进增长：n&gt;N时候，总有f(n)&gt;g(n)，说明f(n)增长渐进快于g(n)</p>
+<p>函数的渐进增长: n&gt;N时候，总有f(n)&gt;g(n)，说明f(n)增长渐进快于g(n)</p>
 <p>判断算法效率时候，主要关注主项的阶数</p>
-<blockquote>
-<p>2016-11-28 21:02</p>
-</blockquote>
 <h1 id="算法时间复杂度"><a href="#算法时间复杂度" class="headerlink" title="算法时间复杂度"></a>算法时间复杂度</h1><p>分析语句总执行次数T(n)随n的变化并确定T(n)的数量级，算法的时间复杂度，就是算法的时间量度，T(n)=O(f(n))，表示随问题规模n的增大，算法执行时间的增长率和f(n)的增长率相同，称作算法的渐近时间复杂度。</p>
 <p>大O记法，O(1),O(n),O(n^2)</p>
 <p><strong>分析一个算法的时间复杂度</strong></p>
@@ -1189,7 +1199,9 @@
     
     <summary type="html">
     
-      &lt;p&gt;线性表～
+      &lt;p&gt;线性表&lt;/p&gt;
+&lt;h1 id=&quot;算法效率&quot;&gt;&lt;a href=&quot;#算法效率&quot; class=&quot;headerlink&quot; title=&quot;算法效率&quot;&gt;&lt;/a&gt;算法效率&lt;/h1&gt;&lt;p&gt;事后统计方法: 利用计时器进行比较，需要事先编制测试程序&lt;/p&gt;
+&lt;p&gt;事前分析估算: 依据统计方法对
     
     </summary>
     
@@ -1207,15 +1219,16 @@
     <link href="http://microndgt.github.io/2016/12/11/LinkList-Practice/"/>
     <id>http://microndgt.github.io/2016/12/11/LinkList-Practice/</id>
     <published>2016-12-11T08:44:34.000Z</published>
-    <updated>2017-01-26T04:00:19.000Z</updated>
+    <updated>2017-01-27T05:24:43.000Z</updated>
     
-    <content type="html"><![CDATA[<p>单链表的练习，另外有一个查找链表中间元素的算法!<a id="more"></a></p>
+    <content type="html"><![CDATA[<p>单链表的练习，另外有一个查找链表中间元素的算法!</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div></pre></td><td class="code"><pre><div class="line">/*************************************************************************</div><div class="line">	&gt; File Name: LinkList.c</div><div class="line">	&gt; Author:</div><div class="line">	&gt; Mail:</div><div class="line">	&gt; Created Time: 日 12/11 11:34:10 2016</div><div class="line"> ************************************************************************/</div><div class="line"></div><div class="line">#include&lt;stdio.h&gt;</div><div class="line">#include&lt;stdlib.h&gt;</div><div class="line">#include&lt;time.h&gt;</div><div class="line"></div><div class="line">typedef struct Node&#123;</div><div class="line">    int data;</div><div class="line">    struct Node *next;</div><div class="line">&#125;Node,*pNode;</div><div class="line"></div><div class="line">void showLinkList(pNode LinkList);</div><div class="line">int createLinkList(pNode LinkList, int n);</div><div class="line">int lengthLinkList(pNode LinkList);</div><div class="line">int midLinkList(pNode LinkList);</div><div class="line">int destroyLinkList(pNode LinkList);</div><div class="line">int insertLinkList(pNode LinkList, int pos, int ele);</div><div class="line">int deleteLinkList(pNode LinkList, int pos, int *ele);</div><div class="line"></div><div class="line">int main()&#123;</div><div class="line">    printf(&quot;0 - check LinkList\n1 - create LinkList\n2 - length of LinkList\n3 - mid data\n4 - destroy LinkList\n5 - insert element\n6 - delete element\n9 - exit\n&quot;);</div><div class="line">    int choose;</div><div class="line">    int pos;</div><div class="line">    int length;</div><div class="line">    int midData;</div><div class="line">    int insert_ele;</div><div class="line">    int ele;</div><div class="line">    int n;</div><div class="line">    //头结点</div><div class="line">    pNode LinkList = (pNode)malloc(sizeof(Node));</div><div class="line">    LinkList-&gt;next = NULL;</div><div class="line">    srand((unsigned)time(NULL));</div><div class="line">    printf(&quot;please choose one:&quot;);</div><div class="line">    scanf(&quot;%d&quot;, &amp;choose);</div><div class="line">    while(choose != 9)&#123;</div><div class="line">        switch(choose)&#123;</div><div class="line">            case 0:</div><div class="line">                showLinkList(LinkList);</div><div class="line">                break;</div><div class="line">            case 1:</div><div class="line">                printf(&quot;enter in how many links do you want:&quot;);</div><div class="line">                scanf(&quot;%d&quot;, &amp;n);</div><div class="line">                createLinkList(LinkList, n);</div><div class="line">                showLinkList(LinkList);</div><div class="line">                break;</div><div class="line">            case 2:</div><div class="line">                length = lengthLinkList(LinkList);</div><div class="line">                printf(&quot;length of LinkList is %d\n&quot;, length);</div><div class="line">                break;</div><div class="line">            case 3:</div><div class="line">                midData = midLinkList(LinkList);</div><div class="line">                printf(&quot;mid data of LinkList is %d\n&quot;, midData);</div><div class="line">                break;</div><div class="line">            case 4:</div><div class="line">                destroyLinkList(LinkList);</div><div class="line">                printf(&quot;already destroy\n&quot;);</div><div class="line">                showLinkList(LinkList);</div><div class="line">                break;</div><div class="line">            case 5:</div><div class="line">                printf(&quot;enter ele to insert and pos:&quot;);</div><div class="line">                scanf(&quot;%d %d&quot;, &amp;insert_ele, &amp;pos);</div><div class="line">                insertLinkList(LinkList, pos, insert_ele);</div><div class="line">                showLinkList(LinkList);</div><div class="line">                break;</div><div class="line">            case 6:</div><div class="line">                printf(&quot;enter pos to delete:&quot;);</div><div class="line">                scanf(&quot;%d&quot;, &amp;pos);</div><div class="line">                deleteLinkList(LinkList, pos, &amp;ele);</div><div class="line">                showLinkList(LinkList);</div><div class="line">                break;</div><div class="line">            default:</div><div class="line">                printf(&quot;enter an number 0-6 and 9 to exit!\n&quot;);</div><div class="line">        &#125;</div><div class="line">    printf(&quot;0 - check LinkList\n1 - create LinkList\n2 - length of LinkList\n3 - mid data\n4 - destroy LinkList\n5 - insert element\n6 - delete element\n9 - exit\n&quot;);</div><div class="line">    printf(&quot;please choose one:&quot;);</div><div class="line">    scanf(&quot;%d&quot;, &amp;choose);</div><div class="line">    &#125;</div><div class="line">    return 0;</div><div class="line">&#125;</div><div class="line"></div><div class="line">void showLinkList(pNode LinkList)&#123;</div><div class="line">    //LinkList指向第一个结点</div><div class="line">    printf(&quot;start-&gt;&quot;);</div><div class="line">    pNode p = LinkList;</div><div class="line">    while(p-&gt;next != NULL)&#123;</div><div class="line">        p = p-&gt;next;</div><div class="line">        printf(&quot;data:%d&quot;, p-&gt;data);</div><div class="line">        printf(&quot;-&gt;&quot;);</div><div class="line">    &#125;</div><div class="line">    printf(&quot;end\n&quot;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">int createLinkList(pNode LinkList, int n)&#123;</div><div class="line">    if (n &lt;= 0 )&#123;</div><div class="line">        return -1;</div><div class="line">    &#125;</div><div class="line">    pNode p = LinkList;</div><div class="line">    pNode q = NULL;</div><div class="line">    int i;</div><div class="line">    int data;</div><div class="line">    printf(&quot;creating...\n&quot;);</div><div class="line">    for(i = 0; i &lt;n; i++)&#123;</div><div class="line">        printf(&quot;creating %d Node\n&quot;, i+1);</div><div class="line">        q = (pNode)malloc(sizeof(Node));</div><div class="line">        data = rand() % 101;</div><div class="line">        q-&gt;data = data;</div><div class="line">        q-&gt;next = NULL;</div><div class="line">        p-&gt;next = q;</div><div class="line">        p = q;</div><div class="line">    &#125;</div><div class="line">    return 0;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int lengthLinkList(pNode LinkList)&#123;</div><div class="line">    if(LinkList-&gt;next == NULL)&#123;</div><div class="line">        return -1;</div><div class="line">    &#125;</div><div class="line">    pNode p = LinkList;</div><div class="line">    int count;</div><div class="line">    while(p-&gt;next != NULL)&#123;</div><div class="line">        p = p-&gt;next;</div><div class="line">        count ++;</div><div class="line">    &#125;</div><div class="line">    return count;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int midLinkList(pNode LinkList)&#123;</div><div class="line">    //快慢指针</div><div class="line">    pNode p = LinkList;</div><div class="line">    pNode q = LinkList;</div><div class="line">    while(p-&gt;next != NULL)&#123;</div><div class="line">        if (p-&gt;next-&gt;next != NULL)&#123;</div><div class="line">            p = p-&gt;next-&gt;next;</div><div class="line">            q = q-&gt;next;</div><div class="line">        &#125;else&#123;</div><div class="line">            p = p-&gt;next;</div><div class="line">            q = q-&gt;next;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return q-&gt;data;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int destroyLinkList(pNode LinkList)&#123;</div><div class="line">    pNode p = LinkList;</div><div class="line">    if(p == NULL || p-&gt;next == NULL)&#123;</div><div class="line">        return -1;</div><div class="line">    &#125;</div><div class="line">    p = p-&gt;next;</div><div class="line">    pNode q = NULL;</div><div class="line">    while(p-&gt;next != NULL)&#123;</div><div class="line">        q = p-&gt;next;</div><div class="line">        free(p);</div><div class="line">        p = q;</div><div class="line">    &#125;</div><div class="line">    return 0;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int insertLinkList(pNode LinkList, int pos, int ele)&#123;</div><div class="line">    if(pos &lt; 0 || pos &gt; lengthLinkList(LinkList))&#123;</div><div class="line">        return -1;</div><div class="line">    &#125;</div><div class="line">    pNode p = LinkList;</div><div class="line">    int i;</div><div class="line">    //首先获取到插入位置前一个元素</div><div class="line">    for(i=1;i&lt;pos;i++)&#123;</div><div class="line">        p = p-&gt;next;</div><div class="line">    &#125;</div><div class="line">    pNode q = (pNode)malloc(sizeof(Node));</div><div class="line">    q-&gt;data = ele;</div><div class="line">    q-&gt;next = p-&gt;next;</div><div class="line">    p-&gt;next = q;</div><div class="line">    return 0;</div><div class="line">&#125;</div><div class="line"></div><div class="line">int deleteLinkList(pNode LinkList, int pos, int *ele)&#123;</div><div class="line">    if(pos &lt; 0 || pos &gt; lengthLinkList(LinkList))&#123;</div><div class="line">        return -1;</div><div class="line">    &#125;</div><div class="line">    //同样获取到前一个元素</div><div class="line">    pNode p = LinkList;</div><div class="line">    int i;</div><div class="line">    for(i=1; i&lt;pos; i++)&#123;</div><div class="line">        p = p-&gt;next;</div><div class="line">    &#125;</div><div class="line">    pNode q = p-&gt;next;</div><div class="line">    *ele = q-&gt;data;</div><div class="line">    p-&gt;next = p-&gt;next-&gt;next;</div><div class="line">    free(q);</div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;单链表的练习，另外有一个查找链表中间元素的算法!
+      &lt;p&gt;单链表的练习，另外有一个查找链表中间元素的算法!&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line
     
     </summary>
     
@@ -1233,9 +1246,9 @@
     <link href="http://microndgt.github.io/2016/12/11/C%E8%AF%AD%E8%A8%80%E6%80%BB%E7%BB%93/"/>
     <id>http://microndgt.github.io/2016/12/11/C语言总结/</id>
     <published>2016-12-11T03:43:04.000Z</published>
-    <updated>2017-01-26T03:57:20.000Z</updated>
+    <updated>2017-01-27T05:24:00.000Z</updated>
     
-    <content type="html"><![CDATA[<p>没有搞清楚的C语言概念总结!<a id="more"></a></p>
+    <content type="html"><![CDATA[<p>没有搞清楚的C语言概念总结!</p>
 <h1 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">typedef struct Node&#123;</div><div class="line">    int data;</div><div class="line">    struct Node *next;</div><div class="line">&#125;mNode, *pNode;</div></pre></td></tr></table></figure>
 <p><code>Node</code>是结构名，这个名字主要是为了在结构体中包含自己为成员变量的时候使用</p>
 <p><code>mNode</code>是<code>struct Node</code>的别名，两者名字可以相同</p>
@@ -1245,7 +1258,8 @@
     
     <summary type="html">
     
-      &lt;p&gt;没有搞清楚的C语言概念总结!
+      &lt;p&gt;没有搞清楚的C语言概念总结!&lt;/p&gt;
+&lt;h1 id=&quot;结构体&quot;&gt;&lt;a href=&quot;#结构体&quot; class=&quot;headerlink&quot; title=&quot;结构体&quot;&gt;&lt;/a&gt;结构体&lt;/h1&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td 
     
     </summary>
     
@@ -1261,9 +1275,9 @@
     <link href="http://microndgt.github.io/2016/12/09/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
     <id>http://microndgt.github.io/2016/12/09/数据分析/</id>
     <published>2016-12-08T23:10:26.000Z</published>
-    <updated>2017-01-26T03:56:35.000Z</updated>
+    <updated>2017-01-27T05:22:35.000Z</updated>
     
-    <content type="html"><![CDATA[<p>利用Python进行数据分析!<a id="more"></a></p>
+    <content type="html"><![CDATA[<p>利用Python进行数据分析!</p>
 <h1 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h1><p>结构化数据，包括</p>
 <ul>
 <li>多维数组</li>
@@ -1303,7 +1317,12 @@
     
     <summary type="html">
     
-      &lt;p&gt;利用Python进行数据分析!
+      &lt;p&gt;利用Python进行数据分析!&lt;/p&gt;
+&lt;h1 id=&quot;数据&quot;&gt;&lt;a href=&quot;#数据&quot; class=&quot;headerlink&quot; title=&quot;数据&quot;&gt;&lt;/a&gt;数据&lt;/h1&gt;&lt;p&gt;结构化数据，包括&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;多维数组&lt;/li&gt;
+&lt;li&gt;表格型数据&lt;/li&gt;
+
     
     </summary>
     
@@ -1321,9 +1340,9 @@
     <link href="http://microndgt.github.io/2016/12/08/Pandas%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/"/>
     <id>http://microndgt.github.io/2016/12/08/Pandas使用笔记/</id>
     <published>2016-12-08T07:18:35.000Z</published>
-    <updated>2017-01-26T04:01:19.000Z</updated>
+    <updated>2017-01-27T05:26:22.000Z</updated>
     
-    <content type="html"><![CDATA[<p>看来工作上需要什么，才有驱动力去学习什么～<a id="more"></a></p>
+    <content type="html"><![CDATA[<p>看来工作上需要什么，才有驱动力去学习什么～</p>
 <p><code>import pandas as pd</code></p>
 <h1 id="读写csv数据"><a href="#读写csv数据" class="headerlink" title="读写csv数据"></a>读写csv数据</h1><h2 id="read-csv"><a href="#read-csv" class="headerlink" title="read_csv()"></a>read_csv()</h2><p><code>df = pd.read_csv(path)</code></p>
 <p>读入csv文件，形成一个数据框，data.frame</p>
@@ -1438,7 +1457,9 @@
     
     <summary type="html">
     
-      &lt;p&gt;看来工作上需要什么，才有驱动力去学习什么～
+      &lt;p&gt;看来工作上需要什么，才有驱动力去学习什么～&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;import pandas as pd&lt;/code&gt;&lt;/p&gt;
+&lt;h1 id=&quot;读写csv数据&quot;&gt;&lt;a href=&quot;#读写csv数据&quot; class=&quot;headerlink&quot; title=&quot;读写csv数据&quot;&gt;
     
     </summary>
     

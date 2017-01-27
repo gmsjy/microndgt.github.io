@@ -9,7 +9,10 @@
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="默认参数，任意数量参数，强制关键字参数，注解和闭包。">
+    <meta name="description" content="默认参数，任意数量参数，强制关键字参数，注解和闭包。
+可接受任意数量参数的函数123def avg(first, *rest):    # 传入相当于一个序列    return (first + sum(rest)) / (1 + len(rest))
+任意数量的关键字参数
+12def make_">
     
     
     
@@ -104,7 +107,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#可接受任意数量参数的函数"><span class="toc-number">1.</span> <span class="toc-text">可接受任意数量参数的函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#强制关键字参数"><span class="toc-number">2.</span> <span class="toc-text">强制关键字参数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#给函数参数增加元信息"><span class="toc-number">3.</span> <span class="toc-text">给函数参数增加元信息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#定义有默认参数的函数"><span class="toc-number">4.</span> <span class="toc-text">定义有默认参数的函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#匿名函数捕获变量值"><span class="toc-number">5.</span> <span class="toc-text">匿名函数捕获变量值</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#减少可调用对象的参数个数"><span class="toc-number">6.</span> <span class="toc-text">减少可调用对象的参数个数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将单方法的类转换成函数"><span class="toc-number">7.</span> <span class="toc-text">将单方法的类转换成函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#带额外状态信息的回调函数"><span class="toc-number">8.</span> <span class="toc-text">带额外状态信息的回调函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#访问闭包中定义的变量"><span class="toc-number">9.</span> <span class="toc-text">访问闭包中定义的变量</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#内联回调函数"><span class="toc-number">10.</span> <span class="toc-text">内联回调函数</span></a></li></ol>
 		</div>
 		
-		<p>默认参数，任意数量参数，强制关键字参数，注解和闭包。<a id="more"></a></p>
+		<p>默认参数，任意数量参数，强制关键字参数，注解和闭包。</p>
 <h1 id="可接受任意数量参数的函数"><a href="#可接受任意数量参数的函数" class="headerlink" title="可接受任意数量参数的函数"></a>可接受任意数量参数的函数</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">def avg(first, *rest):</div><div class="line">    # 传入相当于一个序列</div><div class="line">    return (first + sum(rest)) / (1 + len(rest))</div></pre></td></tr></table></figure>
 <p>任意数量的关键字参数</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">def make_element(name, value, **attrs):</div><div class="line">    keyvals = [&apos; %s = &quot;%s&quot; &apos; % item for item in attrs.items()]</div></pre></td></tr></table></figure>

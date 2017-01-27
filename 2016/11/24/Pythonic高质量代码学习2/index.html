@@ -9,7 +9,9 @@
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="编写高质量代码，改善Python程序的91个建议第三章～">
+    <meta name="description" content="编写高质量代码，改善Python程序的91个建议第三章～
+from..importPython有3种方式引入外部模块，import,from..import..,__import__函数,该函数显式的将模块的名称作为字符串传递并赋值给命名空间的变量
+解决循环嵌套导入问题的一个方法是直接使用impor">
     
     
     
@@ -104,7 +106,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#from-import"><span class="toc-number">1.</span> <span class="toc-text">from..import</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用with自动关闭资源"><span class="toc-number">2.</span> <span class="toc-text">使用with自动关闭资源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用else子句简化循环"><span class="toc-number">3.</span> <span class="toc-text">使用else子句简化循环</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异常处理"><span class="toc-number">4.</span> <span class="toc-text">异常处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#finally可能的陷阱"><span class="toc-number">5.</span> <span class="toc-text">finally可能的陷阱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#None"><span class="toc-number">6.</span> <span class="toc-text">None</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连接字符串尽量使用join"><span class="toc-number">7.</span> <span class="toc-text">连接字符串尽量使用join</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#格式化字符串使用-format而不是"><span class="toc-number">8.</span> <span class="toc-text">格式化字符串使用.format而不是%</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可变对象和不可变对象"><span class="toc-number">9.</span> <span class="toc-text">可变对象和不可变对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用列表解析"><span class="toc-number">10.</span> <span class="toc-text">使用列表解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#函数传参"><span class="toc-number">11.</span> <span class="toc-text">函数传参</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#默认参数可能导致的问题"><span class="toc-number">12.</span> <span class="toc-text">默认参数可能导致的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#慎用变长参数"><span class="toc-number">13.</span> <span class="toc-text">慎用变长参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#str-和repr"><span class="toc-number">14.</span> <span class="toc-text">str()和repr()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#静态方法和类方法"><span class="toc-number">15.</span> <span class="toc-text">静态方法和类方法</span></a></li></ol>
 		</div>
 		
-		<p>编写高质量代码，改善Python程序的91个建议第三章～<a id="more"></a></p>
+		<p>编写高质量代码，改善Python程序的91个建议第三章～</p>
 <h2 id="from-import"><a href="#from-import" class="headerlink" title="from..import"></a>from..import</h2><p>Python有3种方式引入外部模块，<code>import</code>,<code>from..import..</code>,<code>__import__函数</code>,该函数显式的将模块的名称作为字符串传递并赋值给命名空间的变量</p>
 <p>解决循环嵌套导入问题的一个方法是直接使用import语句</p>
 <h2 id="使用with自动关闭资源"><a href="#使用with自动关闭资源" class="headerlink" title="使用with自动关闭资源"></a>使用with自动关闭资源</h2><p>可以使用try..finally，但是Python提供了一个更加简单的解决方案</p>

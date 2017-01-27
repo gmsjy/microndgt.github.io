@@ -9,7 +9,9 @@
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="看书学习后对以前不懂的概念越发的清晰了。">
+    <meta name="description" content="看书学习后对以前不懂的概念越发的清晰了.
+并发是操作系统会在各程序之间迅速切换，使其都有机会运行在这一个处理器上，这种交错执行程序的方式，叫做并发。而并行是指，计算机是在同一时间做着不同的事情，多个核心的计算机，能够同时执行多个程序，使得这些程序能够在同一时刻向前推进。
+用subprocess管理子">
     
     
     
@@ -104,7 +106,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#用subprocess管理子进程"><span class="toc-number">1.</span> <span class="toc-text">用subprocess管理子进程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#可以用线程来执行阻塞式I-O，但是不要用它做平行计算"><span class="toc-number">2.</span> <span class="toc-text">可以用线程来执行阻塞式I/O，但是不要用它做平行计算</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在线程中使用Lock来防止数据竞争"><span class="toc-number">3.</span> <span class="toc-text">在线程中使用Lock来防止数据竞争</span></a></li></ol>
 		</div>
 		
-		<p>看书学习后对以前不懂的概念越发的清晰了。<a id="more"></a></p>
+		<p>看书学习后对以前不懂的概念越发的清晰了.</p>
 <p>并发是操作系统会在各程序之间迅速切换，使其都有机会运行在这一个处理器上，这种交错执行程序的方式，叫做并发。而并行是指，计算机是在同一时间做着不同的事情，多个核心的计算机，能够同时执行多个程序，使得这些程序能够在同一时刻向前推进。</p>
 <h1 id="用subprocess管理子进程"><a href="#用subprocess管理子进程" class="headerlink" title="用subprocess管理子进程"></a>用subprocess管理子进程</h1><p>由Python所启动的多个子进程，是可以平行运作的。最简单的子进程管理模块就是subprocess模块</p>
 <p>用Popen构造器来启动进程，然后使用communicate方法来读取子进程的输出信息，并等待其终止</p>

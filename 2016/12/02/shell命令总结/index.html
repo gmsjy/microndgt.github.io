@@ -9,7 +9,14 @@
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="工作中遇到的shell命令总结～">
+    <meta name="description" content="工作中遇到的shell命令总结～
+清除cache在运行程序过程中，free -h发现cache占用太大，于是：
+
+sync 保存数据
+echo 1 &amp;gt; /proc/sys/vm/drop_caches
+
+这样之后即可清除内存中的cache占用
+awk重新生成idawk &amp;#39;BEGIN{F">
     
     
     
@@ -104,7 +111,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#清除cache"><span class="toc-number">1.</span> <span class="toc-text">清除cache</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#awk"><span class="toc-number">2.</span> <span class="toc-text">awk</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#重新生成id"><span class="toc-number">2.1.</span> <span class="toc-text">重新生成id</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#打印出前两个字段"><span class="toc-number">2.2.</span> <span class="toc-text">打印出前两个字段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获取含有inf的id"><span class="toc-number">2.3.</span> <span class="toc-text">获取含有inf的id</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用if语句"><span class="toc-number">2.4.</span> <span class="toc-text">使用if语句</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sort"><span class="toc-number">3.</span> <span class="toc-text">sort</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#find"><span class="toc-number">4.</span> <span class="toc-text">find</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#vim"><span class="toc-number">5.</span> <span class="toc-text">vim</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#sed"><span class="toc-number">6.</span> <span class="toc-text">sed</span></a></li></ol>
 		</div>
 		
-		<p>工作中遇到的shell命令总结～<a id="more"></a></p>
+		<p>工作中遇到的shell命令总结～</p>
 <h1 id="清除cache"><a href="#清除cache" class="headerlink" title="清除cache"></a>清除cache</h1><p>在运行程序过程中，<code>free -h</code>发现cache占用太大，于是：</p>
 <ul>
 <li><code>sync</code> 保存数据</li>

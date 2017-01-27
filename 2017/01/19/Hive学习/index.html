@@ -9,7 +9,10 @@
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="大数据之Hive的数据操作以及开发">
+    <meta name="description" content="大数据之Hive的数据操作以及开发
+简介Hive是基于Hadoop的一个数据仓库工具，通过它可以实现将结构化的数据文件映射为一张数据库表，并且提供简单的sql查询功能，同时将sql语句转换为MapReduce任务进行运行
+Hive是构建在hadoop HDFS上的一个数据仓库
+数据仓库简介有别于普通">
     
     
     
@@ -104,7 +107,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据仓库简介"><span class="toc-number">1.1.</span> <span class="toc-text">数据仓库简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据仓库的结构和建立过程"><span class="toc-number">1.2.</span> <span class="toc-text">数据仓库的结构和建立过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OLTP应用和OLAP应用"><span class="toc-number">1.3.</span> <span class="toc-text">OLTP应用和OLAP应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据仓库中的数据模型"><span class="toc-number">1.4.</span> <span class="toc-text">数据仓库中的数据模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hive"><span class="toc-number">1.5.</span> <span class="toc-text">Hive</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hive的体系结构"><span class="toc-number">2.</span> <span class="toc-text">Hive的体系结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hive的元数据"><span class="toc-number">2.1.</span> <span class="toc-text">Hive的元数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HQL的执行过程"><span class="toc-number">2.2.</span> <span class="toc-text">HQL的执行过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hive的体系结构-1"><span class="toc-number">2.3.</span> <span class="toc-text">Hive的体系结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hive安装和管理"><span class="toc-number">2.4.</span> <span class="toc-text">Hive安装和管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hive的数据模型和操作"><span class="toc-number">2.5.</span> <span class="toc-text">Hive的数据模型和操作</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hive的数据导入到数据仓库"><span class="toc-number">3.</span> <span class="toc-text">Hive的数据导入到数据仓库</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#load语句执行数据导入"><span class="toc-number">3.1.</span> <span class="toc-text">load语句执行数据导入</span></a></li></ol></li></ol>
 		</div>
 		
-		<p>大数据之Hive的数据操作以及开发<a id="more"></a></p>
+		<p>大数据之Hive的数据操作以及开发</p>
 <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Hive是基于Hadoop的一个数据仓库工具，通过它可以实现将结构化的数据文件映射为一张数据库表，并且提供简单的sql查询功能，同时将sql语句转换为MapReduce任务进行运行</p>
 <p>Hive是构建在hadoop HDFS上的一个数据仓库</p>
 <h2 id="数据仓库简介"><a href="#数据仓库简介" class="headerlink" title="数据仓库简介"></a>数据仓库简介</h2><p>有别于普通的数据库，数据仓库是一个面向主题的，集成的，不可更新的，随时间不变化的数据集合，它用于支持企业或组织的决策分析处理</p>

@@ -9,7 +9,9 @@
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="ssdb是工作要使用到的一个数据库，记录一下安装步骤以及常用用法。">
+    <meta name="description" content="ssdb是工作要使用到的一个数据库，记录一下安装步骤以及常用用法。
+安装1234wget --no-check-certificate https://github.com/ideawu/ssdb/archive/master.zipunzip mastercd ssdb-mastermake
+这时">
     
     
     
@@ -104,7 +106,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#安装"><span class="toc-number">1.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据库操作"><span class="toc-number">2.</span> <span class="toc-text">数据库操作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用pyssdb"><span class="toc-number">3.</span> <span class="toc-text">使用pyssdb</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#命令"><span class="toc-number">4.</span> <span class="toc-text">命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#list"><span class="toc-number">4.1.</span> <span class="toc-text">list</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hashmap"><span class="toc-number">4.2.</span> <span class="toc-text">hashmap</span></a></li></ol></li></ol>
 		</div>
 		
-		<p>ssdb是工作要使用到的一个数据库，记录一下安装步骤以及常用用法。<a id="more"></a></p>
+		<p>ssdb是工作要使用到的一个数据库，记录一下安装步骤以及常用用法。</p>
 <h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget --no-check-certificate https://github.com/ideawu/ssdb/archive/master.zip</div><div class="line">unzip master</div><div class="line">cd ssdb-master</div><div class="line">make</div></pre></td></tr></table></figure>
 <p>这时报错：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ERROR! autoconf required! install autoconf first</div><div class="line"></div><div class="line">Makefile:4: build_config.mk: No such file or directory</div><div class="line">make: *** No rule to make target `build_config.mk&apos;.  Stop.</div></pre></td></tr></table></figure>

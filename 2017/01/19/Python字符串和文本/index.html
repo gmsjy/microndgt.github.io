@@ -9,7 +9,9 @@
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="拆分字符串，搜索，替换，词法分析以及解析，正则表达式。">
+    <meta name="description" content="拆分字符串，搜索，替换，词法分析以及解析，正则表达式.
+针对任意多的分隔符拆分字符串普通字符串的split方法只能处理单个的分隔符，如果要处理多个分隔符，使用re.split()，返回结果仍然是列表
+1234line = &amp;apos;asdf fjdk; afed, fjek,asdf&amp;apos;i">
     
     
     
@@ -104,7 +106,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#针对任意多的分隔符拆分字符串"><span class="toc-number">1.</span> <span class="toc-text">针对任意多的分隔符拆分字符串</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#在字符串开头或者结尾处做文本匹配"><span class="toc-number">2.</span> <span class="toc-text">在字符串开头或者结尾处做文本匹配</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#文本模式的匹配和查找"><span class="toc-number">3.</span> <span class="toc-text">文本模式的匹配和查找</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查找和替换文本"><span class="toc-number">4.</span> <span class="toc-text">查找和替换文本</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#以不区分大小写的方式对文本做查找和替换"><span class="toc-number">5.</span> <span class="toc-text">以不区分大小写的方式对文本做查找和替换</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实现最短匹配的正则表达式"><span class="toc-number">6.</span> <span class="toc-text">实现最短匹配的正则表达式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#将Unicode文本统一表示成规范形式"><span class="toc-number">7.</span> <span class="toc-text">将Unicode文本统一表示成规范形式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#从字符串中去掉不需要的字符"><span class="toc-number">8.</span> <span class="toc-text">从字符串中去掉不需要的字符</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#文本过滤与清理"><span class="toc-number">9.</span> <span class="toc-text">文本过滤与清理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#字符串对齐"><span class="toc-number">10.</span> <span class="toc-text">字符串对齐</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#合并拼接字符串"><span class="toc-number">11.</span> <span class="toc-text">合并拼接字符串</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#内嵌变量的字符串"><span class="toc-number">12.</span> <span class="toc-text">内嵌变量的字符串</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#文本分词"><span class="toc-number">13.</span> <span class="toc-text">文本分词</span></a></li></ol>
 		</div>
 		
-		<p>拆分字符串，搜索，替换，词法分析以及解析，正则表达式。<a id="more"></a></p>
+		<p>拆分字符串，搜索，替换，词法分析以及解析，正则表达式.</p>
 <h1 id="针对任意多的分隔符拆分字符串"><a href="#针对任意多的分隔符拆分字符串" class="headerlink" title="针对任意多的分隔符拆分字符串"></a>针对任意多的分隔符拆分字符串</h1><p>普通字符串的split方法只能处理单个的分隔符，如果要处理多个分隔符，使用<code>re.split()</code>，返回结果仍然是列表</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">line = &apos;asdf fjdk; afed, fjek,asdf&apos;</div><div class="line">import re</div><div class="line">re.split(r&apos;[;,\s]\s*&apos;, line&apos;)</div><div class="line"># \s表示空格，*表示匹配前方0次或者多次</div></pre></td></tr></table></figure>
 <p>如果使用捕获组，匹配的文本也会包含在最终结果中，捕获组中加入或<code>|</code>符号</p>

@@ -9,7 +9,9 @@
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="记录常用的sql语句，还是非常有用的～">
+    <meta name="description" content="记录常用的sql语句，还是非常有用的～
+建表建表语句：
+1234567create table if not exists ability(id int(11) not null auto_increment,fundId int(11) default null,ability_gain floa">
     
     
     
@@ -104,7 +106,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#建表"><span class="toc-number">1.</span> <span class="toc-text">建表</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#插入"><span class="toc-number">2.</span> <span class="toc-text">插入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Load-by-csv"><span class="toc-number">3.</span> <span class="toc-text">Load by csv</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#小操作"><span class="toc-number">4.</span> <span class="toc-text">小操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#删除表"><span class="toc-number">4.1.</span> <span class="toc-text">删除表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除表中数据"><span class="toc-number">4.2.</span> <span class="toc-text">删除表中数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改字段"><span class="toc-number">4.3.</span> <span class="toc-text">修改字段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加索引"><span class="toc-number">4.4.</span> <span class="toc-text">添加索引</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#选择前10条数据"><span class="toc-number">4.5.</span> <span class="toc-text">选择前10条数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加列"><span class="toc-number">4.6.</span> <span class="toc-text">添加列</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#改变表中字段的顺序"><span class="toc-number">4.7.</span> <span class="toc-text">改变表中字段的顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#删除表中某个字段"><span class="toc-number">4.8.</span> <span class="toc-text">删除表中某个字段</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#修改字段名字"><span class="toc-number">4.9.</span> <span class="toc-text">修改字段名字</span></a></li></ol></li></ol>
 		</div>
 		
-		<p>记录常用的sql语句，还是非常有用的～<a id="more"></a></p>
+		<p>记录常用的sql语句，还是非常有用的～</p>
 <h1 id="建表"><a href="#建表" class="headerlink" title="建表"></a>建表</h1><p>建表语句：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">create table if not exists ability(</div><div class="line">id int(11) not null auto_increment,</div><div class="line">fundId int(11) default null,</div><div class="line">ability_gain float(15,4) default null,</div><div class="line">primary key(id),</div><div class="line">index `fundId` (`fundId` asc))</div><div class="line">engine=InnoDB default charset=utf8;</div></pre></td></tr></table></figure>
 <p>注意：</p>

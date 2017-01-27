@@ -9,7 +9,10 @@
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="Python基本的数据结构与算法">
+    <meta name="description" content="Python基本的数据结构与算法
+collections.deque的用法双端队列，可以用这个队列来保存有限的历史记录，形成一个简单的队列结构，如果不指定队列的大小，就会得到一个无界限的队列。
+创建：q = deque(maxlen=3) 建立固定大小的队列
+方法：append, appendlef">
     
     
     
@@ -104,7 +107,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#collections-deque的用法"><span class="toc-number">1.</span> <span class="toc-text">collections.deque的用法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#heapq模块的用法"><span class="toc-number">2.</span> <span class="toc-text">heapq模块的用法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#用heapq模块实现优先级队列"><span class="toc-number">3.</span> <span class="toc-text">用heapq模块实现优先级队列</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用defaultdict类实现一键多值字典"><span class="toc-number">4.</span> <span class="toc-text">使用defaultdict类实现一键多值字典</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用zip将字典的键和值翻转过来"><span class="toc-number">5.</span> <span class="toc-text">使用zip将字典的键和值翻转过来</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#keys-和items-方法都支持集合操作"><span class="toc-number">6.</span> <span class="toc-text">keys()和items()方法都支持集合操作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#从序列中去除重复元素"><span class="toc-number">7.</span> <span class="toc-text">从序列中去除重复元素</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#寻找序列中出现次数最多的元素"><span class="toc-number">8.</span> <span class="toc-text">寻找序列中出现次数最多的元素</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用itemgetter来对字典列表排序"><span class="toc-number">9.</span> <span class="toc-text">使用itemgetter来对字典列表排序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用attrgetter来对类进行排序"><span class="toc-number">10.</span> <span class="toc-text">使用attrgetter来对类进行排序</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#itertools的groupby函数对数据进行分组"><span class="toc-number">11.</span> <span class="toc-text">itertools的groupby函数对数据进行分组</span></a></li></ol>
 		</div>
 		
-		<p>Python基本的数据结构与算法<a id="more"></a></p>
+		<p>Python基本的数据结构与算法</p>
 <h1 id="collections-deque的用法"><a href="#collections-deque的用法" class="headerlink" title="collections.deque的用法"></a>collections.deque的用法</h1><p>双端队列，可以用这个队列来保存有限的历史记录，形成一个简单的队列结构，如果不指定队列的大小，就会得到一个无界限的队列。</p>
 <p>创建：<code>q = deque(maxlen=3)</code> 建立固定大小的队列</p>
 <p>方法：append, appendleft, pop, popleft</p>

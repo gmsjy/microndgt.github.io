@@ -9,7 +9,10 @@
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="系统任务的自动化处理，解析命令行选项，操纵文件系统中的文件，获取有用的系统配置数据">
+    <meta name="description" content="系统任务的自动化处理，解析命令行选项，操纵文件系统中的文件，获取有用的系统配置数据
+ 通过重定向，管道或者输入文件来作为脚本的输入 接受任意一种对用户来说最为方便的输入机制，从命令中产生输出给脚本，把文件重定向到脚本，或者是在命令行中传递一个或者一列文件名给脚本。
+
+是可以将需要传入部分文件的那个东">
     
     
     
@@ -104,7 +107,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#通过重定向，管道或者输入文件来作为脚本的输入"><span class="toc-number">1.</span> <span class="toc-text"> 通过重定向，管道或者输入文件来作为脚本的输入</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#终止程序并显示错误信息"><span class="toc-number">2.</span> <span class="toc-text">终止程序并显示错误信息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#解析命令行选项"><span class="toc-number">3.</span> <span class="toc-text">解析命令行选项</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#执行外部命令并获取输出"><span class="toc-number">4.</span> <span class="toc-text">执行外部命令并获取输出</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#拷贝或者移动文件和目录"><span class="toc-number">5.</span> <span class="toc-text">拷贝或者移动文件和目录</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建和解包归档文件"><span class="toc-number">6.</span> <span class="toc-text">创建和解包归档文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#通过名称来查找文件"><span class="toc-number">7.</span> <span class="toc-text">通过名称来查找文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#读取配置文件"><span class="toc-number">8.</span> <span class="toc-text">读取配置文件</span></a></li></ol>
 		</div>
 		
-		<p> 系统任务的自动化处理，解析命令行选项，操纵文件系统中的文件，获取有用的系统配置数据<a id="more"></a></p>
+		<p> 系统任务的自动化处理，解析命令行选项，操纵文件系统中的文件，获取有用的系统配置数据</p>
 <h1 id="通过重定向，管道或者输入文件来作为脚本的输入"><a href="#通过重定向，管道或者输入文件来作为脚本的输入" class="headerlink" title=" 通过重定向，管道或者输入文件来作为脚本的输入"></a> 通过重定向，管道或者输入文件来作为脚本的输入</h1><p> 接受任意一种对用户来说最为方便的输入机制，从命令中产生输出给脚本，把文件重定向到脚本，或者是在命令行中传递一个或者一列文件名给脚本。</p>
 <blockquote>
 <p>是可以将需要传入部分文件的那个东西，只设置一个-p bool参数，然后为True的时候重定向有用</p>

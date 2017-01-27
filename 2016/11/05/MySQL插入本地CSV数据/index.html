@@ -9,7 +9,8 @@
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="将本地的CSV文件插入到MySQL的方法以及遇到的问题～">
+    <meta name="description" content="将本地的CSV文件插入到MySQL的方法以及遇到的问题~
+load csvLOAD DATA INFILE &amp;#39;/data/output.csv&amp;#39; INTO TABLE ability CHARACTER SET utf8 FIELDS TERMINATED BY &amp;#39;,&amp;#39">
     
     
     
@@ -104,7 +105,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#load-csv"><span class="toc-number">1.</span> <span class="toc-text">load csv</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#存在的问题"><span class="toc-number">1.1.</span> <span class="toc-text">存在的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#原因"><span class="toc-number">1.2.</span> <span class="toc-text">原因</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解决"><span class="toc-number">1.3.</span> <span class="toc-text">解决</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分割文件"><span class="toc-number">2.</span> <span class="toc-text">分割文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#修改字段"><span class="toc-number">3.</span> <span class="toc-text">修改字段</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#合并表"><span class="toc-number">4.</span> <span class="toc-text">合并表</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#关键问题"><span class="toc-number">5.</span> <span class="toc-text">关键问题</span></a></li></ol>
 		</div>
 		
-		<p>将本地的CSV文件插入到MySQL的方法以及遇到的问题～<a id="more"></a></p>
+		<p>将本地的CSV文件插入到MySQL的方法以及遇到的问题~</p>
 <h1 id="load-csv"><a href="#load-csv" class="headerlink" title="load csv"></a>load csv</h1><p><code>LOAD DATA INFILE &#39;/data/output.csv&#39; INTO TABLE ability CHARACTER SET utf8 FIELDS TERMINATED BY &#39;,&#39;;</code></p>
 <h2 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h2><ol>
 <li>使用<code>utf8</code>，而不是<code>utf-8</code></li>

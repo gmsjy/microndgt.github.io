@@ -9,7 +9,12 @@
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="Effective Python 的最后部分。">
+    <meta name="description" content="Effective Python 的最后部分。
+用适当的方式打破循环依赖关系Python系统在执行import语句时的详细机制，引入模块时候，Python会按照深度优先的顺序执行下列操作
+
+在由sys.path所指定的路径中，搜寻待引入的模块
+从模块中加载代码，并且保证这段代码能够正确编译
+创建与该">
     
     
     
@@ -104,7 +109,7 @@ var _hmt = _hmt || [];
 		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#用适当的方式打破循环依赖关系"><span class="toc-number">1.</span> <span class="toc-text">用适当的方式打破循环依赖关系</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#用虚拟环境隔离项目，并重建其依赖关系"><span class="toc-number">2.</span> <span class="toc-text">用虚拟环境隔离项目，并重建其依赖关系</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#重建项目的依赖关系"><span class="toc-number">2.1.</span> <span class="toc-text">重建项目的依赖关系</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#考虑使用模块级别的代码来配置不同的部署环境"><span class="toc-number">3.</span> <span class="toc-text">考虑使用模块级别的代码来配置不同的部署环境</span></a></li></ol>
 		</div>
 		
-		<p>Effective Python 的最后部分。<a id="more"></a></p>
+		<p>Effective Python 的最后部分。</p>
 <h1 id="用适当的方式打破循环依赖关系"><a href="#用适当的方式打破循环依赖关系" class="headerlink" title="用适当的方式打破循环依赖关系"></a>用适当的方式打破循环依赖关系</h1><p>Python系统在执行import语句时的详细机制，引入模块时候，Python会按照深度优先的顺序执行下列操作</p>
 <ol>
 <li>在由sys.path所指定的路径中，搜寻待引入的模块</li>
