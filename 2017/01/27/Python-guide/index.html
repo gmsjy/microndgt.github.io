@@ -136,7 +136,7 @@ var _hmt = _hmt || [];
 <h2 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h2><p>删除之后，工作区和版本库就不一致，这时候如果确实要在版本库中删除文件，那么使用<code>git rm file</code>并且<code>git commit</code></p>
 <p>如果删除错了，那么从版本库中将文件恢复<code>git checkout -- file</code>，<code>git checkout</code>其实是用版本库的版本替换工作区的版本</p>
 <h2 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h2><p>一台电脑充当服务器的角色，其他每个人都是从服务器仓库中克隆一份到自己电脑上，并且各自把自己的提交推送到服务器仓库中，也从服务器仓库中拉取别人的提交。所以完全可以自己搭建一台运行Git的服务器。</p>
-<p>git支持多种协议，https，但是通过ssh支持的原生的git协议速度最快，有必要，每次都输密码真是烦。</p>
+<p>git支持多种协议，https，但是通过ssh支持的原生的git协议速度最快，有必要，每次都输密码真是烦。在<code>hexo</code>配置文件中<code>_config.yml</code>设置<code>deploy</code>属性，<code>repo</code>为<code>git@github.com:Microndgt/microndgt.github.io.git</code>即可。</p>
 <h1 id="专业素养"><a href="#专业素养" class="headerlink" title="专业素养"></a>专业素养</h1><p>不仅需要写程序，还要写文档，写注释，单元测试，这里自己还欠缺的能力是单元测试，有时间去研究学习一下。</p>
   
 	</div>
