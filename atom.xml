@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://microndgt.github.io/"/>
-  <updated>2017-01-28T15:41:06.000Z</updated>
+  <updated>2017-01-31T01:36:38.000Z</updated>
   <id>http://microndgt.github.io/</id>
   
   <author>
@@ -17,10 +17,10 @@
   
   <entry>
     <title>Python类与对象</title>
-    <link href="http://microndgt.github.io/2017/01/28/Python%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1/"/>
-    <id>http://microndgt.github.io/2017/01/28/Python类与对象/</id>
+    <link href="http://microndgt.github.io/2017/01/28/Python%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1/"/>
+    <id>http://microndgt.github.io/2017/01/28/Python类和对象/</id>
     <published>2017-01-28T09:01:05.000Z</published>
-    <updated>2017-01-28T15:41:06.000Z</updated>
+    <updated>2017-01-31T01:36:38.000Z</updated>
     
     <content type="html"><![CDATA[<p>与类定义有关的常见编程模型，包括让对象支持常见的Python特性，特殊方法的使用，类封装技术，继承，内存管理以及有用的设计模式。</p>
 <h1 id="改变对象的字符串显示"><a href="#改变对象的字符串显示" class="headerlink" title="改变对象的字符串显示"></a>改变对象的字符串显示</h1><p>要改变一个实例的字符串表示，可以重新定义它的<code>__str__()</code>和<code>__repr__()</code>方法，今天彻底解决这两个的混乱，repr用于返回一个实例的代码表示形式，用于调试，交互式解释器显示的值是一样的。而str会将实例转换成一个字符串，使用<code>str()</code>或者<code>print()</code>函数会输出这个字符串</p>
@@ -29,6 +29,15 @@
 <h1 id="自定义字符串的格式化"><a href="#自定义字符串的格式化" class="headerlink" title="自定义字符串的格式化"></a>自定义字符串的格式化</h1><p>format()函数和字符串方法使得一个对象能够支持自定义的格式化。需要在类上面定义<code>__format__()</code>方法。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">_formats = &#123;</div><div class="line">  &apos;ymd&apos; : &apos;&#123;d.year&#125;-&#123;d.month&#125;-&#123;d.day&#125;&apos;,</div><div class="line">&#125;</div><div class="line">class Date:</div><div class="line">    def __init__(self, year, month, day):</div><div class="line">        self.year = year</div><div class="line">        self.month = month</div><div class="line">        self.day = day</div><div class="line">    def __format__(self, code):</div><div class="line">        if code == &quot;&quot;:</div><div class="line">            code = &apos;ymd&apos;</div><div class="line">        fmt = _formats[code]</div><div class="line">        return fmt.format(d=self)</div><div class="line">d = Date(2012, 12, 21)</div><div class="line">format(d)</div><div class="line">format(d, &apos;ymd&apos;)</div></pre></td></tr></table></figure>
 <p>就和之前自己写date的解析函数一样，自定义字符串格式功能。<code>__format__()</code>方法给Python的字符串格式化功能提供一个钩子。</p>
+<h1 id="让对象支持上下文管理协议"><a href="#让对象支持上下文管理协议" class="headerlink" title="让对象支持上下文管理协议"></a>让对象支持上下文管理协议</h1><p>需要实现<code>__enter__()</code>和<code>__exit__()</code>方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">from socket import socket, AF_INET, SOCK_STREAM</div><div class="line">class LazyConnection:</div><div class="line">    def __init__(self, address, family=AF_INET, type=SOCK_STREAM):</div><div class="line">        self.address = address</div><div class="line">        self.family = family</div><div class="line">        self.type = type</div><div class="line">        self.sock = None</div><div class="line">    def __enter__(self):</div><div class="line">        if self.sock is not None:</div><div class="line">            raise RuntimeError(&apos;Already connected&apos;)</div><div class="line">        self.sock = socket(self.family, self.type)</div><div class="line">        self.sock.connect(self.address)</div><div class="line">        return self.sock</div><div class="line">    def __exit__(self, exc_ty, exc_val, tb):</div><div class="line">        self.sock.close()</div><div class="line">        self.sock = None</div><div class="line"># 看到类的书写方法，当然是很熟悉，要融化于心;-)</div></pre></td></tr></table></figure>
+<p><code>__enter__()</code>方法的返回值为赋值给as生命的变量，<code>__exit__()</code>方法进行清理工作</p>
+<h1 id="创建大量对象时节省内存的方法"><a href="#创建大量对象时节省内存的方法" class="headerlink" title="创建大量对象时节省内存的方法"></a>创建大量对象时节省内存的方法</h1><p>对于主要是用来当成简单数据结构的类来说，可以通过给类添加<code>__slots__</code>属性来极大减少实例所占的内存</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class Date:</div><div class="line">    __slots__ = [&apos;year&apos;, &apos;month&apos;, &apos;day&apos;]</div><div class="line">    def __init__(self, year, month, day):</div><div class="line">        self.year = year</div><div class="line">        self.month = month</div><div class="line">        self.day = day</div></pre></td></tr></table></figure>
+<p>定义<code>__slots__</code>后，实例就会通过很小的固定大小的数组创建，但是有一个缺点就是只能用在<code>__slots__</code>定义的属性名，不能给实例添加新的属性了。使用slots后节省的内存会跟存储属性的数量和类型有关。不过使用它最好只在真的需要的地方作为内存优化工具。</p>
+<h1 id="在类中封装属性名"><a href="#在类中封装属性名" class="headerlink" title="在类中封装属性名"></a>在类中封装属性名</h1><p><code>_internal</code>单个下划线开头的名字应该是内部实现，同样适用于模块名和模块级别的函数，<code>__private</code>双下划线开头的名字是私有属性或者私有方法，这种属性或者方法是无法通过继承被覆盖的。</p>
+<p>应该让非公共名称以单下划线开始，如果代码涉及子类，并且有些内部属性应该在子类中隐藏，那么使用双下划线方案。</p>
+<p>如果定义的变量和某个保留关键字冲突，后面加上单下划线，<code>lambda_</code></p>
 ]]></content>
     
     <summary type="html">
