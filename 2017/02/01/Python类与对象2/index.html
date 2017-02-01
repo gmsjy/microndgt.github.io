@@ -4,23 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>DA-检验心理学现象 | SkyRover</title>
+    <title>Python类与对象2 | SkyRover</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="Data Analysis - P1: 检验心理学现象
-英文
-validity 有效性
-retrieve 检索
-contruct 抽象概念
-tummy 肚子
-grumble 抱怨
-deficient 不足的
-ponder 考虑，沉思
-cortisol 皮质醇
-hormone 激素
-profanity">
+    <meta name="description" content="Python __set__和__get__等解释12345class T:    name = &amp;apos;name&amp;apos;    def hello(self):        print(&amp;apos;hello&amp;apos;)t = T()
+使用dir(t)列出t的所有有效属性，分为两类，一">
     
     
     
@@ -101,10 +91,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/11/27/DA-检验心理学现象/" title="DA-检验心理学现象" itemprop="url">DA-检验心理学现象</a>
+      <a href="/2017/02/01/Python类与对象2/" title="Python类与对象2" itemprop="url">Python类与对象2</a>
   </h1>
   <p class="article-time">
-    <time datetime="2016-11-27T05:51:21.000Z" itemprop="datePublished">Nov 27 2016</time>
+    <time datetime="2017-02-01T04:29:49.000Z" itemprop="datePublished">Feb 1 2017</time>
   </p>
 </header>
 	<div class="article-content">
@@ -112,71 +102,51 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#英文"><span class="toc-number">1.</span> <span class="toc-text">英文</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Preview"><span class="toc-number">2.</span> <span class="toc-text">Preview</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#相信结果"><span class="toc-number">3.</span> <span class="toc-text">相信结果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#operational-definition"><span class="toc-number">4.</span> <span class="toc-text">operational definition</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#contructs"><span class="toc-number">5.</span> <span class="toc-text">contructs</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Data"><span class="toc-number">6.</span> <span class="toc-text">Data</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python-set-和-get-等解释"><span class="toc-number">1.</span> <span class="toc-text">Python __set__和__get__等解释</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#descriptor"><span class="toc-number">1.1.</span> <span class="toc-text">descriptor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python属性查找策略"><span class="toc-number">1.2.</span> <span class="toc-text">Python属性查找策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#属性赋值的查找策略"><span class="toc-number">1.3.</span> <span class="toc-text">属性赋值的查找策略</span></a></li></ol></li></ol>
 		</div>
 		
-		<p>Data Analysis - P1: 检验心理学现象</p>
-<h1 id="英文"><a href="#英文" class="headerlink" title="英文"></a>英文</h1><ol>
-<li>validity 有效性</li>
-<li>retrieve 检索</li>
-<li>contruct 抽象概念</li>
-<li>tummy 肚子</li>
-<li>grumble 抱怨</li>
-<li>deficient 不足的</li>
-<li>ponder 考虑，沉思</li>
-<li>cortisol 皮质醇</li>
-<li>hormone 激素</li>
-<li>profanity 亵渎</li>
-<li>obesity 肥胖</li>
-<li>Body mass index 身体质量指数</li>
-<li>plausible 貌似可信的</li>
-<li>hunch 预感</li>
-<li>hypothesis 假设</li>
-<li>extraneous 外来的，没有关联的</li>
-<li>lurk 潜伏</li>
-<li>ambush 埋伏</li>
-<li>denote 表示</li>
-<li>melody 旋律</li>
-<li>interval 间隔</li>
-</ol>
-<h1 id="Preview"><a href="#Preview" class="headerlink" title="Preview"></a>Preview</h1><p>describe and analyze data</p>
-<h1 id="相信结果"><a href="#相信结果" class="headerlink" title="相信结果"></a>相信结果</h1><p>what information would help you trust these survey results?</p>
-<ul>
-<li>how many people I surveyed</li>
-<li>who I surveyed</li>
-<li>how the survey was conducted</li>
+		<h1 id="Python-set-和-get-等解释"><a href="#Python-set-和-get-等解释" class="headerlink" title="Python __set__和__get__等解释"></a>Python <code>__set__</code>和<code>__get__</code>等解释</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">class T:</div><div class="line">    name = &apos;name&apos;</div><div class="line">    def hello(self):</div><div class="line">        print(&apos;hello&apos;)</div><div class="line">t = T()</div></pre></td></tr></table></figure>
+<p>使用<code>dir(t)</code>列出t的所有有效属性，分为两类，一类是Python自动产生的，一类是自定义的，如hello,name</p>
+<p>类和实例对象，实际上Python中一切都是对象，类是type的实例，都有<code>__dict__</code>属性，里面存放他们的自定义属性</p>
+<p><code>t.__dict__</code>是一个空字典，在t上没有自定义任何属性，它的有效属性hello和name都是从T得到的。查找t的name属性的时候，首先判断name属性是否是个自动产生的属性，如果是自动产生的，就按特别的方法找到这个属性，自定义的属性，从t的<code>__dict__</code>中寻找，没找到从类T中寻找,<code>T.__dict__</code>中寻找，然后返回，如果没有找到在父类中查找。</p>
+<h2 id="descriptor"><a href="#descriptor" class="headerlink" title="descriptor"></a>descriptor</h2><p>查找属性的时候，如<code>obj.attr</code>，如果Python发现这个属性attr有个<code>__get__</code>方法，Python就会调用这个方法，返回这个方法的返回值，而不是attr。</p>
+<p>descriptor是实现了某些特定方法的对象，<code>__get__</code>和<code>__set__</code>和<code>__delete__</code>，其中set和delete是可选的，另外描述器必须依附对象，作为对象的一个属性，而不能单独存在，描述器也必须存在类的<code>__dict__</code>中，只有在<strong><em>类</em></strong>的<code>__dict__</code>中找到属性，Python才会去看它有没有<code>__get__</code>，但是如果是实例的<code>__dict__</code>中找到的属性，那么不会去查看是否有<code>__get__</code>等方法，直接返回属性本身。</p>
+<p>描述器是对象的一个属性，但是存在于类的<code>__dict__</code>中并且有特殊方法<code>__get__</code>而具有特别的功能，所以成为描述器属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">class Descriptor(object):</div><div class="line">    def __get__(self, obj, type=None):</div><div class="line">        return(&apos;get&apos;, self, obj, type, sep=&quot;, &quot;)</div><div class="line">    def __set__(self, obj, val):</div><div class="line">        print(&quot;set&quot;, self, obj, val)</div><div class="line">    def __delete__(self, obj):</div><div class="line">        print(&quot;delete&quot;, self, obj)</div></pre></td></tr></table></figure>
+<p>self是当前Descriptor实例，obj值是拥有属性的对象，如果直接用类访问，那么就相当于直接用类访问类的属性，obj的值是None。type是obj的类型，如果用类访问，obj是None，那么type就是类本身。</p>
+<p><code>T.d</code>返回的是<code>d.__get__(None, T)</code>，<code>t.d</code>返回的是<code>d.__get__(t, T)</code></p>
+<p>如果描述器只有get方法，没有set方法，那么给这样的属性赋值的时候就会隐藏实例的描述器，直接进行赋值了。</p>
+<h2 id="Python属性查找策略"><a href="#Python属性查找策略" class="headerlink" title="Python属性查找策略"></a>Python属性查找策略</h2><ul>
+<li>如果attr是一个Python自动产生的属性，直接找到</li>
+<li>查找类中的属性<code>obj.__class__.__dict__</code>，如果attr存在而且是描述器，那么返回描述器<code>__get__</code>方法的结果，如果没有那么继续在<code>obj.__class__</code>的父类以及祖先类中寻找描述器，如果是non-data描述器的话，就不满足要求。</li>
+<li>在实例属性字典中<code>obj.__dict__</code>寻找，如果obj是普通实例，那么找到就直接返回。如果obj是类，那么在obj和它的父类，祖先类的<code>__dict__</code>中查找，如果找到描述器就返回描述器的<code>__get__</code>方法的结果，否则直接返回attr。如果没有找到，进入下一步</li>
+<li>在<code>obj.__class__.__dict__</code>中查找，如果找到一个non-data描述器，返回描述器<code>__get__</code>方法的结果，找到普通属性，那么直接返回属性值。</li>
+<li><code>raise AttributeError</code></li>
 </ul>
-<p>they all influence the validity of our results. Three important factors.</p>
-<p>BBC face test</p>
-<h1 id="operational-definition"><a href="#operational-definition" class="headerlink" title="operational definition"></a>operational definition</h1><p>the operational definition of a googd memeory is when the percentage of faces correctly recognized and placed is higher. So we can define and measure constructs.</p>
-<h1 id="contructs"><a href="#contructs" class="headerlink" title="contructs"></a>contructs</h1><p>age: If I had put age in years, I would have defined age as number of years you’ve been living but some people might look at age as how mature you are. maturity, age in years, wisdom.</p>
-<h1 id="Data"><a href="#Data" class="headerlink" title="Data"></a>Data</h1><p>when more factors are held constant, the test is more reliable because these condition are the same for all people that took the test.</p>
-<p>sampling error, so have a good sample will better predict the population parameter.</p>
-<p><strong>x</strong>: independent variable or the predictor variable</p>
-<p><strong>y</strong>: dependent variable or the outcome</p>
-<p><strong><em>correlation does not prove causation</em></strong></p>
-<p>The Lexus and Olive Tree</p>
-<p>Golden arches theory of confict prevention</p>
+<h2 id="属性赋值的查找策略"><a href="#属性赋值的查找策略" class="headerlink" title="属性赋值的查找策略"></a>属性赋值的查找策略</h2><ul>
+<li>查找<code>obj.__class__.__dict__</code>，如果attr存在并且是一个描述器，调用attr的<code>__set__</code>方法，如果不存在，继续到<code>obj.__class__</code>父类和祖先类中查找，找到描述器调用器<code>__set__</code>方法。</li>
+<li>直接在<code>obj.__dict__</code>中加入<code>obj.__dict__[&#39;attr&#39;] = value</code></li>
+</ul>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python/">Python</a><a href="/tags/Udacity/">Udacity</a>
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python/">Python</a><a href="/tags/Python-Cookbook/">Python_Cookbook</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/数据分析/">数据分析</a>
+  <a class="article-category-link" href="/categories/Python/">Python</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2016/11/27/DA-检验心理学现象/" data-title="DA-检验心理学现象 | SkyRover" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2017/02/01/Python类与对象2/" data-title="Python类与对象2 | SkyRover" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -185,19 +155,11 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/12/02/shell命令总结/" title="Shell命令总结">
-  <strong>新一篇:</strong><br/>
-  <span>
-  Shell命令总结</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/11/27/Data-Analysis-Project/"  title="Data Analysis Project">
+<a href="/2017/01/28/Python类和对象/"  title="Python类与对象">
  <strong>旧一篇:</strong><br/> 
- <span>Data Analysis Project
+ <span>Python类与对象
 </span>
 </a>
 </div>
@@ -207,7 +169,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="DA-检验心理学现象" data-thread-key="DA-检验心理学现象" data-author-key="Kevin" data-url="http://microndgt.github.io/post/DA-检验心理学现象"></div>
+	<div class="ds-thread" data-title="Python类与对象2" data-thread-key="Python类与对象2" data-author-key="Kevin" data-url="http://microndgt.github.io/post/Python类与对象2"></div>
 	
 </section>
 

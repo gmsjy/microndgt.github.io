@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://microndgt.github.io/"/>
-  <updated>2017-02-01T04:28:23.000Z</updated>
+  <updated>2017-02-01T11:21:15.000Z</updated>
   <id>http://microndgt.github.io/</id>
   
   <author>
@@ -14,6 +14,54 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python类与对象2</title>
+    <link href="http://microndgt.github.io/2017/02/01/Python%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A12/"/>
+    <id>http://microndgt.github.io/2017/02/01/Python类与对象2/</id>
+    <published>2017-02-01T04:29:49.000Z</published>
+    <updated>2017-02-01T11:21:15.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Python-set-和-get-等解释"><a href="#Python-set-和-get-等解释" class="headerlink" title="Python __set__和__get__等解释"></a>Python <code>__set__</code>和<code>__get__</code>等解释</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">class T:</div><div class="line">    name = &apos;name&apos;</div><div class="line">    def hello(self):</div><div class="line">        print(&apos;hello&apos;)</div><div class="line">t = T()</div></pre></td></tr></table></figure>
+<p>使用<code>dir(t)</code>列出t的所有有效属性，分为两类，一类是Python自动产生的，一类是自定义的，如hello,name</p>
+<p>类和实例对象，实际上Python中一切都是对象，类是type的实例，都有<code>__dict__</code>属性，里面存放他们的自定义属性</p>
+<p><code>t.__dict__</code>是一个空字典，在t上没有自定义任何属性，它的有效属性hello和name都是从T得到的。查找t的name属性的时候，首先判断name属性是否是个自动产生的属性，如果是自动产生的，就按特别的方法找到这个属性，自定义的属性，从t的<code>__dict__</code>中寻找，没找到从类T中寻找,<code>T.__dict__</code>中寻找，然后返回，如果没有找到在父类中查找。</p>
+<h2 id="descriptor"><a href="#descriptor" class="headerlink" title="descriptor"></a>descriptor</h2><p>查找属性的时候，如<code>obj.attr</code>，如果Python发现这个属性attr有个<code>__get__</code>方法，Python就会调用这个方法，返回这个方法的返回值，而不是attr。</p>
+<p>descriptor是实现了某些特定方法的对象，<code>__get__</code>和<code>__set__</code>和<code>__delete__</code>，其中set和delete是可选的，另外描述器必须依附对象，作为对象的一个属性，而不能单独存在，描述器也必须存在类的<code>__dict__</code>中，只有在<strong><em>类</em></strong>的<code>__dict__</code>中找到属性，Python才会去看它有没有<code>__get__</code>，但是如果是实例的<code>__dict__</code>中找到的属性，那么不会去查看是否有<code>__get__</code>等方法，直接返回属性本身。</p>
+<p>描述器是对象的一个属性，但是存在于类的<code>__dict__</code>中并且有特殊方法<code>__get__</code>而具有特别的功能，所以成为描述器属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">class Descriptor(object):</div><div class="line">    def __get__(self, obj, type=None):</div><div class="line">        return(&apos;get&apos;, self, obj, type, sep=&quot;, &quot;)</div><div class="line">    def __set__(self, obj, val):</div><div class="line">        print(&quot;set&quot;, self, obj, val)</div><div class="line">    def __delete__(self, obj):</div><div class="line">        print(&quot;delete&quot;, self, obj)</div></pre></td></tr></table></figure>
+<p>self是当前Descriptor实例，obj值是拥有属性的对象，如果直接用类访问，那么就相当于直接用类访问类的属性，obj的值是None。type是obj的类型，如果用类访问，obj是None，那么type就是类本身。</p>
+<p><code>T.d</code>返回的是<code>d.__get__(None, T)</code>，<code>t.d</code>返回的是<code>d.__get__(t, T)</code></p>
+<p>如果描述器只有get方法，没有set方法，那么给这样的属性赋值的时候就会隐藏实例的描述器，直接进行赋值了。</p>
+<h2 id="Python属性查找策略"><a href="#Python属性查找策略" class="headerlink" title="Python属性查找策略"></a>Python属性查找策略</h2><ul>
+<li>如果attr是一个Python自动产生的属性，直接找到</li>
+<li>查找类中的属性<code>obj.__class__.__dict__</code>，如果attr存在而且是描述器，那么返回描述器<code>__get__</code>方法的结果，如果没有那么继续在<code>obj.__class__</code>的父类以及祖先类中寻找描述器，如果是non-data描述器的话，就不满足要求。</li>
+<li>在实例属性字典中<code>obj.__dict__</code>寻找，如果obj是普通实例，那么找到就直接返回。如果obj是类，那么在obj和它的父类，祖先类的<code>__dict__</code>中查找，如果找到描述器就返回描述器的<code>__get__</code>方法的结果，否则直接返回attr。如果没有找到，进入下一步</li>
+<li>在<code>obj.__class__.__dict__</code>中查找，如果找到一个non-data描述器，返回描述器<code>__get__</code>方法的结果，找到普通属性，那么直接返回属性值。</li>
+<li><code>raise AttributeError</code></li>
+</ul>
+<h2 id="属性赋值的查找策略"><a href="#属性赋值的查找策略" class="headerlink" title="属性赋值的查找策略"></a>属性赋值的查找策略</h2><ul>
+<li>查找<code>obj.__class__.__dict__</code>，如果attr存在并且是一个描述器，调用attr的<code>__set__</code>方法，如果不存在，继续到<code>obj.__class__</code>父类和祖先类中查找，找到描述器调用器<code>__set__</code>方法。</li>
+<li>直接在<code>obj.__dict__</code>中加入<code>obj.__dict__[&#39;attr&#39;] = value</code></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;Python-set-和-get-等解释&quot;&gt;&lt;a href=&quot;#Python-set-和-get-等解释&quot; class=&quot;headerlink&quot; title=&quot;Python __set__和__get__等解释&quot;&gt;&lt;/a&gt;Python &lt;code&gt;__set__&lt;
+    
+    </summary>
+    
+      <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
+    
+    
+      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
+    
+      <category term="Python_Cookbook" scheme="http://microndgt.github.io/tags/Python-Cookbook/"/>
+    
+  </entry>
   
   <entry>
     <title>Python类与对象</title>
@@ -387,9 +435,9 @@
     
       <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
     
-      <category term="Udacity" scheme="http://microndgt.github.io/tags/Udacity/"/>
-    
       <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
+    
+      <category term="Udacity" scheme="http://microndgt.github.io/tags/Udacity/"/>
     
   </entry>
   
@@ -1359,71 +1407,6 @@
     
     
       <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>数据分析</title>
-    <link href="http://microndgt.github.io/2016/12/09/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
-    <id>http://microndgt.github.io/2016/12/09/数据分析/</id>
-    <published>2016-12-08T23:10:26.000Z</published>
-    <updated>2017-01-27T05:22:35.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>利用Python进行数据分析!</p>
-<h1 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h1><p>结构化数据，包括</p>
-<ul>
-<li>多维数组</li>
-<li>表格型数据</li>
-<li>关键列互相联系的多个表</li>
-<li>间隔平均或者不平均的时间序列</li>
-<li>也可以将数据集的特征提取为某种结构化形式</li>
-</ul>
-<p>计数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">from collections import defaultdict</div><div class="line">def get_counts(sequence):</div><div class="line">    counts = defaultdict(int)</div><div class="line">    for x in sequence:</div><div class="line">        counts[x] += 1</div><div class="line">    return counts</div></pre></td></tr></table></figure>
-<p>Series对象有一个value_counts方法,<code>tz_counts = frame[&#39;tz&#39;].value_counts()</code></p>
-<p>给记录中未知或者缺失的值填上一个替代值，fillna函数可以替换缺失值NA，未知值(空字符串)可以通过布尔型数组索引加以替换</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">clean_tz = frame[&apos;tz&apos;].fillna(&apos;Missing&apos;)</div><div class="line">clean_tz[clean_tz == &apos;&apos;] = &apos;Unknow&apos;</div></pre></td></tr></table></figure>
-<p>按Windows和非Windows用户对时区统计信息进行分解，因为agent有缺失，所以首先进行移除工作</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cframe = frame[frame.a.notnull()]</div><div class="line">operating_system = np.where(cframe[&apos;a&apos;].str.contains(&apos;Windows&apos;), &apos;Windows&apos;, &apos;Not Windows&apos;)</div></pre></td></tr></table></figure>
-<p>接下来使用时区和新得到的操作系统列表对数据进行分组</p>
-<p><code>by_tz_os = cframe.groupby([&#39;tz&#39;, operating_system])</code></p>
-<p>通过size对分组结果进行计数，利用unstack对计数结果进行重塑</p>
-<p><code>agg_counts = by_tz_os.size().unstack().fillna(0)</code></p>
-<h1 id="Numpy"><a href="#Numpy" class="headerlink" title="Numpy"></a>Numpy</h1><p>N维数组对象，一个通用的同构数据多维容器，所有元素必须是相同类型，每一个数组有一个shape和一个dtype说明类型</p>
-<h2 id="array"><a href="#array" class="headerlink" title="array"></a>array</h2><p><code>data1 = [6, 7, 8]</code> <code>arr1 = np.array(data1)</code></p>
-<p><code>arr1 = np.array([1, 2, 3], dtype=np.float64)</code></p>
-<p><code>arr.astype(np.float64)</code></p>
-<blockquote>
-<p>浮点数只能表示近似的分数值，在复杂计算中，由于可能会积累一些浮点错误，因此比较操作只能在一定小数位以内有效</p>
-</blockquote>
-<h2 id="矢量化"><a href="#矢量化" class="headerlink" title="矢量化"></a>矢量化</h2><p>类似R语言的核心思想，大小相等的数组之间的任何算术运算都会将运算应用到元素级</p>
-<p>不同大小的数组之间的运算称为广播</p>
-<h2 id="基本索引和切片"><a href="#基本索引和切片" class="headerlink" title="基本索引和切片"></a>基本索引和切片</h2><p>数组切片是原始数组的视图</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">arr_slice = arr[5:8]</div><div class="line">arr_slice[:] = 64</div><div class="line">#这里就会改变原始数组,而列表不会</div></pre></td></tr></table></figure>
-<p>因为Numpy设计目的是处理大数据，因此会尽量不要复制数据，如果要副本的话<code>arr[5:8].copy()</code></p>
-<p>二维数组的索引方式<code>arr2d[0][2]</code> or <code>arr2d[0, 2]</code></p>
-<h2 id="布尔型索引"><a href="#布尔型索引" class="headerlink" title="布尔型索引"></a>布尔型索引</h2><p>数组的比较运算也是矢量化的，因此对数组和字符串的比较运算会产生一个布尔型数组</p>
-<p>布尔型数组的长度必须跟被索引的轴长度一致</p>
-<p>可以使用<code>!=</code>或者使用符号<code>-</code>进行否定</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;利用Python进行数据分析!&lt;/p&gt;
-&lt;h1 id=&quot;数据&quot;&gt;&lt;a href=&quot;#数据&quot; class=&quot;headerlink&quot; title=&quot;数据&quot;&gt;&lt;/a&gt;数据&lt;/h1&gt;&lt;p&gt;结构化数据，包括&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;多维数组&lt;/li&gt;
-&lt;li&gt;表格型数据&lt;/li&gt;
-
-    
-    </summary>
-    
-      <category term="数据分析" scheme="http://microndgt.github.io/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
-    
-    
-      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
-    
-      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
     
   </entry>
   
