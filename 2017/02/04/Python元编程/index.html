@@ -4,15 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>用Python开发可规模化的应用 | SkyRover</title>
+    <title>Python元编程 | SkyRover</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="Developing Scalable Apps in Python!
-Scalability Basics在Google基础结构上运行的应用，缩放，scale，可缩放应用
-the race for scalability 可伸缩性争用
-optimize software, change softw">
+    <meta name="description" content="元编程来解决高度重复的代码，元编程就是关于创建操作源代码(比如修改，生成或者包装原来的代码)的函数和类，主要技术是使用装饰器，类装饰器和元类，签名对象，使用exec()执行代码以及对内部函数和类的反射技术。
+在函数上添加包装器使用额外的代码包装一个函数，定义一个装饰器函数，一个装饰器就是一个函数，它">
     
     
     
@@ -93,10 +91,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/01/20/用Python开发可规模化的应用/" title="用Python开发可规模化的应用" itemprop="url">用Python开发可规模化的应用</a>
+      <a href="/2017/02/04/Python元编程/" title="Python元编程" itemprop="url">Python元编程</a>
   </h1>
   <p class="article-time">
-    <time datetime="2017-01-20T00:47:38.000Z" itemprop="datePublished">Jan 20 2017</time>
+    <time datetime="2017-02-04T07:02:23.000Z" itemprop="datePublished">Feb 4 2017</time>
   </p>
 </header>
 	<div class="article-content">
@@ -104,46 +102,25 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Scalability-Basics"><span class="toc-number">1.</span> <span class="toc-text">Scalability Basics</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#从在单个计算机运行解耦"><span class="toc-number">1.1.</span> <span class="toc-text">从在单个计算机运行解耦</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Use-distributed-architecture-to-solve-problems"><span class="toc-number">1.2.</span> <span class="toc-text">Use distributed architecture to solve problems</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Google-App-Engine"><span class="toc-number">1.3.</span> <span class="toc-text">Google App Engine</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#really-check"><span class="toc-number">1.4.</span> <span class="toc-text">really check</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Getting-Started"><span class="toc-number">2.</span> <span class="toc-text">Getting Started</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#在函数上添加包装器"><span class="toc-number">1.</span> <span class="toc-text">在函数上添加包装器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#创建装饰器时保留函数元信息"><span class="toc-number">2.</span> <span class="toc-text">创建装饰器时保留函数元信息</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#解除一个装饰器"><span class="toc-number">3.</span> <span class="toc-text">解除一个装饰器</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#定义一个带参数的装饰器"><span class="toc-number">4.</span> <span class="toc-text">定义一个带参数的装饰器</span></a></li></ol>
 		</div>
 		
-		<p>Developing Scalable Apps in Python!</p>
-<h1 id="Scalability-Basics"><a href="#Scalability-Basics" class="headerlink" title="Scalability Basics"></a>Scalability Basics</h1><p>在Google基础结构上运行的应用，缩放，scale，可缩放应用</p>
-<p>the race for scalability 可伸缩性争用</p>
-<p>optimize software, change software to run on more servers -&gt; scalable architecture</p>
-<h2 id="从在单个计算机运行解耦"><a href="#从在单个计算机运行解耦" class="headerlink" title="从在单个计算机运行解耦"></a>从在单个计算机运行解耦</h2><p>将向外扩展架构设计为将应用扩展到单一计算机范围之外，因此还需要扩展此分布式架构(distributed architecture)， 而不是共享架构(share architecture)，有道理，不能用共享的，这样扩展的时候共享资源就会称为瓶颈，分布式应用最好也不要有共享的数据，这样会导致通信，处理起来比较麻烦。虚拟机(virtual machine)</p>
-<p>key step to building a scalable system is your need to decouple it from executing on a single computer. You design a scale out architecture as your application scales outside the scope of a single computer and this distributed architecture needs to be socalled, share nothing architecture. Meaning, that it must not depend on any shared resources that can become the bottleneck, this way if your application needs a scale, you can just provide more computer to provide the additional capacity required. That means, you can run your application on. All the things. And to get even more flexibility the concept of virtual machines was born which enables you to decouple a physical machine from the application execution machine. This had great flexibility gain since the infrastructure turned virtual you would now run your scale out application on several virtual machines instead of physical computers. You can now scale indefinitely by adding these standard building blocks of performance that your application can utilize and you have decomposed(分解) your application from the specific execution machine. So how do you design your application to be able to scale like this?</p>
-<h2 id="Use-distributed-architecture-to-solve-problems"><a href="#Use-distributed-architecture-to-solve-problems" class="headerlink" title="Use distributed architecture to solve problems"></a>Use distributed architecture to solve problems</h2><p>plain virtual machines</p>
-<p>First of all, virtual machines are nowadays a standard offering by any cloud service provider. This called IaaS, or infrastructure(基础设施) as a Service. This is because a computer and therefore also a virtual machine can be considered infrastructure today.And achieve unlimited scalability by distributing the execution(分布式计算) of our application, across these virtual machines.</p>
-<p>creating this architecture for your application is a very complicated and resource intensive problem(资源密集型问题).</p>
-<ul>
-<li>VM Management. Starting and stopping the virtual machine.</li>
-<li>Software Management</li>
-<li>Web Server. Powerful</li>
-<li>Distributed Database where you can read and write data, from all of your virtual machines.</li>
-<li>A distributed file system, where you can read and write data which is accessible from all your virtual machines.</li>
-<li>Application monitoring, with a consolidated view(统一视图) of any problems occurring in your distributed execution environment.</li>
-<li>Availability including data replication, hardware software resilience(恢复力), geographic disaster recovery strategies. Back ups, recovery, automatic fail overs, et cetera.</li>
-<li>Security set up and management(安全设置和管理) in your distributed execution environment</li>
-<li>load balancing. How to spread the load across the VMs, including application level session management(应用级会话管理分布负载).</li>
-</ul>
-<h2 id="Google-App-Engine"><a href="#Google-App-Engine" class="headerlink" title="Google App Engine"></a>Google App Engine</h2><p>App Engine is a development and deployment platform that takes care of many things for your application.</p>
-<p>internet services, server side applications.</p>
-<h2 id="really-check"><a href="#really-check" class="headerlink" title="really check"></a>really check</h2><p>since App Engine provides services to control the execution environment, it also has to set up programming languages it supports. Python, Java, PHP, and GO. And since App Engine is an execution container, it also means that there are specific versions of these languages that are supported.</p>
-<p><strong><em>it’s important to remember there are trade-offs with any framework or platform you use.</em></strong></p>
-<p>outro(结尾)</p>
-<h1 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h1><p>app engine development cycle and create an app engine project where you can upload your code</p>
-<p>cloud endpoints that allows you to create a backend that can work with any frontend device technology</p>
-<p>a development environment where you develop code for app engine</p>
-<p>conference central</p>
-<p>不能连接Google是硬伤啊。。。算了，先到这里了，至少了解了scalable application</p>
+		<p>元编程来解决高度重复的代码，元编程就是关于创建操作源代码(比如修改，生成或者包装原来的代码)的函数和类，主要技术是使用装饰器，类装饰器和元类，签名对象，使用exec()执行代码以及对内部函数和类的反射技术。</p>
+<h1 id="在函数上添加包装器"><a href="#在函数上添加包装器" class="headerlink" title="在函数上添加包装器"></a>在函数上添加包装器</h1><p>使用额外的代码包装一个函数，定义一个装饰器函数，一个装饰器就是一个函数，它接受一个函数作为参数并且返回一个新的函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">from functools import wraps</div><div class="line">def timethis(func):</div><div class="line">    # 使用wraps的目的是为了防止函数信息变成wrapper的函数信息</div><div class="line">    @wraps(func)</div><div class="line">    def wrapper(*args, **kwargs):</div><div class="line">        start = time.time()</div><div class="line">        result = func(*args, **kwargs)</div><div class="line">        end = time.time()</div><div class="line">        print(func.__name__, end-start)</div><div class="line">        return result</div><div class="line">    return wrapper</div><div class="line">@timethis</div><div class="line">def countdown(n):</div><div class="line">    while n &gt; 0:</div><div class="line">        n -= 1</div><div class="line"># 相当于</div><div class="line">def countdown(n):</div><div class="line">    while n &gt; 0:</div><div class="line">        n -= 1</div><div class="line">countdown = timethis(countdown)</div></pre></td></tr></table></figure>
+<p>所以真正执行的是装饰器函数中的闭包内部函数，使用装饰器并不会修改原始函数的参数签名以及返回值，使用<code>*args</code>和<code>**kwargs</code>的目的就是确保任何参数都能适用，而返回结果值都是调用原始函数<code>func(*args, **kwargs)</code>的返回结果。<code>@wraps(func)</code>注解是保留原始函数的元数据</p>
+<h1 id="创建装饰器时保留函数元信息"><a href="#创建装饰器时保留函数元信息" class="headerlink" title="创建装饰器时保留函数元信息"></a>创建装饰器时保留函数元信息</h1><p>任何时候定义装饰器，都应该使用functools库中的<code>@wraps</code>装饰器来注解底层包装函数，这样就会复制原始函数的元信息。<code>@wraps</code>可以通过属性<code>__wrapped__</code>直接访问被包装函数，<code>countdown.__wrapped__(100000)</code></p>
+<h1 id="解除一个装饰器"><a href="#解除一个装饰器" class="headerlink" title="解除一个装饰器"></a>解除一个装饰器</h1><p>如果装饰器是通过<code>@wraps</code>来实现的，那么可以访问<code>__wrapped__</code>属性来访问原始函数。</p>
+<p>如果有多个包装器，那么访问<code>__wrapped__</code>属性的行为是不可预知的，而且仅仅适用于包装器正确使用了<code>@wraps</code>的情况。多个包装器，从内向外进行包装。</p>
+<h1 id="定义一个带参数的装饰器"><a href="#定义一个带参数的装饰器" class="headerlink" title="定义一个带参数的装饰器"></a>定义一个带参数的装饰器</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">def logged(level, name=None, message=None):</div><div class="line">    def decorate(func):</div><div class="line">        logname = name if name else func.__module__</div><div class="line">        log = logging.getLogger(logname)</div><div class="line">        logmsg = message if message else func.__name__</div><div class="line">        @wraps(func)</div><div class="line">        def wrapper(*args, **kwargs):</div><div class="line">            log.log(level, logmsg)</div><div class="line">            return func(*args, **kwargs)</div><div class="line">        return wrapper</div><div class="line">    return decorate</div><div class="line">@logged(logging.DEBUG)</div><div class="line">def add(x, y):</div><div class="line">    return x + y</div></pre></td></tr></table></figure>
+<p>最外层的函数logged()接受参数并将它们作用在内部的装饰器函数上。其实就相当于下面：<code>add = logged(logging.DEBUG)(add)</code>logged()返回的是一个可调用对象，接受一个函数作为参数并且包装它。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Udacity/">Udacity</a><a href="/tags/Python/">Python</a>
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python/">Python</a><a href="/tags/Python-Cookbook/">Python_Cookbook</a>
   </div>
 
 
@@ -156,7 +133,7 @@ var _hmt = _hmt || [];
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2017/01/20/用Python开发可规模化的应用/" data-title="用Python开发可规模化的应用 | SkyRover" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2017/02/04/Python元编程/" data-title="Python元编程 | SkyRover" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -165,19 +142,11 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/01/20/Python数字日期和时间/" title="Python数字日期和时间">
-  <strong>新一篇:</strong><br/>
-  <span>
-  Python数字日期和时间</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/01/19/Hive学习/"  title="Hive学习">
+<a href="/2017/02/01/Python类与对象2/"  title="Python类与对象2">
  <strong>旧一篇:</strong><br/> 
- <span>Hive学习
+ <span>Python类与对象2
 </span>
 </a>
 </div>
@@ -187,7 +156,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="用Python开发可规模化的应用" data-thread-key="用Python开发可规模化的应用" data-author-key="Kevin" data-url="http://microndgt.github.io/post/用Python开发可规模化的应用"></div>
+	<div class="ds-thread" data-title="Python元编程" data-thread-key="Python元编程" data-author-key="Kevin" data-url="http://microndgt.github.io/post/Python元编程"></div>
 	
 </section>
 

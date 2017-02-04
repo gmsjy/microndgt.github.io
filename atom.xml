@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://microndgt.github.io/"/>
-  <updated>2017-02-04T02:59:01.000Z</updated>
+  <updated>2017-02-04T07:44:01.000Z</updated>
   <id>http://microndgt.github.io/</id>
   
   <author>
@@ -14,6 +14,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python元编程</title>
+    <link href="http://microndgt.github.io/2017/02/04/Python%E5%85%83%E7%BC%96%E7%A8%8B/"/>
+    <id>http://microndgt.github.io/2017/02/04/Python元编程/</id>
+    <published>2017-02-04T07:02:23.000Z</published>
+    <updated>2017-02-04T07:44:01.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>元编程来解决高度重复的代码，元编程就是关于创建操作源代码(比如修改，生成或者包装原来的代码)的函数和类，主要技术是使用装饰器，类装饰器和元类，签名对象，使用exec()执行代码以及对内部函数和类的反射技术。</p>
+<h1 id="在函数上添加包装器"><a href="#在函数上添加包装器" class="headerlink" title="在函数上添加包装器"></a>在函数上添加包装器</h1><p>使用额外的代码包装一个函数，定义一个装饰器函数，一个装饰器就是一个函数，它接受一个函数作为参数并且返回一个新的函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">from functools import wraps</div><div class="line">def timethis(func):</div><div class="line">    # 使用wraps的目的是为了防止函数信息变成wrapper的函数信息</div><div class="line">    @wraps(func)</div><div class="line">    def wrapper(*args, **kwargs):</div><div class="line">        start = time.time()</div><div class="line">        result = func(*args, **kwargs)</div><div class="line">        end = time.time()</div><div class="line">        print(func.__name__, end-start)</div><div class="line">        return result</div><div class="line">    return wrapper</div><div class="line">@timethis</div><div class="line">def countdown(n):</div><div class="line">    while n &gt; 0:</div><div class="line">        n -= 1</div><div class="line"># 相当于</div><div class="line">def countdown(n):</div><div class="line">    while n &gt; 0:</div><div class="line">        n -= 1</div><div class="line">countdown = timethis(countdown)</div></pre></td></tr></table></figure>
+<p>所以真正执行的是装饰器函数中的闭包内部函数，使用装饰器并不会修改原始函数的参数签名以及返回值，使用<code>*args</code>和<code>**kwargs</code>的目的就是确保任何参数都能适用，而返回结果值都是调用原始函数<code>func(*args, **kwargs)</code>的返回结果。<code>@wraps(func)</code>注解是保留原始函数的元数据</p>
+<h1 id="创建装饰器时保留函数元信息"><a href="#创建装饰器时保留函数元信息" class="headerlink" title="创建装饰器时保留函数元信息"></a>创建装饰器时保留函数元信息</h1><p>任何时候定义装饰器，都应该使用functools库中的<code>@wraps</code>装饰器来注解底层包装函数，这样就会复制原始函数的元信息。<code>@wraps</code>可以通过属性<code>__wrapped__</code>直接访问被包装函数，<code>countdown.__wrapped__(100000)</code></p>
+<h1 id="解除一个装饰器"><a href="#解除一个装饰器" class="headerlink" title="解除一个装饰器"></a>解除一个装饰器</h1><p>如果装饰器是通过<code>@wraps</code>来实现的，那么可以访问<code>__wrapped__</code>属性来访问原始函数。</p>
+<p>如果有多个包装器，那么访问<code>__wrapped__</code>属性的行为是不可预知的，而且仅仅适用于包装器正确使用了<code>@wraps</code>的情况。多个包装器，从内向外进行包装。</p>
+<h1 id="定义一个带参数的装饰器"><a href="#定义一个带参数的装饰器" class="headerlink" title="定义一个带参数的装饰器"></a>定义一个带参数的装饰器</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">def logged(level, name=None, message=None):</div><div class="line">    def decorate(func):</div><div class="line">        logname = name if name else func.__module__</div><div class="line">        log = logging.getLogger(logname)</div><div class="line">        logmsg = message if message else func.__name__</div><div class="line">        @wraps(func)</div><div class="line">        def wrapper(*args, **kwargs):</div><div class="line">            log.log(level, logmsg)</div><div class="line">            return func(*args, **kwargs)</div><div class="line">        return wrapper</div><div class="line">    return decorate</div><div class="line">@logged(logging.DEBUG)</div><div class="line">def add(x, y):</div><div class="line">    return x + y</div></pre></td></tr></table></figure>
+<p>最外层的函数logged()接受参数并将它们作用在内部的装饰器函数上。其实就相当于下面：<code>add = logged(logging.DEBUG)(add)</code>logged()返回的是一个可调用对象，接受一个函数作为参数并且包装它。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;元编程来解决高度重复的代码，元编程就是关于创建操作源代码(比如修改，生成或者包装原来的代码)的函数和类，主要技术是使用装饰器，类装饰器和元类，签名对象，使用exec()执行代码以及对内部函数和类的反射技术。&lt;/p&gt;
+&lt;h1 id=&quot;在函数上添加包装器&quot;&gt;&lt;a href=&quot;#
+    
+    </summary>
+    
+      <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
+    
+    
+      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
+    
+      <category term="Python_Cookbook" scheme="http://microndgt.github.io/tags/Python-Cookbook/"/>
+    
+  </entry>
   
   <entry>
     <title>Python类与对象2</title>
@@ -465,9 +501,9 @@
     
       <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
     
-      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
-    
       <category term="Udacity" scheme="http://microndgt.github.io/tags/Udacity/"/>
+    
+      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
     
   </entry>
   
@@ -1408,35 +1444,6 @@
       <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
     
       <category term="计算机科学" scheme="http://microndgt.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>C语言总结</title>
-    <link href="http://microndgt.github.io/2016/12/11/C%E8%AF%AD%E8%A8%80%E6%80%BB%E7%BB%93/"/>
-    <id>http://microndgt.github.io/2016/12/11/C语言总结/</id>
-    <published>2016-12-11T03:43:04.000Z</published>
-    <updated>2017-01-27T05:24:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>没有搞清楚的C语言概念总结!</p>
-<h1 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">typedef struct Node&#123;</div><div class="line">    int data;</div><div class="line">    struct Node *next;</div><div class="line">&#125;mNode, *pNode;</div></pre></td></tr></table></figure>
-<p><code>Node</code>是结构名，这个名字主要是为了在结构体中包含自己为成员变量的时候使用</p>
-<p><code>mNode</code>是<code>struct Node</code>的别名，两者名字可以相同</p>
-<p><code>pNode</code>是<code>struct Node *</code>的别名</p>
-<p>等价于<code>typedef struct Node mNode</code>和<code>typedef struct Node *pNode</code></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;没有搞清楚的C语言概念总结!&lt;/p&gt;
-&lt;h1 id=&quot;结构体&quot;&gt;&lt;a href=&quot;#结构体&quot; class=&quot;headerlink&quot; title=&quot;结构体&quot;&gt;&lt;/a&gt;结构体&lt;/h1&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td 
-    
-    </summary>
-    
-      <category term="C" scheme="http://microndgt.github.io/categories/C/"/>
-    
-    
-      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
     
   </entry>
   
