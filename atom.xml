@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://microndgt.github.io/"/>
-  <updated>2017-02-05T02:48:22.000Z</updated>
+  <updated>2017-02-05T03:01:12.000Z</updated>
   <id>http://microndgt.github.io/</id>
   
   <author>
@@ -14,6 +14,48 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用Python和Flask设计RESTful API</title>
+    <link href="http://microndgt.github.io/2017/02/05/%E4%BD%BF%E7%94%A8Python%E5%92%8CFlask%E8%AE%BE%E8%AE%A1RESTful-API/"/>
+    <id>http://microndgt.github.io/2017/02/05/使用Python和Flask设计RESTful-API/</id>
+    <published>2017-02-05T03:25:20.000Z</published>
+    <updated>2017-02-05T03:01:12.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="REST-REpresentational-State-Transfer表现层状态迁移"><a href="#REST-REpresentational-State-Transfer表现层状态迁移" class="headerlink" title="REST(REpresentational State Transfer表现层状态迁移)"></a>REST(REpresentational State Transfer表现层状态迁移)</h1><p>web services和web APIs</p>
+<ul>
+<li>客户端－服务器，两者隔离</li>
+<li>无状态，一种服务器不会存储客户端上一次请求的信息用来下一次使用</li>
+<li>可缓存，服务器明示客户端请求能否缓存</li>
+<li>分层系统，客户端和服务器通信应该以一种标准方式，中间层代替服务器做出相应，客户端不需要做任何变动</li>
+<li>统一接口，通信方法必须是统一的</li>
+<li>按需编码：服务器可以提供可执行代码的脚本，为客户端在它们的环境中执行</li>
+</ul>
+<h1 id="RESTful-的-web-service"><a href="#RESTful-的-web-service" class="headerlink" title="RESTful 的 web service"></a>RESTful 的 web service</h1><p>核心是资源，资源可以用URI表示，客户端使用HTTP协议定义的方法来发送请求到这些URIs，当然可能会导致这些被访问的资源状态改变</p>
+<p><code>GET,POST,PUT,DELETE</code></p>
+<p>REST设计不需要特定的数据格式，在请求中数据可以以JSON形式，或者作为url中查询参数项。</p>
+<h1 id="设计一个web-service"><a href="#设计一个web-service" class="headerlink" title="设计一个web service"></a>设计一个web service</h1><p>其实就是一个标识资源被展示出来以及它们是怎样受不同的请求方法影响。</p>
+<p>首先设计URL: <code>http://[hostname]/todo/api/v1.0</code>，在URL中包含应用名称有助于提供一个命名空间以便区分同一系统上的其他服务，包含版本号能够帮助以后的更新，如果新版本中存在新的和潜在不兼容的功能，可以不影响依赖于旧的功能的应用程序。</p>
+<p>现在从前端过来的也就是指令信息，然后发送给服务器，计算之后返回数据信息，主要在于要将这些数据格式化成json格式，把指令从json变成python可用的。</p>
+<p>有这么几项，一个是登陆，密码验证之类。另外一个是开始计算，返回数据，已完成百分比，耗费时间。另外一个是返回summary数据，输入id的话返回对应的ability或者其他数据，这块也就是数据查询功能，看查询类型了</p>
+<p>擦，在虚拟环境指定Python3也是不容易啊，<code>virtualenv backend -p /usr/local/bin/python3</code>使用用户安装的python3，貌似anaconda的Python3用不了</p>
+<h1 id="Flask-restful使用"><a href="#Flask-restful使用" class="headerlink" title="Flask restful使用"></a>Flask restful使用</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">from flask import Flask</div><div class="line">from flask.ext import restful</div><div class="line"># 创建程序实例</div><div class="line">app = Flask(__name__)</div><div class="line">api = restful.Api(app)</div><div class="line"># 定义资源</div><div class="line">class HelloWorld(restful.Resource):</div><div class="line">    def get(self):</div><div class="line">        return &#123;&apos;hello&apos;: &apos;world&apos;&#125;</div><div class="line"># 添加资源</div><div class="line">api.add_resource(HelloWorld, &apos;/&apos;)</div><div class="line">if __name__ == &apos;__main__&apos;:</div><div class="line">    # 开始运行</div><div class="line">    app.run(debug=True)</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;REST-REpresentational-State-Transfer表现层状态迁移&quot;&gt;&lt;a href=&quot;#REST-REpresentational-State-Transfer表现层状态迁移&quot; class=&quot;headerlink&quot; title=&quot;REST(R
+    
+    </summary>
+    
+      <category term="web" scheme="http://microndgt.github.io/categories/web/"/>
+    
+    
+      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>Python元编程</title>
@@ -350,49 +392,6 @@
       <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
     
       <category term="Python_Cookbook" scheme="http://microndgt.github.io/tags/Python-Cookbook/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用Python和Flask设计RESTful API</title>
-    <link href="http://microndgt.github.io/2017/01/22/%E4%BD%BF%E7%94%A8Python%E5%92%8CFlask%E8%AE%BE%E8%AE%A1RESTful-API/"/>
-    <id>http://microndgt.github.io/2017/01/22/使用Python和Flask设计RESTful-API/</id>
-    <published>2017-01-22T03:25:20.000Z</published>
-    <updated>2017-01-26T03:56:27.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="REST-REpresentational-State-Transfer表现层状态迁移"><a href="#REST-REpresentational-State-Transfer表现层状态迁移" class="headerlink" title="REST(REpresentational State Transfer表现层状态迁移)"></a>REST(REpresentational State Transfer表现层状态迁移)</h1><p>web services和web APIs</p>
-<ul>
-<li>客户端－服务器，两者隔离</li>
-<li>无状态，一种服务器不会存储客户端上一次请求的信息用来下一次使用</li>
-<li>可缓存，服务器明示客户端请求能否缓存</li>
-<li>分层系统，客户端和服务器通信应该以一种标准方式，中间层代替服务器做出相应，客户端不需要做任何变动</li>
-<li>统一接口，通信方法必须是统一的</li>
-<li>按需编码：服务器可以提供可执行代码的脚本，为客户端在它们的环境中执行</li>
-</ul>
-<h1 id="RESTful-的-web-service"><a href="#RESTful-的-web-service" class="headerlink" title="RESTful 的 web service"></a>RESTful 的 web service</h1><p>核心是资源，资源可以用URI表示，客户端使用HTTP协议定义的方法来发送请求到这些URIs，当然可能会导致这些被访问的资源状态改变</p>
-<p><code>GET,POST,PUT,DELETE</code></p>
-<p>REST设计不需要特定的数据格式，在请求中数据可以以JSON形式，或者作为url中查询参数项。</p>
-<h1 id="设计一个web-service"><a href="#设计一个web-service" class="headerlink" title="设计一个web service"></a>设计一个web service</h1><p>其实就是一个标识资源被展示出来以及它们是怎样受不同的请求方法影响。</p>
-<p>首先设计URL: <code>http://[hostname]/todo/api/v1.0</code>，在URL中包含应用名称有助于提供一个命名空间以便区分同一系统上的其他服务，包含版本号能够帮助以后的更新，如果新版本中存在新的和潜在不兼容的功能，可以不影响依赖于旧的功能的应用程序。</p>
-<p>现在从前端过来的也就是指令信息，然后发送给服务器，计算之后返回数据信息，主要在于要将这些数据格式化成json格式，把指令从json变成python可用的。</p>
-<p>有这么几项，一个是登陆，密码验证之类。另外一个是开始计算，返回数据，已完成百分比，耗费时间。另外一个是返回summary数据，输入id的话返回对应的ability或者其他数据，这块也就是数据查询功能，看查询类型了</p>
-<p>擦，在虚拟环境指定Python3也是不容易啊，<code>virtualenv backend -p /usr/local/bin/python3</code>使用用户安装的python3，貌似anaconda的Python3用不了</p>
-<h1 id="使用Python和Flask实现RESTful-services"><a href="#使用Python和Flask实现RESTful-services" class="headerlink" title="使用Python和Flask实现RESTful services"></a>使用Python和Flask实现RESTful services</h1><p>使用ssdb数据库</p>
-<p>最后使用了<code>flask-restful</code></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;REST-REpresentational-State-Transfer表现层状态迁移&quot;&gt;&lt;a href=&quot;#REST-REpresentational-State-Transfer表现层状态迁移&quot; class=&quot;headerlink&quot; title=&quot;REST(R
-    
-    </summary>
-    
-      <category term="web" scheme="http://microndgt.github.io/categories/web/"/>
-    
-    
-      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
-    
-      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
     
   </entry>
   
