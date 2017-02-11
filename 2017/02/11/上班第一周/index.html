@@ -4,17 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>使用Python和Flask设计RESTful API | SkyRover</title>
+    <title>上班第一周 | SkyRover</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="REST(REpresentational State Transfer表现层状态迁移)web services和web APIs
-
-客户端－服务器，两者隔离
-无状态，一种服务器不会存储客户端上一次请求的信息用来下一次使用
-可缓存，服务器明示客户端请求能否缓存
-分层系统，客户端和服务器通信应该以一种">
+    <meta name="description" content="这周是从毕业以来正式出去上班工作的第一个周，真的体会到了上班不易，不仅是上下班路上不易，更多的是要工作好，然后自己要有所提高，和自己预想的差异还是蛮大的。曾经自己构想的每日计划其实到了每日也就能执行一小部分，原因就是自己没那么多精力，不仅思想会累，身体也会累，眼镜会累，并且每天还有各种各样的事情，谁">
     
     
     
@@ -95,10 +90,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/02/05/使用Python和Flask设计RESTful-API/" title="使用Python和Flask设计RESTful API" itemprop="url">使用Python和Flask设计RESTful API</a>
+      <a href="/2017/02/11/上班第一周/" title="上班第一周" itemprop="url">上班第一周</a>
   </h1>
   <p class="article-time">
-    <time datetime="2017-02-05T03:25:20.000Z" itemprop="datePublished">Feb 5 2017</time>
+    <time datetime="2017-02-11T01:18:06.000Z" itemprop="datePublished">Feb 11 2017</time>
   </p>
 </header>
 	<div class="article-content">
@@ -106,47 +101,33 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#REST-REpresentational-State-Transfer表现层状态迁移"><span class="toc-number">1.</span> <span class="toc-text">REST(REpresentational State Transfer表现层状态迁移)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RESTful-的-web-service"><span class="toc-number">2.</span> <span class="toc-text">RESTful 的 web service</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设计一个web-service"><span class="toc-number">3.</span> <span class="toc-text">设计一个web service</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Flask-restful使用"><span class="toc-number">4.</span> <span class="toc-text">Flask restful使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#添加路由"><span class="toc-number">4.1.</span> <span class="toc-text">添加路由</span></a></li></ol></li></ol>
+		
 		</div>
 		
-		<h1 id="REST-REpresentational-State-Transfer表现层状态迁移"><a href="#REST-REpresentational-State-Transfer表现层状态迁移" class="headerlink" title="REST(REpresentational State Transfer表现层状态迁移)"></a>REST(REpresentational State Transfer表现层状态迁移)</h1><p>web services和web APIs</p>
-<ul>
-<li>客户端－服务器，两者隔离</li>
-<li>无状态，一种服务器不会存储客户端上一次请求的信息用来下一次使用</li>
-<li>可缓存，服务器明示客户端请求能否缓存</li>
-<li>分层系统，客户端和服务器通信应该以一种标准方式，中间层代替服务器做出相应，客户端不需要做任何变动</li>
-<li>统一接口，通信方法必须是统一的</li>
-<li>按需编码：服务器可以提供可执行代码的脚本，为客户端在它们的环境中执行</li>
-</ul>
-<h1 id="RESTful-的-web-service"><a href="#RESTful-的-web-service" class="headerlink" title="RESTful 的 web service"></a>RESTful 的 web service</h1><p>核心是资源，资源可以用URI表示，客户端使用HTTP协议定义的方法来发送请求到这些URIs，当然可能会导致这些被访问的资源状态改变</p>
-<p><code>GET,POST,PUT,DELETE</code></p>
-<p>REST设计不需要特定的数据格式，在请求中数据可以以JSON形式，或者作为url中查询参数项。</p>
-<h1 id="设计一个web-service"><a href="#设计一个web-service" class="headerlink" title="设计一个web service"></a>设计一个web service</h1><p>其实就是一个标识资源被展示出来以及它们是怎样受不同的请求方法影响。</p>
-<p>首先设计URL: <code>http://[hostname]/todo/api/v1.0</code>，在URL中包含应用名称有助于提供一个命名空间以便区分同一系统上的其他服务，包含版本号能够帮助以后的更新，如果新版本中存在新的和潜在不兼容的功能，可以不影响依赖于旧的功能的应用程序。</p>
-<p>现在从前端过来的也就是指令信息，然后发送给服务器，计算之后返回数据信息，主要在于要将这些数据格式化成json格式，把指令从json变成python可用的。</p>
-<p>有这么几项，一个是登陆，密码验证之类。另外一个是开始计算，返回数据，已完成百分比，耗费时间。另外一个是返回summary数据，输入id的话返回对应的ability或者其他数据，这块也就是数据查询功能，看查询类型了</p>
-<p>擦，在虚拟环境指定Python3也是不容易啊，<code>virtualenv backend -p /usr/local/bin/python3</code>使用用户安装的python3，貌似anaconda的Python3用不了</p>
-<h1 id="Flask-restful使用"><a href="#Flask-restful使用" class="headerlink" title="Flask restful使用"></a>Flask restful使用</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">from flask import Flask</div><div class="line">from flask.ext import restful</div><div class="line"># 创建程序实例</div><div class="line">app = Flask(__name__)</div><div class="line">api = restful.Api(app)</div><div class="line"># 定义资源</div><div class="line">class HelloWorld(restful.Resource):</div><div class="line">    def get(self):</div><div class="line">        return &#123;&apos;hello&apos;: &apos;world&apos;&#125;</div><div class="line"># 添加资源</div><div class="line">api.add_resource(HelloWorld, &apos;/&apos;)</div><div class="line">if __name__ == &apos;__main__&apos;:</div><div class="line">    # 开始运行</div><div class="line">    app.run(debug=True)</div></pre></td></tr></table></figure>
-<h2 id="添加路由"><a href="#添加路由" class="headerlink" title="添加路由"></a>添加路由</h2>  
+		<p>这周是从毕业以来正式出去上班工作的第一个周，真的体会到了上班不易，不仅是上下班路上不易，更多的是要工作好，然后自己要有所提高，和自己预想的差异还是蛮大的。曾经自己构想的每日计划其实到了每日也就能执行一小部分，原因就是自己没那么多精力，不仅思想会累，身体也会累，眼镜会累，并且每天还有各种各样的事情，谁能保证自己有那个精力那个时间呢。在工作后，自己才觉得自己需要回炉重造，但是哪里又有那个机会呢。又到了新的学期，自己势必要去退学，想起这个就觉的心慌，但是没有办法了，早去早解脱吧。说起这个，又想起以后，难道安全感是如此获得的吗？我在恐惧什么？</p>
+<p>这周途中搬了一次家，真是累，感谢两位小伙伴，要不然我真的是觉得有点无助，就开车搬都搬了3次，这么多东西，我到底是买了什么？搬到一个离工作地点更远的地方，为了她。算了，不提了，现在已经这样了，记得上次租房子也是。不过还好还好吧，至少现在安定下来了，住了一个稍微大点的房子，感觉还不错。每天上班40-50分钟，早上7点半起床。</p>
+<p>工作呢，也随着时间慢慢的我也在适应了，虽然我在一个小房间一个人工作，但是我也觉得挺好，至少随意。项目上这周进展也比较大，web后端成体系了，自己也学到了不少，当然只是基本。计算核心也搞出来了，当然需要优化。不过深知自己需要大量学习，自己还是太菜了，很多东西没有接触，自然就没法想到更好的办法，所以学习学习再学习！</p>
+<p>搬家时候整理衣服，看到那件风衣，突然很突然的一下心里有点痛。谁的青春不腐朽呢？总有那么多遗憾，谁都刻骨铭心，怎能忘记？当时在别人的故事里流的泪，终将化作那混凝土，浇筑在心底最柔软的角落，才能在多年以后，把酒言欢，唏嘘着自己的青春。愿所有的爱情不要轻易的说再见。</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python/">Python</a>
+  <span></span> <a href="/tags/奋斗/">奋斗</a><a href="/tags/西安/">西安</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/web/">web</a>
+  <a class="article-category-link" href="/categories/人生杂记/">人生杂记</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2017/02/05/使用Python和Flask设计RESTful-API/" data-title="使用Python和Flask设计RESTful API | SkyRover" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2017/02/11/上班第一周/" data-title="上班第一周 | SkyRover" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -155,19 +136,11 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2017/02/11/上班第一周/" title="上班第一周">
-  <strong>新一篇:</strong><br/>
-  <span>
-  上班第一周</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/02/04/Python元编程/"  title="Python元编程">
+<a href="/2017/02/05/使用Python和Flask设计RESTful-API/"  title="使用Python和Flask设计RESTful API">
  <strong>旧一篇:</strong><br/> 
- <span>Python元编程
+ <span>使用Python和Flask设计RESTful API
 </span>
 </a>
 </div>
@@ -177,7 +150,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="使用Python和Flask设计RESTful API" data-thread-key="使用Python和Flask设计RESTful-API" data-author-key="Kevin" data-url="http://microndgt.github.io/post/使用Python和Flask设计RESTful-API"></div>
+	<div class="ds-thread" data-title="上班第一周" data-thread-key="上班第一周" data-author-key="Kevin" data-url="http://microndgt.github.io/post/上班第一周"></div>
 	
 </section>
 
