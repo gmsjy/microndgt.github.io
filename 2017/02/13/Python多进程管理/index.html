@@ -4,23 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>DA-检验心理学现象 | SkyRover</title>
+    <title>Python多进程管理 | SkyRover</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="Data Analysis - P1: 检验心理学现象
-英文
-validity 有效性
-retrieve 检索
-contruct 抽象概念
-tummy 肚子
-grumble 抱怨
-deficient 不足的
-ponder 考虑，沉思
-cortisol 皮质醇
-hormone 激素
-profanity">
+    <meta name="description" content="工作上要在Flask后台调用计算包，需要进行多进程并行计算，但是要对诸多进程进行管理，于是创造了这个多进程管理，记录下来以便后来使用。
+1234567891011121314151617181920212223242526272829303132333435class MyProcManager(o">
     
     
     
@@ -101,10 +91,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/11/27/DA-检验心理学现象/" title="DA-检验心理学现象" itemprop="url">DA-检验心理学现象</a>
+      <a href="/2017/02/13/Python多进程管理/" title="Python多进程管理" itemprop="url">Python多进程管理</a>
   </h1>
   <p class="article-time">
-    <time datetime="2016-11-27T05:51:21.000Z" itemprop="datePublished">Nov 27 2016</time>
+    <time datetime="2017-02-13T01:41:53.000Z" itemprop="datePublished">Feb 13 2017</time>
   </p>
 </header>
 	<div class="article-content">
@@ -112,71 +102,35 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#英文"><span class="toc-number">1.</span> <span class="toc-text">英文</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Preview"><span class="toc-number">2.</span> <span class="toc-text">Preview</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#相信结果"><span class="toc-number">3.</span> <span class="toc-text">相信结果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#operational-definition"><span class="toc-number">4.</span> <span class="toc-text">operational definition</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#contructs"><span class="toc-number">5.</span> <span class="toc-text">contructs</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Data"><span class="toc-number">6.</span> <span class="toc-text">Data</span></a></li></ol>
+		
 		</div>
 		
-		<p>Data Analysis - P1: 检验心理学现象</p>
-<h1 id="英文"><a href="#英文" class="headerlink" title="英文"></a>英文</h1><ol>
-<li>validity 有效性</li>
-<li>retrieve 检索</li>
-<li>contruct 抽象概念</li>
-<li>tummy 肚子</li>
-<li>grumble 抱怨</li>
-<li>deficient 不足的</li>
-<li>ponder 考虑，沉思</li>
-<li>cortisol 皮质醇</li>
-<li>hormone 激素</li>
-<li>profanity 亵渎</li>
-<li>obesity 肥胖</li>
-<li>Body mass index 身体质量指数</li>
-<li>plausible 貌似可信的</li>
-<li>hunch 预感</li>
-<li>hypothesis 假设</li>
-<li>extraneous 外来的，没有关联的</li>
-<li>lurk 潜伏</li>
-<li>ambush 埋伏</li>
-<li>denote 表示</li>
-<li>melody 旋律</li>
-<li>interval 间隔</li>
-</ol>
-<h1 id="Preview"><a href="#Preview" class="headerlink" title="Preview"></a>Preview</h1><p>describe and analyze data</p>
-<h1 id="相信结果"><a href="#相信结果" class="headerlink" title="相信结果"></a>相信结果</h1><p>what information would help you trust these survey results?</p>
-<ul>
-<li>how many people I surveyed</li>
-<li>who I surveyed</li>
-<li>how the survey was conducted</li>
-</ul>
-<p>they all influence the validity of our results. Three important factors.</p>
-<p>BBC face test</p>
-<h1 id="operational-definition"><a href="#operational-definition" class="headerlink" title="operational definition"></a>operational definition</h1><p>the operational definition of a googd memeory is when the percentage of faces correctly recognized and placed is higher. So we can define and measure constructs.</p>
-<h1 id="contructs"><a href="#contructs" class="headerlink" title="contructs"></a>contructs</h1><p>age: If I had put age in years, I would have defined age as number of years you’ve been living but some people might look at age as how mature you are. maturity, age in years, wisdom.</p>
-<h1 id="Data"><a href="#Data" class="headerlink" title="Data"></a>Data</h1><p>when more factors are held constant, the test is more reliable because these condition are the same for all people that took the test.</p>
-<p>sampling error, so have a good sample will better predict the population parameter.</p>
-<p><strong>x</strong>: independent variable or the predictor variable</p>
-<p><strong>y</strong>: dependent variable or the outcome</p>
-<p><strong><em>correlation does not prove causation</em></strong></p>
-<p>The Lexus and Olive Tree</p>
-<p>Golden arches theory of confict prevention</p>
+		<p>工作上要在Flask后台调用计算包，需要进行多进程并行计算，但是要对诸多进程进行管理，于是创造了这个多进程管理，记录下来以便后来使用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">class MyProcManager(object):</div><div class="line">    def __init__(self):</div><div class="line">        self.procs = []</div><div class="line">        self.errors_flag = False</div><div class="line">        self._threads = []</div><div class="line">        self._lock = threading.Lock()</div><div class="line">    def terminate_all(self):</div><div class="line">        with self._lock:</div><div class="line">            for p in self.procs:</div><div class="line">                if p.is_alive():</div><div class="line">                    print(&quot;Terminating %s&quot; % p)</div><div class="line">                    p.terminate()</div><div class="line">        self.cleaning()</div><div class="line">    def launch_proc(self, func, args=(), kwargs=&#123;&#125;):</div><div class="line">        t = threading.Thread(target=self._proc_thread_runner,</div><div class="line">                             args=(func, args, kwargs))</div><div class="line">        self._threads.append(t)</div><div class="line">        t.start()</div><div class="line">    def _proc_thread_runner(self, func, args, kwargs):</div><div class="line">        p = multiprocessing.Process(target=func, args=args, kwargs=kwargs)</div><div class="line">        self.procs.append(p)</div><div class="line">        p.start()</div><div class="line">        while p.exitcode is None:</div><div class="line">            p.join()</div><div class="line">        if p.exitcode &gt; 0:</div><div class="line">            self.errors_flag = True</div><div class="line">            self.terminate_all()</div><div class="line">    def wait(self):</div><div class="line">        for t in self._threads:</div><div class="line">            t.join()</div><div class="line">    def cleaning(self):</div><div class="line">        self.procs = []</div><div class="line">        self.errors_flag = False</div><div class="line">        self._threads = []</div><div class="line">        self._lock = threading.Lock()</div></pre></td></tr></table></figure>
+<p><code>cleaning</code>方法，因为自己在调用的时候在全局实例化了这个类，所以在每次运行完毕的时候需要重新初始化实例变量。</p>
+<p>以下是调用方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">t0 = time.time()</div><div class="line">for fundId in fundIds:</div><div class="line">    proc_manager.launch_proc(calc_ability_proc, args=(fundId, start_date, end_date, config))</div><div class="line">proc_manager.wait()</div><div class="line">if proc_manager.errors_flag:</div><div class="line">    return gen_response(data=None, message=&quot;some processes crashed&quot;, errorcode=1, status=&quot;error&quot;)</div><div class="line">else:</div><div class="line">    print(&quot;Everything closed cleanly&quot;)</div><div class="line">proc_manager.cleaning()</div><div class="line">t1 = time.time()</div><div class="line">print(&quot;time used: %d min&quot; % ((t1 - t0) / 60))</div></pre></td></tr></table></figure>
+<p>用了10个fundId进行测试，大约比单线程快了2倍，不过应该fundId越多，速度会越快吧。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python/">Python</a><a href="/tags/Udacity/">Udacity</a>
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python/">Python</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/数据分析/">数据分析</a>
+  <a class="article-category-link" href="/categories/Python/">Python</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2016/11/27/DA-检验心理学现象/" data-title="DA-检验心理学现象 | SkyRover" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2017/02/13/Python多进程管理/" data-title="Python多进程管理 | SkyRover" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -185,19 +139,11 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2016/12/02/shell命令总结/" title="Shell命令总结">
-  <strong>新一篇:</strong><br/>
-  <span>
-  Shell命令总结</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2016/11/27/Data-Analysis-Project/"  title="Data Analysis Project">
+<a href="/2017/02/11/上班第一周/"  title="上班第一周">
  <strong>旧一篇:</strong><br/> 
- <span>Data Analysis Project
+ <span>上班第一周
 </span>
 </a>
 </div>
@@ -207,7 +153,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="DA-检验心理学现象" data-thread-key="DA-检验心理学现象" data-author-key="Kevin" data-url="http://microndgt.github.io/post/DA-检验心理学现象"></div>
+	<div class="ds-thread" data-title="Python多进程管理" data-thread-key="Python多进程管理" data-author-key="Kevin" data-url="http://microndgt.github.io/post/Python多进程管理"></div>
 	
 </section>
 
