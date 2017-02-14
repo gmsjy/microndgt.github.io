@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://microndgt.github.io/"/>
-  <updated>2017-02-14T04:21:18.000Z</updated>
+  <updated>2017-02-14T15:58:18.000Z</updated>
   <id>http://microndgt.github.io/</id>
   
   <author>
@@ -14,6 +14,64 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>今日情人节</title>
+    <link href="http://microndgt.github.io/2017/02/14/%E4%BB%8A%E6%97%A5%E6%83%85%E4%BA%BA%E8%8A%82/"/>
+    <id>http://microndgt.github.io/2017/02/14/今日情人节/</id>
+    <published>2017-02-14T15:46:22.000Z</published>
+    <updated>2017-02-14T15:58:18.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>说实话，都长这么大了，从来没有在情人节这天给谁送过花，谈恋爱从2011年到2017年，6年了，没有过。我不知道为什么，买花这件事其实并没有什么，但是我总是想着但是总不会行动，不知道有什么力量阻止着我。是觉得麻烦？是不够爱？是觉得对感情没有信息？抑或是觉得买花没意思？我不知道，可能是觉得麻烦吧，可能觉得突然的来个这么节日挺麻烦的吧，各种生日，过年，大小节日，送礼物我觉得应该是我的软肋，更本质了的说就是我这个人不知道如何和别人交往，我不主动，很不主动，有点过分，因为我不知道这样做是不是对的，会不会被别人笑话。那么从这个方面来讲，就可以深入到性格方面来说了，我性格压抑，内向，自卑，这与从小的生活成长环境有关，我父母就是比较压抑的人，加上从小看父母吵架，很心痛。还有一个原因就是头有点大，让我觉得不爽很久了，因为和别人不一样，总觉得有点怪异，很烦。从小到大，喜欢我的人我觉得是挺多的，但是我没有明白为什么，我长得好看？我学习好？还是我举止优雅像个绅士？我不懂诶。</p>
+<p>说到她，更是让我感动，是感动，而不是不懂，她爱我让我觉得我为了她做什么我都不会后悔，因为真的是感动，我享受她对我的爱。我们去厦门，在厦门海湾公园，她那么爱我的和我举行模拟婚礼，和我约定，那么开心的和我走在一起。在武汉，也是对我百依百顺，临分别前火车站前的那个吻。到我们中间分开了一段时间后的北京。再到西安。她对我，我想说我爱你，在我的生命里，遇到你是我最大的幸运，没有之一。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;说实话，都长这么大了，从来没有在情人节这天给谁送过花，谈恋爱从2011年到2017年，6年了，没有过。我不知道为什么，买花这件事其实并没有什么，但是我总是想着但是总不会行动，不知道有什么力量阻止着我。是觉得麻烦？是不够爱？是觉得对感情没有信息？抑或是觉得买花没意思？我不知道
+    
+    </summary>
+    
+      <category term="人生杂记" scheme="http://microndgt.github.io/categories/%E4%BA%BA%E7%94%9F%E6%9D%82%E8%AE%B0/"/>
+    
+    
+      <category term="奋斗" scheme="http://microndgt.github.io/tags/%E5%A5%8B%E6%96%97/"/>
+    
+      <category term="西安" scheme="http://microndgt.github.io/tags/%E8%A5%BF%E5%AE%89/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python并发编程2</title>
+    <link href="http://microndgt.github.io/2017/02/14/Python%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B2/"/>
+    <id>http://microndgt.github.io/2017/02/14/Python并发编程2/</id>
+    <published>2017-02-14T04:23:49.000Z</published>
+    <updated>2017-02-14T08:07:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>并发编程第二部分</p>
+<h1 id="给关键部分加锁"><a href="#给关键部分加锁" class="headerlink" title="给关键部分加锁"></a>给关键部分加锁</h1><p>一次仅允许一个进程使用的资源称为临界资源。临界区内放的一般是被1个以上的进程或线程（以下只说进程）共用的数据。临界区内的数据一次只能同时被一个进程使用，当一个进程使用临界区内的数据时，其他需要使用临界区数据的进程进入等待状态。</p>
+<p>在多线程程序中安全使用可变对象，使用threading库中的Lock对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">import threading</div><div class="line">class SharedCounter:</div><div class="line">    def __init__(self, initial_value=0):</div><div class="line">        self._value = initial_value</div><div class="line">        self._value_lock = threading.Lock()</div><div class="line">    def incr(self, delta=1):</div><div class="line">        with self._value_lock:</div><div class="line">            self._value += delta</div><div class="line">    def decr(self, delta=1):</div><div class="line">        with self._value_lock:</div><div class="line">            self._value -= delta</div></pre></td></tr></table></figure>
+<p>线程调度本质上是不稳定的。RLock可重入锁，可以被同一个线程多次获取，主要用来实现基于监测对象模式的锁定和同步。在使用这种锁的情况下,当锁被持有时,只有一个线程可以使用完整 的函数或者类中的方法。一个被所 有实例共享的类级锁。这个锁用来同步类方法,具体来说就是,这个锁可以保证一次 只有一个线程可以调用这个类方法。不过,与一个标准的锁不同的是,已经持有这个 锁的方法在调用同样使用这个锁的方法时,无需再次获取锁。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">import threading</div><div class="line">class SharedCounter:</div><div class="line">    _lock = threading.RLock()</div><div class="line">    def __init__(self, initial_value=0):</div><div class="line">        self._value = initial_value</div><div class="line">        self._value_lock = threading.Lock()</div><div class="line">    def incr(self, delta=1):</div><div class="line">        with SharedCounter._lock:</div><div class="line">            self._value += delta</div><div class="line">    def decr(self, delta=1):</div><div class="line">        with SharedCounter._lock:</div><div class="line">            self.incr(-delta)</div></pre></td></tr></table></figure>
+<h1 id="防止死锁的加锁机制"><a href="#防止死锁的加锁机制" class="headerlink" title="防止死锁的加锁机制"></a>防止死锁的加锁机制</h1><h1 id="保存线程的状态信息"><a href="#保存线程的状态信息" class="headerlink" title="保存线程的状态信息"></a>保存线程的状态信息</h1><h1 id="创建一个线程池"><a href="#创建一个线程池" class="headerlink" title="创建一个线程池"></a>创建一个线程池</h1><p>服务器端程序也应该这样做，至少要限制进程创建的数目，最大应该是8，然后使用Condition对象或者event，等到一个进程结束运行后，然后再将阻塞的创建进程的函数解除阻塞。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;并发编程第二部分&lt;/p&gt;
+&lt;h1 id=&quot;给关键部分加锁&quot;&gt;&lt;a href=&quot;#给关键部分加锁&quot; class=&quot;headerlink&quot; title=&quot;给关键部分加锁&quot;&gt;&lt;/a&gt;给关键部分加锁&lt;/h1&gt;&lt;p&gt;一次仅允许一个进程使用的资源称为临界资源。临界区内放的一般是被1个以
+    
+    </summary>
+    
+      <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
+    
+    
+      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>Python并发编程</title>
@@ -1019,218 +1077,6 @@
       <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
     
       <category term="Python_Cookbook" scheme="http://microndgt.github.io/tags/Python-Cookbook/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python模块和包</title>
-    <link href="http://microndgt.github.io/2017/01/08/Python%E6%A8%A1%E5%9D%97%E5%92%8C%E5%8C%85/"/>
-    <id>http://microndgt.github.io/2017/01/08/Python模块和包/</id>
-    <published>2017-01-08T14:49:13.000Z</published>
-    <updated>2017-01-27T05:48:02.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>模块和包是任何大型项目的核心,本文核心是如何组织包,将大型的模块分解成多个文件,以及创建命名空间包.</p>
-<h1 id="git问题处理"><a href="#git问题处理" class="headerlink" title="git问题处理"></a>git问题处理</h1><p>hexo d提交的时候出现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git.exe pull --progress --no-rebase -v &quot;origin&quot;</div><div class="line">fatal: unable to access https://github.com/konsumer/arduinoscope.git/: error setting certificate verify locations:</div><div class="line">CAfile: D:\Program Files\Git\mingw64/bin/curl-ca-bundle.crt</div><div class="line">CApath: none</div></pre></td></tr></table></figure>
-<p>输入<code>git config --system http.sslverify false</code>解决问题</p>
-<h1 id="把模块按层次结构组织成包"><a href="#把模块按层次结构组织成包" class="headerlink" title="把模块按层次结构组织成包"></a>把模块按层次结构组织成包</h1><p>只要把代码按照所希望的方式在文件系统上进行组织，并且确保每个目录中都定义了一个<code>__init__.py</code>文件即可</p>
-<p><code>__init__.py</code>文件的目的是包含可选的初始化代码，当遇到软件包中不同层次的模块时候会触发运行，比如<code>import graphics</code>文件<code>graphics/__init__.py</code>会被导入并形成graphics命名空间中的内容</p>
-<p>一般情况该文件留空即可，但是某些情况下是需要包含代码的，比如可以使用<code>__init__.py</code>来自动加载子模块</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">from . import jpg</div><div class="line">from . import png</div></pre></td></tr></table></figure>
-<p>这样只需要一句单独的<code>import graphics.formats</code>就可以导入jpg和png模块了</p>
-<h1 id="对所有符号的导入进行精确控制"><a href="#对所有符号的导入进行精确控制" class="headerlink" title="对所有符号的导入进行精确控制"></a>对所有符号的导入进行精确控制</h1><p>在模块中定义一个变量<code>__all__</code>，用来显式列出可以导出的符号名，一般也不这么做。</p>
-<h1 id="用相对名称来导入包中的子模块"><a href="#用相对名称来导入包中的子模块" class="headerlink" title="用相对名称来导入包中的子模块"></a>用相对名称来导入包中的子模块</h1><p>在软件包中的子模块中导入同一个包中其他的子模块，使用相对名称来导入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">from . import grok</div><div class="line">from ..B import bar</div></pre></td></tr></table></figure>
-<p>也可以使用给出完整的绝对名称来导入<code>from mypackage.A import grok</code></p>
-<p>使用相对导入会好一点，但是不允许跳出定义包的那个目录，另外使用相对导入必须模块位于一个合适的包中才可以，<strong><em>位于脚本顶层目录的模块不能使用相对导入，并且如果包的某个部分是直接以脚本形式执行的，这种情况也不能使用相对导入</em></strong></p>
-<p>但是可以使用<code>-m</code>选项使得相对导入可以正常工作<code>python -m mypackage/A/spam.py</code></p>
-<h1 id="将模块分解成多个文件"><a href="#将模块分解成多个文件" class="headerlink" title="将模块分解成多个文件"></a>将模块分解成多个文件</h1><p>将模块转换为包，这样就可以分解成多个单独的文件，将模块mymodule.py替换成目录mymodule，然后每个文件中包含一个类的定义，最后在<code>__init__.py</code>中将这些文件绑定在一起</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">from .a import A</div><div class="line">from .b import B</div></pre></td></tr></table></figure>
-<p>这样mypackage包就在逻辑上成为了一个单独的模块</p>
-<p>但是这样做会一次性将所有需要的组件都导入进来，所以采用一种惰性导入的方式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">def A():</div><div class="line">    from .a import A</div><div class="line">    return A()</div><div class="line">def B():</div><div class="line">    from .b import B</div><div class="line">    return B()</div></pre></td></tr></table></figure>
-<h1 id="让各个目录下的代码在统一的命名空间下"><a href="#让各个目录下的代码在统一的命名空间下" class="headerlink" title="让各个目录下的代码在统一的命名空间下"></a>让各个目录下的代码在统一的命名空间下</h1><p>定义一个顶层的Python包，把它作为命名空间来管理大量单独维护的子模块，对于打算合并在一起的组件，这些目录中的<code>__init__.py</code>文件需要忽略</p>
-<p><code>foo-package/spam/blah.py</code>和<code>bar-package/spam/grok.py</code>在这两个目录里，spam作为公共的命名空间，并且不含有<code>__init__.py</code>文件，将这两个目录都加入Python的模块查询路径中，就可以把不同的包目录合并在一起</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">import sys</div><div class="line">sys.path.extend([&apos;foo-package&apos;, &apos;bar-package&apos;])</div><div class="line">import spam.blah.py</div><div class="line">import spam.grok.py</div></pre></td></tr></table></figure>
-<p>这里使用了命名空间包的特性，就是用来合并不同目录下的代码，把他们放在统一的命名空间下进行管理，因为没有<code>__init__.py</code>，所以解释器开始创建一个列表，然后把所有包含有这个包名的目录都囊括在内，此时就创建除了一个特殊的命名空间包模块。</p>
-<h1 id="重新加载模块"><a href="#重新加载模块" class="headerlink" title="重新加载模块"></a>重新加载模块</h1><p>使用<code>imp.reload()</code>实现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import spam</div><div class="line">import imp</div><div class="line">imp.load(spam)</div></pre></td></tr></table></figure>
-<p>这样就会使得已经导入到程序中的模块得到更新，但是<code>from module import name</code>这样语句定义的是不会更新的。所以在生产环境中应该要避免重新加载模块。</p>
-<h1 id="让目录或者zip文件成为可运行的脚本"><a href="#让目录或者zip文件成为可运行的脚本" class="headerlink" title="让目录或者zip文件成为可运行的脚本"></a>让目录或者zip文件成为可运行的脚本</h1><p>如果程序已经由很多文件组成了，则可以把他们放在专属目录下，然后添加一个<code>__main__.py</code>，这样就可以在顶层目录下运行Python解释器，解释器就会把<code>__main__.py</code>作为主程序来执行，在把代码打包成zip文件也是可以执行的<code>python3 myapp.zip</code>，这个方法是一种打包规模较大的Python应用程序的可行方法</p>
-<h1 id="读取包中的数据文件"><a href="#读取包中的数据文件" class="headerlink" title="读取包中的数据文件"></a>读取包中的数据文件</h1><p>读取包中的一个数据文件，因为运行的时候无法知道Python解释器的当前工作目录在哪里，所以必须得用绝对路径来读取文件，这样就太麻烦了，所以使用<code>pkgutil</code>模块来读取文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">import pkgutil</div><div class="line">data = pkgutil.get_data(__package__, &apos;somedata.dat&apos;)</div></pre></td></tr></table></figure>
-<p>所以无论包以什么样的形式安装到了哪里，都可以使用这个函数来获取数据文件，第一个参数是包含有包名的字符串，可以直接提供这个字符串，或者使用<code>__package__</code>，第二个参数是获取的文件相对于包的名称</p>
-<h1 id="添加目录到sys-path中"><a href="#添加目录到sys-path中" class="headerlink" title="添加目录到sys.path中"></a>添加目录到<code>sys.path</code>中</h1><h2 id="PYTHONPATH环境变量添加"><a href="#PYTHONPATH环境变量添加" class="headerlink" title="PYTHONPATH环境变量添加"></a>PYTHONPATH环境变量添加</h2><p><code>env PYTHONPATH=/some/dir:/other/dir python3</code></p>
-<h2 id="创建-pth文件"><a href="#创建-pth文件" class="headerlink" title="创建.pth文件"></a>创建<code>.pth</code>文件</h2><p>放在Python的其中一个site-packages目录中</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/some/dir</div><div class="line">/other/dir</div></pre></td></tr></table></figure>
-<p>使用<code>__file__</code>变量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import sys</div><div class="line">from os.path import abspath, join, dirname</div><div class="line">sys.path.insert(0, abspath(dirname(&apos;__file__&apos;), &apos;src&apos;))</div></pre></td></tr></table></figure>
-<h1 id="使用字符串给定的名称来导入模块"><a href="#使用字符串给定的名称来导入模块" class="headerlink" title="使用字符串给定的名称来导入模块"></a>使用字符串给定的名称来导入模块</h1><p>使用<code>importlib.import_module()</code>函数手动导入模块，这个函数会把模块对象作为结果返回</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import importlib</div><div class="line">math = importlib.import_module(&apos;math&apos;)</div><div class="line">math.sin(2)</div></pre></td></tr></table></figure>
-<p>同时也可以实现相对导入<code>b = importlib.import_module(&#39;.b&#39;, __package__)</code></p>
-<p>也可以使用内建的<code>__import__()</code>函数进行导入，但是上面的方法更容易使用些</p>
-<h1 id="安装只为自己使用的包"><a href="#安装只为自己使用的包" class="headerlink" title="安装只为自己使用的包"></a>安装只为自己使用的包</h1><p>在安装命令后面添加<code>--user</code>选项即可<code>python3 setup.py install --user</code></p>
-<h1 id="发布自定义的包"><a href="#发布自定义的包" class="headerlink" title="发布自定义的包"></a>发布自定义的包</h1><p>编写setup.py文件</p>
-<p>distutils - Python自带的基本安装工具<code>from distutils.core import setup</code></p>
-<p>下来创建<code>MANIFEST.in</code>文件，列出包含在包中的非源代码文件</p>
-<p>然后<code>python3 setup.py sdist</code>创建源代码级的分发包</p>
-<p>另外一个包管理工具<code>setuptools</code></p>
-<p><a href="http://blog.csdn.net/pfm685757/article/details/48651389#t3" target="_blank" rel="external">http://blog.csdn.net/pfm685757/article/details/48651389#t3</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;模块和包是任何大型项目的核心,本文核心是如何组织包,将大型的模块分解成多个文件,以及创建命名空间包.&lt;/p&gt;
-&lt;h1 id=&quot;git问题处理&quot;&gt;&lt;a href=&quot;#git问题处理&quot; class=&quot;headerlink&quot; title=&quot;git问题处理&quot;&gt;&lt;/a&gt;git问题处理
-    
-    </summary>
-    
-      <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
-    
-    
-      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
-    
-      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
-    
-      <category term="Python_Cookbook" scheme="http://microndgt.github.io/tags/Python-Cookbook/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Effective Python</title>
-    <link href="http://microndgt.github.io/2017/01/07/Effective-Python/"/>
-    <id>http://microndgt.github.io/2017/01/07/Effective-Python/</id>
-    <published>2017-01-07T01:41:57.000Z</published>
-    <updated>2017-01-27T05:22:16.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Python进阶之路～</p>
-<h1 id="PEP8风格指南"><a href="#PEP8风格指南" class="headerlink" title="PEP8风格指南"></a>PEP8风格指南</h1><ul>
-<li>使用空格来表示缩进，而不是制表符</li>
-<li>占据多行的长表达式，除了首行之外的其余各行都应该在通常的缩进级别上再加4个空格</li>
-<li>函数，变量，属性应该用小写字母来拼写，各单词之前以下划线相连</li>
-<li>受保护的实例属性，用单个下划线开头</li>
-<li>私有的实例属性，用两个下划线开头</li>
-<li>类与异常，使用每个单词首字母大写的形式命名，<code>CatCat</code></li>
-<li>采用内联形式的否定词，<code>if a is not b</code></li>
-<li>通过<code>if not somelist</code> or <code>if somelist</code>来对是否为空值进行检测</li>
-<li>如果以相对名称来编写import语句，<code>from . import foo</code></li>
-<li>import顺序，标准库，第三方模块，自用模块，按字母排序</li>
-</ul>
-<h1 id="bytes-str与unicode的区别"><a href="#bytes-str与unicode的区别" class="headerlink" title="bytes, str与unicode的区别"></a>bytes, str与unicode的区别</h1><p>Python3有两种表示字符序列的类型，bytes和str，前者包含原始的8位值，后者实例包含Unicode字符</p>
-<p>要想把Unicode字符转换成二进制数据，使用encode方法，想将二进制数据转换成Unicode字符，使用decode方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt;&apos;€20&apos;.encode(&apos;iso-8859-15&apos;)</div><div class="line">b&apos;\xa420&apos;</div><div class="line">&gt;&gt;&gt; b&apos;\xa420&apos;.decode(&apos;iso-8859-15&apos;)</div><div class="line">&apos;€20&apos;</div></pre></td></tr></table></figure>
-<p>程序的核心部分使用Unicode字符类型，外部进行解码编码操作</p>
-<p>创建两个函数，切换字符类型，使得转换后的数据符合开发者的预期</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">def to_str(bytes_or_str):</div><div class="line">    if isinstance(bytes_or_str, bytes):</div><div class="line">        value = bytes_or_str.decode(&apos;utf-8&apos;)</div><div class="line">    else:</div><div class="line">        value = bytes_or_str</div><div class="line">    return value</div><div class="line">def to_bytes(bytes_or_str):</div><div class="line">    if isinstance(bytes_or_str, str):</div><div class="line">        value = bytes_or_str.encode(&apos;utf-8&apos;)</div><div class="line">    else:</div><div class="line">        value = bytes_or_str</div><div class="line">    return value</div></pre></td></tr></table></figure>
-<p>在Python3中，str和bytes永远不会等价，另外通过内置的open函数获取了函数句柄，那么该句柄酒会采用默认的utf-8编码格式操作文件，而在Python2中默认编码格式是二进制形式，所以写入或者读取二进制数据使用<code>wb</code> or <code>rb</code>模式</p>
-<blockquote>
-<p>2016-12-18 12:00</p>
-</blockquote>
-<h1 id="用辅助函数来取代复杂的表达式"><a href="#用辅助函数来取代复杂的表达式" class="headerlink" title="用辅助函数来取代复杂的表达式"></a>用辅助函数来取代复杂的表达式</h1><p><code>red = int(my_values.get(&#39;red&#39;, [&#39;&#39;])[0] or 0)</code></p>
-<p>这种写法过于复杂，可以这样</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">red = my_values.get(&apos;red&apos;, [&apos;&apos;])</div><div class="line">red = int(red[0]) if red[0] else 0</div></pre></td></tr></table></figure>
-<p>但是还可以写成辅助函数，这样可以通用，如果频繁使用这种逻辑，那么更应该这么做</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">def get_first_int(values, key, default=0):</div><div class="line">    found = values.get(key, [&apos;&apos;])</div><div class="line">    if found[0]:</div><div class="line">        found = int(found[0])</div><div class="line">    else:</div><div class="line">        found = default</div><div class="line">    return found</div></pre></td></tr></table></figure>
-<p>如果表达式变的比较复杂，那么就应该考虑将其拆成小块，并且把这些逻辑移入辅助函数中，让代码更加易读。</p>
-<p>使用if/else表达式，要比or或者and这样的boolean表达式更加清晰。</p>
-<h1 id="切割序列的方法"><a href="#切割序列的方法" class="headerlink" title="切割序列的方法"></a>切割序列的方法</h1><p>切割列表的时候，start或者end索引越界也不会出现问题，<code>first_twenty_items = a[:20]</code>或者<code>last_twenty_items = a[-20:]</code></p>
-<p>对原列表进行切割之后，会产生另外一份全新的列表，在切割后得到的新列表上进行修改，不会影响原来列表，当然如果列表中含有可变元素，则除外。</p>
-<p>在赋值的时候对左侧列表使用切割操作，会把该列表处在指定范围内的对象替换为新值。列表会根据新值的个数相应的扩张或者收缩。</p>
-<p><code>a[2:7] = [99, 22, 14]</code></p>
-<p>这样就将5个元素变成了3个元素</p>
-<p><code>a[:] = [101, 102, 103]</code></p>
-<p>这样会用右侧的新值复制一份，替换左侧列表全部内容，但是不会重新分配新的列表。</p>
-<h1 id="单次切片操作内，不要同时指定start-end和stride"><a href="#单次切片操作内，不要同时指定start-end和stride" class="headerlink" title="单次切片操作内，不要同时指定start,end和stride"></a>单次切片操作内，不要同时指定start,end和stride</h1><p>常见技巧，把从字节形式存储的字符串反转过来，<code>x[::-1]</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">w = &apos;谢谢&apos; # unicode字符</div><div class="line">x = w.encode(&apos;utf-8&apos;) # 编码成二进制数据</div><div class="line">y = x[::-1] # 反转</div><div class="line">z = y.decode(&apos;utf-8&apos;) # 解码成unicode字符</div><div class="line"># 会出现错误</div></pre></td></tr></table></figure>
-<p>尽量使用stride为正数，且不带start或者end索引的切割操作，尽量避免使用负数做stride</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># 可以多次切割</div><div class="line">b = a[::2]</div><div class="line">c = b[1:-1]</div></pre></td></tr></table></figure>
-<h1 id="用列表推导来取代map和filter"><a href="#用列表推导来取代map和filter" class="headerlink" title="用列表推导来取代map和filter"></a>用列表推导来取代map和filter</h1><p><code>even_squares = [x**2 for x in a if x % 2 == 0]</code></p>
-<p>也可以使用map和filter</p>
-<p><code>alt = map(lambda x: x**2, filter(lambda x: x % 2 == 0, a))</code></p>
-<p>字典推导式</p>
-<p><code>rank_dict = {rank: name for name, rank in chile_ranks.item()}</code></p>
-<h1 id="使用生成器表达式来改写数据量较大的列表推导"><a href="#使用生成器表达式来改写数据量较大的列表推导" class="headerlink" title="使用生成器表达式来改写数据量较大的列表推导"></a>使用生成器表达式来改写数据量较大的列表推导</h1><p>比如在这种情况，文件特别大或者网络传输中，列表推导就会出现问题，所以使用生成器表达式，对列表推导和生成器的一种泛化，生成一个迭代器，每次可以根据生成器表达式产生一项数据。</p>
-<p>对生成器表达式求值的时候，会立刻返回一个迭代器，而不会深入处理文件中的内容。</p>
-<p><code>it = (len(x) for x in open(filename))</code></p>
-<p>以迭代器为参数，逐次调用内置的next函数，可以按照生成器表达式输出下一个值，可以多次命令迭代器根据生成器表达式来生成新值。</p>
-<p><code>print(next(it))</code></p>
-<p>如果操作大批量数据，最好是使用生成器表达式来实现，生成器表达式返回的迭代器是有状态的，不能反复使用。</p>
-<h1 id="尽量使用enumerate代替range"><a href="#尽量使用enumerate代替range" class="headerlink" title="尽量使用enumerate代替range"></a>尽量使用enumerate代替range</h1><p>enumerate可以把各种迭代器包装成生成器，以便产生输出值，生成器每次产生一对输出值，前者表示循环下标，后者表示从迭代器中获取到的下一个序列元素</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">for i, ele in enumerate(range(5)):</div><div class="line">    print(&quot;%d %d&quot; % (i + 1, ele))</div></pre></td></tr></table></figure>
-<p>enumerate第二个参数指定函数开始计数使用的值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">for i, ele in enumerate(range(5), 1):</div><div class="line">    print(&quot;%d %d&quot; % (i, ele))</div></pre></td></tr></table></figure>
-<h1 id="用zip函数同时遍历两个迭代器"><a href="#用zip函数同时遍历两个迭代器" class="headerlink" title="用zip函数同时遍历两个迭代器"></a>用zip函数同时遍历两个迭代器</h1><p>python3中的zip函数，可以把两个或者两个以上的迭代器封装成生成器，以便稍后求值，zip生成器会从每个迭代器中获取该迭代器的下一个值，然后把这些值汇聚成元组</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">max_letters = 0</div><div class="line">for name, count in zip(names, letters):</div><div class="line">    if count &gt; max_letters:</div><div class="line">        longest_name = name</div><div class="line">        max_letters = count</div></pre></td></tr></table></figure>
-<p>只要有一个序列耗尽，zip就不会产生元组了。Python2中zip是直接把这些元组完全生成好，一次性的返回整份列表。</p>
-<blockquote>
-<p>2017-1-4 22:47</p>
-</blockquote>
-<h1 id="for和while循环后面的else块"><a href="#for和while循环后面的else块" class="headerlink" title="for和while循环后面的else块"></a>for和while循环后面的else块</h1><p>在循环里用break语句跳出，会导致程序不执行else块</p>
-<p>写成辅助函数更好，有两种写法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def coprime(a, b):</div><div class="line">    for i in range(2, min(a, b) + 1):</div><div class="line">        if a % i == 0:</div><div class="line">            return False</div><div class="line">    return True</div></pre></td></tr></table></figure>
-<p>另外一种是实用变量来记录参数是否符合</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">def coprime2(a, b):</div><div class="line">    is_coprime = True</div><div class="line">    for i in range(2, min(a, b) + 1):</div><div class="line">        if a % i == 0:</div><div class="line">            is_coprime = False</div><div class="line">            break</div><div class="line">    return is_coprime</div></pre></td></tr></table></figure>
-<p>当整个循环主体都没有遇到break语句的时候，循环后面的else块才会被执行</p>
-<h1 id="合理使用try-except-else-finally"><a href="#合理使用try-except-else-finally" class="headerlink" title="合理使用try/except/else/finally"></a>合理使用try/except/else/finally</h1><h2 id="finally"><a href="#finally" class="headerlink" title="finally"></a>finally</h2><p>既要将异常向上传播，又要在异常发生的时候执行清理工作，try/finally结构，可以确保程序可靠的关闭文件句柄</p>
-<h2 id="else"><a href="#else" class="headerlink" title="else"></a>else</h2><p>try没有发生异常，就执行else块，有了else块，就可以缩减try块内的代码量，使其易读，并且明确try中的内容，使得异常传播更加清晰，把没有发生异常所要执行的语句和try/except隔开</p>
-<p>一个例子</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">UNDEFINED = object()</div><div class="line">def divide_json(path):</div><div class="line">    handle = open(path, &apos;r+&apos;)</div><div class="line">    try:</div><div class="line">        data = handle.read()</div><div class="line">        op = json.loads(data)</div><div class="line">        value = (</div><div class="line">            op[&apos;numerator&apos;] /</div><div class="line">            op[&apos;denominator&apos;])</div><div class="line">    except ZeroDivisionError as e:</div><div class="line">        return UNDEFINED</div><div class="line">    else:</div><div class="line">        op[&apos;result&apos;] = value</div><div class="line">        result = json.dumps(op)</div><div class="line">        handle.seek(0)</div><div class="line">        handle.write(result)</div><div class="line">        return value</div><div class="line">    finally:</div><div class="line">        handle.close()</div></pre></td></tr></table></figure>
-<h1 id="尽量用异常来表示特殊情况，而不是返回None"><a href="#尽量用异常来表示特殊情况，而不是返回None" class="headerlink" title="尽量用异常来表示特殊情况，而不是返回None"></a>尽量用异常来表示特殊情况，而不是返回None</h1><p>因为None和空值，0都属于False，但是None产生的原因比较特殊，所以不要直接返回None，而是说明产生这种情况的原因，或者表示操作是否成功。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def divide(a, b):</div><div class="line">    try:</div><div class="line">        return True, a / b</div><div class="line">    except ZeroDivisionError:</div><div class="line">        return False, None</div></pre></td></tr></table></figure>
-<p>另外一种方法就是不返回None，而是将异常抛给上一级，这样没有异常，则返回值正常，否则处理异常</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def divide(a, b):</div><div class="line">    try:</div><div class="line">        return a / b</div><div class="line">    except ZeroDivisionError:</div><div class="line">        raise ValueError(&apos;Invalid inputs&apos;) from e</div></pre></td></tr></table></figure>
-<h1 id="用super初始化父类"><a href="#用super初始化父类" class="headerlink" title="用super初始化父类"></a>用super初始化父类</h1><blockquote>
-<p>2016-1-7 9:32</p>
-</blockquote>
-<p>初始化父类的传统方式，是在子类里用子类实例直接调用父类的<code>__init__</code>方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class MyBaseClass(object):</div><div class="line">    def __init__(self, value):</div><div class="line">        self.value = value</div><div class="line">class MyChildClass(MyBaseClass):</div><div class="line">    def __init__(self):</div><div class="line">        MyBaseClass.__init__(self, 5)</div></pre></td></tr></table></figure>
-<p>但是如果子类受到了多重继承的影响，那么直接调用超类的<code>__init__</code>方法，那么可能会产生无法预知的行为，还有一个问题就是它的调用顺序并不固定</p>
-<p>还有一个问题是菱形继承中，子类继承自两个单独的超类，那两个超类又继承自同一个公共基类，这种继承会使得公共基类多次执行其<code>__init__</code>方法</p>
-<p>super函数，定义了方法解析顺序MRO，MRO以标准的流程来安排超类之间的初始化顺序，保证钻石顶部的公共基类的方法只会运行一次。</p>
-<p>Python 2</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">class TimesFiveClass(MyBaseClass):</div><div class="line">    def __init__(self, value):</div><div class="line">        super(TimesFiveClass, self).__init__(value)</div><div class="line">        self.value *= 5</div><div class="line">class PlusTwoClass(MyBaseClass):</div><div class="line">    def __init__(self, value):</div><div class="line">        super(PlusTwoClass, self).__init__(value)</div><div class="line">        self.value += 2</div><div class="line">class GoodWay(TimesFiveClass, PlusTwoClass):</div><div class="line">    def __init__(self, value):</div><div class="line">        super(GoodWay, self).__init__(value)</div></pre></td></tr></table></figure>
-<p>程序的运行顺序会与GoodWay类的MRO保持一致，这个MRO可以通过名为mro的类方法来查询 <code>pprint(GoodWay.mro())</code></p>
-<p>Python 3提供了不带参数的super调用方式，或者Python3可以在方法中通过<code>__class__</code>变量准确的引用当前类</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class GoodWay(TimesFiveClass, PlusTwoClass):</div><div class="line">    def __init__(self, value):</div><div class="line">        super(__class__, self).__init__(value)</div><div class="line">class GoodWay(TimesFiveClass, PlusTwoClass):</div><div class="line">    def __init__(self, value):</div><div class="line">        super().__init__(value)</div></pre></td></tr></table></figure>
-<h1 id="继承collections-abc以实现自定义的容器类型"><a href="#继承collections-abc以实现自定义的容器类型" class="headerlink" title="继承collections.abc以实现自定义的容器类型"></a>继承collections.abc以实现自定义的容器类型</h1><p>Python中的每一个类，从某种程度上来说都是容器，它们都封装了属性和功能。如果要设计用法比较简单的序列，那么我们可以直接继承Python内置的list类型</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">class FrequencyList(list):</div><div class="line">    def __init__(self, members):</div><div class="line">        super().__init__(members)</div><div class="line">    def frequency(self):</div><div class="line">        counts = &#123;&#125;</div><div class="line">        for item in self:</div><div class="line">            counts.setdefault(item, 0)</div><div class="line">            counts[item] += 1</div><div class="line">        return counts</div></pre></td></tr></table></figure>
-<p>如果有这种类，本身不属于list子类，但是可以通过特殊方法来加入序列类型的功能，Python会使用名称比较特殊的实例方法，来实现与容器有关的行为。</p>
-<p>比如<code>__getitem__</code>，<code>__len__</code>，这样就需要编写大量的特殊方法</p>
-<p>所以可以使用内置的collections.abc模块，该模块定义了一系列的抽象基类，提供了每一种容器类型所应具备的常用方法，如果子类已经实现了抽象基类所要求的每一个方法，那么基类就会自动提供剩下的方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">from collections.abc import Sequence</div><div class="line">class test(Sequence):</div><div class="line">   pass</div></pre></td></tr></table></figure>
-<h1 id="在重视精确度的场合，应该使用decimal"><a href="#在重视精确度的场合，应该使用decimal" class="headerlink" title="在重视精确度的场合，应该使用decimal"></a>在重视精确度的场合，应该使用decimal</h1><p>Decimal类默认提供28个小数位，以进行定点数学计算。其提供了一个内置函数，可以按照开发者要求的精度和舍入方式，来准确的调整数值。</p>
-<p><code>rounded = cost.quantize(Decimal(&#39;0.01&#39;), rounding=ROUND_UP)</code></p>
-<p>但是它在精确度方面仍然有局限，如果要用精度不受限制的方式来表达有理数，那么可以考虑使用Fraction类，在内置的fractions模块中。</p>
-<h1 id="为每个函数，类和模块编写文档字符串"><a href="#为每个函数，类和模块编写文档字符串" class="headerlink" title="为每个函数，类和模块编写文档字符串"></a>为每个函数，类和模块编写文档字符串</h1><p>使用文档生成工具，Sphinx将纯文本转换成HTML等更友好的格式。</p>
-<h2 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h2><p>第一行，描述本模块内容</p>
-<p>第二行，细节信息，本模块的操作有关的内容，告诉模块的使用者，可以在模块的docstring中，强调模块里面比较重要的类和函数</p>
-<p>如果模块是一个命令行工具，那么可以把工具的用法，写在docstring里面</p>
-<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><p>第一行，类的用途</p>
-<p>第二行，类的操作方式</p>
-<p>类中比较重要的属性和方法，public，在此加以强调，另外，还要告诉子类的实现者，如何才能正确的与protected属性以及超类方法相交互。</p>
-<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p>第一行，本函数功能</p>
-<p>第二行，描述函数具体行为，然后是函数的参数，返回值，函数出现的异常也应该解释</p>
-<h1 id="用包来安排模块，并提供稳固的API"><a href="#用包来安排模块，并提供稳固的API" class="headerlink" title="用包来安排模块，并提供稳固的API"></a>用包来安排模块，并提供稳固的API</h1><p>模块数量过多的时候，需要在程序之中引入一种抽象层，使得代码更加便于理解，包，一种含有其它模块的模块。</p>
-<p>在目录中放入<code>__init__.py</code>的空文件，来定义包，只要目录里有这个文件，我们就可以采用相对该目录的路径，来引用目录中的其它Python文件。</p>
-<p><code>from mypackage import utils</code></p>
-<p>使用as子句，给引入当前作用域的属性重新起名字，<code>import pandas as pd</code></p>
-<p>python包的第二种用途，是为外部使用者提供严谨而稳固的API，使用<code>__all__</code>属性</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Python进阶之路～&lt;/p&gt;
-&lt;h1 id=&quot;PEP8风格指南&quot;&gt;&lt;a href=&quot;#PEP8风格指南&quot; class=&quot;headerlink&quot; title=&quot;PEP8风格指南&quot;&gt;&lt;/a&gt;PEP8风格指南&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;使用空格来表示缩进，而不是制表符&lt;/li&gt;
-    
-    </summary>
-    
-      <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
-    
-    
-      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
-    
-      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
     
   </entry>
   
