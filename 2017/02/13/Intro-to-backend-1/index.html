@@ -4,13 +4,13 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Python多进程管理 | SkyRover</title>
+    <title>Intro to Backend 1 | SkyRover</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
     
-    <meta name="description" content="工作上要在Flask后台调用计算包，需要进行多进程并行计算，但是要对诸多进程进行管理，于是创造了这个多进程管理，记录下来以便后来使用。
-1234567891011121314151617181920212223242526272829303132333435class MyProcManager(o">
+    <meta name="description" content="第一部分，Introduction to the web
+万维网是HTML文档的集合，这些文件由HTML组成">
     
     
     
@@ -91,10 +91,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/02/13/Python多进程管理/" title="Python多进程管理" itemprop="url">Python多进程管理</a>
+      <a href="/2017/02/13/Intro-to-backend-1/" title="Intro to Backend 1" itemprop="url">Intro to Backend 1</a>
   </h1>
   <p class="article-time">
-    <time datetime="2017-02-13T01:41:53.000Z" itemprop="datePublished">Feb 13 2017</time>
+    <time datetime="2017-02-13T04:43:57.000Z" itemprop="datePublished">Feb 13 2017</time>
   </p>
 </header>
 	<div class="article-content">
@@ -105,12 +105,8 @@ var _hmt = _hmt || [];
 		
 		</div>
 		
-		<p>工作上要在Flask后台调用计算包，需要进行多进程并行计算，但是要对诸多进程进行管理，于是创造了这个多进程管理，记录下来以便后来使用。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">class MyProcManager(object):</div><div class="line">    def __init__(self):</div><div class="line">        self.procs = []</div><div class="line">        self.errors_flag = False</div><div class="line">        self._threads = []</div><div class="line">        self._lock = threading.Lock()</div><div class="line">    def terminate_all(self):</div><div class="line">        with self._lock:</div><div class="line">            for p in self.procs:</div><div class="line">                if p.is_alive():</div><div class="line">                    print(&quot;Terminating %s&quot; % p)</div><div class="line">                    p.terminate()</div><div class="line">        self.cleaning()</div><div class="line">    def launch_proc(self, func, args=(), kwargs=&#123;&#125;):</div><div class="line">        t = threading.Thread(target=self._proc_thread_runner,</div><div class="line">                             args=(func, args, kwargs))</div><div class="line">        self._threads.append(t)</div><div class="line">        t.start()</div><div class="line">    def _proc_thread_runner(self, func, args, kwargs):</div><div class="line">        p = multiprocessing.Process(target=func, args=args, kwargs=kwargs)</div><div class="line">        self.procs.append(p)</div><div class="line">        p.start()</div><div class="line">        while p.exitcode is None:</div><div class="line">            p.join()</div><div class="line">        if p.exitcode &gt; 0:</div><div class="line">            self.errors_flag = True</div><div class="line">            self.terminate_all()</div><div class="line">    def wait(self):</div><div class="line">        for t in self._threads:</div><div class="line">            t.join()</div><div class="line">    def cleaning(self):</div><div class="line">        self.procs = []</div><div class="line">        self.errors_flag = False</div><div class="line">        self._threads = []</div><div class="line">        self._lock = threading.Lock()</div></pre></td></tr></table></figure>
-<p><code>cleaning</code>方法，因为自己在调用的时候在全局实例化了这个类，所以在每次运行完毕的时候需要重新初始化实例变量。</p>
-<p>以下是调用方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">t0 = time.time()</div><div class="line">for fundId in fundIds:</div><div class="line">    proc_manager.launch_proc(calc_ability_proc, args=(fundId, start_date, end_date, config))</div><div class="line">proc_manager.wait()</div><div class="line">if proc_manager.errors_flag:</div><div class="line">    return gen_response(data=None, message=&quot;some processes crashed&quot;, errorcode=1, status=&quot;error&quot;)</div><div class="line">else:</div><div class="line">    print(&quot;Everything closed cleanly&quot;)</div><div class="line">proc_manager.cleaning()</div><div class="line">t1 = time.time()</div><div class="line">print(&quot;time used: %d min&quot; % ((t1 - t0) / 60))</div></pre></td></tr></table></figure>
-<p>用了10个fundId进行测试，大约比单线程快了2倍，不过应该fundId越多，速度会越快吧。</p>
+		<p>第一部分，Introduction to the web</p>
+<p>万维网是HTML文档的集合，这些文件由HTML组成</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -123,14 +119,14 @@ var _hmt = _hmt || [];
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/Python/">Python</a>
+  <a class="article-category-link" href="/categories/web/">web</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2017/02/13/Python多进程管理/" data-title="Python多进程管理 | SkyRover" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2017/02/13/Intro-to-backend-1/" data-title="Intro to Backend 1 | SkyRover" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -140,18 +136,18 @@ var _hmt = _hmt || [];
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2017/02/13/Intro-to-backend-1/" title="Intro to Backend 1">
+ <a href="/2017/02/13/Python并发编程/" title="Python并发编程">
   <strong>新一篇:</strong><br/>
   <span>
-  Intro to Backend 1</span>
+  Python并发编程</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2017/02/11/上班第一周/"  title="上班第一周">
+<a href="/2017/02/13/Python多进程管理/"  title="Python多进程管理">
  <strong>旧一篇:</strong><br/> 
- <span>上班第一周
+ <span>Python多进程管理
 </span>
 </a>
 </div>
@@ -161,7 +157,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="Python多进程管理" data-thread-key="Python多进程管理" data-author-key="Kevin" data-url="http://microndgt.github.io/post/Python多进程管理"></div>
+	<div class="ds-thread" data-title="Intro to Backend 1" data-thread-key="Intro-to-backend-1" data-author-key="Kevin" data-url="http://microndgt.github.io/post/Intro-to-backend-1"></div>
 	
 </section>
 

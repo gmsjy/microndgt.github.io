@@ -1,0 +1,378 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Python并发编程 | SkyRover</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Kevin">
+    
+    <meta name="description" content="多线程，调用子进程，生成器函数，并行计算
+启动和停止线程threading库可以在单独的线程中执行任何的在Python中可以调用的对象，可以创建一个Thread对象并且将要执行的对象以target参数的形式提供给该对象。
+123from threading import Threadt = Thre">
+    
+    
+    
+    
+    <link rel="alternative" href="atom.xml" title="SkyRover" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/myLogo.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/myLogo.png">
+    
+
+  
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="SkyRover">SkyRover</a></h1>
+				<h2 class="blog-motto">做我的仲夏夜之梦～</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="st-search-inpu" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/02/13/Python并发编程/" title="Python并发编程" itemprop="url">Python并发编程</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2017-02-13T04:49:52.000Z" itemprop="datePublished">Feb 13 2017</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#启动和停止线程"><span class="toc-number">1.</span> <span class="toc-text">启动和停止线程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#判断线程是否已经启动"><span class="toc-number">2.</span> <span class="toc-text">判断线程是否已经启动</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#线程间通信"><span class="toc-number">3.</span> <span class="toc-text">线程间通信</span></a></li></ol>
+		</div>
+		
+		<p>多线程，调用子进程，生成器函数，并行计算</p>
+<h1 id="启动和停止线程"><a href="#启动和停止线程" class="headerlink" title="启动和停止线程"></a>启动和停止线程</h1><p>threading库可以在单独的线程中执行任何的在Python中可以调用的对象，可以创建一个Thread对象并且将要执行的对象以target参数的形式提供给该对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">from threading import Thread</div><div class="line">t = Thread(target=countdown, args=(10, ))</div><div class="line">t.start()</div></pre></td></tr></table></figure>
+<p>线程会在一个单独的系统级线程中执行，这些线程由操作系统全权管理，一旦启动，独立执行到目标函数返回。查询线程状态<code>t.is_alive()</code>，将一个线程加入到当前线程，等待它终止<code>t.join()</code></p>
+<p>Python解释器在所有线程都终止后才继续执行代码，所以长时间运行的线程或者需要一直运行的后台任务，使用后台线程。<code>t = Thread(target=countdown, args=(10, ), daemon=True)</code></p>
+<p>后台线程无法等待，但是这些线程会在主线程终止时候自动销毁，但是无法结束线程，必须自己写一个调度类来实现这些功能。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">class CountdownTask:</div><div class="line">    def __init__(self):</div><div class="line">        self.running = True</div><div class="line">    def terminate(self):</div><div class="line">        self.running = False</div><div class="line">    def run(self, n):</div><div class="line">        while self.running and n &gt; 0:</div><div class="line">            print(&quot;T-minus&quot;, n)</div><div class="line">            n -= 1</div><div class="line">            time.sleep(5)</div><div class="line">c = CountdownTask()</div><div class="line">t = Thread(target=c.run, args=(10,))</div><div class="line">t.start()</div><div class="line">c.terminate()</div><div class="line">t.join()</div></pre></td></tr></table></figure>
+<p>如果线程执行I/O阻塞操作，name就应该使用超时循环来操作线程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">class IOTask:</div><div class="line">    def terminate(self):</div><div class="line">        self._running = False</div><div class="line">    def run(self, sock):</div><div class="line">        sock.settimeout(5)</div><div class="line">        while self._running:</div><div class="line">            try:</div><div class="line">                data = sock.recv(8192)</div><div class="line">                break</div><div class="line">            except socket.timeout:</div><div class="line">                continue</div><div class="line">        return</div></pre></td></tr></table></figure>
+<p>Python线程被限制到同一时刻只允许一个线程执行，所以Python线程更适用于I/O和其他需要并发执行的阻塞操作，而不是需要多处理器并行的计算密集型任务。</p>
+<p>以下的实现的线程也可以工作，但是依赖于threading库，所以只能在线程上下文中使用，但是上面的与threading库无关，所以可以被用在其他上下文中，比如在multiprocessing单独进程中执行代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">from threading import Thread</div><div class="line">class CountdownTask(Thread):</div><div class="line">    def __init__(self, n):</div><div class="line">        super().__init__()</div><div class="line">        self.n = 0</div><div class="line">    def run(self):</div><div class="line">        while self.n &gt; 0:</div><div class="line">            self.n -= 1</div><div class="line">            time.sleep(5)</div></pre></td></tr></table></figure>
+<h1 id="判断线程是否已经启动"><a href="#判断线程是否已经启动" class="headerlink" title="判断线程是否已经启动"></a>判断线程是否已经启动</h1><p>程序其他线程判断某个线程的状态来确定下一步，使用threading的Event来设置一个信号标志来协调线程的启动。初始状态为假。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">from threading import Thread, Event</div><div class="line">import time</div><div class="line">def countdown(n, started_evt):</div><div class="line">    print(&quot;starting&quot;)</div><div class="line">    # 在此设置event对象为真</div><div class="line">    started_evt.set()</div><div class="line">    while n &gt; 0:</div><div class="line">        print(&apos;t-minus&apos;)</div><div class="line">        n -= 1</div><div class="line">        time.sleep(2)</div><div class="line">started_evt = Event()</div><div class="line">print(&apos;launching countdown&apos;)</div><div class="line">t = Thread(target=countdown, args=(10, started_evt))</div><div class="line">t.start()</div><div class="line"># 为真后执行继续执行主线程</div><div class="line">started_evt.wait()</div><div class="line">print(&apos;running&apos;)</div></pre></td></tr></table></figure>
+<p>event对象最好单次使用，一旦对象设置为真，就应该丢弃它。如果需要多次使用，则使用Condition对象代替。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">import threading</div><div class="line">import time</div><div class="line">class PeriodcTimer:</div><div class="line">    def __init__(self, interval):</div><div class="line">        self._interval = interval</div><div class="line">        self._flag = 0</div><div class="line">        self._cv = threading.Condition()</div><div class="line">    def start(self):</div><div class="line">        t = threading.Thread(target=self.run)</div><div class="line">        t.daemon = True</div><div class="line">        t.start()</div><div class="line">    def run(self):</div><div class="line">        while True:</div><div class="line">            time.sleep(self._interval)</div><div class="line">            with self._cv:</div><div class="line">                self._flag ^= 1</div><div class="line">                self._cv.notify_all()</div><div class="line">    def wait_for_tick(self):</div><div class="line">        with self._cv:</div><div class="line">            last_flag = self._flag</div><div class="line">            while last_flag == self._flag:</div><div class="line">                # 当每次有notify_all时候结束循环,开始计数</div><div class="line">                self._cv.wait()</div><div class="line">ptiemr = PeriodcTimer(5)</div><div class="line">ptiemr.start()</div><div class="line">def countdown(nticks):</div><div class="line">    while nticks &gt; 0:</div><div class="line">        ptiemr.wait_for_tick()</div><div class="line">        print(&quot;T-minus&quot;, nticks)</div><div class="line">        nticks -= 1</div><div class="line">def countup(last):</div><div class="line">    n = 0</div><div class="line">    while n &lt; last:</div><div class="line">        ptiemr.wait_for_tick()</div><div class="line">        print(&quot;counting&quot;, n)</div><div class="line">        n += 1</div><div class="line">threading.Thread(target=countdown, args=(10, )).start()</div><div class="line">threading.Thread(target=countup, args=(5, )).start()</div></pre></td></tr></table></figure>
+<p>event当它设置为真的时候会唤醒所有等待它的线程，如果只想唤醒单个线程，最好使用信号量或者Condition对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">def worker(n, sema):</div><div class="line">    sema.acquire()</div><div class="line">    print(&quot;working &quot;, n)</div><div class="line">sema = threading.Semaphore(0)</div><div class="line">nworkers = 10</div><div class="line">for n in range(nworkers):</div><div class="line">    # 会启动一个线程池，但是所有线程都在等待获取信号量</div><div class="line">    t = threading.Thread(target=worker, args=(n, sema, ))</div><div class="line">    t.start()</div><div class="line"># 每次释放信号量的时候，只有一个线程会唤醒并且执行</div><div class="line">sema.release()</div></pre></td></tr></table></figure>
+<p>使用队列来进行线程间通信或者把每个线程当成一个Actor，使用Actor模型控制并发。</p>
+<h1 id="线程间通信"><a href="#线程间通信" class="headerlink" title="线程间通信"></a>线程间通信</h1><p>从一个线程向另一个线程发送数据最安全的方式是使用queue库中的队列。创建一个被多个线程共享的Queue对象，这些线程通过使用put()和get()方法来向队列中添加或者删除元素。Queue中含有了必要的锁，可以在多个线程中安全地共享数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">from queue import Queue</div><div class="line">from threading import Thread</div><div class="line"># 哨兵</div><div class="line">_sentinel = object()</div><div class="line">def producer(out_q):</div><div class="line">    while running:</div><div class="line">        out_q.put(data)</div><div class="line">    out_q.put(_sentinel)</div><div class="line">def cousumer(in_q):</div><div class="line">    while True:</div><div class="line">        data = in_q.get()</div><div class="line">        if data is _sentinel:</div><div class="line">            # 再放回去，这样所有监听这个队列的消费者线程就可以都关闭了。</div><div class="line">            in_q.put(_sentinel)</div><div class="line">            break</div></pre></td></tr></table></figure>
+<p>使用Condition变量来包装数据结构，创建一个线程安全的优先级队列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">import heapq</div><div class="line">import threading</div><div class="line">class PriorityQueue:</div><div class="line">    def __init__(self):</div><div class="line">        self._queue = []</div><div class="line">        self._count = 0</div><div class="line">        self._cv = threading.Condition()</div><div class="line">    def put(self, item, priority):</div><div class="line">        with self._cv:</div><div class="line">            heapq.heappush(self._queue, (-priority, self._count, item))</div><div class="line">            self._count += 1</div><div class="line">            self._cv.notify()</div><div class="line">    def get(self):</div><div class="line">        with self._cv:</div><div class="line">            while len(self._queue) == 0:</div><div class="line">                # 在这里阻塞,而不是循环，直到添加元素后解除阻塞</div><div class="line">                self._cv.wait()</div><div class="line">            # 获取优先级最低的</div><div class="line">            return heapq.heappop(self._queue)[-1]</div></pre></td></tr></table></figure>
+<p>使用task_done()和join()来表示已经完成,q.task_done()，每次从queue中get一个数据之后，当处理好相关问题，最后调用该方法，以提示q.join()是否停止阻塞，让线程向前执行或者退出；q.join()，阻塞，直到queue中的数据均被删除或者处理。为队列中的每一项都调用一次。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">from queue import Queue</div><div class="line">from threading import Thread</div><div class="line">def producer(out_q):</div><div class="line">    while running:</div><div class="line">        out_q.put(data)</div><div class="line">def cousumer(in_q):</div><div class="line">    while True:</div><div class="line">        data = in_q.get()</div><div class="line">        in_q.task_done()</div><div class="line">q = Queue()</div><div class="line">t2 = Thread(target=producer, args=(q, ))</div><div class="line">t1 = Thread(target=consumer, args=(q, ))</div><div class="line">t2.start()</div><div class="line">t1.start()</div><div class="line">q.join() #所有生产的都被消费</div></pre></td></tr></table></figure>
+<p>使用event当消费者线程处理完数据后生产者立即得到通知，来监测处理过程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">from queue import Queue</div><div class="line">from threading import Thread, Event</div><div class="line">def producer(out_q):</div><div class="line">    while running:</div><div class="line">        evt = Event()</div><div class="line">        out_q.put((data, event))</div><div class="line">        evt.wait()</div><div class="line">def cousumer(in_q):</div><div class="line">    while True:</div><div class="line">        data, evt = in_q.get()</div><div class="line">        evt.set()</div></pre></td></tr></table></figure>
+<p>使用线程队列需要注意向队列中添加数据项并不会复制此数据项，实际上是在线程中传递对象引用。可以使用不变结构或者深拷贝。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python/">Python</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Python/">Python</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://microndgt.github.io/2017/02/13/Python并发编程/" data-title="Python并发编程 | SkyRover" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/02/13/Intro-to-backend-1/"  title="Intro to Backend 1">
+ <strong>旧一篇:</strong><br/> 
+ <span>Intro to Backend 1
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="Python并发编程" data-thread-key="Python并发编程" data-author-key="Kevin" data-url="http://microndgt.github.io/post/Python并发编程"></div>
+	
+</section>
+
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© Kevin</span>
+		
+	<div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"microndgt"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';    //change to ds.src = '/js/embed.js'; to add useragent for duoshuo
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>

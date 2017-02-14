@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://microndgt.github.io/"/>
-  <updated>2017-02-13T03:33:58.000Z</updated>
+  <updated>2017-02-14T04:21:18.000Z</updated>
   <id>http://microndgt.github.io/</id>
   
   <author>
@@ -14,6 +14,87 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python并发编程</title>
+    <link href="http://microndgt.github.io/2017/02/13/Python%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"/>
+    <id>http://microndgt.github.io/2017/02/13/Python并发编程/</id>
+    <published>2017-02-13T04:49:52.000Z</published>
+    <updated>2017-02-14T04:21:18.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>多线程，调用子进程，生成器函数，并行计算</p>
+<h1 id="启动和停止线程"><a href="#启动和停止线程" class="headerlink" title="启动和停止线程"></a>启动和停止线程</h1><p>threading库可以在单独的线程中执行任何的在Python中可以调用的对象，可以创建一个Thread对象并且将要执行的对象以target参数的形式提供给该对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">from threading import Thread</div><div class="line">t = Thread(target=countdown, args=(10, ))</div><div class="line">t.start()</div></pre></td></tr></table></figure>
+<p>线程会在一个单独的系统级线程中执行，这些线程由操作系统全权管理，一旦启动，独立执行到目标函数返回。查询线程状态<code>t.is_alive()</code>，将一个线程加入到当前线程，等待它终止<code>t.join()</code></p>
+<p>Python解释器在所有线程都终止后才继续执行代码，所以长时间运行的线程或者需要一直运行的后台任务，使用后台线程。<code>t = Thread(target=countdown, args=(10, ), daemon=True)</code></p>
+<p>后台线程无法等待，但是这些线程会在主线程终止时候自动销毁，但是无法结束线程，必须自己写一个调度类来实现这些功能。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">class CountdownTask:</div><div class="line">    def __init__(self):</div><div class="line">        self.running = True</div><div class="line">    def terminate(self):</div><div class="line">        self.running = False</div><div class="line">    def run(self, n):</div><div class="line">        while self.running and n &gt; 0:</div><div class="line">            print(&quot;T-minus&quot;, n)</div><div class="line">            n -= 1</div><div class="line">            time.sleep(5)</div><div class="line">c = CountdownTask()</div><div class="line">t = Thread(target=c.run, args=(10,))</div><div class="line">t.start()</div><div class="line">c.terminate()</div><div class="line">t.join()</div></pre></td></tr></table></figure>
+<p>如果线程执行I/O阻塞操作，name就应该使用超时循环来操作线程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">class IOTask:</div><div class="line">    def terminate(self):</div><div class="line">        self._running = False</div><div class="line">    def run(self, sock):</div><div class="line">        sock.settimeout(5)</div><div class="line">        while self._running:</div><div class="line">            try:</div><div class="line">                data = sock.recv(8192)</div><div class="line">                break</div><div class="line">            except socket.timeout:</div><div class="line">                continue</div><div class="line">        return</div></pre></td></tr></table></figure>
+<p>Python线程被限制到同一时刻只允许一个线程执行，所以Python线程更适用于I/O和其他需要并发执行的阻塞操作，而不是需要多处理器并行的计算密集型任务。</p>
+<p>以下的实现的线程也可以工作，但是依赖于threading库，所以只能在线程上下文中使用，但是上面的与threading库无关，所以可以被用在其他上下文中，比如在multiprocessing单独进程中执行代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">from threading import Thread</div><div class="line">class CountdownTask(Thread):</div><div class="line">    def __init__(self, n):</div><div class="line">        super().__init__()</div><div class="line">        self.n = 0</div><div class="line">    def run(self):</div><div class="line">        while self.n &gt; 0:</div><div class="line">            self.n -= 1</div><div class="line">            time.sleep(5)</div></pre></td></tr></table></figure>
+<h1 id="判断线程是否已经启动"><a href="#判断线程是否已经启动" class="headerlink" title="判断线程是否已经启动"></a>判断线程是否已经启动</h1><p>程序其他线程判断某个线程的状态来确定下一步，使用threading的Event来设置一个信号标志来协调线程的启动。初始状态为假。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">from threading import Thread, Event</div><div class="line">import time</div><div class="line">def countdown(n, started_evt):</div><div class="line">    print(&quot;starting&quot;)</div><div class="line">    # 在此设置event对象为真</div><div class="line">    started_evt.set()</div><div class="line">    while n &gt; 0:</div><div class="line">        print(&apos;t-minus&apos;)</div><div class="line">        n -= 1</div><div class="line">        time.sleep(2)</div><div class="line">started_evt = Event()</div><div class="line">print(&apos;launching countdown&apos;)</div><div class="line">t = Thread(target=countdown, args=(10, started_evt))</div><div class="line">t.start()</div><div class="line"># 为真后执行继续执行主线程</div><div class="line">started_evt.wait()</div><div class="line">print(&apos;running&apos;)</div></pre></td></tr></table></figure>
+<p>event对象最好单次使用，一旦对象设置为真，就应该丢弃它。如果需要多次使用，则使用Condition对象代替。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">import threading</div><div class="line">import time</div><div class="line">class PeriodcTimer:</div><div class="line">    def __init__(self, interval):</div><div class="line">        self._interval = interval</div><div class="line">        self._flag = 0</div><div class="line">        self._cv = threading.Condition()</div><div class="line">    def start(self):</div><div class="line">        t = threading.Thread(target=self.run)</div><div class="line">        t.daemon = True</div><div class="line">        t.start()</div><div class="line">    def run(self):</div><div class="line">        while True:</div><div class="line">            time.sleep(self._interval)</div><div class="line">            with self._cv:</div><div class="line">                self._flag ^= 1</div><div class="line">                self._cv.notify_all()</div><div class="line">    def wait_for_tick(self):</div><div class="line">        with self._cv:</div><div class="line">            last_flag = self._flag</div><div class="line">            while last_flag == self._flag:</div><div class="line">                # 当每次有notify_all时候结束循环,开始计数</div><div class="line">                self._cv.wait()</div><div class="line">ptiemr = PeriodcTimer(5)</div><div class="line">ptiemr.start()</div><div class="line">def countdown(nticks):</div><div class="line">    while nticks &gt; 0:</div><div class="line">        ptiemr.wait_for_tick()</div><div class="line">        print(&quot;T-minus&quot;, nticks)</div><div class="line">        nticks -= 1</div><div class="line">def countup(last):</div><div class="line">    n = 0</div><div class="line">    while n &lt; last:</div><div class="line">        ptiemr.wait_for_tick()</div><div class="line">        print(&quot;counting&quot;, n)</div><div class="line">        n += 1</div><div class="line">threading.Thread(target=countdown, args=(10, )).start()</div><div class="line">threading.Thread(target=countup, args=(5, )).start()</div></pre></td></tr></table></figure>
+<p>event当它设置为真的时候会唤醒所有等待它的线程，如果只想唤醒单个线程，最好使用信号量或者Condition对象。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">def worker(n, sema):</div><div class="line">    sema.acquire()</div><div class="line">    print(&quot;working &quot;, n)</div><div class="line">sema = threading.Semaphore(0)</div><div class="line">nworkers = 10</div><div class="line">for n in range(nworkers):</div><div class="line">    # 会启动一个线程池，但是所有线程都在等待获取信号量</div><div class="line">    t = threading.Thread(target=worker, args=(n, sema, ))</div><div class="line">    t.start()</div><div class="line"># 每次释放信号量的时候，只有一个线程会唤醒并且执行</div><div class="line">sema.release()</div></pre></td></tr></table></figure>
+<p>使用队列来进行线程间通信或者把每个线程当成一个Actor，使用Actor模型控制并发。</p>
+<h1 id="线程间通信"><a href="#线程间通信" class="headerlink" title="线程间通信"></a>线程间通信</h1><p>从一个线程向另一个线程发送数据最安全的方式是使用queue库中的队列。创建一个被多个线程共享的Queue对象，这些线程通过使用put()和get()方法来向队列中添加或者删除元素。Queue中含有了必要的锁，可以在多个线程中安全地共享数据。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">from queue import Queue</div><div class="line">from threading import Thread</div><div class="line"># 哨兵</div><div class="line">_sentinel = object()</div><div class="line">def producer(out_q):</div><div class="line">    while running:</div><div class="line">        out_q.put(data)</div><div class="line">    out_q.put(_sentinel)</div><div class="line">def cousumer(in_q):</div><div class="line">    while True:</div><div class="line">        data = in_q.get()</div><div class="line">        if data is _sentinel:</div><div class="line">            # 再放回去，这样所有监听这个队列的消费者线程就可以都关闭了。</div><div class="line">            in_q.put(_sentinel)</div><div class="line">            break</div></pre></td></tr></table></figure>
+<p>使用Condition变量来包装数据结构，创建一个线程安全的优先级队列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">import heapq</div><div class="line">import threading</div><div class="line">class PriorityQueue:</div><div class="line">    def __init__(self):</div><div class="line">        self._queue = []</div><div class="line">        self._count = 0</div><div class="line">        self._cv = threading.Condition()</div><div class="line">    def put(self, item, priority):</div><div class="line">        with self._cv:</div><div class="line">            heapq.heappush(self._queue, (-priority, self._count, item))</div><div class="line">            self._count += 1</div><div class="line">            self._cv.notify()</div><div class="line">    def get(self):</div><div class="line">        with self._cv:</div><div class="line">            while len(self._queue) == 0:</div><div class="line">                # 在这里阻塞,而不是循环，直到添加元素后解除阻塞</div><div class="line">                self._cv.wait()</div><div class="line">            # 获取优先级最低的</div><div class="line">            return heapq.heappop(self._queue)[-1]</div></pre></td></tr></table></figure>
+<p>使用task_done()和join()来表示已经完成,q.task_done()，每次从queue中get一个数据之后，当处理好相关问题，最后调用该方法，以提示q.join()是否停止阻塞，让线程向前执行或者退出；q.join()，阻塞，直到queue中的数据均被删除或者处理。为队列中的每一项都调用一次。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">from queue import Queue</div><div class="line">from threading import Thread</div><div class="line">def producer(out_q):</div><div class="line">    while running:</div><div class="line">        out_q.put(data)</div><div class="line">def cousumer(in_q):</div><div class="line">    while True:</div><div class="line">        data = in_q.get()</div><div class="line">        in_q.task_done()</div><div class="line">q = Queue()</div><div class="line">t2 = Thread(target=producer, args=(q, ))</div><div class="line">t1 = Thread(target=consumer, args=(q, ))</div><div class="line">t2.start()</div><div class="line">t1.start()</div><div class="line">q.join() #所有生产的都被消费</div></pre></td></tr></table></figure>
+<p>使用event当消费者线程处理完数据后生产者立即得到通知，来监测处理过程。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">from queue import Queue</div><div class="line">from threading import Thread, Event</div><div class="line">def producer(out_q):</div><div class="line">    while running:</div><div class="line">        evt = Event()</div><div class="line">        out_q.put((data, event))</div><div class="line">        evt.wait()</div><div class="line">def cousumer(in_q):</div><div class="line">    while True:</div><div class="line">        data, evt = in_q.get()</div><div class="line">        evt.set()</div></pre></td></tr></table></figure>
+<p>使用线程队列需要注意向队列中添加数据项并不会复制此数据项，实际上是在线程中传递对象引用。可以使用不变结构或者深拷贝。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;多线程，调用子进程，生成器函数，并行计算&lt;/p&gt;
+&lt;h1 id=&quot;启动和停止线程&quot;&gt;&lt;a href=&quot;#启动和停止线程&quot; class=&quot;headerlink&quot; title=&quot;启动和停止线程&quot;&gt;&lt;/a&gt;启动和停止线程&lt;/h1&gt;&lt;p&gt;threading库可以在单独的线程中执行任
+    
+    </summary>
+    
+      <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
+    
+    
+      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Intro to Backend 1</title>
+    <link href="http://microndgt.github.io/2017/02/13/Intro-to-backend-1/"/>
+    <id>http://microndgt.github.io/2017/02/13/Intro-to-backend-1/</id>
+    <published>2017-02-13T04:43:57.000Z</published>
+    <updated>2017-02-13T04:50:09.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>第一部分，Introduction to the web</p>
+<p>万维网是HTML文档的集合，这些文件由HTML组成</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;第一部分，Introduction to the web&lt;/p&gt;
+&lt;p&gt;万维网是HTML文档的集合，这些文件由HTML组成&lt;/p&gt;
+
+    
+    </summary>
+    
+      <category term="web" scheme="http://microndgt.github.io/categories/web/"/>
+    
+    
+      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>Python多进程管理</title>
@@ -1150,115 +1231,6 @@
       <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
     
       <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>群体性孤独</title>
-    <link href="http://microndgt.github.io/2017/01/05/%E7%BE%A4%E4%BD%93%E6%80%A7%E5%AD%A4%E7%8B%AC/"/>
-    <id>http://microndgt.github.io/2017/01/05/群体性孤独/</id>
-    <published>2017-01-05T10:52:38.000Z</published>
-    <updated>2017-01-27T05:25:51.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><code>you will rock!</code> 网易公开课</p>
-<p>Along Together</p>
-<p>Hiding from each other</p>
-<p>Goldilocks effect: not too close, not too far, just right</p>
-<p>let us present the self as we want to be</p>
-<p>I’m thinking about you</p>
-<p>No one is listening</p>
-<p>we expect more from technology and less from each other</p>
-<p>technology appeals to us most where we are most vulnerable</p>
-<p>we’re lonely but we’re afraid of intimacy</p>
-<p>the illusion of companionship without the demands of friendship</p>
-<p>being alone feels like a problem that needs to be solved</p>
-<p>i share therefore i am</p>
-<p>isolation</p>
-<p>you end up isolated if you don’t cultivate the capacity for solitude, the ability to be seperate to gather yourself.</p>
-<p>if we don’t teach our children to be alone, they will only know how to be lonely.</p>
-<p>time to talk.</p>
-<p>start thinking of solitude as a good thing make room for it.</p>
-<p>conversation talk</p>
-<p>we all really need to listen to each other, including to the boring bits.</p>
-<p>Finally, love your friends, love your body, love your life.</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;code&gt;you will rock!&lt;/code&gt; 网易公开课&lt;/p&gt;
-&lt;p&gt;Along Together&lt;/p&gt;
-&lt;p&gt;Hiding from each other&lt;/p&gt;
-&lt;p&gt;Goldilocks effect: not too close, not too fa
-    
-    </summary>
-    
-      <category term="公开课" scheme="http://microndgt.github.io/categories/%E5%85%AC%E5%BC%80%E8%AF%BE/"/>
-    
-    
-      <category term="TED" scheme="http://microndgt.github.io/tags/TED/"/>
-    
-      <category term="笔记" scheme="http://microndgt.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SSDB使用笔记</title>
-    <link href="http://microndgt.github.io/2017/01/05/SSDB%E4%BD%BF%E7%94%A8%E7%AC%94%E8%AE%B0/"/>
-    <id>http://microndgt.github.io/2017/01/05/SSDB使用笔记/</id>
-    <published>2017-01-05T06:10:00.000Z</published>
-    <updated>2017-01-27T05:27:13.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>ssdb是工作要使用到的一个数据库，记录一下安装步骤以及常用用法。</p>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget --no-check-certificate https://github.com/ideawu/ssdb/archive/master.zip</div><div class="line">unzip master</div><div class="line">cd ssdb-master</div><div class="line">make</div></pre></td></tr></table></figure>
-<p>这时报错：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ERROR! autoconf required! install autoconf first</div><div class="line"></div><div class="line">Makefile:4: build_config.mk: No such file or directory</div><div class="line">make: *** No rule to make target `build_config.mk&apos;.  Stop.</div></pre></td></tr></table></figure>
-<p>安装<code>autoconf</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install autoconf</div></pre></td></tr></table></figure>
-<p>安装完成后继续编译</p>
-<p><code>make &amp;&amp; make install</code></p>
-<p>然后启动ssdb服务，<code>-d</code>是deamon模式，服务后台运行</p>
-<p><code>./ssdb-server -d ./ssdb.conf</code></p>
-<p>使用ssdb数据库</p>
-<p><code>./tools/ssdb-cli -h localhost -p 8888</code></p>
-<p>关闭数据库</p>
-<p><code>./ssdb-server ./ssdb.conf -s stop</code></p>
-<h1 id="数据库操作"><a href="#数据库操作" class="headerlink" title="数据库操作"></a>数据库操作</h1><p>字符串类型<code>s</code>，列表类型<code>q</code>，哈希类型<code>h</code>，有序集合类型<code>z</code></p>
-<p>数据库存在哪些键：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">keys 字符串类型</div><div class="line">qlist 列表类型</div><div class="line">hlist 哈希类型</div><div class="line">zlist 有序集合类型</div></pre></td></tr></table></figure>
-<p>前两个参数用于确定键的范围，第三个参数用于返回最大个数，为必需参数。<code>keys &#39;&#39; &#39;&#39; 10</code></p>
-<h1 id="使用pyssdb"><a href="#使用pyssdb" class="headerlink" title="使用pyssdb"></a>使用pyssdb</h1><p>在PyCharm中安装pyssdb</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">c = pyssdb.Client()</div><div class="line">print(c.hgetall(&apos;logasset_10005050&apos;))</div><div class="line">print(c.hget(&apos;logasset_10005050&apos;, &apos;20160102&apos;))</div></pre></td></tr></table></figure>
-<h1 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h1><h2 id="list"><a href="#list" class="headerlink" title="list"></a>list</h2><p><code>qpush_front name item1 item2...</code></p>
-<p><code>qpush_back name item1 item2...</code></p>
-<p><code>qpush name item1 item2...</code></p>
-<p><code>qpop_front name size</code> pop out one or more elements from the head of a queue</p>
-<p><code>qpop_back name size</code> pop out one or more elements from the tail of a queue</p>
-<p><code>qfront name</code> return the first element of a queue</p>
-<p><code>qback name</code> return the last element of a queue</p>
-<p><code>qget name index</code> return the element a the specified index</p>
-<p><code>qrange name offset limit</code> returns a portion of elements from the queue at the specified range[offset, offset+limit]</p>
-<p><code>qlist name_start name_end limit</code> list names in range(name_start, name_end)</p>
-<p><code>qslice name begin end</code> returns a portion of elements from the queue at the specified range[begin,end]</p>
-<h2 id="hashmap"><a href="#hashmap" class="headerlink" title="hashmap"></a>hashmap</h2><p><code>hset name key value</code> set the string value in argument as value of the key of a hashmap</p>
-<p><code>hget name key</code> get the value related to the specified key of a hashmap</p>
-<p><code>hexists name key</code> verify if the specified key exists in a hashmap</p>
-<p><code>hsize name</code> return the number of key-value pairs in the hashmap</p>
-<p><code>hkeys name key_start key_end</code> list keys of a hashmap in range(key_start, key_end)</p>
-<p><code>hgetall name</code> returns the whole hash, as an array of strings indexed by strings</p>
-<p><code>hscan name key_start key_end limit</code> list key-value pairs of a hashmap with keys in range(key_start, key_end)</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;ssdb是工作要使用到的一个数据库，记录一下安装步骤以及常用用法。&lt;/p&gt;
-&lt;h1 id=&quot;安装&quot;&gt;&lt;a href=&quot;#安装&quot; class=&quot;headerlink&quot; title=&quot;安装&quot;&gt;&lt;/a&gt;安装&lt;/h1&gt;&lt;figure class=&quot;highlight plain&quot;&gt;
-    
-    </summary>
-    
-      <category term="NoSQL" scheme="http://microndgt.github.io/categories/NoSQL/"/>
-    
-    
-      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
     
   </entry>
   
