@@ -1,0 +1,385 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>计算机网络 | SkyRover</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Kevin">
+    
+    <meta name="description" content="网络中运行的端系统和网络应用，计算机网络的核心，传输数据的链路和交换机，链接端系统与网络核心的接入网和物理媒体。
+因特网网络的具体构成设备：主机或端系统，端系统通过通信链路和分组交换机链接在一起，链路的速率是bps度量，数据发送是，发送端将数据分段，每段加上首部字节。这样的信息包称为分组。两种分组交">
+    
+    
+    
+    
+    <link rel="alternative" href="atom.xml" title="SkyRover" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/myLogo.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/myLogo.png">
+    
+
+  
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="SkyRover">SkyRover</a></h1>
+				<h2 class="blog-motto">做我的仲夏夜之梦～</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="st-search-inpu" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/02/17/计算机网络/" title="计算机网络" itemprop="url">计算机网络</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2017-02-17T06:03:41.000Z" itemprop="datePublished">Feb 17 2017</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#因特网"><span class="toc-number">1.</span> <span class="toc-text">因特网</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#网络的具体构成"><span class="toc-number">1.1.</span> <span class="toc-text">网络的具体构成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务描述"><span class="toc-number">1.2.</span> <span class="toc-text">服务描述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#协议"><span class="toc-number">1.3.</span> <span class="toc-text">协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接入网"><span class="toc-number">1.4.</span> <span class="toc-text">接入网</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络核心"><span class="toc-number">1.5.</span> <span class="toc-text">网络核心</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分组交换"><span class="toc-number">1.6.</span> <span class="toc-text">分组交换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#电路交换"><span class="toc-number">1.7.</span> <span class="toc-text">电路交换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分组交换网中的时延"><span class="toc-number">1.8.</span> <span class="toc-text">分组交换网中的时延</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#丢包"><span class="toc-number">1.9.</span> <span class="toc-text">丢包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#吞吐量"><span class="toc-number">1.10.</span> <span class="toc-text">吞吐量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#协议分层"><span class="toc-number">1.11.</span> <span class="toc-text">协议分层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#封装"><span class="toc-number">1.12.</span> <span class="toc-text">封装</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>网络中运行的端系统和网络应用，计算机网络的核心，传输数据的链路和交换机，链接端系统与网络核心的接入网和物理媒体。</p>
+<h1 id="因特网"><a href="#因特网" class="headerlink" title="因特网"></a>因特网</h1><h2 id="网络的具体构成"><a href="#网络的具体构成" class="headerlink" title="网络的具体构成"></a>网络的具体构成</h2><p>设备：主机或端系统，端系统通过通信链路和分组交换机链接在一起，链路的速率是bps度量，数据发送是，发送端将数据分段，每段加上首部字节。这样的信息包称为分组。两种分组交换机是路由器和链路层交换机。分组交换机类似于立交桥。</p>
+<p>端系统通过因特网服务提供商ISP接入互联网，每个ISP是一个由多个分组交换机和多段通信链路组成的网络。地层ISP通过国家的，国际的高层ISP互联起来，高层ISP是由通过高速光纤链路互联的高速路由器组成的。</p>
+<p>信息接收和发送的协议：TCP传输控制协议,IP网际协议。</p>
+<h2 id="服务描述"><a href="#服务描述" class="headerlink" title="服务描述"></a>服务描述</h2><p>从为应用程序提供服务的基础设施的角度来描述互联网，互联网是一种基础设施，新应用程序正在其上不断的发明和设置。</p>
+<h2 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h2><p>完成一项工作，要求两个通信实体运行相同的协议。一个协议定义了在两个或多个通信实体之间交换的报文格式和次序，以及在报文传输和接收或其他事件方面所采取的动作。</p>
+<h2 id="接入网"><a href="#接入网" class="headerlink" title="接入网"></a>接入网</h2><p>端系统连接到器边缘路由器的物理链路，边缘路由器是端系统到任何其他远程端系统的路径上的第一台路由器。</p>
+<h2 id="网络核心"><a href="#网络核心" class="headerlink" title="网络核心"></a>网络核心</h2><p>通过网络链路和交换机移动数据有两种方法，电路交换和分组交换。电路交换需要的资源在通信会话期间会被预留。分组交换网络，这些资源不被预留。电话网络是电路交换网络。因特网是分组交换网络。因特网尽力而为的以适时的方式传递分组。</p>
+<h2 id="分组交换"><a href="#分组交换" class="headerlink" title="分组交换"></a>分组交换</h2><p>存储转发传输，当路由器已经接收完了该分组的所有比特后，它才能开始向出链路传输，即转发该分组</p>
+<p>排队时延和分组丢失，对于每条相连的链路，该分组交换机有一个输出缓存，缓存空间是有限的，网络拥塞程度越大，排队时延越大，还有可能出现分组丢失。</p>
+<p>转发表和路由选择协议，源在该分组的首部包含了目的地的IP地址，每台路由器具有一个转发表，用于将目的地址映射城输出链路。路由器使用分组的目的地址来索引转发表并决定适当的出链路，因特网具有一些特殊的路由选择协议，用于自动的设置这些转发表，一个路由选择协议可以决定从每台路由器到每个目的地的最短路径，并使用这些最短路径结果来配置路由器中的转发表。</p>
+<h2 id="电路交换"><a href="#电路交换" class="headerlink" title="电路交换"></a>电路交换</h2><p>在端系统间通话会话期间，预留了端系统间通信沿路径所需要的资源，缓存，链路传输速率，传统的电话网络是电路交换网络的例子，建立链接后，沿着发送方和接收方之间路径上的交换机都将为该链接维护链接状态，当网络创建这种电路时候，他也在链接期间在该网络链路上预留了恒定的传输速率，表示为每条链路传输容量的一部分。</p>
+<h2 id="分组交换网中的时延"><a href="#分组交换网中的时延" class="headerlink" title="分组交换网中的时延"></a>分组交换网中的时延</h2><p>分组在每个节点经受了以下几种不同类型的时延，节点处理时延，排队时延，传输时延和传播时延，加起来是节点总时延。</p>
+<p>处理时延，检查分组首部和决定将分组导向何处所需要的时间是处理时延的一部分。处理之后，路由器将该分组引向通往路由器B链路之前的队列。</p>
+<p>排队时延，在队列中，当分组在链路上等待传输的时候，经受排队时延。到达分组期待发现的分组数量是到达该队列的流量的强度和性质的函数。</p>
+<p><strong><em>传输时延</em></strong>,传输时延L/R是将所有分组的比特推向链路所需要的时间</p>
+<p>传播时延，从链路的起点到路由器B传播所需要的时间是传播时延</p>
+<h2 id="丢包"><a href="#丢包" class="headerlink" title="丢包"></a>丢包</h2><p>到达路由器队列的分组发现一个满的队列，由于没有地方存储这个分组，路由器将丢弃该分组，丢包现象是一个分组已经传输到网络核心，绝不会从网络发送到目的地，分组丢失的份额随着流量强度增加而增加，因此，一个节点的性能也需要根据分组丢失的概率来度量。</p>
+<h2 id="吞吐量"><a href="#吞吐量" class="headerlink" title="吞吐量"></a>吞吐量</h2><p>除了时延和丢包，另外一个性能指标是端到端吞吐量，在任何时间瞬时吞吐量是主机B接受到该文件的速率。对于简单的两链路的网络，吞吐量是最小的链路速率，它是瓶颈链路的传输速率。吞吐量取决于数据流过的链路的传输速率，近似于沿着源和目的地之间路径的最小传输速率。</p>
+<h2 id="协议分层"><a href="#协议分层" class="headerlink" title="协议分层"></a>协议分层</h2><p>分层只要每个层次的接口不变，实现的功能不变，那么怎么实现它，改变服务的实现而不影响该系统其他组件是分层的优点。每层通过在该层中执行某些动作或使用直接下层的服务来提供服务。因特网的协议栈由5个层次组成，物理层，链路层，网络层，运输层和应用层。</p>
+<p>应用层，HTTP，SMTP，FTP，DNS，位于应用层的信息分组称为报文</p>
+<p>运输层，在应用程序端点之间传送应用层报文。TCP，面向连接的服务，确保传递和流量控制。UDP提供无连接服务，运输层分组称为报文段</p>
+<p>网络层，负责将数据报的网络层分组从一台主机移动到另一台主机，IP协议，协议定义了数据报中的各个字段以及端系统和路由器如何作用于这些字段，也包括决定路由的路由选择协议，IP是将因特网链接在一起的</p>
+<p>链路层，一个数据报可能被沿途不同链路上的不同链路层协议处理，网络层将受到来自每个不同的链路层协议的不同服务，链路层分组称为帧</p>
+<p>物理层，将帧中的一个个比特从一个节点移动到下一个节点，这层的协议是链路相关的，进一步和链路的实际传输媒体相关。</p>
+<p>OSI模型中多了两层，表示层和会话层，在应用层和运输层之间，表示层的作用是使得通信的应用程序能够解释交换数据的含义，会话层提供了数据交换定界功能，应用程序开发者决定一个服务是否重要，在应用程序中构建该功能。</p>
+<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><p>路由器和链路层交换机以多层次的方式组织他们的网络硬件和软件，链路层交换机实现了物理层和链路层，路由器实现了物理层，链路层和网络层，能够实现IP协议，链路层交换机不能识别IP地址，但是能够识别第二层地址，以太网地址。</p>
+<p>应用层报文传到运输层，加上运输层首部信息形成运输层报文段，然后向网路层传递报文段，网路层增加源和目的端系统地址等网路层首部信息，产生了网路层数据报，然后传给链路层，链路层增加自己的链路层首部信息并且创建链路层帧。所以一个分组具有两种类型的字段，首部字段和有效载荷字段。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/计算机科学/">计算机科学</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/计算机网络/">计算机网络</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://microndgt.github.io/2017/02/17/计算机网络/" data-title="计算机网络 | SkyRover" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/02/17/密钥加解密/" title="密钥加解密">
+  <strong>新一篇:</strong><br/>
+  <span>
+  密钥加解密</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/02/17/Python-元编程2/"  title="Python 元编程2">
+ <strong>旧一篇:</strong><br/> 
+ <span>Python 元编程2
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="计算机网络" data-thread-key="计算机网络" data-author-key="Kevin" data-url="http://microndgt.github.io/post/计算机网络"></div>
+	
+</section>
+
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© Kevin</span>
+		
+	<div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"microndgt"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';    //change to ds.src = '/js/embed.js'; to add useragent for duoshuo
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>

@@ -1,0 +1,376 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Python后台开发工程师面试指南 | SkyRover</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Kevin">
+    
+    <meta name="description" content="最近两天当了三次面试官，刚开始面试的时候不知道问些什么，后来就形成套路了，基本就是先是Python语法，多线程多进程，然后是数据分析，数据结构与算法，操作系统，Linux，数据库。不过有些问题自己也不知道答案。。。为了防止自己什么时候卡壳，所以总结一下这个面试指南，得指南者得天下。。万一有面试者提前">
+    
+    
+    
+    
+    <link rel="alternative" href="atom.xml" title="SkyRover" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/myLogo.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/myLogo.png">
+    
+
+  
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="SkyRover">SkyRover</a></h1>
+				<h2 class="blog-motto">做我的仲夏夜之梦～</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="st-search-inpu" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/02/17/Python后台开发工程师面试指南/" title="Python后台开发工程师面试指南" itemprop="url">Python后台开发工程师面试指南</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2017-02-17T09:15:39.000Z" itemprop="datePublished">Feb 17 2017</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python篇"><span class="toc-number">1.</span> <span class="toc-text">Python篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#序列倒序"><span class="toc-number">1.1.</span> <span class="toc-text">序列倒序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#字典排序"><span class="toc-number">1.2.</span> <span class="toc-text">字典排序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#寻找序列中次数最多的元素"><span class="toc-number">1.3.</span> <span class="toc-text">寻找序列中次数最多的元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#闭包"><span class="toc-number">1.4.</span> <span class="toc-text">闭包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#生成器"><span class="toc-number">1.5.</span> <span class="toc-text">生成器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#静态方法，类方法，实例方法的区别"><span class="toc-number">1.6.</span> <span class="toc-text">静态方法，类方法，实例方法的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python中有哪几种导入方法"><span class="toc-number">1.7.</span> <span class="toc-text">Python中有哪几种导入方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#上下文管理器"><span class="toc-number">1.8.</span> <span class="toc-text">上下文管理器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#property属性"><span class="toc-number">1.9.</span> <span class="toc-text">property属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#描述器"><span class="toc-number">1.10.</span> <span class="toc-text">描述器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多线程，多进程"><span class="toc-number">1.11.</span> <span class="toc-text">多线程，多进程</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#计算机网络"><span class="toc-number">2.</span> <span class="toc-text">计算机网络</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一个请求中途发生的事情"><span class="toc-number">2.1.</span> <span class="toc-text">一个请求中途发生的事情</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#版本控制"><span class="toc-number">3.</span> <span class="toc-text">版本控制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#分支"><span class="toc-number">3.1.</span> <span class="toc-text">分支</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Flask"><span class="toc-number">4.</span> <span class="toc-text">Flask</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#REST表现层状态迁移"><span class="toc-number">4.1.</span> <span class="toc-text">REST表现层状态迁移</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#设计模式"><span class="toc-number">5.</span> <span class="toc-text">设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#工厂模式"><span class="toc-number">5.1.</span> <span class="toc-text">工厂模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#单例"><span class="toc-number">5.2.</span> <span class="toc-text">单例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据库"><span class="toc-number">6.</span> <span class="toc-text">数据库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#操作系统"><span class="toc-number">7.</span> <span class="toc-text">操作系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#进程和线程区别"><span class="toc-number">7.1.</span> <span class="toc-text">进程和线程区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内存管理"><span class="toc-number">7.2.</span> <span class="toc-text">内存管理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#数据结构与算法"><span class="toc-number">8.</span> <span class="toc-text">数据结构与算法</span></a></li></ol>
+		</div>
+		
+		<p>最近两天当了三次面试官，刚开始面试的时候不知道问些什么，后来就形成套路了，基本就是先是Python语法，多线程多进程，然后是数据分析，数据结构与算法，操作系统，Linux，数据库。不过有些问题自己也不知道答案。。。为了防止自己什么时候卡壳，所以总结一下这个面试指南，得指南者得天下。。万一有面试者提前看了这篇文章，那就偷着乐吧，啊哈哈哈哈。</p>
+<h1 id="Python篇"><a href="#Python篇" class="headerlink" title="Python篇"></a>Python篇</h1><h2 id="序列倒序"><a href="#序列倒序" class="headerlink" title="序列倒序"></a>序列倒序</h2><p>这个问题是我乐此不疲的问题之一，方法有好多种。。。另外，记住拼写，<code>reverse</code>，好多面试者写错了= =</p>
+<ol>
+<li><code>a[::-1]</code></li>
+<li>对于列表<code>a.reverse()</code>,原地倒序</li>
+<li>对于字符串不可变对象，<code>&#39;&#39;.join(list(reversed(a)))</code></li>
+</ol>
+<h2 id="字典排序"><a href="#字典排序" class="headerlink" title="字典排序"></a>字典排序</h2><p>这个主要有两种常用方法一种套路</p>
+<ol>
+<li><code>sorted(a.items(), key=lambda x: x[0])</code></li>
+<li>使用itemgetter</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">from operator import itemgetter</div><div class="line">sorted(a.items(), key=itemgetter(0))</div></pre></td></tr></table></figure>
+<p>对列表字典等结构排序也很容易。</p>
+<h2 id="寻找序列中次数最多的元素"><a href="#寻找序列中次数最多的元素" class="headerlink" title="寻找序列中次数最多的元素"></a>寻找序列中次数最多的元素</h2><p>这个问题在leetcode刷题的时候遇到过，当时是用字典手动实现的，但是用<code>collections</code>模块的<code>Counter</code>类更简单</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">from collections import Counter</div><div class="line">word_counts = Counter(word)</div><div class="line">top_three = word_counts.most_common(3)</div></pre></td></tr></table></figure>
+<h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><p>实现一个简单的闭包，以及阐述其特性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">def func(name):</div><div class="line">    def inner_func(age):</div><div class="line">        print &apos;name:&apos;, name, &apos;age:&apos;, age</div><div class="line">    return inner_func</div></pre></td></tr></table></figure>
+<p>在python中很重要也很常见的一个使用场景就是装饰器，Python为装饰器提供了一个很友好的“语法糖”——<code>@</code>，让我们可以很方便的使用装饰器</p>
+<h2 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h2><p>实现一个简单的生成器函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">def odd():</div><div class="line">    n = 1</div><div class="line">    while True:</div><div class="line">        yield n</div><div class="line">        n += 2</div><div class="line">odd_num = odd()</div><div class="line">count = 0</div><div class="line">for o in odd_num:</div><div class="line">    if count &gt;= 5: break</div><div class="line">    print(o)</div><div class="line">    count += 1</div></pre></td></tr></table></figure>
+<h2 id="静态方法，类方法，实例方法的区别"><a href="#静态方法，类方法，实例方法的区别" class="headerlink" title="静态方法，类方法，实例方法的区别"></a>静态方法，类方法，实例方法的区别</h2><h2 id="Python中有哪几种导入方法"><a href="#Python中有哪几种导入方法" class="headerlink" title="Python中有哪几种导入方法"></a>Python中有哪几种导入方法</h2><h2 id="上下文管理器"><a href="#上下文管理器" class="headerlink" title="上下文管理器"></a>上下文管理器</h2><h2 id="property属性"><a href="#property属性" class="headerlink" title="property属性"></a>property属性</h2><p>如何定义，如何使用</p>
+<h2 id="描述器"><a href="#描述器" class="headerlink" title="描述器"></a>描述器</h2><h2 id="多线程，多进程"><a href="#多线程，多进程" class="headerlink" title="多线程，多进程"></a>多线程，多进程</h2><p>如何在线程之间通信</p>
+<p>防止死锁的加锁机制</p>
+<p>Python全局锁问题</p>
+<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><h2 id="一个请求中途发生的事情"><a href="#一个请求中途发生的事情" class="headerlink" title="一个请求中途发生的事情"></a>一个请求中途发生的事情</h2><h1 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h1><h2 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h2><p>分支的原理</p>
+<h1 id="Flask"><a href="#Flask" class="headerlink" title="Flask"></a>Flask</h1><h2 id="REST表现层状态迁移"><a href="#REST表现层状态迁移" class="headerlink" title="REST表现层状态迁移"></a>REST表现层状态迁移</h2><p>如何理解web service</p>
+<h1 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h1><h2 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h2><h2 id="单例"><a href="#单例" class="headerlink" title="单例"></a>单例</h2><h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><p>操作系统的本质</p>
+<h2 id="进程和线程区别"><a href="#进程和线程区别" class="headerlink" title="进程和线程区别"></a>进程和线程区别</h2><h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><h1 id="数据结构与算法"><a href="#数据结构与算法" class="headerlink" title="数据结构与算法"></a>数据结构与算法</h1>  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python/">Python</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/面试/">面试</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://microndgt.github.io/2017/02/17/Python后台开发工程师面试指南/" data-title="Python后台开发工程师面试指南 | SkyRover" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/02/17/密钥加解密/"  title="密钥加解密">
+ <strong>旧一篇:</strong><br/> 
+ <span>密钥加解密
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="Python后台开发工程师面试指南" data-thread-key="Python后台开发工程师面试指南" data-author-key="Kevin" data-url="http://microndgt.github.io/post/Python后台开发工程师面试指南"></div>
+	
+</section>
+
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© Kevin</span>
+		
+	<div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"microndgt"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';    //change to ds.src = '/js/embed.js'; to add useragent for duoshuo
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://microndgt.github.io/"/>
-  <updated>2017-02-15T08:16:48.000Z</updated>
+  <updated>2017-02-17T15:21:55.000Z</updated>
   <id>http://microndgt.github.io/</id>
   
   <author>
@@ -14,6 +14,183 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Python后台开发工程师面试指南</title>
+    <link href="http://microndgt.github.io/2017/02/17/Python%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E6%8C%87%E5%8D%97/"/>
+    <id>http://microndgt.github.io/2017/02/17/Python后台开发工程师面试指南/</id>
+    <published>2017-02-17T09:15:39.000Z</published>
+    <updated>2017-02-17T15:21:55.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近两天当了三次面试官，刚开始面试的时候不知道问些什么，后来就形成套路了，基本就是先是Python语法，多线程多进程，然后是数据分析，数据结构与算法，操作系统，Linux，数据库。不过有些问题自己也不知道答案。。。为了防止自己什么时候卡壳，所以总结一下这个面试指南，得指南者得天下。。万一有面试者提前看了这篇文章，那就偷着乐吧，啊哈哈哈哈。</p>
+<h1 id="Python篇"><a href="#Python篇" class="headerlink" title="Python篇"></a>Python篇</h1><h2 id="序列倒序"><a href="#序列倒序" class="headerlink" title="序列倒序"></a>序列倒序</h2><p>这个问题是我乐此不疲的问题之一，方法有好多种。。。另外，记住拼写，<code>reverse</code>，好多面试者写错了= =</p>
+<ol>
+<li><code>a[::-1]</code></li>
+<li>对于列表<code>a.reverse()</code>,原地倒序</li>
+<li>对于字符串不可变对象，<code>&#39;&#39;.join(list(reversed(a)))</code></li>
+</ol>
+<h2 id="字典排序"><a href="#字典排序" class="headerlink" title="字典排序"></a>字典排序</h2><p>这个主要有两种常用方法一种套路</p>
+<ol>
+<li><code>sorted(a.items(), key=lambda x: x[0])</code></li>
+<li>使用itemgetter</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">from operator import itemgetter</div><div class="line">sorted(a.items(), key=itemgetter(0))</div></pre></td></tr></table></figure>
+<p>对列表字典等结构排序也很容易。</p>
+<h2 id="寻找序列中次数最多的元素"><a href="#寻找序列中次数最多的元素" class="headerlink" title="寻找序列中次数最多的元素"></a>寻找序列中次数最多的元素</h2><p>这个问题在leetcode刷题的时候遇到过，当时是用字典手动实现的，但是用<code>collections</code>模块的<code>Counter</code>类更简单</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">from collections import Counter</div><div class="line">word_counts = Counter(word)</div><div class="line">top_three = word_counts.most_common(3)</div></pre></td></tr></table></figure>
+<h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><p>实现一个简单的闭包，以及阐述其特性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">def func(name):</div><div class="line">    def inner_func(age):</div><div class="line">        print &apos;name:&apos;, name, &apos;age:&apos;, age</div><div class="line">    return inner_func</div></pre></td></tr></table></figure>
+<p>在python中很重要也很常见的一个使用场景就是装饰器，Python为装饰器提供了一个很友好的“语法糖”——<code>@</code>，让我们可以很方便的使用装饰器</p>
+<h2 id="生成器"><a href="#生成器" class="headerlink" title="生成器"></a>生成器</h2><p>实现一个简单的生成器函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">def odd():</div><div class="line">    n = 1</div><div class="line">    while True:</div><div class="line">        yield n</div><div class="line">        n += 2</div><div class="line">odd_num = odd()</div><div class="line">count = 0</div><div class="line">for o in odd_num:</div><div class="line">    if count &gt;= 5: break</div><div class="line">    print(o)</div><div class="line">    count += 1</div></pre></td></tr></table></figure>
+<h2 id="静态方法，类方法，实例方法的区别"><a href="#静态方法，类方法，实例方法的区别" class="headerlink" title="静态方法，类方法，实例方法的区别"></a>静态方法，类方法，实例方法的区别</h2><h2 id="Python中有哪几种导入方法"><a href="#Python中有哪几种导入方法" class="headerlink" title="Python中有哪几种导入方法"></a>Python中有哪几种导入方法</h2><h2 id="上下文管理器"><a href="#上下文管理器" class="headerlink" title="上下文管理器"></a>上下文管理器</h2><h2 id="property属性"><a href="#property属性" class="headerlink" title="property属性"></a>property属性</h2><p>如何定义，如何使用</p>
+<h2 id="描述器"><a href="#描述器" class="headerlink" title="描述器"></a>描述器</h2><h2 id="多线程，多进程"><a href="#多线程，多进程" class="headerlink" title="多线程，多进程"></a>多线程，多进程</h2><p>如何在线程之间通信</p>
+<p>防止死锁的加锁机制</p>
+<p>Python全局锁问题</p>
+<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><h2 id="一个请求中途发生的事情"><a href="#一个请求中途发生的事情" class="headerlink" title="一个请求中途发生的事情"></a>一个请求中途发生的事情</h2><h1 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h1><h2 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h2><p>分支的原理</p>
+<h1 id="Flask"><a href="#Flask" class="headerlink" title="Flask"></a>Flask</h1><h2 id="REST表现层状态迁移"><a href="#REST表现层状态迁移" class="headerlink" title="REST表现层状态迁移"></a>REST表现层状态迁移</h2><p>如何理解web service</p>
+<h1 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h1><h2 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h2><h2 id="单例"><a href="#单例" class="headerlink" title="单例"></a>单例</h2><h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><p>操作系统的本质</p>
+<h2 id="进程和线程区别"><a href="#进程和线程区别" class="headerlink" title="进程和线程区别"></a>进程和线程区别</h2><h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><h1 id="数据结构与算法"><a href="#数据结构与算法" class="headerlink" title="数据结构与算法"></a>数据结构与算法</h1>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;最近两天当了三次面试官，刚开始面试的时候不知道问些什么，后来就形成套路了，基本就是先是Python语法，多线程多进程，然后是数据分析，数据结构与算法，操作系统，Linux，数据库。不过有些问题自己也不知道答案。。。为了防止自己什么时候卡壳，所以总结一下这个面试指南，得指南者
+    
+    </summary>
+    
+      <category term="面试" scheme="http://microndgt.github.io/categories/%E9%9D%A2%E8%AF%95/"/>
+    
+    
+      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>密钥加解密</title>
+    <link href="http://microndgt.github.io/2017/02/17/%E5%AF%86%E9%92%A5%E5%8A%A0%E8%A7%A3%E5%AF%86/"/>
+    <id>http://microndgt.github.io/2017/02/17/密钥加解密/</id>
+    <published>2017-02-17T08:03:45.000Z</published>
+    <updated>2017-02-17T08:12:52.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="使用不同的加密算法与加密模式进行加密"><a href="#使用不同的加密算法与加密模式进行加密" class="headerlink" title="使用不同的加密算法与加密模式进行加密"></a>使用不同的加密算法与加密模式进行加密</h1><p><code>openssl enc</code>加密解密文件,<code>openssl enc ciphertype -e -in plain.txt -out cipher.bin -K 00112233445566778899aabbccddeeff -iv 0102030405060708</code></p>
+<p>cipher 密码，密码(cipher):指 bf, cast, des, aes, rs2 等 加密模式(encryption mode):指 cbc, ecb, cfb, ofb 等。两者组合起来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-K/-iv 十六进制密钥与初始向量</div><div class="line">-e 加密</div><div class="line">-d 解密</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;使用不同的加密算法与加密模式进行加密&quot;&gt;&lt;a href=&quot;#使用不同的加密算法与加密模式进行加密&quot; class=&quot;headerlink&quot; title=&quot;使用不同的加密算法与加密模式进行加密&quot;&gt;&lt;/a&gt;使用不同的加密算法与加密模式进行加密&lt;/h1&gt;&lt;p&gt;&lt;code&gt;
+    
+    </summary>
+    
+      <category term="信息安全" scheme="http://microndgt.github.io/categories/%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8/"/>
+    
+    
+      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="计算机科学" scheme="http://microndgt.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>计算机网络</title>
+    <link href="http://microndgt.github.io/2017/02/17/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    <id>http://microndgt.github.io/2017/02/17/计算机网络/</id>
+    <published>2017-02-17T06:03:41.000Z</published>
+    <updated>2017-02-18T11:31:51.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>网络中运行的端系统和网络应用，计算机网络的核心，传输数据的链路和交换机，链接端系统与网络核心的接入网和物理媒体。</p>
+<h1 id="因特网"><a href="#因特网" class="headerlink" title="因特网"></a>因特网</h1><h2 id="网络的具体构成"><a href="#网络的具体构成" class="headerlink" title="网络的具体构成"></a>网络的具体构成</h2><p>设备：主机或端系统，端系统通过通信链路和分组交换机链接在一起，链路的速率是bps度量，数据发送是，发送端将数据分段，每段加上首部字节。这样的信息包称为分组。两种分组交换机是路由器和链路层交换机。分组交换机类似于立交桥。</p>
+<p>端系统通过因特网服务提供商ISP接入互联网，每个ISP是一个由多个分组交换机和多段通信链路组成的网络。地层ISP通过国家的，国际的高层ISP互联起来，高层ISP是由通过高速光纤链路互联的高速路由器组成的。</p>
+<p>信息接收和发送的协议：TCP传输控制协议,IP网际协议。</p>
+<h2 id="服务描述"><a href="#服务描述" class="headerlink" title="服务描述"></a>服务描述</h2><p>从为应用程序提供服务的基础设施的角度来描述互联网，互联网是一种基础设施，新应用程序正在其上不断的发明和设置。</p>
+<h2 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h2><p>完成一项工作，要求两个通信实体运行相同的协议。一个协议定义了在两个或多个通信实体之间交换的报文格式和次序，以及在报文传输和接收或其他事件方面所采取的动作。</p>
+<h2 id="接入网"><a href="#接入网" class="headerlink" title="接入网"></a>接入网</h2><p>端系统连接到器边缘路由器的物理链路，边缘路由器是端系统到任何其他远程端系统的路径上的第一台路由器。</p>
+<h2 id="网络核心"><a href="#网络核心" class="headerlink" title="网络核心"></a>网络核心</h2><p>通过网络链路和交换机移动数据有两种方法，电路交换和分组交换。电路交换需要的资源在通信会话期间会被预留。分组交换网络，这些资源不被预留。电话网络是电路交换网络。因特网是分组交换网络。因特网尽力而为的以适时的方式传递分组。</p>
+<h2 id="分组交换"><a href="#分组交换" class="headerlink" title="分组交换"></a>分组交换</h2><p>存储转发传输，当路由器已经接收完了该分组的所有比特后，它才能开始向出链路传输，即转发该分组</p>
+<p>排队时延和分组丢失，对于每条相连的链路，该分组交换机有一个输出缓存，缓存空间是有限的，网络拥塞程度越大，排队时延越大，还有可能出现分组丢失。</p>
+<p>转发表和路由选择协议，源在该分组的首部包含了目的地的IP地址，每台路由器具有一个转发表，用于将目的地址映射城输出链路。路由器使用分组的目的地址来索引转发表并决定适当的出链路，因特网具有一些特殊的路由选择协议，用于自动的设置这些转发表，一个路由选择协议可以决定从每台路由器到每个目的地的最短路径，并使用这些最短路径结果来配置路由器中的转发表。</p>
+<h2 id="电路交换"><a href="#电路交换" class="headerlink" title="电路交换"></a>电路交换</h2><p>在端系统间通话会话期间，预留了端系统间通信沿路径所需要的资源，缓存，链路传输速率，传统的电话网络是电路交换网络的例子，建立链接后，沿着发送方和接收方之间路径上的交换机都将为该链接维护链接状态，当网络创建这种电路时候，他也在链接期间在该网络链路上预留了恒定的传输速率，表示为每条链路传输容量的一部分。</p>
+<h2 id="分组交换网中的时延"><a href="#分组交换网中的时延" class="headerlink" title="分组交换网中的时延"></a>分组交换网中的时延</h2><p>分组在每个节点经受了以下几种不同类型的时延，节点处理时延，排队时延，传输时延和传播时延，加起来是节点总时延。</p>
+<p>处理时延，检查分组首部和决定将分组导向何处所需要的时间是处理时延的一部分。处理之后，路由器将该分组引向通往路由器B链路之前的队列。</p>
+<p>排队时延，在队列中，当分组在链路上等待传输的时候，经受排队时延。到达分组期待发现的分组数量是到达该队列的流量的强度和性质的函数。</p>
+<p><strong><em>传输时延</em></strong>,传输时延L/R是将所有分组的比特推向链路所需要的时间</p>
+<p>传播时延，从链路的起点到路由器B传播所需要的时间是传播时延</p>
+<h2 id="丢包"><a href="#丢包" class="headerlink" title="丢包"></a>丢包</h2><p>到达路由器队列的分组发现一个满的队列，由于没有地方存储这个分组，路由器将丢弃该分组，丢包现象是一个分组已经传输到网络核心，绝不会从网络发送到目的地，分组丢失的份额随着流量强度增加而增加，因此，一个节点的性能也需要根据分组丢失的概率来度量。</p>
+<h2 id="吞吐量"><a href="#吞吐量" class="headerlink" title="吞吐量"></a>吞吐量</h2><p>除了时延和丢包，另外一个性能指标是端到端吞吐量，在任何时间瞬时吞吐量是主机B接受到该文件的速率。对于简单的两链路的网络，吞吐量是最小的链路速率，它是瓶颈链路的传输速率。吞吐量取决于数据流过的链路的传输速率，近似于沿着源和目的地之间路径的最小传输速率。</p>
+<h2 id="协议分层"><a href="#协议分层" class="headerlink" title="协议分层"></a>协议分层</h2><p>分层只要每个层次的接口不变，实现的功能不变，那么怎么实现它，改变服务的实现而不影响该系统其他组件是分层的优点。每层通过在该层中执行某些动作或使用直接下层的服务来提供服务。因特网的协议栈由5个层次组成，物理层，链路层，网络层，运输层和应用层。</p>
+<p>应用层，HTTP，SMTP，FTP，DNS，位于应用层的信息分组称为报文</p>
+<p>运输层，在应用程序端点之间传送应用层报文。TCP，面向连接的服务，确保传递和流量控制。UDP提供无连接服务，运输层分组称为报文段</p>
+<p>网络层，负责将数据报的网络层分组从一台主机移动到另一台主机，IP协议，协议定义了数据报中的各个字段以及端系统和路由器如何作用于这些字段，也包括决定路由的路由选择协议，IP是将因特网链接在一起的</p>
+<p>链路层，一个数据报可能被沿途不同链路上的不同链路层协议处理，网络层将受到来自每个不同的链路层协议的不同服务，链路层分组称为帧</p>
+<p>物理层，将帧中的一个个比特从一个节点移动到下一个节点，这层的协议是链路相关的，进一步和链路的实际传输媒体相关。</p>
+<p>OSI模型中多了两层，表示层和会话层，在应用层和运输层之间，表示层的作用是使得通信的应用程序能够解释交换数据的含义，会话层提供了数据交换定界功能，应用程序开发者决定一个服务是否重要，在应用程序中构建该功能。</p>
+<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><p>路由器和链路层交换机以多层次的方式组织他们的网络硬件和软件，链路层交换机实现了物理层和链路层，路由器实现了物理层，链路层和网络层，能够实现IP协议，链路层交换机不能识别IP地址，但是能够识别第二层地址，以太网地址。</p>
+<p>应用层报文传到运输层，加上运输层首部信息形成运输层报文段，然后向网路层传递报文段，网路层增加源和目的端系统地址等网路层首部信息，产生了网路层数据报，然后传给链路层，链路层增加自己的链路层首部信息并且创建链路层帧。所以一个分组具有两种类型的字段，首部字段和有效载荷字段。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;网络中运行的端系统和网络应用，计算机网络的核心，传输数据的链路和交换机，链接端系统与网络核心的接入网和物理媒体。&lt;/p&gt;
+&lt;h1 id=&quot;因特网&quot;&gt;&lt;a href=&quot;#因特网&quot; class=&quot;headerlink&quot; title=&quot;因特网&quot;&gt;&lt;/a&gt;因特网&lt;/h1&gt;&lt;h2 i
+    
+    </summary>
+    
+      <category term="计算机网络" scheme="http://microndgt.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+    
+      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="计算机科学" scheme="http://microndgt.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python 元编程2</title>
+    <link href="http://microndgt.github.io/2017/02/17/Python-%E5%85%83%E7%BC%96%E7%A8%8B2/"/>
+    <id>http://microndgt.github.io/2017/02/17/Python-元编程2/</id>
+    <published>2017-02-17T02:16:05.000Z</published>
+    <updated>2017-02-17T03:28:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="装饰器为被包装函数增加参数"><a href="#装饰器为被包装函数增加参数" class="headerlink" title="装饰器为被包装函数增加参数"></a>装饰器为被包装函数增加参数</h1><p>在装饰器中给被包装函数增加额外的参数,可以使用关键字参数来给被包装函数增加额外参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">from functools import wraps</div><div class="line">def optional_debug(func):</div><div class="line">    @wraps(func)</div><div class="line">    def wrapper(*args, debug=True, **kwargs):</div><div class="line">        if debug:</div><div class="line">            print(&apos;Calling&apos;, func.__name__)</div><div class="line">        return func(*args, **kwargs)</div><div class="line">    return wrapper</div><div class="line">@optional_debug</div><div class="line">def spam(a, b, c):</div><div class="line">    print(a, b, c)</div><div class="line">spam(1, 2, 3)</div><div class="line">spam(1, 2, 3, debug=True)</div></pre></td></tr></table></figure>
+<p>可以避免一些重复代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">def a(x, debug=False):</div><div class="line">    if debug:</div><div class="line">        print(&apos;Calling a&apos;)</div><div class="line">def b(x, y, z, debug=False):</div><div class="line">    if debug:</div><div class="line">        print(&apos;Calling b&apos;)</div><div class="line">from functools import wraps</div><div class="line">import inspect</div><div class="line">def optional_debug(func):</div><div class="line">    if &apos;debug&apos; in inspect.getargspec(func).args:</div><div class="line">        raise TypeError(&apos;debug argument already defined&apos;)</div><div class="line">    @wraps(func)</div><div class="line">    def wrapper(*args, debug=False, **kwargs):</div><div class="line">        if debug:</div><div class="line">            print(&apos;Calling&apos;, func.__name__)</div><div class="line">        return func(*args, **kwargs)</div><div class="line">    return wrapper</div><div class="line">@optional_debug</div><div class="line">def a(x):</div><div class="line">    pass</div><div class="line">@optional_debug</div><div class="line">def b(x, y, z):</div><div class="line">    pass</div></pre></td></tr></table></figure>
+<h1 id="使用装饰器扩充类的功能"><a href="#使用装饰器扩充类的功能" class="headerlink" title="使用装饰器扩充类的功能"></a>使用装饰器扩充类的功能</h1><p>通过反省或者重写类定义的某部分来修改它的行为，这种情况是类装饰器最好的使用场景了，下面是重写了特殊方法<code>__getattribute__</code>的类装饰器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">def log_getattribute(cls):</div><div class="line">    orig_getattribute = cls.__getattribute__</div><div class="line">    def new_getattribute(self, name):</div><div class="line">        print(&apos;getting:&apos;, name)</div><div class="line">        return orig_getattribute(self, name)</div><div class="line">    cls.__getattribute__ = new_getattribute</div><div class="line">    return cls</div><div class="line">@log_getattribute</div><div class="line">class A:</div><div class="line">    def __init__(self, x):</div><div class="line">        self.x = x</div><div class="line">    def spam(self):</div><div class="line">        pass</div></pre></td></tr></table></figure>
+<p>类装饰器通常可以作为其他高级技术比如混入或元类的一种非常简洁的替代方案。</p>
+<p>使用继承的方案</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">class LoggedGetattribute:</div><div class="line">    def __getattribute__(self, name):</div><div class="line">        print(&apos;getting:&apos;, name)</div><div class="line">        return super().__getattribute__(name)</div><div class="line"># Example:</div><div class="line">class A(LoggedGetattribute):</div><div class="line">    def __init__(self,x):</div><div class="line">        self.x = x</div><div class="line">    def spam(self):</div><div class="line">        pass</div></pre></td></tr></table></figure>
+<h1 id="使用元类控制实例的创建"><a href="#使用元类控制实例的创建" class="headerlink" title="使用元类控制实例的创建"></a>使用元类控制实例的创建</h1><p>通过改变实例创建方式来实现单例，缓存等。自定义创建实例的方式，可以定义一个元类并自己实现<code>__call__()</code>方法。继承type的类叫做元类，元类是创建类的类。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">class NoInstance(type):</div><div class="line">    def __call__(self, *args, **kwargs):</div><div class="line">        raise TypeError(&apos;can not instantiate directly&apos;)</div><div class="line">class Spam(metaclass=NoInstance):</div><div class="line">    @staticmethod</div><div class="line">    def grok(x):</div><div class="line">        print(&apos;Spam.grok&apos;)</div></pre></td></tr></table></figure>
+<p>所以只能调用静态方法，不能创建它的实例。下面是实现单例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">class Singleton(type):</div><div class="line">    def __init__(self, *args, **kwargs):</div><div class="line">        self.__instance = None</div><div class="line">        super().__init__(*args, **kwargs)</div><div class="line"></div><div class="line">    def __call__(self, *args, **kwargs):</div><div class="line">        if self.__instance is None:</div><div class="line">            self.__instance = super().__call__(*args, **kwargs)</div><div class="line">            return self.__instance</div><div class="line">        else:</div><div class="line">            return self.__instance</div><div class="line">class Spam(metaclass=Singleton):</div><div class="line">    def __init__(self):</div><div class="line">        print(&apos;Creating Spam&apos;)</div></pre></td></tr></table></figure>
+<p>利用元类实现多种实例创建模式通常要比不使用元类的方式优雅得多。</p>
+<h1 id="定义有可选参数的元类"><a href="#定义有可选参数的元类" class="headerlink" title="定义有可选参数的元类"></a>定义有可选参数的元类</h1><p>定义类的时候，使用<code>metaclass</code>参数来指定特定的元类：元类是用来控制类的创建的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">from abc import ABCMeta, abstractmethod</div><div class="line">class IStream(metaclass=ABCMeta):</div><div class="line">    @abstractmethod</div><div class="line">    def read(self, maxsize=None):</div><div class="line">        pass</div><div class="line">    @abstractmethod</div><div class="line">    def write(self, data):</div><div class="line">        pass</div></pre></td></tr></table></figure>
+<p>在自定义元类中我们还可以提供其他的关键字参数,为了使元类支持这些关键字参数，你必须确保在 <code>__prepare__()</code> , <code>__new__()</code> 和 <code>__init__()</code> 方法中都使用强制关键字参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">class Spam(metaclass=MyMeta, debug=True, synchronize=True):</div><div class="line">    pass</div><div class="line">class MyMeta(type):</div><div class="line">    # Optional</div><div class="line">    @classmethod</div><div class="line">    def __prepare__(cls, name, bases, *, debug=False, synchronize=False):</div><div class="line">        # Custom processing</div><div class="line">        pass</div><div class="line">        return super().__prepare__(name, bases)</div><div class="line">    # Required</div><div class="line">    def __new__(cls, name, bases, ns, *, debug=False, synchronize=False):</div><div class="line">        # Custom processing</div><div class="line">        pass</div><div class="line">        return super().__new__(cls, name, bases, ns)</div><div class="line">    # Required</div><div class="line">    def __init__(self, name, bases, ns, *, debug=False, synchronize=False):</div><div class="line">        # Custom processing</div><div class="line">        pass</div><div class="line">        super().__init__(name, bases, ns)</div></pre></td></tr></table></figure>
+<p><code>__prepare__()</code>方法在所有类定义开始执行前首先被调用，用来创建类命名空间。 通常来讲，这个方法只是简单的返回一个字典或其他映射对象。 <code>__new__()</code>方法被用来实例化最终的类对象。它在类的主体被执行完后开始执行。 <code>__init__()</code> 方法最后被调用，用来执行其他的一些初始化工作。通过使用强制关键字参数，在类的创建过程中我们必须通过关键字来指定这些参数。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;装饰器为被包装函数增加参数&quot;&gt;&lt;a href=&quot;#装饰器为被包装函数增加参数&quot; class=&quot;headerlink&quot; title=&quot;装饰器为被包装函数增加参数&quot;&gt;&lt;/a&gt;装饰器为被包装函数增加参数&lt;/h1&gt;&lt;p&gt;在装饰器中给被包装函数增加额外的参数,可以使用关键字
+    
+    </summary>
+    
+      <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
+    
+    
+      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
+    
+      <category term="Python_Cookbook" scheme="http://microndgt.github.io/tags/Python-Cookbook/"/>
+    
+  </entry>
   
   <entry>
     <title>Python 设计模式</title>
@@ -897,205 +1074,6 @@
     
       &lt;p&gt;拆分字符串，搜索，替换，词法分析以及解析，正则表达式.&lt;/p&gt;
 &lt;h1 id=&quot;针对任意多的分隔符拆分字符串&quot;&gt;&lt;a href=&quot;#针对任意多的分隔符拆分字符串&quot; class=&quot;headerlink&quot; title=&quot;针对任意多的分隔符拆分字符串&quot;&gt;&lt;/a&gt;针对任意多的分隔符
-    
-    </summary>
-    
-      <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
-    
-    
-      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
-    
-      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
-    
-      <category term="Python_Cookbook" scheme="http://microndgt.github.io/tags/Python-Cookbook/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python数据结构与算法</title>
-    <link href="http://microndgt.github.io/2017/01/16/Python%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"/>
-    <id>http://microndgt.github.io/2017/01/16/Python数据结构与算法/</id>
-    <published>2017-01-16T13:18:44.000Z</published>
-    <updated>2017-01-27T05:19:44.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Python基本的数据结构与算法</p>
-<h1 id="collections-deque的用法"><a href="#collections-deque的用法" class="headerlink" title="collections.deque的用法"></a>collections.deque的用法</h1><p>双端队列，可以用这个队列来保存有限的历史记录，形成一个简单的队列结构，如果不指定队列的大小，就会得到一个无界限的队列。</p>
-<p>创建：<code>q = deque(maxlen=3)</code> 建立固定大小的队列</p>
-<p>方法：append, appendleft, pop, popleft</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">from collections import deque</div><div class="line"></div><div class="line">def search(lines, pattern, history=5):</div><div class="line">	previous_line = deque(maxlen=history)</div><div class="line">	count = 0</div><div class="line">	for li in lines:</div><div class="line">		if pattern in li:</div><div class="line">			yield li, previous_line</div><div class="line">		previous_line.append(li)</div><div class="line"></div><div class="line">with open(&quot;test.txt&quot;) as f:</div><div class="line">	for line, prevlines in search(f, &quot;python&quot;):</div><div class="line">		for pline in prevlines:</div><div class="line">			print(pline,end=&quot;&quot;)</div><div class="line">		print(line,end=&apos;&apos;)</div><div class="line">		print(&apos;-&apos; * 20)</div></pre></td></tr></table></figure>
-<h1 id="heapq模块的用法"><a href="#heapq模块的用法" class="headerlink" title="heapq模块的用法"></a>heapq模块的用法</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import heapq</div><div class="line">start2 = time.time()</div><div class="line">for index, ele in enumerate(heapq.nsmallest(3, targetList)):</div><div class="line">	print(&quot;the %d st min value is %d&quot; % (index+1, ele))</div><div class="line">stop2 = time.time()</div></pre></td></tr></table></figure>
-<p>如果查找的元素个数相对比较小，使用nlargest(), nsmallest()比较合适，如果查找唯一的话，使用min(), max()比较合适，如果N大小和集合大小相近，则先排序，sorted(items)[:N]</p>
-<h1 id="用heapq模块实现优先级队列"><a href="#用heapq模块实现优先级队列" class="headerlink" title="用heapq模块实现优先级队列"></a>用heapq模块实现优先级队列</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">import heapq</div><div class="line">class PriorityQueue:</div><div class="line">	def __init__(self):</div><div class="line">		self._queue = []</div><div class="line">		self._index = 0</div><div class="line">	def push(self, item, priority):</div><div class="line">		# 元组比较大小,按照第一个元素来进行,如果优先级相同,按照插入顺序也就是</div><div class="line">		# 第二个元素决定顺序</div><div class="line">		heapq.heappush(self._queue, (-priority, self._index, item))</div><div class="line">		self._index += 1</div><div class="line">	def pop(self):</div><div class="line">		# 返回最小的元素，取出插入元组的最后一个项</div><div class="line">		return heapq.heappop(self._queue)[-1]</div><div class="line">class Item:</div><div class="line">	def __init__(self, name):</div><div class="line">		self.name = name</div><div class="line">	def __repr__(self):</div><div class="line">		return &apos;Item(&#123;&#125;)&apos;.format(self.name)</div><div class="line">q = PriorityQueue()</div><div class="line">q.push(Item(&apos;root&apos;), 5)</div><div class="line">q.push(Item(&apos;Elena&apos;), 3)</div><div class="line">q.push(Item(&apos;Kevin&apos;), 4)</div><div class="line">q.push(Item(&apos;group&apos;), 1)</div><div class="line">q.push(Item(&apos;other&apos;), 1)</div><div class="line">print(q.pop())</div><div class="line">print(q.pop())</div><div class="line">print(q.pop())</div><div class="line">print(q.pop())</div><div class="line">print(q.pop())</div></pre></td></tr></table></figure>
-<h1 id="使用defaultdict类实现一键多值字典"><a href="#使用defaultdict类实现一键多值字典" class="headerlink" title="使用defaultdict类实现一键多值字典"></a>使用defaultdict类实现一键多值字典</h1><p>一个键映射多个值，需要将多个值放到另外的容器里，如列表，集合。</p>
-<p>使用collections中的defaultdict构造这样的字典，它会自动初始化每个key刚开始对应的值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">from collections import defaultdict</div><div class="line">d = defaultdict(list)</div><div class="line">d[&apos;a&apos;].append(1)</div><div class="line">d[&apos;a&apos;].append(2)</div><div class="line">d[&apos;b&apos;].append(4)</div><div class="line">for key, value in d.items():</div><div class="line">	print(key, &quot; and &quot;, value)</div><div class="line">d = defaultdict(set)</div><div class="line">d[&apos;a&apos;].add(1)</div><div class="line">d[&apos;a&apos;].add(3)</div><div class="line">d[&apos;b&apos;].add(4)</div><div class="line">for key, value in d.items():</div><div class="line">	print(key, &quot; and &quot;, value)</div></pre></td></tr></table></figure>
-<p>defaultdict会自动为将要访问的键创建映射实体，另外一个是字典的setdefault方法</p>
-<p><code>d.setdefault(&#39;a&#39;, []).append(1)</code></p>
-<h1 id="使用zip将字典的键和值翻转过来"><a href="#使用zip将字典的键和值翻转过来" class="headerlink" title="使用zip将字典的键和值翻转过来"></a>使用zip将字典的键和值翻转过来</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">d = &#123;&#125;</div><div class="line">d[&apos;a&apos;] = 5</div><div class="line">d[&apos;b&apos;] = 3</div><div class="line">d[&apos;c&apos;] = 6</div><div class="line">d[&apos;d&apos;] = 2</div><div class="line"># 求最小值,返回的是一个只能访问一次的迭代器</div><div class="line">min_value = min(zip(d.values(), d.keys()))</div><div class="line">print(min_value)</div><div class="line"># sorted默认是按照第一个元素进行排序的</div><div class="line">d_sorted = sorted(zip(d.values(), d.keys()))</div><div class="line">print(d_sorted)</div><div class="line"># 要改变的话,指定key</div><div class="line">d_sorted_1 = sorted(d.items(), key=lambda x: x[1])</div><div class="line">print(d_sorted_1)</div></pre></td></tr></table></figure>
-<h1 id="keys-和items-方法都支持集合操作"><a href="#keys-和items-方法都支持集合操作" class="headerlink" title="keys()和items()方法都支持集合操作"></a>keys()和items()方法都支持集合操作</h1><p>这两个方法返回了<code>keys-view</code>对象，其中暴露了键或者键值，但是values()方法不支持集合操作，因为value可能是重复的，不是唯一的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">print(d.keys() &amp; e.keys())</div><div class="line">print(d.keys() - e.keys())</div><div class="line">print(d.items() &amp; e.items())</div><div class="line">c = &#123;key: d[key] for key in d.keys() - &#123;&apos;z&apos;, &apos;b&apos;&#125;&#125;</div><div class="line">print(c)</div></pre></td></tr></table></figure>
-<h1 id="从序列中去除重复元素"><a href="#从序列中去除重复元素" class="headerlink" title="从序列中去除重复元素"></a>从序列中去除重复元素</h1><p>如果一个对象是可哈希的，那么在它的生存期内必须是不可变的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">def dedupe(items, key=None):</div><div class="line">	seen = set()</div><div class="line">	for item in items:</div><div class="line">		val = item if key is None else key(item)</div><div class="line">		if val not in seen:</div><div class="line">			yield item</div><div class="line">			seen.add(val)</div><div class="line">a = [ &#123;&apos;x&apos;: 1, &apos;y&apos;: 2&#125;, &#123;&apos;x&apos;: 1, &apos;y&apos;: 2&#125;]</div><div class="line"># 将值转换成元组,hashable</div><div class="line">print(list(dedupe(a, key=lambda d: (d[&apos;x&apos;], d[&apos;y&apos;]))))</div></pre></td></tr></table></figure>
-<h1 id="寻找序列中出现次数最多的元素"><a href="#寻找序列中出现次数最多的元素" class="headerlink" title="寻找序列中出现次数最多的元素"></a>寻找序列中出现次数最多的元素</h1><p>使用collections里面的Counter类，可以给该对象提供任何可哈希的对象序列作为输入，是一个字典，在元素和它们出现的次数之间做了映射。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">from collections import Counter</div><div class="line">word_counts = Counter(words)</div><div class="line">top_three = word_counts.most_common(3)</div><div class="line">print(top_three)</div><div class="line">record = &quot;32323432435435235326253435436546547643&quot;</div><div class="line">from collections import Counter</div><div class="line">record = list(record)</div><div class="line">counts = Counter(record)</div><div class="line">top_five = counts.most_common(5)</div><div class="line">print(top_five)</div><div class="line">print(counts[&apos;3&apos;])</div><div class="line">more = list(&quot;43542354&quot;)</div><div class="line">counts.update(more)</div><div class="line">print(counts[&apos;3&apos;])</div><div class="line"># Counter对象支持数学运算</div><div class="line">counts1 = Counter(more)</div><div class="line">print(counts + counts1)</div></pre></td></tr></table></figure>
-<h1 id="使用itemgetter来对字典列表排序"><a href="#使用itemgetter来对字典列表排序" class="headerlink" title="使用itemgetter来对字典列表排序"></a>使用itemgetter来对字典列表排序</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">rows = [</div><div class="line">	&#123;&apos;fname&apos;: &apos;Brian&apos;, &apos;lname&apos;: &apos;Jones&apos;, &apos;uid&apos;: 1003&#125;,</div><div class="line">	&#123;&apos;fname&apos;: &apos;Kevin&apos;, &apos;lname&apos;: &apos;Du&apos;, &apos;uid&apos;: 1000&#125;</div><div class="line">]</div><div class="line">from operator import itemgetter</div><div class="line">＃ 类似一个方法，通过itemgetter的到rows的属性fname作为key，item表示项，和后面的attr属性有所区别，属性则用于类</div><div class="line">rows_by_fname = sorted(rows, key=itemgetter(&apos;fname&apos;))</div><div class="line">print(rows_by_fname)</div><div class="line">rows_by_lname = sorted(rows, key=itemgetter(&apos;lname&apos;))</div><div class="line">print(rows_by_lname)</div><div class="line">rows_by_nameid = sorted(rows, key=itemgetter(&apos;lname&apos;, &apos;uid&apos;))</div><div class="line">print(rows_by_nameid)</div><div class="line"># 也可以使用lambda表达式代替</div><div class="line">rows_by_fname = sorted(rows, key=lambda r: r[&apos;fname&apos;])</div><div class="line"># 但是使用itemgetter更快一些</div><div class="line">print(rows_by_fname)</div><div class="line"># 也适用于min和max函数</div></pre></td></tr></table></figure>
-<h1 id="使用attrgetter来对类进行排序"><a href="#使用attrgetter来对类进行排序" class="headerlink" title="使用attrgetter来对类进行排序"></a>使用attrgetter来对类进行排序</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">class User:</div><div class="line">	def __init__(self, user_id):</div><div class="line">		self.user_id = user_id</div><div class="line">	def __repr__(self):</div><div class="line">		return &apos;User(&#123;&#125;)&apos;.format(self.user_id)</div><div class="line"></div><div class="line">def sort_notcompare():</div><div class="line">	users = [User(23), User(3), User(99)]</div><div class="line">	print(users)</div><div class="line">	print(sorted(users, key=lambda a: a.user_id))</div><div class="line"></div><div class="line">from operator import attrgetter</div><div class="line">users = [User(23), User(3), User(99), User(43)]</div><div class="line">print(users)</div><div class="line">print(sorted(users, key=attrgetter(&apos;user_id&apos;)))</div><div class="line">sort_notcompare()</div></pre></td></tr></table></figure>
-<h1 id="itertools的groupby函数对数据进行分组"><a href="#itertools的groupby函数对数据进行分组" class="headerlink" title="itertools的groupby函数对数据进行分组"></a>itertools的groupby函数对数据进行分组</h1><p>itertools.groupby()函数扫描整个序列并且查找连续相同的值的元素序列，每次迭代的时候返回一个值和一个迭代器对象，这个迭代器对象可以生成元素值全部等于上面那个值的组中所有对象。但是必须根据指定的字段将数据排序，groupby函数仅仅检查连续的元素。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">from operator import itemgetter</div><div class="line">from itertools import groupby</div><div class="line">rows = [</div><div class="line">	&#123;&apos;date&apos;: &apos;01/01&apos;, &apos;item&apos;: 1&#125;,</div><div class="line">	&#123;&apos;date&apos;: &apos;02/01&apos;, &apos;item&apos;: 2&#125;,</div><div class="line">	&#123;&apos;date&apos;: &apos;01/01&apos;, &apos;item&apos;: 2&#125;</div><div class="line">]</div><div class="line"># 首先进行排序</div><div class="line"># 或者使用itemgetter, 用于字典</div><div class="line">rows.sort(key=itemgetter(&apos;date&apos;))</div><div class="line">print(rows)</div><div class="line">rows.sort(key=lambda x: x[&apos;item&apos;])</div><div class="line"># 返回值以及分组的组</div><div class="line">for date, item in groupby(rows, key=lambda x: x[&apos;item&apos;]):</div><div class="line">	print(date)</div><div class="line">	for i in item:</div><div class="line">		print(&quot; &quot;,i)</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Python基本的数据结构与算法&lt;/p&gt;
-&lt;h1 id=&quot;collections-deque的用法&quot;&gt;&lt;a href=&quot;#collections-deque的用法&quot; class=&quot;headerlink&quot; title=&quot;collections.deque的用法&quot;&gt;&lt;/a&gt;co
-    
-    </summary>
-    
-      <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
-    
-    
-      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
-    
-      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
-    
-      <category term="Python_Cookbook" scheme="http://microndgt.github.io/tags/Python-Cookbook/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Effective Python 部署</title>
-    <link href="http://microndgt.github.io/2017/01/12/Effective-Python-%E9%83%A8%E7%BD%B2/"/>
-    <id>http://microndgt.github.io/2017/01/12/Effective-Python-部署/</id>
-    <published>2017-01-12T11:37:10.000Z</published>
-    <updated>2017-01-27T05:22:09.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Effective Python 的最后部分。</p>
-<h1 id="用适当的方式打破循环依赖关系"><a href="#用适当的方式打破循环依赖关系" class="headerlink" title="用适当的方式打破循环依赖关系"></a>用适当的方式打破循环依赖关系</h1><p>Python系统在执行import语句时的详细机制，引入模块时候，Python会按照深度优先的顺序执行下列操作</p>
-<ol>
-<li>在由sys.path所指定的路径中，搜寻待引入的模块</li>
-<li>从模块中加载代码，并且保证这段代码能够正确编译</li>
-<li>创建与该模块相对应的空对象</li>
-<li>把这个空的模块对象，添加到sys.modules里面</li>
-<li>运行模块对象中的代码，以定义其内容</li>
-</ol>
-<p>某些属性必须等Python系统把对应的代码执行完毕之后，才可以具有完整的定义，但是，包含该属性的模块，却只需要等Python系统执行完第四步，就可以用import语句引入并且添加到sys.modules</p>
-<p>解决这个问题的最佳方案，就是重构代码，将要重复用到的数据结构定义出来，然后app与dialog模块都引入这个工具模块，这样以避免出现循环依赖关系。</p>
-<p>三种解决办法：</p>
-<ol>
-<li>调整引入顺序</li>
-<li><p>先引入，再配置，最后运行</p>
-<p>只在模块中给出函数，类和常量的定义，而不要在引入的时候真正运行那些函数。在main模块中，分三个阶段来执行代码，首先引入所有的模块，然后配置他们，最后执行程序中的第一个动作。</p>
-</li>
-<li><p>动态引入</p>
-<p>在函数或者方法内部使用import语句，程序会等到真正需要运行相关代码时候，才会触发模块的引入操作，所以称为动态引入。但是有可能重复引入，这样也不好。</p>
-</li>
-</ol>
-<h1 id="用虚拟环境隔离项目，并重建其依赖关系"><a href="#用虚拟环境隔离项目，并重建其依赖关系" class="headerlink" title="用虚拟环境隔离项目，并重建其依赖关系"></a>用虚拟环境隔离项目，并重建其依赖关系</h1><p>使用pyvenv工具，提供了一套虚拟环境。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">which python</div><div class="line">python --version</div><div class="line"># 创建虚拟环境</div><div class="line">pyvenv /temp/myproject</div><div class="line">cd /tmp/myproject</div><div class="line">source bin/activate</div><div class="line">pip install pytz</div><div class="line">deactivate</div></pre></td></tr></table></figure>
-<h2 id="重建项目的依赖关系"><a href="#重建项目的依赖关系" class="headerlink" title="重建项目的依赖关系"></a>重建项目的依赖关系</h2><p><code>pip freeze</code> 使用这个命令，生成<code>requirements.txt</code>将开发环境软件包的依赖关系，明确的保存到文件中。</p>
-<p>然后<code>pip install -r /tmp/requirements.txt</code></p>
-<h1 id="考虑使用模块级别的代码来配置不同的部署环境"><a href="#考虑使用模块级别的代码来配置不同的部署环境" class="headerlink" title="考虑使用模块级别的代码来配置不同的部署环境"></a>考虑使用模块级别的代码来配置不同的部署环境</h1><p>想让Python程序付诸使用，必须从开发环境部署到生产环境中，要将Python程序产品化，令其能够稳定的运行在实际环境中。</p>
-<p>编写<code>__main__.py</code>文件</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;Effective Python 的最后部分。&lt;/p&gt;
-&lt;h1 id=&quot;用适当的方式打破循环依赖关系&quot;&gt;&lt;a href=&quot;#用适当的方式打破循环依赖关系&quot; class=&quot;headerlink&quot; title=&quot;用适当的方式打破循环依赖关系&quot;&gt;&lt;/a&gt;用适当的方式打破循环依赖关
-    
-    </summary>
-    
-      <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
-    
-    
-      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
-    
-      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Effective Python 并发与并行</title>
-    <link href="http://microndgt.github.io/2017/01/11/Effective-Python-%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%B9%B6%E8%A1%8C/"/>
-    <id>http://microndgt.github.io/2017/01/11/Effective-Python-并发与并行/</id>
-    <published>2017-01-11T11:20:40.000Z</published>
-    <updated>2017-01-27T05:23:55.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>看书学习后对以前不懂的概念越发的清晰了.</p>
-<p>并发是操作系统会在各程序之间迅速切换，使其都有机会运行在这一个处理器上，这种交错执行程序的方式，叫做并发。而并行是指，计算机是在同一时间做着不同的事情，多个核心的计算机，能够同时执行多个程序，使得这些程序能够在同一时刻向前推进。</p>
-<h1 id="用subprocess管理子进程"><a href="#用subprocess管理子进程" class="headerlink" title="用subprocess管理子进程"></a>用subprocess管理子进程</h1><p>由Python所启动的多个子进程，是可以平行运作的。最简单的子进程管理模块就是subprocess模块</p>
-<p>用Popen构造器来启动进程，然后使用communicate方法来读取子进程的输出信息，并等待其终止</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">proc = subprocess.Popen([&apos;echo&apos;, &apos;Hello from the child!&apos;], stdout=subprocess.PIPE)</div><div class="line">out, err = proc.communicate()</div><div class="line">print(out.decode(&apos;utf-8&apos;))</div></pre></td></tr></table></figure>
-<p>子进程会独立于父进程而运行，父进程就是Python解释器，把子进程从父进程中剥离，意味着父进程可以随意运行很多条平行的子进程。</p>
-<p>并且也可以从Python程序向子进程中输送数据，然后获取子进程的输出信息。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">def run_openssl(data):</div><div class="line">    env = os.environ.copy()</div><div class="line">    env[&apos;passwd&apos;] = b&apos;\xe24U\n&apos;</div><div class="line">    proc = subprocess.Popen([&apos;openssl&apos;, &apos;enc&apos;, &apos;-des3&apos;, &apos;-pass&apos;, &apos;env:password&apos;],</div><div class="line">        env=env,</div><div class="line">        stdin=subprocess.PIPE</div><div class="line">        stdout=subprocess.PIPE)</div><div class="line">    proc.stdin.write(data)</div><div class="line">    proc.stdin.flush()</div><div class="line">    return proc</div><div class="line">procs = []</div><div class="line">for _ in range(3):</div><div class="line">    data = os.urandom(10)</div><div class="line">    proc = run_openssl(data)</div><div class="line">    procs.append(proc)</div><div class="line"># 这些子进程就可以平行的运作并且处理他们的输入信息</div><div class="line">for proc in procs:</div><div class="line">    out, err = proc.communicate()</div><div class="line">    print(out[-10:])</div></pre></td></tr></table></figure>
-<h1 id="可以用线程来执行阻塞式I-O，但是不要用它做平行计算"><a href="#可以用线程来执行阻塞式I-O，但是不要用它做平行计算" class="headerlink" title="可以用线程来执行阻塞式I/O，但是不要用它做平行计算"></a>可以用线程来执行阻塞式I/O，但是不要用它做平行计算</h1><p>标准的Python实现叫做CPython，CPython分两步运行Python程序，首先，把文本形式的源代码解析并编译成字节码，然后用基于栈的解释器来运行这份字节码。执行Python程序时候，字节码解释器必须保持协调一致的状态，Python使用GIL全局解释器锁来确保这种协调性。</p>
-<p>GIL防止CPython受到占先式多线程切换操作的干扰，是指某个线程可以通过打断另外一个线程的方式，来获取程序控制权。所以同一时刻，只有一条线程可以向前执行。</p>
-<p>Python下的多线程有以下的好处，首先，多线程使得程序看上去好像能够在同一时间做许多事情。能够令Python程序自动以一种看似平行的方式，来执行这些函数。不过受到GIL限制，所以同一时刻实际上只能有一个线程得到执行。</p>
-<p>另外一个好处是处理阻塞式I/O操作，可以借助线程，把Python程序与这些耗时的I/O操作隔离开。尽管受制于GIL，但是用多个Python线程来执行系统调用的时候，这些系统调用可以平行的执行，GIL虽然使得Python代码无法执行，但是它对系统调用却没有任何负面影响，由于Python线程在执行系统调用的时候回释放GIL，并且一直要等到执行完毕才会重新获取它，所以GIL是不会影响系统调用的。</p>
-<h1 id="在线程中使用Lock来防止数据竞争"><a href="#在线程中使用Lock来防止数据竞争" class="headerlink" title="在线程中使用Lock来防止数据竞争"></a>在线程中使用Lock来防止数据竞争</h1><p>虽然同一时刻只有一个线程在运行，但是当这个线程正在操作某个数据结构的时候，其他线程可能会打断它，也就是说，Python解释器在执行两个连续的字节码时候，其他线程可能会在中途突然插进来。如果在多个线程中同时访问某个对象，那么中断现象就可能随时发生。一旦发生，就会破坏程序的状态，从而使相关的数据结构无法保持其一致性。</p>
-<p>为了防止这种数据竞争，Lock类，也相当于互斥锁，就可以保护自己的数据结构不受破坏。同一时刻，只有一个线程能够获得这把锁。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">class LockingCounter(object):</div><div class="line">    def __init__(self):</div><div class="line">        self.lock = Lock()</div><div class="line">        self.count = 0</div><div class="line">    def increment(self, offset):</div><div class="line">        with self.lock:</div><div class="line">            self.count += offset</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;看书学习后对以前不懂的概念越发的清晰了.&lt;/p&gt;
-&lt;p&gt;并发是操作系统会在各程序之间迅速切换，使其都有机会运行在这一个处理器上，这种交错执行程序的方式，叫做并发。而并行是指，计算机是在同一时间做着不同的事情，多个核心的计算机，能够同时执行多个程序，使得这些程序能够在同一时刻
-    
-    </summary>
-    
-      <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
-    
-    
-      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
-    
-      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python实用脚本系统管理</title>
-    <link href="http://microndgt.github.io/2017/01/10/Python%E5%AE%9E%E7%94%A8%E8%84%9A%E6%9C%AC%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86/"/>
-    <id>http://microndgt.github.io/2017/01/10/Python实用脚本系统管理/</id>
-    <published>2017-01-10T10:09:36.000Z</published>
-    <updated>2017-01-27T05:19:50.000Z</updated>
-    
-    <content type="html"><![CDATA[<p> 系统任务的自动化处理，解析命令行选项，操纵文件系统中的文件，获取有用的系统配置数据</p>
-<h1 id="通过重定向，管道或者输入文件来作为脚本的输入"><a href="#通过重定向，管道或者输入文件来作为脚本的输入" class="headerlink" title=" 通过重定向，管道或者输入文件来作为脚本的输入"></a> 通过重定向，管道或者输入文件来作为脚本的输入</h1><p> 接受任意一种对用户来说最为方便的输入机制，从命令中产生输出给脚本，把文件重定向到脚本，或者是在命令行中传递一个或者一列文件名给脚本。</p>
-<blockquote>
-<p>是可以将需要传入部分文件的那个东西，只设置一个-p bool参数，然后为True的时候重定向有用</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">import fileinput</div><div class="line">with fileinput.input() as f_input:</div><div class="line">    for line in f_input:</div><div class="line">        print(line, end=&apos;&apos;)</div></pre></td></tr></table></figure>
-<p>fileinput.input()创建并且返回一个FileInput类的实例，该实例可以用作上下文管理器使用</p>
-<h1 id="终止程序并显示错误信息"><a href="#终止程序并显示错误信息" class="headerlink" title="终止程序并显示错误信息"></a>终止程序并显示错误信息</h1><p>发出一个SystemExit异常，提供错误信息作为参数</p>
-<p><code>raise SystemExit(&#39;It failed&#39;)</code></p>
-<h1 id="解析命令行选项"><a href="#解析命令行选项" class="headerlink" title="解析命令行选项"></a>解析命令行选项</h1><p>argparse模块解析命令行选项</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">1. parser = argparse.ArgumentParser()</div><div class="line">2. parser.add_argument()</div><div class="line">3. args = parser.parse_args()</div><div class="line">参数用法什么的参考文档</div></pre></td></tr></table></figure>
-<p><a href="https://docs.python.org/3/library/argparse.html" target="_blank" rel="external">argparse模块使用指南</a></p>
-<h1 id="执行外部命令并获取输出"><a href="#执行外部命令并获取输出" class="headerlink" title="执行外部命令并获取输出"></a>执行外部命令并获取输出</h1><p>执行一个外部命令并把输出保存为一个Python字符串</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">import subprocess</div><div class="line">out_bytes = subprocess.check_output([&apos;netstat&apos;, &apos;-a&apos;])</div></pre></td></tr></table></figure>
-<p>输出结果以字节串形式返回，如果要以文本形式解读，可以再增加解码步骤</p>
-<p><code>out_text = out_bytes.decode(&#39;utf-8&#39;)</code></p>
-<p>该函数只会返回写入到标准输出中的结果，如果希望命令通过shell执行，可以将命令以简单的字符串形式提供并且指定参数shell=True</p>
-<p><code>out_bytes = subprocess.check_output(&#39;grep python | wc &gt; output&#39;, shell=True)</code></p>
-<p>如果需要实现自动向用户请求输入密码的任务，需要expect族的工具</p>
-<h1 id="拷贝或者移动文件和目录"><a href="#拷贝或者移动文件和目录" class="headerlink" title="拷贝或者移动文件和目录"></a>拷贝或者移动文件和目录</h1><p>shutil模块</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">import shutil</div><div class="line">shutil.copy(src, dst)</div><div class="line">shutil.copy2(src, dst) # preserve metadata</div><div class="line">shutil.copytree(src, dst)</div><div class="line">shutil.move(src, dst)</div></pre></td></tr></table></figure>
-<p>当和文件名打交道的时候，尽量使用os.path模块获得最佳的移植性</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">os.path.basename(path)</div><div class="line">os.path.dirname(path)</div><div class="line">os.path.split(filename)</div><div class="line">os.path.join(dir, filename)</div><div class="line">os.path.expanduser(path) # 把path中包含的&quot;~&quot;和&quot;~user&quot;转换成用户目录</div></pre></td></tr></table></figure>
-<h1 id="创建和解包归档文件"><a href="#创建和解包归档文件" class="headerlink" title="创建和解包归档文件"></a>创建和解包归档文件</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import shutil</div><div class="line">shutil.unpack_archive(&apos;python.zip&apos;)</div><div class="line">shutil.make_archive(&apos;py33&apos;, &apos;zip&apos;, root_dir)</div></pre></td></tr></table></figure>
-<h1 id="通过名称来查找文件"><a href="#通过名称来查找文件" class="headerlink" title="通过名称来查找文件"></a>通过名称来查找文件</h1><p>搜索文件可以使用<code>os.walk()</code>函数，将顶层目录提供给它即可，返回一个3元组，当前目录的相对路径，该目录包含的所有目录名的列表，以及该目录中所有文件名的列表</p>
-<p>使用<code>os.path.join()</code>来组合路径的时候，使用<code>os.path.abspath()</code>和<code>os.path.normpath()</code>来修正路径成标准化形式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">import os</div><div class="line">import time</div><div class="line">def modified_within(top, seconds):</div><div class="line">    now = time.time()</div><div class="line">    for path, dirs, files in os.walk(top):</div><div class="line">        for name in files:</div><div class="line">            fullpath = os.path.join(path, name)</div><div class="line">            if os.path.exists(fullpath):</div><div class="line">                mtime = os.path.getmtime(fullpath)</div><div class="line">                if mtime &gt; (now - seconds):</div><div class="line">                    print(fullpath)</div></pre></td></tr></table></figure>
-<h1 id="读取配置文件"><a href="#读取配置文件" class="headerlink" title="读取配置文件"></a>读取配置文件</h1><p>使用configparser模块来读取配置文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">from configparser import ConfigParser</div><div class="line">cfg = ConfigParser()</div><div class="line">cfg.read(&apos;config.ini&apos;)</div><div class="line">cfg.sections()</div><div class="line">cfg.get(&apos;installation&apos;, &apos;library&apos;)</div><div class="line">cfg.getboolean(&apos;debug&apos;, &apos;log_errors&apos;)</div><div class="line">cfg.getint(&apos;server&apos;, &apos;port&apos;)</div><div class="line"># 写入</div><div class="line">cfg.set(&apos;server&apos;, &apos;port&apos;, &apos;9000&apos;)</div><div class="line">cfg.write(filename)</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt; 系统任务的自动化处理，解析命令行选项，操纵文件系统中的文件，获取有用的系统配置数据&lt;/p&gt;
-&lt;h1 id=&quot;通过重定向，管道或者输入文件来作为脚本的输入&quot;&gt;&lt;a href=&quot;#通过重定向，管道或者输入文件来作为脚本的输入&quot; class=&quot;headerlink&quot; title
     
     </summary>
     
