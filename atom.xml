@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://microndgt.github.io/"/>
-  <updated>2017-02-20T09:26:41.000Z</updated>
+  <updated>2017-02-20T12:06:55.000Z</updated>
   <id>http://microndgt.github.io/</id>
   
   <author>
@@ -16,14 +16,14 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>局域网入侵记1</title>
-    <link href="http://microndgt.github.io/2017/02/20/%E5%B1%80%E5%9F%9F%E7%BD%91%E5%85%A5%E4%BE%B5%E8%AE%B01/"/>
-    <id>http://microndgt.github.io/2017/02/20/局域网入侵记1/</id>
+    <title>网络探险记1</title>
+    <link href="http://microndgt.github.io/2017/02/20/%E7%BD%91%E7%BB%9C%E6%8E%A2%E9%99%A9%E8%AE%B01/"/>
+    <id>http://microndgt.github.io/2017/02/20/网络探险记1/</id>
     <published>2017-02-20T08:52:29.000Z</published>
-    <updated>2017-02-20T09:26:41.000Z</updated>
+    <updated>2017-02-20T12:06:55.000Z</updated>
     
     <content type="html"><![CDATA[<p>我们的目标是－－－成为一名黑客～ 虽然现在啥都不会，可是有一颗黑客的心（秘制尴尬），哈哈哈</p>
-<p>最近深入研究了计算机网络，并且一直在开发web服务器，所以突发奇想看看自己所在局域网有没有可以入侵的主机;-)，公司的小伙伴可不要打我哟，我只是看看，不搞事情。。。</p>
+<p>最近深入研究了计算机网络，并且一直在开发web服务器，所以突发奇想看看自己所在局域网有没有可以探险的主机;-)，公司的小伙伴可不要打我哟，我只是看看，不搞事情。。。</p>
 <p>第一步查看下局域网中有哪些打开的端口，祭上大杀器NMAP扫描器！</p>
 <h1 id="NMAP扫描"><a href="#NMAP扫描" class="headerlink" title="NMAP扫描"></a>NMAP扫描</h1><p>使用客户端也行，命令行也行，命令：<code>nmap -p 1-65535 -T4 -A -v 192.168.0.*</code>，这里只检测TCP连接。检测很快就有结果了：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Initiating SYN Stealth Scan at 16:28</div><div class="line">Scanning 8 hosts [65535 ports/host]</div><div class="line">Discovered open port 445/tcp on 192.168.0.104</div><div class="line">Discovered open port 8888/tcp on 192.168.0.101</div><div class="line">Discovered open port 8080/tcp on 192.168.0.112</div><div class="line">Discovered open port 3306/tcp on 192.168.0.117</div><div class="line">Discovered open port 22/tcp on 192.168.0.117</div><div class="line">Discovered open port 80/tcp on 192.168.0.1</div><div class="line">Discovered open port 135/tcp on 192.168.0.104</div><div class="line">Discovered open port 139/tcp on 192.168.0.104</div><div class="line">SYN Stealth Scan Timing: About 0.57% done</div></pre></td></tr></table></figure>
@@ -55,7 +55,7 @@
     <summary type="html">
     
       &lt;p&gt;我们的目标是－－－成为一名黑客～ 虽然现在啥都不会，可是有一颗黑客的心（秘制尴尬），哈哈哈&lt;/p&gt;
-&lt;p&gt;最近深入研究了计算机网络，并且一直在开发web服务器，所以突发奇想看看自己所在局域网有没有可以入侵的主机;-)，公司的小伙伴可不要打我哟，我只是看看，不搞事情。。。&lt;/
+&lt;p&gt;最近深入研究了计算机网络，并且一直在开发web服务器，所以突发奇想看看自己所在局域网有没有可以探险的主机;-)，公司的小伙伴可不要打我哟，我只是看看，不搞事情。。。&lt;/
     
     </summary>
     
