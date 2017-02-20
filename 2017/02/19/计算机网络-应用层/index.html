@@ -1,0 +1,403 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>计算机网络 应用层 | SkyRover</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Kevin">
+    
+    <meta name="description" content="网络应用方面的原理和实现，包括应用程序所需要使用的网络服务，客户和服务器，进程和运输层接口。研发网络应用程序的核心是写出能够运行在不同的端系统和通过网络彼此通信的程序。
+应用层协议原理网络应用程序体系结构网络体系结构是固定的，为应用程序提供了特定的服务集合，应用程序体系结构主要有一下：客户－服务器体">
+    
+    
+    
+    
+    <link rel="alternative" href="atom.xml" title="SkyRover" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/myLogo.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/myLogo.png">
+    
+
+  
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="SkyRover">SkyRover</a></h1>
+				<h2 class="blog-motto">做我的仲夏夜之梦～</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="st-search-inpu" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/02/19/计算机网络-应用层/" title="计算机网络 应用层" itemprop="url">计算机网络 应用层</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2017-02-19T03:06:16.000Z" itemprop="datePublished">Feb 19 2017</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#应用层协议原理"><span class="toc-number">1.</span> <span class="toc-text">应用层协议原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#网络应用程序体系结构"><span class="toc-number">1.1.</span> <span class="toc-text">网络应用程序体系结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#进程通信"><span class="toc-number">1.2.</span> <span class="toc-text">进程通信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可供应用程序使用的运输服务"><span class="toc-number">1.3.</span> <span class="toc-text">可供应用程序使用的运输服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#因特网提供的运输服务"><span class="toc-number">1.4.</span> <span class="toc-text">因特网提供的运输服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#应用层协议"><span class="toc-number">1.5.</span> <span class="toc-text">应用层协议</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTTP"><span class="toc-number">2.</span> <span class="toc-text">HTTP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#概况"><span class="toc-number">2.1.</span> <span class="toc-text">概况</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#非持续连接和持续连接"><span class="toc-number">2.2.</span> <span class="toc-text">非持续连接和持续连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP请求报文"><span class="toc-number">2.3.</span> <span class="toc-text">HTTP请求报文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP响应报文"><span class="toc-number">2.4.</span> <span class="toc-text">HTTP响应报文</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用户和服务器的交互：cookie"><span class="toc-number">2.5.</span> <span class="toc-text">用户和服务器的交互：cookie</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#web缓存"><span class="toc-number">2.6.</span> <span class="toc-text">web缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#条件get方法"><span class="toc-number">2.7.</span> <span class="toc-text">条件get方法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FTP"><span class="toc-number">3.</span> <span class="toc-text">FTP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DNS"><span class="toc-number">4.</span> <span class="toc-text">DNS</span></a></li></ol>
+		</div>
+		
+		<p>网络应用方面的原理和实现，包括应用程序所需要使用的网络服务，客户和服务器，进程和运输层接口。研发网络应用程序的核心是写出能够运行在不同的端系统和通过网络彼此通信的程序。</p>
+<h1 id="应用层协议原理"><a href="#应用层协议原理" class="headerlink" title="应用层协议原理"></a>应用层协议原理</h1><h2 id="网络应用程序体系结构"><a href="#网络应用程序体系结构" class="headerlink" title="网络应用程序体系结构"></a>网络应用程序体系结构</h2><p>网络体系结构是固定的，为应用程序提供了特定的服务集合，应用程序体系结构主要有一下：客户－服务器体系结构或者对等P2P体系结构</p>
+<p>客户－服务器体系结构有一个打开的主机作为服务器，服务于来自其他客户的主机请求，客户通过向该服务器的IP地址发送分组来与其联系。</p>
+<p>P2P体系结构中，应用程序在间断链接的主机对之间使用直接通信，这些主机对被称为对等方，通信不必经过专门的服务器，在即时讯息应用，服务器被用于跟踪用户的IP地址，用户和用户的报文在用户主机之间直接发送。</p>
+<h2 id="进程通信"><a href="#进程通信" class="headerlink" title="进程通信"></a>进程通信</h2><p>进行通信的实际上是进程而不是程序，进程运行在相同的端系统上时，他们使用进程间通信机制相互通信，进程间通信规则由端系统上的操作系统确定。两个不同端系统上的进行，通过跨越计算机网络交换报文而相互通信。</p>
+<p>进程通过一个被称为套接字的软件接口向网络发送报文和从网络接收报文。套接字是同一台主机内应用层与运输层之间的接口，由于该套接字是建立网络应用程序的可编程接口，因此套接字也称为应用程序和网络之间的应用程序编程接口。开发者可以控制套接字在应用层端的一切，但是对套接字在运输层端几乎没有控制权。</p>
+<p>为了标识接收进程，需要定义两种信息，主机的地址和接收进程标识符。IP地址和目的端口号。</p>
+<h2 id="可供应用程序使用的运输服务"><a href="#可供应用程序使用的运输服务" class="headerlink" title="可供应用程序使用的运输服务"></a>可供应用程序使用的运输服务</h2><p>主要有可靠运输服务，吞吐量，定时和安全性。</p>
+<p>可靠运输：确保数据交付服务，进程到进程之间的可靠数据传输</p>
+<p>吞吐量：发送进程能够向接收进程交付比特的速率，运输层协议能够以某种特定的速率提供确保的可用吞吐量，使用这种服务，应用程序能够请求r比特/s的确保吞吐量</p>
+<p>定时：提供定时保证</p>
+<p>安全性，运输协议能够为应用程序提供一种或者多种安全性服务。</p>
+<h2 id="因特网提供的运输服务"><a href="#因特网提供的运输服务" class="headerlink" title="因特网提供的运输服务"></a>因特网提供的运输服务</h2><p>TCP：包括面向链接的服务和可靠数据传输服务，在应用层数据开始流动之前，TCP让服务器和客户互联，即握手，之后TCP链接就在两个进程的套接字之间建立了，是全双工的，即链接双方的进程可以在此链接上同时进行报文收发。同时其具有拥塞控制机制。</p>
+<p>SSL：安全套接字层，是对TCP的加强，这种强化是在应用层上实现的。</p>
+<p>UDP：不提供不必要服务的轻量级运输协议，提供最小服务，提供一种不可靠数据传送服务，不保证报文将到达接收进程，到达也可能是乱序到达的，没有拥塞控制机制。</p>
+<p>当前互联网能够为时间敏感应用提供服务，但是不能提供定时或者带宽保证。</p>
+<h2 id="应用层协议"><a href="#应用层协议" class="headerlink" title="应用层协议"></a>应用层协议</h2><p>定义了运行在不同端系统的应用程序进程如何相互传递报文，定义了</p>
+<ul>
+<li>交换的报文类型</li>
+<li>各种报文类型的语法</li>
+<li>字段的语义</li>
+<li>一个进程何时以及如何发送报文，对报文进行响应的规则</li>
+</ul>
+<p>web的应用层协议是HTTP，定义了在浏览器和web服务器之间传输的报文格式和序列</p>
+<h1 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h1><h2 id="概况"><a href="#概况" class="headerlink" title="概况"></a>概况</h2><p>超文本传输协议，HTTP，web的核心，HTTP由两个程序实现，一个客户程序，一个服务器程序，客户程序和服务器程序运行在不同的端系统中，通过交换HTTP报文进行会话。</p>
+<p>每个URL地址由两部分组成，存放对象的服务器主机名和对象的路径名</p>
+<p>web浏览器实现了HTTP的客户端，web服务器实现了HTTP的服务器端，存储web对象，每个对象由URL寻址。</p>
+<p>HTTP定义了web客户向web服务器请求web页面的方式，以及服务器向客户传送web页面的方式。HTTP使用TCP作为他的支撑运输协议。</p>
+<p>服务器向客户发送被请求的文件，而不存储任何关于该客户的状态信息，所以HTTP是一个无状态协议。</p>
+<h2 id="非持续连接和持续连接"><a href="#非持续连接和持续连接" class="headerlink" title="非持续连接和持续连接"></a>非持续连接和持续连接</h2><p>HTTP在其默认方式下使用持续连接，HTTP客户和服务器能够配置成使用非持续连接。每个请求响应对是经一个单独的TCP连接发送，非持续连接。所有请求和响应经过相同的TCP链接发送，持续连接。</p>
+<p>往返时间RTT，指一个短分组从客户到服务器然后再返回客户所花费的时间。因此一个TCP连接总的响应时间是两个RTT加上服务传输HTML文件的时间，三次握手及传输。</p>
+<p>采用持续连接，服务器在发送响应后保持该TCP连接打开，在相同的客户与服务器之间的后续请求和响应报文能够通过相同的连接进行传送。如果经过一定时间间隔没有使用，HTTP服务器就关闭该链接。</p>
+<h2 id="HTTP请求报文"><a href="#HTTP请求报文" class="headerlink" title="HTTP请求报文"></a>HTTP请求报文</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">GET /somedir/sth.html HTTP/1.1</div><div class="line">Host: www.someschool.edu</div><div class="line">Connection: close</div><div class="line">User-agent: Mozilla/5.0</div><div class="line">Accept-language: fr</div></pre></td></tr></table></figure>
+<p>每行由一个回车和换行符结束，最后一行再附加一个回车换行符。第一行是请求行，其后继行叫做首部行，对于POST请求，后面还附有实体体。Connection close说明服务器不希望使用持续连接。</p>
+<h2 id="HTTP响应报文"><a href="#HTTP响应报文" class="headerlink" title="HTTP响应报文"></a>HTTP响应报文</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">HTTP/1.1 200 OK</div><div class="line">Connection: close</div><div class="line">Date: Tue, 09 Aug 2016 15:44:04 GMT</div><div class="line">Server: Apache/2.2.3 (CentOS)</div><div class="line">Last-Modified:</div><div class="line">Content-Length: 6821</div><div class="line">Content-Type: text/html</div><div class="line"></div><div class="line">(data...)</div></pre></td></tr></table></figure>
+<p>初始状态行，首部行和实体体，Date是服务器产生并且发送该响应报文的日期和时间。</p>
+<h2 id="用户和服务器的交互：cookie"><a href="#用户和服务器的交互：cookie" class="headerlink" title="用户和服务器的交互：cookie"></a>用户和服务器的交互：cookie</h2><p>HTTP使用cookie允许站点对用户进行跟踪</p>
+<p>HTTP响应报文中一个cookie首部行，HTTP请求报文中一个cookie首部行，用户端系统保留有一个cookie文件，并有用户的浏览器进行管理，后端Web站点有一个后端数据库。</p>
+<p>cookie用于标识一个用户，用户首次访问一个站点需要一个用户标识，cookie可以在无状态的HTTP上建立了一个用户会话层。</p>
+<h2 id="web缓存"><a href="#web缓存" class="headerlink" title="web缓存"></a>web缓存</h2><p>web缓存器也叫做代理服务器，他是能够代表初始web服务器来满足http请求的网络实体，具体内容见书74页。web缓存器既是服务器又是客户，当它接收浏览器的请求并且发回响应的时候是服务器，当它向初始服务器发送请求并且接收响应时候，是一个客户。</p>
+<p>web缓存器可以大大减少对客户请求的响应时间，特别是客户与初始服务器之间的瓶颈带宽远低于客户与web缓存器之间的瓶颈带宽时。</p>
+<p>通过使用内容分发网络，CDN，web缓存器，CDN公司安装了地理上分散的缓存器，使得大量流量本地化。</p>
+<h2 id="条件get方法"><a href="#条件get方法" class="headerlink" title="条件get方法"></a>条件get方法</h2><p>http协议有一种机制，允许缓存器证实它的对象是最新的，就是条件get方法，请求报文使用get方法， 有一个<code>If-Modified-Since</code>首部，其内容是日期，指当指定日期之后该对象被修改过，才发送该对象。作为对条件get方法的响应，web服务器仍然发送一个响应报文，但是没有在响应报文中包含所请求的对象，如果没有修改过的话。<code>304 Not Modified</code>表示缓存器可以使用该对象，能向请求的浏览器转发它缓存的该对象副本。</p>
+<h1 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h1><p>FTP与HTTP都是运行在TCP上，FTP用了两个并行的TCP来传输文件，一个是控制链接，一个是数据连接。控制链接用于在两主机上传输控制信息，数据连接用于实际发送文件数据，HTTP是在同一个TCP连接内发送请求和响应的，HTTP是带内发送控制信息的，FTP是带外发送控制信息的。</p>
+<p>FTP的客户首先在服务器21号端口发起一个用于控制的TCP连接。对FTP传输而言，控制连接贯穿了整个用户会话期间，但是对会话的每次文件传输都需要建立一个新的数据连接，数据连接是非持续的。</p>
+<p>FTP服务器将对每个进行中的用户会话状态信息进行追踪，大大限制了FTP同时维护的会话总数。</p>
+<h1 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h1>  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/计算机科学/">计算机科学</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/计算机网络/">计算机网络</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://microndgt.github.io/2017/02/19/计算机网络-应用层/" data-title="计算机网络 应用层 | SkyRover" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/02/19/BAIDU的DNS解析/" title="BAIDU的DNS解析">
+  <strong>新一篇:</strong><br/>
+  <span>
+  BAIDU的DNS解析</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/02/17/Python后台开发工程师面试指南/"  title="Python后台开发工程师面试指南">
+ <strong>旧一篇:</strong><br/> 
+ <span>Python后台开发工程师面试指南
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="计算机网络 应用层" data-thread-key="计算机网络-应用层" data-author-key="Kevin" data-url="http://microndgt.github.io/post/计算机网络-应用层"></div>
+	
+</section>
+
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© Kevin</span>
+		
+	<div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"microndgt"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';    //change to ds.src = '/js/embed.js'; to add useragent for duoshuo
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>

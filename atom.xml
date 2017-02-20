@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://microndgt.github.io/"/>
-  <updated>2017-02-17T15:21:55.000Z</updated>
+  <updated>2017-02-20T02:14:51.000Z</updated>
   <id>http://microndgt.github.io/</id>
   
   <author>
@@ -14,6 +14,120 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>BAIDU的DNS解析</title>
+    <link href="http://microndgt.github.io/2017/02/19/BAIDU%E7%9A%84DNS%E8%A7%A3%E6%9E%90/"/>
+    <id>http://microndgt.github.io/2017/02/19/BAIDU的DNS解析/</id>
+    <published>2017-02-19T09:31:18.000Z</published>
+    <updated>2017-02-20T02:14:51.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天用<code>nslookup</code>命令解析查看了<code>www.baidu.com</code>的IP地址，却意外发现百度的<code>CNAME</code>居然是<code>www.a.shifen.com</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">nslookup www.baidu.com</div><div class="line">&gt;&gt;&gt;</div><div class="line">Server:		119.29.29.29</div><div class="line">Address:	119.29.29.29#53</div><div class="line"></div><div class="line">Non-authoritative answer:</div><div class="line">www.baidu.com	canonical name = www.a.shifen.com.</div><div class="line">Name:	www.a.shifen.com</div><div class="line">Address: 220.181.111.188</div><div class="line">Name:	www.a.shifen.com</div><div class="line">Address: 220.181.112.244</div></pre></td></tr></table></figure>
+<p>接下来看看一个详细的baidu的dns解析过程</p>
+<p>理论上，目前我的电脑通过ISP接入互联网，ISP就会分配一个本地DNS服务器（非权威服务器），然后我的电脑向这个ISP DNS服务器发起请求，查询<code>www.baidu.com</code>的IP地址。</p>
+<p>首先DNS会检查自己的缓存里面有没有这个地址，如果有的话直接返回，没有的话，ISP会把请求发送给根DNS服务器（13台），然后根DNS服务器发现是<code>.com</code>结尾，是<code>.com</code>这个顶级域名下的，就告诉请求者负责解析<code>.com</code>的DNS服务器，ISP DNS再次向baidu.com这个域的权威服务器发起请求，服务器收到之后，查一下www这台主机，然后把IP返回给IPS DNS，然后把地址返回给PC，并且存入缓存中，以便再次访问。</p>
+<p>使用dig命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">+trace 表示将显示从根域逐级查询的过程，追踪dns解析中的问题</div><div class="line">+tcp dig默认使用udp协议，使用tcp方式</div></pre></td></tr></table></figure>
+<p><code>dig www.baidu.com</code>的结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">kevin:~ $ dig www.baidu.com</div><div class="line"># 版本信息和全局设置选项</div><div class="line">; &lt;&lt;&gt;&gt; DiG 9.8.3-P1 &lt;&lt;&gt;&gt; www.baidu.com</div><div class="line">;; global options: +cmd</div><div class="line"># DNS返回的技术信息</div><div class="line">;; Got answer:</div><div class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 20158</div><div class="line">;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 0</div><div class="line"># 问题，查询的名字和类型字段，A记录</div><div class="line">;; QUESTION SECTION:</div><div class="line">;www.baidu.com.			IN	A</div><div class="line"># 回答，对查询的响应中的RR</div><div class="line">;; ANSWER SECTION:</div><div class="line">www.baidu.com.		1014	IN	CNAME	www.a.shifen.com.</div><div class="line">www.a.shifen.com.	114	IN	A	220.181.111.188</div><div class="line">www.a.shifen.com.	114	IN	A	220.181.112.244</div><div class="line"># 查询的统计数据</div><div class="line">;; Query time: 60 msec</div><div class="line">;; SERVER: 119.29.29.29#53(119.29.29.29)</div><div class="line">;; WHEN: Sun Feb 19 15:07:00 2017</div><div class="line">;; MSG SIZE  rcvd: 90</div></pre></td></tr></table></figure>
+<p>然后使用trace功能，从头显示dns解析过程：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">kevin@duguangtingdeMacBook-Pro:~ $ dig +trace www.baidu.com</div><div class="line"># 查询根DNS服务器</div><div class="line">; &lt;&lt;&gt;&gt; DiG 9.8.3-P1 &lt;&lt;&gt;&gt; +trace www.baidu.com</div><div class="line">;; global options: +cmd</div><div class="line">.			335103	IN	NS	m.root-servers.net.</div><div class="line">.			335103	IN	NS	a.root-servers.net.</div><div class="line">.			335103	IN	NS	j.root-servers.net.</div><div class="line">.			335103	IN	NS	e.root-servers.net.</div><div class="line">.			335103	IN	NS	c.root-servers.net.</div><div class="line">.			335103	IN	NS	i.root-servers.net.</div><div class="line">.			335103	IN	NS	b.root-servers.net.</div><div class="line">.			335103	IN	NS	g.root-servers.net.</div><div class="line">.			335103	IN	NS	h.root-servers.net.</div><div class="line">.			335103	IN	NS	k.root-servers.net.</div><div class="line">.			335103	IN	NS	l.root-servers.net.</div><div class="line">.			335103	IN	NS	d.root-servers.net.</div><div class="line">.			335103	IN	NS	f.root-servers.net.</div><div class="line">;; Received 228 bytes from 119.29.29.29#53(119.29.29.29) in 3126 ms</div><div class="line"># 查询到的com顶级域dns服务器</div><div class="line">com.			172800	IN	NS	e.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	b.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	j.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	m.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	i.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	f.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	a.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	g.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	h.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	l.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	k.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	c.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	d.gtld-servers.net.</div><div class="line">;; Received 503 bytes from 198.41.0.4#53(198.41.0.4) in 5139 ms</div><div class="line"># 查询到的baidu.com权威dns服务器</div><div class="line">baidu.com.		172800	IN	NS	dns.baidu.com.</div><div class="line">baidu.com.		172800	IN	NS	ns2.baidu.com.</div><div class="line">baidu.com.		172800	IN	NS	ns3.baidu.com.</div><div class="line">baidu.com.		172800	IN	NS	ns4.baidu.com.</div><div class="line">baidu.com.		172800	IN	NS	ns7.baidu.com.</div><div class="line">;; Received 201 bytes from 192.52.178.30#53(192.52.178.30) in 1697 ms</div><div class="line"># 查询到的别名</div><div class="line">www.baidu.com.		1200	IN	CNAME	www.a.shifen.com.</div><div class="line">a.shifen.com.		1200	IN	NS	ns1.a.shifen.com.</div><div class="line">a.shifen.com.		1200	IN	NS	ns3.a.shifen.com.</div><div class="line">a.shifen.com.		1200	IN	NS	ns5.a.shifen.com.</div><div class="line">a.shifen.com.		1200	IN	NS	ns4.a.shifen.com.</div><div class="line">a.shifen.com.		1200	IN	NS	ns2.a.shifen.com.</div><div class="line">;; Received 228 bytes from 61.135.165.235#53(61.135.165.235) in 123 ms</div></pre></td></tr></table></figure>
+<p>首先获取13个根服务器的13个IP和主机名，然后向其中一个<code>198.41.0.4</code>发送<code>www.baidu.com</code>请求，返回<code>.com</code>顶级域的服务器IP，接着向<code>.com</code>域的一台服务器<code>192.52.178.30</code>请求，返回<code>baidu.com</code>域名服务器IP和名称，向百度的顶级域名服务器<code>dns.baidu.com</code>请求<code>www.baidu.com</code>，他发现这个www有别名叫<code>www.a.shifen.com</code>。</p>
+<p>一般来讲，dns请求到别名的时候，查询就会终止，然后重新发起查询别名的请求，所以应该返回<code>www.a.shifen.com</code>，但是其实它返回了<code>a.shifen.com</code>的NS</p>
+<p>再使用dig工具来查询一下<code>shifen.com</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">kevin@duguangtingdeMacBook-Pro:~ $ dig +trace shifen.com</div><div class="line"># 查询的根DNS服务器</div><div class="line">; &lt;&lt;&gt;&gt; DiG 9.8.3-P1 &lt;&lt;&gt;&gt; +trace shifen.com</div><div class="line">;; global options: +cmd</div><div class="line">.			188674	IN	NS	a.root-servers.net.</div><div class="line">.			188674	IN	NS	b.root-servers.net.</div><div class="line">.			188674	IN	NS	h.root-servers.net.</div><div class="line">.			188674	IN	NS	d.root-servers.net.</div><div class="line">.			188674	IN	NS	g.root-servers.net.</div><div class="line">.			188674	IN	NS	l.root-servers.net.</div><div class="line">.			188674	IN	NS	m.root-servers.net.</div><div class="line">.			188674	IN	NS	f.root-servers.net.</div><div class="line">.			188674	IN	NS	j.root-servers.net.</div><div class="line">.			188674	IN	NS	c.root-servers.net.</div><div class="line">.			188674	IN	NS	i.root-servers.net.</div><div class="line">.			188674	IN	NS	e.root-servers.net.</div><div class="line">.			188674	IN	NS	k.root-servers.net.</div><div class="line">;; Received 228 bytes from 119.29.29.29#53(119.29.29.29) in 1573 ms</div><div class="line"># com顶级域dns服务器</div><div class="line">com.			172800	IN	NS	g.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	a.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	c.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	f.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	e.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	l.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	m.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	i.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	b.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	j.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	h.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	d.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	k.gtld-servers.net.</div><div class="line">;; Received 488 bytes from 192.33.4.12#53(192.33.4.12) in 2454 ms</div><div class="line"># shifen.com 权威dns服务器</div><div class="line">shifen.com.		172800	IN	NS	dns.baidu.com.</div><div class="line">shifen.com.		172800	IN	NS	ns2.baidu.com.</div><div class="line">shifen.com.		172800	IN	NS	ns3.baidu.com.</div><div class="line">shifen.com.		172800	IN	NS	ns4.baidu.com.</div><div class="line">;; Received 170 bytes from 192.33.14.30#53(192.33.14.30) in 430 ms</div><div class="line"># 最终的A记录和NS记录</div><div class="line">shifen.com.		7200	IN	A	202.108.250.218</div><div class="line">shifen.com.		86400	IN	NS	ns4.baidu.com.</div><div class="line">shifen.com.		86400	IN	NS	ns3.baidu.com.</div><div class="line">shifen.com.		86400	IN	NS	ns2.baidu.com.</div><div class="line">shifen.com.		86400	IN	NS	ns1.baidu.com.</div><div class="line">;; Received 186 bytes from 61.135.165.235#53(61.135.165.235) in 24 ms</div></pre></td></tr></table></figure>
+<p>从这里可以看出来<code>shifen.com</code>和<code>baidu.com</code>的域名服务器是同一台，当拿到别名<code>www.a.shifen.com</code>的时候，本来要重新到com域查找<code>shifen.com</code>的NS，又因为两个域在同一台NS上，所以直接本机发起了<code>shifen.com</code>请求，发现<code>www.a.shifen.com</code>是属于<code>a.shifen.com</code>这个域的，所以直接访问<code>shifen.com</code>所返回的IP地址，结果是<code>403 Forbidden</code>，所以应该去到<code>a.shifen.com</code>这个域获取，于是把<code>a.shifen.com</code>这个NS和IP返回，然后在<code>a.shifen.com</code>这个域的域名服务器上查询<code>www.a.shifen.com</code>，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line">kevin@duguangtingdeMacBook-Pro:~/Desktop/work/capacity $ dig www.a.shifen.com +trace</div><div class="line"># 根dns服务器</div><div class="line">; &lt;&lt;&gt;&gt; DiG 9.8.3-P1 &lt;&lt;&gt;&gt; www.a.shifen.com +trace</div><div class="line">;; global options: +cmd</div><div class="line">.			174188	IN	NS	a.root-servers.net.</div><div class="line">.			174188	IN	NS	b.root-servers.net.</div><div class="line">.			174188	IN	NS	h.root-servers.net.</div><div class="line">.			174188	IN	NS	d.root-servers.net.</div><div class="line">.			174188	IN	NS	g.root-servers.net.</div><div class="line">.			174188	IN	NS	l.root-servers.net.</div><div class="line">.			174188	IN	NS	m.root-servers.net.</div><div class="line">.			174188	IN	NS	f.root-servers.net.</div><div class="line">.			174188	IN	NS	j.root-servers.net.</div><div class="line">.			174188	IN	NS	c.root-servers.net.</div><div class="line">.			174188	IN	NS	i.root-servers.net.</div><div class="line">.			174188	IN	NS	e.root-servers.net.</div><div class="line">.			174188	IN	NS	k.root-servers.net.</div><div class="line">;; Received 228 bytes from 119.29.29.29#53(119.29.29.29) in 39 ms</div><div class="line"># com域</div><div class="line">com.			172800	IN	NS	c.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	d.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	m.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	j.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	f.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	e.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	b.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	h.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	a.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	k.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	i.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	l.gtld-servers.net.</div><div class="line">com.			172800	IN	NS	g.gtld-servers.net.</div><div class="line">;; Received 494 bytes from 192.203.230.10#53(192.203.230.10) in 523 ms</div><div class="line"># 先查的是shifen.com</div><div class="line">shifen.com.		172800	IN	NS	dns.baidu.com.</div><div class="line">shifen.com.		172800	IN	NS	ns2.baidu.com.</div><div class="line">shifen.com.		172800	IN	NS	ns3.baidu.com.</div><div class="line">shifen.com.		172800	IN	NS	ns4.baidu.com.</div><div class="line">;; Received 176 bytes from 192.33.14.30#53(192.33.14.30) in 27 ms</div><div class="line"># 发现是属于 a.shifen.com这个域的</div><div class="line">a.shifen.com.		1200	IN	NS	ns5.a.shifen.com.</div><div class="line">a.shifen.com.		1200	IN	NS	ns4.a.shifen.com.</div><div class="line">a.shifen.com.		1200	IN	NS	ns2.a.shifen.com.</div><div class="line">a.shifen.com.		1200	IN	NS	ns1.a.shifen.com.</div><div class="line">a.shifen.com.		1200	IN	NS	ns3.a.shifen.com.</div><div class="line">;; Received 204 bytes from 61.135.165.235#53(61.135.165.235) in 82 ms</div><div class="line"># 在a.shifen.com这个域上查找</div><div class="line">www.a.shifen.com.	300	IN	A	61.135.169.125</div><div class="line">www.a.shifen.com.	300	IN	A	61.135.169.121</div><div class="line">a.shifen.com.		1200	IN	NS	ns3.a.shifen.com.</div><div class="line">a.shifen.com.		1200	IN	NS	ns4.a.shifen.com.</div><div class="line">a.shifen.com.		1200	IN	NS	ns5.a.shifen.com.</div><div class="line">a.shifen.com.		1200	IN	NS	ns1.a.shifen.com.</div><div class="line">a.shifen.com.		1200	IN	NS	ns2.a.shifen.com.</div><div class="line">;; Received 236 bytes from 61.135.162.215#53(61.135.162.215) in 38 ms</div></pre></td></tr></table></figure>
+<p>直接访问之，正是百度的页面。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天用&lt;code&gt;nslookup&lt;/code&gt;命令解析查看了&lt;code&gt;www.baidu.com&lt;/code&gt;的IP地址，却意外发现百度的&lt;code&gt;CNAME&lt;/code&gt;居然是&lt;code&gt;www.a.shifen.com&lt;/code&gt;&lt;/p&gt;
+&lt;figure cla
+    
+    </summary>
+    
+      <category term="计算机网络" scheme="http://microndgt.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+    
+      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="计算机科学" scheme="http://microndgt.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>计算机网络 应用层</title>
+    <link href="http://microndgt.github.io/2017/02/19/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E5%BA%94%E7%94%A8%E5%B1%82/"/>
+    <id>http://microndgt.github.io/2017/02/19/计算机网络-应用层/</id>
+    <published>2017-02-19T03:06:16.000Z</published>
+    <updated>2017-02-19T09:29:02.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>网络应用方面的原理和实现，包括应用程序所需要使用的网络服务，客户和服务器，进程和运输层接口。研发网络应用程序的核心是写出能够运行在不同的端系统和通过网络彼此通信的程序。</p>
+<h1 id="应用层协议原理"><a href="#应用层协议原理" class="headerlink" title="应用层协议原理"></a>应用层协议原理</h1><h2 id="网络应用程序体系结构"><a href="#网络应用程序体系结构" class="headerlink" title="网络应用程序体系结构"></a>网络应用程序体系结构</h2><p>网络体系结构是固定的，为应用程序提供了特定的服务集合，应用程序体系结构主要有一下：客户－服务器体系结构或者对等P2P体系结构</p>
+<p>客户－服务器体系结构有一个打开的主机作为服务器，服务于来自其他客户的主机请求，客户通过向该服务器的IP地址发送分组来与其联系。</p>
+<p>P2P体系结构中，应用程序在间断链接的主机对之间使用直接通信，这些主机对被称为对等方，通信不必经过专门的服务器，在即时讯息应用，服务器被用于跟踪用户的IP地址，用户和用户的报文在用户主机之间直接发送。</p>
+<h2 id="进程通信"><a href="#进程通信" class="headerlink" title="进程通信"></a>进程通信</h2><p>进行通信的实际上是进程而不是程序，进程运行在相同的端系统上时，他们使用进程间通信机制相互通信，进程间通信规则由端系统上的操作系统确定。两个不同端系统上的进行，通过跨越计算机网络交换报文而相互通信。</p>
+<p>进程通过一个被称为套接字的软件接口向网络发送报文和从网络接收报文。套接字是同一台主机内应用层与运输层之间的接口，由于该套接字是建立网络应用程序的可编程接口，因此套接字也称为应用程序和网络之间的应用程序编程接口。开发者可以控制套接字在应用层端的一切，但是对套接字在运输层端几乎没有控制权。</p>
+<p>为了标识接收进程，需要定义两种信息，主机的地址和接收进程标识符。IP地址和目的端口号。</p>
+<h2 id="可供应用程序使用的运输服务"><a href="#可供应用程序使用的运输服务" class="headerlink" title="可供应用程序使用的运输服务"></a>可供应用程序使用的运输服务</h2><p>主要有可靠运输服务，吞吐量，定时和安全性。</p>
+<p>可靠运输：确保数据交付服务，进程到进程之间的可靠数据传输</p>
+<p>吞吐量：发送进程能够向接收进程交付比特的速率，运输层协议能够以某种特定的速率提供确保的可用吞吐量，使用这种服务，应用程序能够请求r比特/s的确保吞吐量</p>
+<p>定时：提供定时保证</p>
+<p>安全性，运输协议能够为应用程序提供一种或者多种安全性服务。</p>
+<h2 id="因特网提供的运输服务"><a href="#因特网提供的运输服务" class="headerlink" title="因特网提供的运输服务"></a>因特网提供的运输服务</h2><p>TCP：包括面向链接的服务和可靠数据传输服务，在应用层数据开始流动之前，TCP让服务器和客户互联，即握手，之后TCP链接就在两个进程的套接字之间建立了，是全双工的，即链接双方的进程可以在此链接上同时进行报文收发。同时其具有拥塞控制机制。</p>
+<p>SSL：安全套接字层，是对TCP的加强，这种强化是在应用层上实现的。</p>
+<p>UDP：不提供不必要服务的轻量级运输协议，提供最小服务，提供一种不可靠数据传送服务，不保证报文将到达接收进程，到达也可能是乱序到达的，没有拥塞控制机制。</p>
+<p>当前互联网能够为时间敏感应用提供服务，但是不能提供定时或者带宽保证。</p>
+<h2 id="应用层协议"><a href="#应用层协议" class="headerlink" title="应用层协议"></a>应用层协议</h2><p>定义了运行在不同端系统的应用程序进程如何相互传递报文，定义了</p>
+<ul>
+<li>交换的报文类型</li>
+<li>各种报文类型的语法</li>
+<li>字段的语义</li>
+<li>一个进程何时以及如何发送报文，对报文进行响应的规则</li>
+</ul>
+<p>web的应用层协议是HTTP，定义了在浏览器和web服务器之间传输的报文格式和序列</p>
+<h1 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h1><h2 id="概况"><a href="#概况" class="headerlink" title="概况"></a>概况</h2><p>超文本传输协议，HTTP，web的核心，HTTP由两个程序实现，一个客户程序，一个服务器程序，客户程序和服务器程序运行在不同的端系统中，通过交换HTTP报文进行会话。</p>
+<p>每个URL地址由两部分组成，存放对象的服务器主机名和对象的路径名</p>
+<p>web浏览器实现了HTTP的客户端，web服务器实现了HTTP的服务器端，存储web对象，每个对象由URL寻址。</p>
+<p>HTTP定义了web客户向web服务器请求web页面的方式，以及服务器向客户传送web页面的方式。HTTP使用TCP作为他的支撑运输协议。</p>
+<p>服务器向客户发送被请求的文件，而不存储任何关于该客户的状态信息，所以HTTP是一个无状态协议。</p>
+<h2 id="非持续连接和持续连接"><a href="#非持续连接和持续连接" class="headerlink" title="非持续连接和持续连接"></a>非持续连接和持续连接</h2><p>HTTP在其默认方式下使用持续连接，HTTP客户和服务器能够配置成使用非持续连接。每个请求响应对是经一个单独的TCP连接发送，非持续连接。所有请求和响应经过相同的TCP链接发送，持续连接。</p>
+<p>往返时间RTT，指一个短分组从客户到服务器然后再返回客户所花费的时间。因此一个TCP连接总的响应时间是两个RTT加上服务传输HTML文件的时间，三次握手及传输。</p>
+<p>采用持续连接，服务器在发送响应后保持该TCP连接打开，在相同的客户与服务器之间的后续请求和响应报文能够通过相同的连接进行传送。如果经过一定时间间隔没有使用，HTTP服务器就关闭该链接。</p>
+<h2 id="HTTP请求报文"><a href="#HTTP请求报文" class="headerlink" title="HTTP请求报文"></a>HTTP请求报文</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">GET /somedir/sth.html HTTP/1.1</div><div class="line">Host: www.someschool.edu</div><div class="line">Connection: close</div><div class="line">User-agent: Mozilla/5.0</div><div class="line">Accept-language: fr</div></pre></td></tr></table></figure>
+<p>每行由一个回车和换行符结束，最后一行再附加一个回车换行符。第一行是请求行，其后继行叫做首部行，对于POST请求，后面还附有实体体。Connection close说明服务器不希望使用持续连接。</p>
+<h2 id="HTTP响应报文"><a href="#HTTP响应报文" class="headerlink" title="HTTP响应报文"></a>HTTP响应报文</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">HTTP/1.1 200 OK</div><div class="line">Connection: close</div><div class="line">Date: Tue, 09 Aug 2016 15:44:04 GMT</div><div class="line">Server: Apache/2.2.3 (CentOS)</div><div class="line">Last-Modified:</div><div class="line">Content-Length: 6821</div><div class="line">Content-Type: text/html</div><div class="line"></div><div class="line">(data...)</div></pre></td></tr></table></figure>
+<p>初始状态行，首部行和实体体，Date是服务器产生并且发送该响应报文的日期和时间。</p>
+<h2 id="用户和服务器的交互：cookie"><a href="#用户和服务器的交互：cookie" class="headerlink" title="用户和服务器的交互：cookie"></a>用户和服务器的交互：cookie</h2><p>HTTP使用cookie允许站点对用户进行跟踪</p>
+<p>HTTP响应报文中一个cookie首部行，HTTP请求报文中一个cookie首部行，用户端系统保留有一个cookie文件，并有用户的浏览器进行管理，后端Web站点有一个后端数据库。</p>
+<p>cookie用于标识一个用户，用户首次访问一个站点需要一个用户标识，cookie可以在无状态的HTTP上建立了一个用户会话层。</p>
+<h2 id="web缓存"><a href="#web缓存" class="headerlink" title="web缓存"></a>web缓存</h2><p>web缓存器也叫做代理服务器，他是能够代表初始web服务器来满足http请求的网络实体，具体内容见书74页。web缓存器既是服务器又是客户，当它接收浏览器的请求并且发回响应的时候是服务器，当它向初始服务器发送请求并且接收响应时候，是一个客户。</p>
+<p>web缓存器可以大大减少对客户请求的响应时间，特别是客户与初始服务器之间的瓶颈带宽远低于客户与web缓存器之间的瓶颈带宽时。</p>
+<p>通过使用内容分发网络，CDN，web缓存器，CDN公司安装了地理上分散的缓存器，使得大量流量本地化。</p>
+<h2 id="条件get方法"><a href="#条件get方法" class="headerlink" title="条件get方法"></a>条件get方法</h2><p>http协议有一种机制，允许缓存器证实它的对象是最新的，就是条件get方法，请求报文使用get方法， 有一个<code>If-Modified-Since</code>首部，其内容是日期，指当指定日期之后该对象被修改过，才发送该对象。作为对条件get方法的响应，web服务器仍然发送一个响应报文，但是没有在响应报文中包含所请求的对象，如果没有修改过的话。<code>304 Not Modified</code>表示缓存器可以使用该对象，能向请求的浏览器转发它缓存的该对象副本。</p>
+<h1 id="FTP"><a href="#FTP" class="headerlink" title="FTP"></a>FTP</h1><p>FTP与HTTP都是运行在TCP上，FTP用了两个并行的TCP来传输文件，一个是控制链接，一个是数据连接。控制链接用于在两主机上传输控制信息，数据连接用于实际发送文件数据，HTTP是在同一个TCP连接内发送请求和响应的，HTTP是带内发送控制信息的，FTP是带外发送控制信息的。</p>
+<p>FTP的客户首先在服务器21号端口发起一个用于控制的TCP连接。对FTP传输而言，控制连接贯穿了整个用户会话期间，但是对会话的每次文件传输都需要建立一个新的数据连接，数据连接是非持续的。</p>
+<p>FTP服务器将对每个进行中的用户会话状态信息进行追踪，大大限制了FTP同时维护的会话总数。</p>
+<h1 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h1>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;网络应用方面的原理和实现，包括应用程序所需要使用的网络服务，客户和服务器，进程和运输层接口。研发网络应用程序的核心是写出能够运行在不同的端系统和通过网络彼此通信的程序。&lt;/p&gt;
+&lt;h1 id=&quot;应用层协议原理&quot;&gt;&lt;a href=&quot;#应用层协议原理&quot; class=&quot;heade
+    
+    </summary>
+    
+      <category term="计算机网络" scheme="http://microndgt.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+    
+      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="计算机科学" scheme="http://microndgt.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/"/>
+    
+  </entry>
   
   <entry>
     <title>Python后台开发工程师面试指南</title>
@@ -927,164 +1041,6 @@
       <category term="Udacity" scheme="http://microndgt.github.io/tags/Udacity/"/>
     
       <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hive学习</title>
-    <link href="http://microndgt.github.io/2017/01/19/Hive%E5%AD%A6%E4%B9%A0/"/>
-    <id>http://microndgt.github.io/2017/01/19/Hive学习/</id>
-    <published>2017-01-19T07:26:16.000Z</published>
-    <updated>2017-01-27T05:24:21.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>大数据之Hive的数据操作以及开发</p>
-<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Hive是基于Hadoop的一个数据仓库工具，通过它可以实现将结构化的数据文件映射为一张数据库表，并且提供简单的sql查询功能，同时将sql语句转换为MapReduce任务进行运行</p>
-<p>Hive是构建在hadoop HDFS上的一个数据仓库</p>
-<h2 id="数据仓库简介"><a href="#数据仓库简介" class="headerlink" title="数据仓库简介"></a>数据仓库简介</h2><p>有别于普通的数据库，数据仓库是一个面向主题的，集成的，不可更新的，随时间不变化的数据集合，它用于支持企业或组织的决策分析处理</p>
-<p>面向主题：用户关注的具体方面</p>
-<p>集成的：来自分散性的数据，进行加工和处理后进入数据仓库</p>
-<p>不可更新：主要用于决策分析，主要涉及操作，数据查询</p>
-<h2 id="数据仓库的结构和建立过程"><a href="#数据仓库的结构和建立过程" class="headerlink" title="数据仓库的结构和建立过程"></a>数据仓库的结构和建立过程</h2><p>数据源：业务数据系统，文档资料，其他数据</p>
-<p>数据存储及管理：抽取，转换，装载，Extract,Transform,load，满足格式的数据</p>
-<p>数据仓库引擎：为数据查询等提供服务</p>
-<p>前端展示：数据查询，数据报表，数据分析，各类应用</p>
-<h2 id="OLTP应用和OLAP应用"><a href="#OLTP应用和OLAP应用" class="headerlink" title="OLTP应用和OLAP应用"></a>OLTP应用和OLAP应用</h2><p>OLTP:连接事务处理，面对事务，操作频率高，银行转账</p>
-<p>OLAP:连接分析处理，Online analysis process, 商品推荐系统,面对的是查询操作</p>
-<h2 id="数据仓库中的数据模型"><a href="#数据仓库中的数据模型" class="headerlink" title="数据仓库中的数据模型"></a>数据仓库中的数据模型</h2><p>面向主题的模型</p>
-<p>星形模型：商品信息-&gt;客户信息，订单信息，促销信息，生产信息，物流信息</p>
-<p>雪花模型：客户也可以分很多信息，家庭信息，地址信息，教育背景信息，财务信息</p>
-<h2 id="Hive"><a href="#Hive" class="headerlink" title="Hive"></a>Hive</h2><p>Hive是构建在hadoop HDFS上的一个数据仓库基础架构</p>
-<p>可以用来进行数据提取转化加载ETL</p>
-<p>定义了简单的类似SQL查询语言，称为HQL它允许熟悉SQL的用户查询数据</p>
-<p>允许MapReduce开发者的开发自定义的mapper和reducer来处理内建的mapper和reducer无法完成的复杂分析工作</p>
-<p>Hive是SQL解析引擎，将SQL语句转移成M/R job然后在hadoop执行</p>
-<p>Hive的表其实是HDFS的目录/文件</p>
-<h1 id="Hive的体系结构"><a href="#Hive的体系结构" class="headerlink" title="Hive的体系结构"></a>Hive的体系结构</h1><h2 id="Hive的元数据"><a href="#Hive的元数据" class="headerlink" title="Hive的元数据"></a>Hive的元数据</h2><p>将元数据存储在数据库中(metastore)，支持mysql，derby等数据库，默认是derby数据库。</p>
-<p>元数据包括表的名字，表的列和分区及其属性，表的属性是否为外部表，表的数据所在目录</p>
-<h2 id="HQL的执行过程"><a href="#HQL的执行过程" class="headerlink" title="HQL的执行过程"></a>HQL的执行过程</h2><p>解释器，编译器和优化器完成HQL查询语句从词法分析，语法分析，编译，优化以及查询计划的生成，生成的查询计划存储在HDFS中，并在随后由MapReduce调用执行</p>
-<p>select-&gt;解析器，词法分析-&gt;编译器，生成HQL的执行计划-&gt;优化器，生成最佳的执行计划-&gt;执行</p>
-<h2 id="Hive的体系结构-1"><a href="#Hive的体系结构-1" class="headerlink" title="Hive的体系结构"></a>Hive的体系结构</h2><ul>
-<li>Hadoop</li>
-<li>元数据存储</li>
-</ul>
-<p>linux-&gt;hadoop-&gt;hive</p>
-<p>hadoop: DataNode数据节点，NameNode名称节点，JobTracker任务调度器</p>
-<p>hive：Hive Driver驱动包括编译器，解析器，优化器。访问接口：CLI,ODBC,Web Console只可以查询。元数据metastore</p>
-<h2 id="Hive安装和管理"><a href="#Hive安装和管理" class="headerlink" title="Hive安装和管理"></a>Hive安装和管理</h2><h2 id="Hive的数据模型和操作"><a href="#Hive的数据模型和操作" class="headerlink" title="Hive的数据模型和操作"></a>Hive的数据模型和操作</h2><h1 id="Hive的数据导入到数据仓库"><a href="#Hive的数据导入到数据仓库" class="headerlink" title="Hive的数据导入到数据仓库"></a>Hive的数据导入到数据仓库</h1><h2 id="load语句执行数据导入"><a href="#load语句执行数据导入" class="headerlink" title="load语句执行数据导入"></a>load语句执行数据导入</h2><p><code>LOAD DATA [LOCAL] INPATH &#39;filepath&#39; [OVERWRITE] INTO TABLE tablename [PARTITION (partcol1=vall, partcol2=val2)]</code></p>
-<p>PARTITION当是分区表</p>
-<p>load命令，Sqoop组件导入</p>
-<p>数据查询 HQL语句</p>
-<p>Hive的Java客户端和自定义函数</p>
-<p>Hive的体系结构和基本操作</p>
-<p>Java编程</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;大数据之Hive的数据操作以及开发&lt;/p&gt;
-&lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;p&gt;Hive是基于Hadoop的一个数据仓库工具，通过它可以实现将结构化的数据文件映射为一张数
-    
-    </summary>
-    
-      <category term="数据分析" scheme="http://microndgt.github.io/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
-    
-    
-      <category term="Hive" scheme="http://microndgt.github.io/tags/Hive/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python字符串和文本</title>
-    <link href="http://microndgt.github.io/2017/01/19/Python%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E6%96%87%E6%9C%AC/"/>
-    <id>http://microndgt.github.io/2017/01/19/Python字符串和文本/</id>
-    <published>2017-01-19T00:40:59.000Z</published>
-    <updated>2017-01-27T05:21:20.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>拆分字符串，搜索，替换，词法分析以及解析，正则表达式.</p>
-<h1 id="针对任意多的分隔符拆分字符串"><a href="#针对任意多的分隔符拆分字符串" class="headerlink" title="针对任意多的分隔符拆分字符串"></a>针对任意多的分隔符拆分字符串</h1><p>普通字符串的split方法只能处理单个的分隔符，如果要处理多个分隔符，使用<code>re.split()</code>，返回结果仍然是列表</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">line = &apos;asdf fjdk; afed, fjek,asdf&apos;</div><div class="line">import re</div><div class="line">re.split(r&apos;[;,\s]\s*&apos;, line&apos;)</div><div class="line"># \s表示空格，*表示匹配前方0次或者多次</div></pre></td></tr></table></figure>
-<p>如果使用捕获组，匹配的文本也会包含在最终结果中，捕获组中加入或<code>|</code>符号</p>
-<p><code>fields = re.split(r&#39;(;|,|\s)\s*&#39;, line&#39;)</code></p>
-<p>或者使用非捕获组<code>?:</code></p>
-<p><code>fields = re.split(r&#39;(?:;|,|\s)\s*&#39;, line&#39;)</code></p>
-<h1 id="在字符串开头或者结尾处做文本匹配"><a href="#在字符串开头或者结尾处做文本匹配" class="headerlink" title="在字符串开头或者结尾处做文本匹配"></a>在字符串开头或者结尾处做文本匹配</h1><p>使用<code>str.startswith()</code>和<code>str.endswith()</code>，如果要对多个选项做检查，给这两个函数传入包含可能选项的元组。</p>
-<p><code>[name for name in filenames if name.endswith((&#39;.h&#39;, &#39;.c&#39;))]</code></p>
-<p>使用<code>any()</code>函数：</p>
-<p><code>any(name.endswith(&#39;.py&#39;) for name in filenames)</code></p>
-<p>这里是Python需要把元组当成输入的一个地方，如果选项指定在列表或者集合里，使用<code>tuple()</code>函数将其转换成元组</p>
-<h1 id="文本模式的匹配和查找"><a href="#文本模式的匹配和查找" class="headerlink" title="文本模式的匹配和查找"></a>文本模式的匹配和查找</h1><p>使用re模块</p>
-<p>可以将正则表达式首先预编译成一个模式对象<code>datepat = re.compile(r&#39;\d+/\d+/\d+&#39;)</code></p>
-<p><code>\d</code>表示数字，<code>+</code>表示匹配一次或者多次，<code>*</code>表示匹配0次或者多次</p>
-<p><code>re.match()</code>返回一个匹配对象，可以使用<code>groups()</code>方法，<code>m.group(0)</code>表示所有匹配对象，<code>m.group(1)</code>表示第一次匹配的对象</p>
-<p><code>re.search()</code>和<code>match()</code>不同的是对整个文本进行匹配而不是从头开始匹配</p>
-<p><code>re.findall()</code>返回一个列表，包含所有匹配成功的字符串</p>
-<h1 id="查找和替换文本"><a href="#查找和替换文本" class="headerlink" title="查找和替换文本"></a>查找和替换文本</h1><p><code>str.replace(old, new)</code>进行字符串的替换</p>
-<p>使用<code>re.sub()</code>，第一个参数是要匹配的模式，第二个参数是要替换上的模式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">t = &apos; today is 11/27/2017. Pycon is 3/13/2013&apos;</div><div class="line">import re</div><div class="line">re.sub(r&apos;(\d+)/(\d+)/(\d+)&apos;, r&apos;\3-\1-\2&apos;, t)</div><div class="line"># 真正运行一遍才知道自己掌握了没，注意：使用r原始字符串，使用捕获组后面的\3才能使用</div></pre></td></tr></table></figure>
-<p>可以预先编译</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">datepat = re.compile(r&apos;(\d+)/(\d+)/(\d+)&apos;)</div><div class="line">datapat.sub(r&apos;\3-\1-\2&apos;, t)</div></pre></td></tr></table></figure>
-<p>完成多少次替换<code>re.subn()</code></p>
-<p><code>newtext, n = datepat.subn(r&#39;\3-\1-\2&#39;, text)</code></p>
-<h1 id="以不区分大小写的方式对文本做查找和替换"><a href="#以不区分大小写的方式对文本做查找和替换" class="headerlink" title="以不区分大小写的方式对文本做查找和替换"></a>以不区分大小写的方式对文本做查找和替换</h1><p>加上<code>re.IGNORECASE</code>标记</p>
-<p><code>re.findall(&#39;python&#39;, text, flags=re.IGNORECASE)</code></p>
-<p>可以使用一个支撑函数作为<code>sub()</code>中的要替换上的模式，返回一个替换后的字符串</p>
-<h1 id="实现最短匹配的正则表达式"><a href="#实现最短匹配的正则表达式" class="headerlink" title="实现最短匹配的正则表达式"></a>实现最短匹配的正则表达式</h1><p><code>r&#39;\&quot;(.*)\&quot;&#39;</code>使用的是贪心策略，<code>r&#39;\&quot;(.*?)\&quot;&#39;</code>使用的是非贪心策略，另外<code>.</code>除了换行符可以匹配任意字符，可以使用<code>re.S</code>或者是<code>re.DOTALL</code>用来匹配换行符</p>
-<p>另外一般遇到复杂情况都是自己书写正则表达式：<code>comment = re.compile(r&#39;/\*((?:.|\n)*?)\*/)</code>，其中指定了一个非捕获组，这个组只做匹配但是不捕获结果，也不会分配组号。</p>
-<h1 id="将Unicode文本统一表示成规范形式"><a href="#将Unicode文本统一表示成规范形式" class="headerlink" title="将Unicode文本统一表示成规范形式"></a>将Unicode文本统一表示成规范形式</h1><p>对于任何需要确保以规范和一致性的方式处理Unicode文本的程序来说，规范化都是重要的一部分，在对文本进行过滤和净化的时候，规范化同样占据了重要的部分。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import unicodedata</div><div class="line">t1 = unicodedata.normalize(&apos;NFD&apos;, s1)</div><div class="line">&apos;&apos;.join(c for c in t1 if not unicodedata.combining(c))</div></pre></td></tr></table></figure>
-<p><code>combining()</code>函数对字符进行检查，判断它是否是一个组合型字符，若不是则返回0</p>
-<p>NFC表示字符应该是全组成的，如果可能就使用单个代码点。NFD表示应该使用组合字符，每个字符应该是能完全分解开的。</p>
-<h1 id="从字符串中去掉不需要的字符"><a href="#从字符串中去掉不需要的字符" class="headerlink" title="从字符串中去掉不需要的字符"></a>从字符串中去掉不需要的字符</h1><p>使用<code>strip()</code>方法，或者<code>lstrip()</code>，<code>rstrip()</code></p>
-<p>如果要对里面的空格执行某些操作，应该使用其他技巧比如replace()方法或者正则表达式替换</p>
-<p>经常遇到的情况是去除字符的操作和某些迭代操作结合起来，生成器表达式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">with open(filename) as f:</div><div class="line">    lines = (line.strip() for line in f)</div><div class="line">    for line in line:</div><div class="line">        ...</div></pre></td></tr></table></figure>
-<h1 id="文本过滤与清理"><a href="#文本过滤与清理" class="headerlink" title="文本过滤与清理"></a>文本过滤与清理</h1><p>感觉非常好用啊，使用<code>str.translate()</code>方法，首先创建一个转换表格，然后使用这个方法对字符串进行转换。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># ord函数返回ASC值</div><div class="line">remap = &#123;</div><div class="line">  ord(&apos;\t&apos;): &apos; &apos;,</div><div class="line">  ord(&apos;\f&apos;): &apos; &apos;,</div><div class="line">  ord(&apos;\r&apos;): None # 直接被删除</div><div class="line">&#125;</div><div class="line"># 调用translate方法</div><div class="line">a = s.translate(remap)</div></pre></td></tr></table></figure>
-<p>删除所有的和音符，使用NFD可以将字符串分解成单个字符，标准化称为分解形式字符</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cmb_chrs = dict.fromkeys(c for c in range(sys.maxunicode) if unicodedata.combining(chr(c)))</div><div class="line">b = unicodedata.normalize(&apos;NFD&apos;, a)</div><div class="line">b.translate(cmb_chrs)</div></pre></td></tr></table></figure>
-<p>一般使用replace方法比较快，但是涉及任何复杂字符对字符的重新映射或者是删除操作的话，translate方法会比较快</p>
-<h1 id="字符串对齐"><a href="#字符串对齐" class="headerlink" title="字符串对齐"></a>字符串对齐</h1><p>使用ljust(),rjust(),center()方法，并且可以接受一个可选的填充字符,<code>text.rjust(20, &#39;=&#39;)</code></p>
-<p>format函数也可以用来对齐字符串<code>format(text, &#39;&gt;20&#39;)</code> 右对齐，或者指定一个非空格填充字符，<code>format(text, &#39;=&gt;20&#39;)</code></p>
-<p>格式化多个值，<code>&#39;&#39;{:&gt;10s} {:&gt;10s}&#39;.format(&#39;hello&#39;, &#39;world&#39;)&#39;</code></p>
-<p>可以格式化任何值，<code>x = 1.234</code>, <code>format(x, &#39;&gt;10&#39;)</code></p>
-<p>优先选用format()函数或者方法</p>
-<h1 id="合并拼接字符串"><a href="#合并拼接字符串" class="headerlink" title="合并拼接字符串"></a>合并拼接字符串</h1><p>如果要合并的字符串在一个序列中，最快的方式就是join()方法，如果是合并少数的几个字符串，使用加号就可以了。</p>
-<p>如果只是将两个字面字符串合并起来，只需要简单的放在一起就OK, <code>a = &#39;Hello&#39; &#39;World&#39;</code></p>
-<p>使用生成器表达式：<code>&#39;,&#39;.join(str(d) for d in data)</code></p>
-<p>注意不必要的字符串连接操作：<code>print(a, b, c, sep=&quot;:&quot;)</code>，这样更加优雅</p>
-<h1 id="内嵌变量的字符串"><a href="#内嵌变量的字符串" class="headerlink" title="内嵌变量的字符串"></a>内嵌变量的字符串</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">s = &apos;&#123;name&#125; has &#123;n&#125; message&apos;</div><div class="line">s.format(name=&quot;kevin&quot;, n=34)</div></pre></td></tr></table></figure>
-<p>如果要被替换的变量能在变量域中找到，可以结合使用format_map()和vars(),vars()返回了一个字典</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">name = &quot;kevin&quot;</div><div class="line">n = 5</div><div class="line">s.format_map(vars())</div></pre></td></tr></table></figure>
-<p>vars()也适用于对象实例</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a = Info(&apos;kevin&apos;, 30)</div><div class="line"># 其中Info类中含有相应的属性名字为name和n</div><div class="line">s.format_map(vars(a))</div></pre></td></tr></table></figure>
-<p>定义一个含有<code>__missing__()</code>方法的字典对象这样就可以避免KeyError</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class safesub(dict):</div><div class="line">    # 定义如何处理缺失值</div><div class="line">    def __missing__(self, key):</div><div class="line">        return &apos;&#123;&apos; + key + &apos;&#125;&apos;</div><div class="line">s.format_map(safesub(vars()))</div><div class="line"># 这样即使不存在这个键也不会报错</div></pre></td></tr></table></figure>
-<p>可以进一步封装成工具函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import sys</div><div class="line">def sub(text):</div><div class="line">    return text.format_map(safesub(sys._getframe(1).f_locals))</div></pre></td></tr></table></figure>
-<p><code>sys._getframe(1)</code>返回调用者的栈帧，从中访问属性<code>f_locals</code>来获得局部变量，是一个复制调用函数本地变量的字典，对它的操作不回覆盖和改变调用者本地变量的值。</p>
-<h1 id="文本分词"><a href="#文本分词" class="headerlink" title="文本分词"></a>文本分词</h1><p>有一个字符串，想从左到右将其解析为标记流</p>
-<p>第一步是利用命名捕获组的正则表达式定义所有可能的标记，包括空格：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">import re</div><div class="line">NAME = r&apos;(?P&lt;NAME&gt;[a-zA-Z_][a-zA-Z_0-9]*)&apos;</div><div class="line"># ?P&lt;TOKENNAME&gt;用于给一个模式命名</div><div class="line">NUM = r&apos;(?P&lt;NUM&gt;\d+)&apos;</div><div class="line">PLUS = r&apos;(?P&lt;PLUS&gt;\+)&apos;</div><div class="line">TIMES = r&apos;(?P&lt;TIMES&gt;\*)&apos;</div><div class="line">EQ = r&apos;(?P&lt;EQ&gt;=)&apos;</div><div class="line">WS = r&apos;(?P&lt;WS&gt;\s+)&apos;</div><div class="line">master_pat = re.compile(r&apos;|&apos;.join([NAME, NUM, PLUS, TIMES, EQ, WS]))</div></pre></td></tr></table></figure>
-<p>第二步，使用scanner()方法，创建一个scanner对象，在这个对象上不断调用match()方法会一步步扫描目标文本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">scanner = master_pat.scanner(&apos;foo = 42&apos;)</div><div class="line"># 重复之</div><div class="line">scanner.match().groups()</div></pre></td></tr></table></figure>
-<p>要点在于必须确认使用正则表达式制定了所有输入中可能出现的文本序列。另外分词顺序也是有影响的，re模块会按照制定好的顺序去做匹配，因此另一个模式恰好是另一个更长模式的子字符串，需要确定长模式在前面。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;拆分字符串，搜索，替换，词法分析以及解析，正则表达式.&lt;/p&gt;
-&lt;h1 id=&quot;针对任意多的分隔符拆分字符串&quot;&gt;&lt;a href=&quot;#针对任意多的分隔符拆分字符串&quot; class=&quot;headerlink&quot; title=&quot;针对任意多的分隔符拆分字符串&quot;&gt;&lt;/a&gt;针对任意多的分隔符
-    
-    </summary>
-    
-      <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
-    
-    
-      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
-    
-      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
-    
-      <category term="Python_Cookbook" scheme="http://microndgt.github.io/tags/Python-Cookbook/"/>
     
   </entry>
   
