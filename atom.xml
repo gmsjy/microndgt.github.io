@@ -509,34 +509,6 @@
   </entry>
   
   <entry>
-    <title>上班第一周</title>
-    <link href="http://microndgt.github.io/2017/02/11/%E4%B8%8A%E7%8F%AD%E7%AC%AC%E4%B8%80%E5%91%A8/"/>
-    <id>http://microndgt.github.io/2017/02/11/上班第一周/</id>
-    <published>2017-02-11T01:18:06.000Z</published>
-    <updated>2017-02-11T01:48:54.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>这周是从毕业以来正式出去上班工作的第一个周，真的体会到了上班不易，不仅是上下班路上不易，更多的是要工作好，然后自己要有所提高，和自己预想的差异还是蛮大的。曾经自己构想的每日计划其实到了每日也就能执行一小部分，原因就是自己没那么多精力，不仅思想会累，身体也会累，眼镜会累，并且每天还有各种各样的事情，谁能保证自己有那个精力那个时间呢。在工作后，自己才觉得自己需要回炉重造，但是哪里又有那个机会呢。又到了新的学期，自己势必要去退学，想起这个就觉的心慌，但是没有办法了，早去早解脱吧。说起这个，又想起以后，难道安全感是如此获得的吗？我在恐惧什么？</p>
-<p>这周途中搬了一次家，真是累，感谢两位小伙伴，要不然我真的是觉得有点无助，就开车搬都搬了3次，这么多东西，我到底是买了什么？搬到一个离工作地点更远的地方，为了她。算了，不提了，现在已经这样了，记得上次租房子也是。不过还好还好吧，至少现在安定下来了，住了一个稍微大点的房子，感觉还不错。每天上班40-50分钟，早上7点半起床。</p>
-<p>工作呢，也随着时间慢慢的我也在适应了，虽然我在一个小房间一个人工作，但是我也觉得挺好，至少随意。项目上这周进展也比较大，web后端成体系了，自己也学到了不少，当然只是基本。计算核心也搞出来了，当然需要优化。不过深知自己需要大量学习，自己还是太菜了，很多东西没有接触，自然就没法想到更好的办法，所以学习学习再学习！</p>
-<p>搬家时候整理衣服，看到那件风衣，突然很突然的一下心里有点痛。谁的青春不腐朽呢？总有那么多遗憾，谁都刻骨铭心，怎能忘记？当时在别人的故事里流的泪，终将化作那混凝土，浇筑在心底最柔软的角落，才能在多年以后，把酒言欢，唏嘘着自己的青春。愿所有的爱情不要轻易的说再见。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;这周是从毕业以来正式出去上班工作的第一个周，真的体会到了上班不易，不仅是上下班路上不易，更多的是要工作好，然后自己要有所提高，和自己预想的差异还是蛮大的。曾经自己构想的每日计划其实到了每日也就能执行一小部分，原因就是自己没那么多精力，不仅思想会累，身体也会累，眼镜会累，并且
-    
-    </summary>
-    
-      <category term="人生杂记" scheme="http://microndgt.github.io/categories/%E4%BA%BA%E7%94%9F%E6%9D%82%E8%AE%B0/"/>
-    
-    
-      <category term="奋斗" scheme="http://microndgt.github.io/tags/%E5%A5%8B%E6%96%97/"/>
-    
-      <category term="西安" scheme="http://microndgt.github.io/tags/%E8%A5%BF%E5%AE%89/"/>
-    
-  </entry>
-  
-  <entry>
     <title>使用Python和Flask设计RESTful API</title>
     <link href="http://microndgt.github.io/2017/02/05/%E4%BD%BF%E7%94%A8Python%E5%92%8CFlask%E8%AE%BE%E8%AE%A1RESTful-API/"/>
     <id>http://microndgt.github.io/2017/02/05/使用Python和Flask设计RESTful-API/</id>
@@ -1043,6 +1015,69 @@
       <category term="Udacity" scheme="http://microndgt.github.io/tags/Udacity/"/>
     
       <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hive学习</title>
+    <link href="http://microndgt.github.io/2017/01/19/Hive%E5%AD%A6%E4%B9%A0/"/>
+    <id>http://microndgt.github.io/2017/01/19/Hive学习/</id>
+    <published>2017-01-19T07:26:16.000Z</published>
+    <updated>2017-01-27T05:24:21.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>大数据之Hive的数据操作以及开发</p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Hive是基于Hadoop的一个数据仓库工具，通过它可以实现将结构化的数据文件映射为一张数据库表，并且提供简单的sql查询功能，同时将sql语句转换为MapReduce任务进行运行</p>
+<p>Hive是构建在hadoop HDFS上的一个数据仓库</p>
+<h2 id="数据仓库简介"><a href="#数据仓库简介" class="headerlink" title="数据仓库简介"></a>数据仓库简介</h2><p>有别于普通的数据库，数据仓库是一个面向主题的，集成的，不可更新的，随时间不变化的数据集合，它用于支持企业或组织的决策分析处理</p>
+<p>面向主题：用户关注的具体方面</p>
+<p>集成的：来自分散性的数据，进行加工和处理后进入数据仓库</p>
+<p>不可更新：主要用于决策分析，主要涉及操作，数据查询</p>
+<h2 id="数据仓库的结构和建立过程"><a href="#数据仓库的结构和建立过程" class="headerlink" title="数据仓库的结构和建立过程"></a>数据仓库的结构和建立过程</h2><p>数据源：业务数据系统，文档资料，其他数据</p>
+<p>数据存储及管理：抽取，转换，装载，Extract,Transform,load，满足格式的数据</p>
+<p>数据仓库引擎：为数据查询等提供服务</p>
+<p>前端展示：数据查询，数据报表，数据分析，各类应用</p>
+<h2 id="OLTP应用和OLAP应用"><a href="#OLTP应用和OLAP应用" class="headerlink" title="OLTP应用和OLAP应用"></a>OLTP应用和OLAP应用</h2><p>OLTP:连接事务处理，面对事务，操作频率高，银行转账</p>
+<p>OLAP:连接分析处理，Online analysis process, 商品推荐系统,面对的是查询操作</p>
+<h2 id="数据仓库中的数据模型"><a href="#数据仓库中的数据模型" class="headerlink" title="数据仓库中的数据模型"></a>数据仓库中的数据模型</h2><p>面向主题的模型</p>
+<p>星形模型：商品信息-&gt;客户信息，订单信息，促销信息，生产信息，物流信息</p>
+<p>雪花模型：客户也可以分很多信息，家庭信息，地址信息，教育背景信息，财务信息</p>
+<h2 id="Hive"><a href="#Hive" class="headerlink" title="Hive"></a>Hive</h2><p>Hive是构建在hadoop HDFS上的一个数据仓库基础架构</p>
+<p>可以用来进行数据提取转化加载ETL</p>
+<p>定义了简单的类似SQL查询语言，称为HQL它允许熟悉SQL的用户查询数据</p>
+<p>允许MapReduce开发者的开发自定义的mapper和reducer来处理内建的mapper和reducer无法完成的复杂分析工作</p>
+<p>Hive是SQL解析引擎，将SQL语句转移成M/R job然后在hadoop执行</p>
+<p>Hive的表其实是HDFS的目录/文件</p>
+<h1 id="Hive的体系结构"><a href="#Hive的体系结构" class="headerlink" title="Hive的体系结构"></a>Hive的体系结构</h1><h2 id="Hive的元数据"><a href="#Hive的元数据" class="headerlink" title="Hive的元数据"></a>Hive的元数据</h2><p>将元数据存储在数据库中(metastore)，支持mysql，derby等数据库，默认是derby数据库。</p>
+<p>元数据包括表的名字，表的列和分区及其属性，表的属性是否为外部表，表的数据所在目录</p>
+<h2 id="HQL的执行过程"><a href="#HQL的执行过程" class="headerlink" title="HQL的执行过程"></a>HQL的执行过程</h2><p>解释器，编译器和优化器完成HQL查询语句从词法分析，语法分析，编译，优化以及查询计划的生成，生成的查询计划存储在HDFS中，并在随后由MapReduce调用执行</p>
+<p>select-&gt;解析器，词法分析-&gt;编译器，生成HQL的执行计划-&gt;优化器，生成最佳的执行计划-&gt;执行</p>
+<h2 id="Hive的体系结构-1"><a href="#Hive的体系结构-1" class="headerlink" title="Hive的体系结构"></a>Hive的体系结构</h2><ul>
+<li>Hadoop</li>
+<li>元数据存储</li>
+</ul>
+<p>linux-&gt;hadoop-&gt;hive</p>
+<p>hadoop: DataNode数据节点，NameNode名称节点，JobTracker任务调度器</p>
+<p>hive：Hive Driver驱动包括编译器，解析器，优化器。访问接口：CLI,ODBC,Web Console只可以查询。元数据metastore</p>
+<h2 id="Hive安装和管理"><a href="#Hive安装和管理" class="headerlink" title="Hive安装和管理"></a>Hive安装和管理</h2><h2 id="Hive的数据模型和操作"><a href="#Hive的数据模型和操作" class="headerlink" title="Hive的数据模型和操作"></a>Hive的数据模型和操作</h2><h1 id="Hive的数据导入到数据仓库"><a href="#Hive的数据导入到数据仓库" class="headerlink" title="Hive的数据导入到数据仓库"></a>Hive的数据导入到数据仓库</h1><h2 id="load语句执行数据导入"><a href="#load语句执行数据导入" class="headerlink" title="load语句执行数据导入"></a>load语句执行数据导入</h2><p><code>LOAD DATA [LOCAL] INPATH &#39;filepath&#39; [OVERWRITE] INTO TABLE tablename [PARTITION (partcol1=vall, partcol2=val2)]</code></p>
+<p>PARTITION当是分区表</p>
+<p>load命令，Sqoop组件导入</p>
+<p>数据查询 HQL语句</p>
+<p>Hive的Java客户端和自定义函数</p>
+<p>Hive的体系结构和基本操作</p>
+<p>Java编程</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;大数据之Hive的数据操作以及开发&lt;/p&gt;
+&lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;p&gt;Hive是基于Hadoop的一个数据仓库工具，通过它可以实现将结构化的数据文件映射为一张数
+    
+    </summary>
+    
+      <category term="数据分析" scheme="http://microndgt.github.io/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
+    
+    
+      <category term="Hive" scheme="http://microndgt.github.io/tags/Hive/"/>
     
   </entry>
   
