@@ -1,0 +1,374 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Using Mix-Ins With Python | SkyRover</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Kevin">
+    
+    <meta name="description" content="利用Mixins扩展类功能扩展其他类的功能，但是这些类没有任何继承的关系。因此你不能简单的将这些方法放入一个基类,然后被其他类继承。所以就有了这个Mixins。
+也可能是某个库提供了基础类，可以利用其构造自己的类。
+扩展映射对象，添加日志，唯一性设置，类型检查
+1234567891011121314">
+    
+    
+    
+    
+    <link rel="alternative" href="atom.xml" title="SkyRover" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/myLogo.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/myLogo.png">
+    
+
+  
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="SkyRover">SkyRover</a></h1>
+				<h2 class="blog-motto">做我的仲夏夜之梦～</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="st-search-inpu" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/02/24/Using Mix-ins with Python/" title="Using Mix-Ins With Python" itemprop="url">Using Mix-Ins With Python</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2017-02-24T04:10:49.000Z" itemprop="datePublished">Feb 24 2017</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#利用Mixins扩展类功能"><span class="toc-number">1.</span> <span class="toc-text">利用Mixins扩展类功能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#理解2"><span class="toc-number">2.</span> <span class="toc-text">理解2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Using-Mix-ins-with-Python"><span class="toc-number">3.</span> <span class="toc-text">Using Mix-ins with Python</span></a></li></ol>
+		</div>
+		
+		<h1 id="利用Mixins扩展类功能"><a href="#利用Mixins扩展类功能" class="headerlink" title="利用Mixins扩展类功能"></a>利用Mixins扩展类功能</h1><p>扩展其他类的功能，但是这些类没有任何继承的关系。因此你不能简单的将这些方法放入一个基类,然后被其他类继承。所以就有了这个Mixins。</p>
+<p>也可能是某个库提供了基础类，可以利用其构造自己的类。</p>
+<p>扩展映射对象，添加日志，唯一性设置，类型检查</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">class LoggedMappingMixin:</div><div class="line">    __slots__ = () # 混入类没有实例变量，因为直接实例化混入类没有意义</div><div class="line">    def __getitem__(self, key):</div><div class="line">        print(&apos;Getting &apos; + str(key))</div><div class="line">        return super().__getitem__(key)</div><div class="line">    def __setitem__(self, key, value):</div><div class="line">        print(&apos;Setting &#123;&#125; = &#123;!r&#125;&apos;.format(key, value))</div><div class="line">        return super().__setitem__(key, value)</div><div class="line">    def __delitem__(self, key):</div><div class="line">        print(&apos;Deleting &apos; + str(key))</div><div class="line">        return super().__delitem__(key)</div><div class="line">class SetOnceMappingMixin:</div><div class="line">    __slots__ = ()</div><div class="line">    def __setitem__(self, key, value):</div><div class="line">        if key in self:</div><div class="line">            raise KeyError(str(key) + &apos; already set&apos;)</div><div class="line">        return super().__setitem__(key, value)</div><div class="line">class StringKeysMappingMixin:</div><div class="line">    __slots__ = ()</div><div class="line">    def __setitem__(self, key, value):</div><div class="line">        if not isinstance(key, str):</div><div class="line">            raise TypeError(&apos;keys must be strings&apos;)</div><div class="line">        return super().__setitem__(key, value)</div></pre></td></tr></table></figure>
+<p>通过多继承和其他映射对象混入使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">class LoggedDict(LoggedMappingMixin, dict):</div><div class="line">    pass</div><div class="line">d = LoggedDict()</div><div class="line">d[&apos;x&apos;] = 23</div><div class="line">print(d[&apos;x&apos;])</div><div class="line">del d[&apos;x&apos;]</div><div class="line">from collections import defaultdict</div><div class="line">class SetOnceDefaultDict(SetOnceMappingMixin, defaultdict):</div><div class="line">    pass</div><div class="line">d = SetOnceDefaultDict(list)</div><div class="line">d[&apos;x&apos;].append(2)</div><div class="line">d[&apos;x&apos;].append(3)</div><div class="line">d[&apos;x&apos;] = 32 # wrong</div></pre></td></tr></table></figure>
+<p>在一些大型库和框架中也会发现混入类的使用,用途同样是增强已存在的类的功能和一些可选特征,对于混入类,有几点需要记住。首先是,混入类不能直接被实例化使用。其次,混入类没有自己的态信息,也就是说它们并没有定义<code>__init__()</code>方法,并且没有实例属性。这也是为什么我们在上面明确定了<code>__slots__=()</code>。</p>
+<p>还有一种实现混入类的方式就是使用类装饰器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">def LoggedMapping(cls):</div><div class="line">    cls_getitem = cls.__getitem__</div><div class="line">    cls_setitem = cls.__setitem__</div><div class="line">    cls_delitem = cls.__delitem__</div><div class="line">    def __getitem__(self, key):</div><div class="line">        print(&apos;Getting &apos; + str(key))</div><div class="line">        return super().__getitem__(key)</div><div class="line">    def __setitem__(self, key, value):</div><div class="line">        print(&apos;Setting &#123;&#125; = &#123;!r&#125;&apos;.format(key, value))</div><div class="line">        return super().__setitem__(key, value)</div><div class="line">    def __delitem__(self, key):</div><div class="line">        print(&apos;Deleting &apos; + str(key))</div><div class="line">        return super().__delitem__(key)</div><div class="line">    cls.__getitem__ = __getitem__</div><div class="line">    cls.__setitem__ = __setitem__</div><div class="line">    cls.__delitem__ = __delitem__</div><div class="line">    return cls</div><div class="line">@LoggedMapping</div><div class="line">class LoggedDict(dict):</div><div class="line">    pass</div></pre></td></tr></table></figure>
+<h1 id="理解2"><a href="#理解2" class="headerlink" title="理解2"></a>理解2</h1><p>Mixin模式是一种在python里经常使用的模式，适当合理的应用能够达到复用代码，合理组织代码结构的目的。</p>
+<p>Python的Mixin模式可以通过多继承的方式来实现, 举例来说，我们自定义一个简单的具有嵌套结构的数据容器：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class SimpleItemContainer(object):</div><div class="line">    def __init__(self, id, item_containers):</div><div class="line">        self.id = id</div><div class="line">        self.data = &#123;&#125;</div><div class="line">        for item in item_containers:</div><div class="line">            self.data[item.id] = item</div></pre></td></tr></table></figure>
+<p>这时候利用python内置的<code>UserDict.DictMixin</code>来实现一个像原生字典的一样来访问数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">from collections import MutableMapping as DictMixin</div><div class="line">class SimpleItemContainer(object):</div><div class="line">    def __init__(self, id, item_containers):</div><div class="line">        self.id = id</div><div class="line">        self.data = &#123;&#125;</div><div class="line">        for item in item_containers:</div><div class="line">            self.data[item[&apos;id&apos;]] = item[&apos;item&apos;]</div><div class="line">class BetterSimpleItemContainer(SimpleItemContainer, DictMixin):</div><div class="line">    def __getitem__(self, id):</div><div class="line">        return self.data[id]</div><div class="line">    def __setitem__(self, id, value):</div><div class="line">        self.data[id] = value</div><div class="line">    def __delitem__(self, id):</div><div class="line">        del self.data[id]</div><div class="line">    def __iter__(self):</div><div class="line">        return iter(self.data)</div><div class="line">    def __len__(self):</div><div class="line">        return len(self.data)</div><div class="line">    def keys(self):</div><div class="line">        return self.data.keys()</div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">    b = BetterSimpleItemContainer(1, [&#123;&apos;id&apos;:1,&apos;item&apos;:&apos;item&apos;&#125;])</div><div class="line">    print(b[1])</div><div class="line">    print(b)</div></pre></td></tr></table></figure>
+<p>是一种特殊的多继承，而是在继承了一个基类的基础上，顺带利用多重继承的功能给这个子类添点料，增加一些其他的功能。保证Mixin的类功能单一具体，混入之后，新的类的MRO树其实也会相对很简单，并不会引起混乱。通常混入 Mixin 的类和 Mixin 类本身不是 is-a 的关系，混入 Mixin 类是为了添加某些（可选的）功能。自由地混入 Mixin 类就可以灵活地为被混入的类添加不同的功能。</p>
+<p>python支持多继承后，但能否支持动态继承性质?在程序运行过程中，重定义类的继承，python是支持这种动态继承性质的。这也就是python中 的mixin，在定义类过程中改变类的继承顺序，继承类。当某个模块不能修改时，通过mixin方式可以动态添加该类的方法，动态改变类的原有继承体系。 弄懂了多继承，mixin特性就简单多了。 但需要注意mixin后的具体继承体系的改变。</p>
+<p>一个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line">import types</div><div class="line">def MixIn(pyClass,mixInClass,makeAncestor=0):</div><div class="line">    if makeAncestor:</div><div class="line">        pyClass.__bases__ = (mixInClass,) + pyClass.__bases__</div><div class="line">    elif mixInClass not in pyClass.__bases__:</div><div class="line">        pyClass.__bases__ = pyClass.__bases__ + (mixInClass,)</div><div class="line">    else:</div><div class="line">        pass</div><div class="line">class C1(object):</div><div class="line">    def test(self):</div><div class="line">        print &apos;test in C1&apos;</div><div class="line">class C0MixIn(object):</div><div class="line">    def test(self):</div><div class="line">        print &apos;test in C0MixIn&apos;</div><div class="line">class C2(C1,C0MixIn):</div><div class="line">    def test(self):</div><div class="line">        print &apos;test in C2&apos;</div><div class="line">class C0(C1):</div><div class="line">    pass</div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">    print C0.__mro__</div><div class="line">    c1 = C0()</div><div class="line">    c1.test()</div><div class="line">    MixIn(C0,C0MixIn,1)</div><div class="line">    c0 = C0()</div><div class="line">    c0.test()</div><div class="line">    print C0.__mro__</div><div class="line">    print C2.__mro__</div><div class="line">    MixIn(C2,C0MixIn)</div><div class="line">    print C2.__mro__</div></pre></td></tr></table></figure>
+<p>运行结果:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(&lt;class &apos;__main__.C0&apos;&gt;, &lt;class &apos;__main__.C1&apos;&gt;, &lt;type &apos;object&apos;&gt;)</div><div class="line">test in C1</div><div class="line">test in C0MixIn</div><div class="line">(&lt;class &apos;__main__.C0&apos;&gt;, &lt;class &apos;__main__.C0MixIn&apos;&gt;, &lt;class &apos;__main__.C1&apos;&gt;, &lt;type &apos;object&apos;&gt;)</div><div class="line">(&lt;class &apos;__main__.C2&apos;&gt;, &lt;class &apos;__main__.C1&apos;&gt;, &lt;class &apos;__main__.C0MixIn&apos;&gt;, &lt;type &apos;object&apos;&gt;)</div><div class="line">(&lt;class &apos;__main__.C2&apos;&gt;, &lt;class &apos;__main__.C1&apos;&gt;, &lt;class &apos;__main__.C0MixIn&apos;&gt;, &lt;type &apos;object&apos;&gt;)</div></pre></td></tr></table></figure>
+<h1 id="Using-Mix-ins-with-Python"><a href="#Using-Mix-ins-with-Python" class="headerlink" title="Using Mix-ins with Python"></a>Using Mix-ins with Python</h1><p>翻译自<a href="http://www.linuxjournal.com/node/4540/print" target="_blank" rel="external">http://www.linuxjournal.com/node/4540/print</a></p>
+<p>应用在Python中的mix-in编程风格的解释。</p>
+<p>Mix-in编程是一种软件开发风格，其功能单元在一个类中创建然后在其他类中混入。可能这听起来像简单的继承，但是mix-in有别与传统的类。大多情况下mix-in不是任何一个给定类”主要的”父类，不关心它将用于什么类，被用于贯穿类继承体系的多数类，并且可以动态载入。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/Python/">Python</a><a href="/tags/Mixin/">Mixin</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/Python/">Python</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://microndgt.github.io/2017/02/24/Using Mix-ins with Python/" data-title="Using Mix-Ins With Python | SkyRover" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/02/24/Jupyter详解/"  title="Jupyter详解">
+ <strong>旧一篇:</strong><br/> 
+ <span>Jupyter详解
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="Using Mix-Ins With Python" data-thread-key="Using Mix-ins with Python" data-author-key="Kevin" data-url="http://microndgt.github.io/post/Using Mix-ins with Python"></div>
+	
+</section>
+
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© Kevin</span>
+		
+	<div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"microndgt"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';    //change to ds.src = '/js/embed.js'; to add useragent for duoshuo
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>

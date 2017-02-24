@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://microndgt.github.io/"/>
-  <updated>2017-02-21T09:34:10.000Z</updated>
+  <updated>2017-02-24T07:36:01.000Z</updated>
   <id>http://microndgt.github.io/</id>
   
   <author>
@@ -14,6 +14,131 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Using Mix-Ins With Python</title>
+    <link href="http://microndgt.github.io/2017/02/24/Using%20Mix-ins%20with%20Python/"/>
+    <id>http://microndgt.github.io/2017/02/24/Using Mix-ins with Python/</id>
+    <published>2017-02-24T04:10:49.000Z</published>
+    <updated>2017-02-24T07:36:01.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="利用Mixins扩展类功能"><a href="#利用Mixins扩展类功能" class="headerlink" title="利用Mixins扩展类功能"></a>利用Mixins扩展类功能</h1><p>扩展其他类的功能，但是这些类没有任何继承的关系。因此你不能简单的将这些方法放入一个基类,然后被其他类继承。所以就有了这个Mixins。</p>
+<p>也可能是某个库提供了基础类，可以利用其构造自己的类。</p>
+<p>扩展映射对象，添加日志，唯一性设置，类型检查</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">class LoggedMappingMixin:</div><div class="line">    __slots__ = () # 混入类没有实例变量，因为直接实例化混入类没有意义</div><div class="line">    def __getitem__(self, key):</div><div class="line">        print(&apos;Getting &apos; + str(key))</div><div class="line">        return super().__getitem__(key)</div><div class="line">    def __setitem__(self, key, value):</div><div class="line">        print(&apos;Setting &#123;&#125; = &#123;!r&#125;&apos;.format(key, value))</div><div class="line">        return super().__setitem__(key, value)</div><div class="line">    def __delitem__(self, key):</div><div class="line">        print(&apos;Deleting &apos; + str(key))</div><div class="line">        return super().__delitem__(key)</div><div class="line">class SetOnceMappingMixin:</div><div class="line">    __slots__ = ()</div><div class="line">    def __setitem__(self, key, value):</div><div class="line">        if key in self:</div><div class="line">            raise KeyError(str(key) + &apos; already set&apos;)</div><div class="line">        return super().__setitem__(key, value)</div><div class="line">class StringKeysMappingMixin:</div><div class="line">    __slots__ = ()</div><div class="line">    def __setitem__(self, key, value):</div><div class="line">        if not isinstance(key, str):</div><div class="line">            raise TypeError(&apos;keys must be strings&apos;)</div><div class="line">        return super().__setitem__(key, value)</div></pre></td></tr></table></figure>
+<p>通过多继承和其他映射对象混入使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">class LoggedDict(LoggedMappingMixin, dict):</div><div class="line">    pass</div><div class="line">d = LoggedDict()</div><div class="line">d[&apos;x&apos;] = 23</div><div class="line">print(d[&apos;x&apos;])</div><div class="line">del d[&apos;x&apos;]</div><div class="line">from collections import defaultdict</div><div class="line">class SetOnceDefaultDict(SetOnceMappingMixin, defaultdict):</div><div class="line">    pass</div><div class="line">d = SetOnceDefaultDict(list)</div><div class="line">d[&apos;x&apos;].append(2)</div><div class="line">d[&apos;x&apos;].append(3)</div><div class="line">d[&apos;x&apos;] = 32 # wrong</div></pre></td></tr></table></figure>
+<p>在一些大型库和框架中也会发现混入类的使用,用途同样是增强已存在的类的功能和一些可选特征,对于混入类,有几点需要记住。首先是,混入类不能直接被实例化使用。其次,混入类没有自己的态信息,也就是说它们并没有定义<code>__init__()</code>方法,并且没有实例属性。这也是为什么我们在上面明确定了<code>__slots__=()</code>。</p>
+<p>还有一种实现混入类的方式就是使用类装饰器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">def LoggedMapping(cls):</div><div class="line">    cls_getitem = cls.__getitem__</div><div class="line">    cls_setitem = cls.__setitem__</div><div class="line">    cls_delitem = cls.__delitem__</div><div class="line">    def __getitem__(self, key):</div><div class="line">        print(&apos;Getting &apos; + str(key))</div><div class="line">        return super().__getitem__(key)</div><div class="line">    def __setitem__(self, key, value):</div><div class="line">        print(&apos;Setting &#123;&#125; = &#123;!r&#125;&apos;.format(key, value))</div><div class="line">        return super().__setitem__(key, value)</div><div class="line">    def __delitem__(self, key):</div><div class="line">        print(&apos;Deleting &apos; + str(key))</div><div class="line">        return super().__delitem__(key)</div><div class="line">    cls.__getitem__ = __getitem__</div><div class="line">    cls.__setitem__ = __setitem__</div><div class="line">    cls.__delitem__ = __delitem__</div><div class="line">    return cls</div><div class="line">@LoggedMapping</div><div class="line">class LoggedDict(dict):</div><div class="line">    pass</div></pre></td></tr></table></figure>
+<h1 id="理解2"><a href="#理解2" class="headerlink" title="理解2"></a>理解2</h1><p>Mixin模式是一种在python里经常使用的模式，适当合理的应用能够达到复用代码，合理组织代码结构的目的。</p>
+<p>Python的Mixin模式可以通过多继承的方式来实现, 举例来说，我们自定义一个简单的具有嵌套结构的数据容器：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class SimpleItemContainer(object):</div><div class="line">    def __init__(self, id, item_containers):</div><div class="line">        self.id = id</div><div class="line">        self.data = &#123;&#125;</div><div class="line">        for item in item_containers:</div><div class="line">            self.data[item.id] = item</div></pre></td></tr></table></figure>
+<p>这时候利用python内置的<code>UserDict.DictMixin</code>来实现一个像原生字典的一样来访问数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">from collections import MutableMapping as DictMixin</div><div class="line">class SimpleItemContainer(object):</div><div class="line">    def __init__(self, id, item_containers):</div><div class="line">        self.id = id</div><div class="line">        self.data = &#123;&#125;</div><div class="line">        for item in item_containers:</div><div class="line">            self.data[item[&apos;id&apos;]] = item[&apos;item&apos;]</div><div class="line">class BetterSimpleItemContainer(SimpleItemContainer, DictMixin):</div><div class="line">    def __getitem__(self, id):</div><div class="line">        return self.data[id]</div><div class="line">    def __setitem__(self, id, value):</div><div class="line">        self.data[id] = value</div><div class="line">    def __delitem__(self, id):</div><div class="line">        del self.data[id]</div><div class="line">    def __iter__(self):</div><div class="line">        return iter(self.data)</div><div class="line">    def __len__(self):</div><div class="line">        return len(self.data)</div><div class="line">    def keys(self):</div><div class="line">        return self.data.keys()</div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">    b = BetterSimpleItemContainer(1, [&#123;&apos;id&apos;:1,&apos;item&apos;:&apos;item&apos;&#125;])</div><div class="line">    print(b[1])</div><div class="line">    print(b)</div></pre></td></tr></table></figure>
+<p>是一种特殊的多继承，而是在继承了一个基类的基础上，顺带利用多重继承的功能给这个子类添点料，增加一些其他的功能。保证Mixin的类功能单一具体，混入之后，新的类的MRO树其实也会相对很简单，并不会引起混乱。通常混入 Mixin 的类和 Mixin 类本身不是 is-a 的关系，混入 Mixin 类是为了添加某些（可选的）功能。自由地混入 Mixin 类就可以灵活地为被混入的类添加不同的功能。</p>
+<p>python支持多继承后，但能否支持动态继承性质?在程序运行过程中，重定义类的继承，python是支持这种动态继承性质的。这也就是python中 的mixin，在定义类过程中改变类的继承顺序，继承类。当某个模块不能修改时，通过mixin方式可以动态添加该类的方法，动态改变类的原有继承体系。 弄懂了多继承，mixin特性就简单多了。 但需要注意mixin后的具体继承体系的改变。</p>
+<p>一个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">#!/usr/bin/env python</div><div class="line">import types</div><div class="line">def MixIn(pyClass,mixInClass,makeAncestor=0):</div><div class="line">    if makeAncestor:</div><div class="line">        pyClass.__bases__ = (mixInClass,) + pyClass.__bases__</div><div class="line">    elif mixInClass not in pyClass.__bases__:</div><div class="line">        pyClass.__bases__ = pyClass.__bases__ + (mixInClass,)</div><div class="line">    else:</div><div class="line">        pass</div><div class="line">class C1(object):</div><div class="line">    def test(self):</div><div class="line">        print &apos;test in C1&apos;</div><div class="line">class C0MixIn(object):</div><div class="line">    def test(self):</div><div class="line">        print &apos;test in C0MixIn&apos;</div><div class="line">class C2(C1,C0MixIn):</div><div class="line">    def test(self):</div><div class="line">        print &apos;test in C2&apos;</div><div class="line">class C0(C1):</div><div class="line">    pass</div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">    print C0.__mro__</div><div class="line">    c1 = C0()</div><div class="line">    c1.test()</div><div class="line">    MixIn(C0,C0MixIn,1)</div><div class="line">    c0 = C0()</div><div class="line">    c0.test()</div><div class="line">    print C0.__mro__</div><div class="line">    print C2.__mro__</div><div class="line">    MixIn(C2,C0MixIn)</div><div class="line">    print C2.__mro__</div></pre></td></tr></table></figure>
+<p>运行结果:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">(&lt;class &apos;__main__.C0&apos;&gt;, &lt;class &apos;__main__.C1&apos;&gt;, &lt;type &apos;object&apos;&gt;)</div><div class="line">test in C1</div><div class="line">test in C0MixIn</div><div class="line">(&lt;class &apos;__main__.C0&apos;&gt;, &lt;class &apos;__main__.C0MixIn&apos;&gt;, &lt;class &apos;__main__.C1&apos;&gt;, &lt;type &apos;object&apos;&gt;)</div><div class="line">(&lt;class &apos;__main__.C2&apos;&gt;, &lt;class &apos;__main__.C1&apos;&gt;, &lt;class &apos;__main__.C0MixIn&apos;&gt;, &lt;type &apos;object&apos;&gt;)</div><div class="line">(&lt;class &apos;__main__.C2&apos;&gt;, &lt;class &apos;__main__.C1&apos;&gt;, &lt;class &apos;__main__.C0MixIn&apos;&gt;, &lt;type &apos;object&apos;&gt;)</div></pre></td></tr></table></figure>
+<h1 id="Using-Mix-ins-with-Python"><a href="#Using-Mix-ins-with-Python" class="headerlink" title="Using Mix-ins with Python"></a>Using Mix-ins with Python</h1><p>翻译自<a href="http://www.linuxjournal.com/node/4540/print" target="_blank" rel="external">http://www.linuxjournal.com/node/4540/print</a></p>
+<p>应用在Python中的mix-in编程风格的解释。</p>
+<p>Mix-in编程是一种软件开发风格，其功能单元在一个类中创建然后在其他类中混入。可能这听起来像简单的继承，但是mix-in有别与传统的类。大多情况下mix-in不是任何一个给定类”主要的”父类，不关心它将用于什么类，被用于贯穿类继承体系的多数类，并且可以动态载入。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;利用Mixins扩展类功能&quot;&gt;&lt;a href=&quot;#利用Mixins扩展类功能&quot; class=&quot;headerlink&quot; title=&quot;利用Mixins扩展类功能&quot;&gt;&lt;/a&gt;利用Mixins扩展类功能&lt;/h1&gt;&lt;p&gt;扩展其他类的功能，但是这些类没有任何继承的关系。因此
+    
+    </summary>
+    
+      <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
+    
+    
+      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
+    
+      <category term="Mixin" scheme="http://microndgt.github.io/tags/Mixin/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Jupyter详解</title>
+    <link href="http://microndgt.github.io/2017/02/24/Jupyter%E8%AF%A6%E8%A7%A3/"/>
+    <id>http://microndgt.github.io/2017/02/24/Jupyter详解/</id>
+    <published>2017-02-24T03:08:24.000Z</published>
+    <updated>2017-02-24T03:36:48.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="import"><a href="#import" class="headerlink" title="__import__"></a><code>__import__</code></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">def import_item(name):</div><div class="line">    parts = name.rsplit(&apos;.&apos;, 1)</div><div class="line">    if len(parts) == 2:</div><div class="line">        # called with &apos;foo.bar....&apos;</div><div class="line">        package, obj = parts</div><div class="line">        module = __import__(package, fromlist=[obj])</div><div class="line">        try:</div><div class="line">            pak = getattr(module, obj)</div><div class="line">        except AttributeError:</div><div class="line">            raise ImportError(&apos;No module named %s&apos; % obj)</div><div class="line">        return pak</div><div class="line">    else:</div><div class="line">        # called with un-dotted string</div><div class="line">        return __import__(parts[0])</div></pre></td></tr></table></figure>
+<p><code>name.rsplit(&#39;.&#39;, 1)</code>表示从右边开始切分，只切分一次</p>
+<p><code>__import__(package, fromlist=[obj])</code>:这里是当name是类似这种名字<code>foo.bar</code>才会运行，所以<code>package=foo</code>,fromlist不论填什么都会返回package，最后返回的module就是<code>foo</code>，然后在<code>foo</code>获取<code>bar</code>属性,如果没有这个的话，产生异常，否则返回获取的属性。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;import&quot;&gt;&lt;a href=&quot;#import&quot; class=&quot;headerlink&quot; title=&quot;__import__&quot;&gt;&lt;/a&gt;&lt;code&gt;__import__&lt;/code&gt;&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;tab
+    
+    </summary>
+    
+      <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
+    
+    
+      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
+    
+      <category term="Jupyter" scheme="http://microndgt.github.io/tags/Jupyter/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python 与 Zmq</title>
+    <link href="http://microndgt.github.io/2017/02/24/Python-%E4%B8%8E-zmq/"/>
+    <id>http://microndgt.github.io/2017/02/24/Python-与-zmq/</id>
+    <published>2017-02-24T01:58:21.000Z</published>
+    <updated>2017-02-24T02:43:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>zmq是一个云时代极速消息通信库，励志要写入Linux内核。这东西简单实用，完成同样的功能，如果是用socket，那恐怕要写出一大堆的代码，但用zmq，只需要简单的几行代码就可以了。</p>
+<p>zmq的版本和pyzmq的版本:<code>zmq.zmq_version()</code>和<code>zmq.pyzmq_version()</code></p>
+<h2 id="一个使用示例"><a href="#一个使用示例" class="headerlink" title="一个使用示例"></a>一个使用示例</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">#coding=utf-8</div><div class="line">&apos;&apos;&apos;&apos;&apos;</div><div class="line">Created on 2015-10-13</div><div class="line">服务端，发布模式</div><div class="line">@author: kwsy2015</div><div class="line">&apos;&apos;&apos;</div><div class="line">import zmq</div><div class="line">from random import randrange</div><div class="line">context = zmq.Context()</div><div class="line">socket = context.socket(zmq.PUB)</div><div class="line">socket.bind(&quot;tcp://*:5556&quot;)</div><div class="line">while True:</div><div class="line">    zipcode = randrange(1, 100000)</div><div class="line">    temperature = randrange(-80, 135)</div><div class="line">    relhumidity = randrange(10, 60)</div><div class="line">    socket.send_string(&quot;%i %i %i&quot; % (zipcode,temperature , relhumidity))</div><div class="line"># 客户端</div><div class="line"># coding=utf-8</div><div class="line">&apos;&apos;&apos;&apos;&apos;</div><div class="line">Created on 2015-10-13</div><div class="line">订阅模式，如果设置了过滤条件，那么只会接收到以过滤条件开头的消息</div><div class="line">@author: kwsy2015</div><div class="line">&apos;&apos;&apos;</div><div class="line">import sys</div><div class="line">import zmq</div><div class="line">#  Socket to talk to server</div><div class="line">context = zmq.Context()</div><div class="line">socket = context.socket(zmq.SUB)</div><div class="line">print(&quot;Collecting updates from weather server...&quot;)</div><div class="line">socket.connect(&quot;tcp://localhost:5556&quot;)</div><div class="line"># Subscribe to zipcode, default is NYC, 10001</div><div class="line">zip_filter = sys.argv[1] if len(sys.argv) &gt; 1 else &quot;10002&quot;</div><div class="line"># 此处设置过滤条件，只有以 zip_filter 开头的消息才会被接收</div><div class="line">socket.setsockopt_string(zmq.SUBSCRIBE, zip_filter)</div><div class="line"># Process 5 updates</div><div class="line">total_temp = 0</div><div class="line">for update_nbr in range(5):</div><div class="line">    string = socket.recv().decode(&apos;utf-8&apos;)</div><div class="line">    print(string)</div><div class="line">    zipcode, temperature, relhumidity = string.split()</div><div class="line">    total_temp += int(temperature)</div><div class="line">print(&quot;Average temperature for zipcode &apos;%s&apos; was %dF&quot; % (zip_filter, total_temp / update_nbr))</div></pre></td></tr></table></figure>
+<ul>
+<li>zmq的程序，也是要分清服务端和客户端的，服务端也是要绑定ip和端口的</li>
+<li>如果我们先启动客户端，后启动服务端，那么程序是可以正常运行的，换成socket，就不行，socket只能先启动服务端，后启动客户端</li>
+<li>这是一个消息通信库，它自己实现了一些协议，使得我们可以非常轻松的在节点间，进程间，线程间传递消息</li>
+</ul>
+<h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h2><p>不论是服务端还是客户端，都需要获得zmq上下文<code>context = zmq.Context()</code></p>
+<p>然后获得socket，每一个socket都是有自己的类型的，示例中，服务端的socket的类型是<code>zmq.PUB</code>，客户端的socket的类型是<code>zmq.SUB</code>，pub是发布，sub是订阅。说的通俗点，就是有一个pub节点，可以有多个sub节点，pub节点发出去的消息，如果sub节点没有设置过滤条件，那么就会接收所有的消息，如果有过滤条件，就只接收满足过滤条件的消息。</p>
+<p>设置过滤条件很简单<code>socket.setsockopt(zmq.SUBSCRIBE, zip_filter)</code>第二个参数就是期望的过滤条件，只有那些以这个过滤条件开头的消息才会被接收</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li>一个上下文可以创建任意多个socket，完全不受限制</li>
+<li>先启动了客户端，服务端pub出去的一些消息也还是可能没有被收到，因为你启动服务端时，服务端与客户端要建立连接，而这个时候，消息其实已经发出去了，所以你没收到</li>
+<li>客户端断开连接，没有影响。如果是服务端断开了呢，比如程序死掉了，那么客户端不会发生崩溃，只是阻塞在<code>socket.recv()</code>这条语句上，并且客户端有缓存，所以有可能客户端还在运行，只是收的数据是缓存中的数据。</li>
+</ol>
+<h2 id="zmq应答模式"><a href="#zmq应答模式" class="headerlink" title="zmq应答模式"></a>zmq应答模式</h2><ol>
+<li>必须先提问，后回答</li>
+<li>对于一个提问，只能回答一次</li>
+<li>在没有收到回答前不能再次提问</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"># coding=utf-8</div><div class="line">&apos;&apos;&apos;&apos;&apos;</div><div class="line">Created on 2015-10-10</div><div class="line">回复请求</div><div class="line">@author: kwsy2015</div><div class="line">&apos;&apos;&apos;</div><div class="line">import zmq</div><div class="line">import time</div><div class="line">context = zmq.Context()</div><div class="line">socket = context.socket(zmq.REP)</div><div class="line">socket.bind(&apos;tcp://*:5555&apos;)</div><div class="line">while True:</div><div class="line">    message = socket.recv()</div><div class="line">    print(&apos;received request: &apos;, message)</div><div class="line">    time.sleep(1)</div><div class="line">    socket.send_string(&apos;World&apos;)</div><div class="line"># 客户端</div><div class="line"># coding=utf-8</div><div class="line">&apos;&apos;&apos;&apos;&apos;</div><div class="line">Created on 2015-10-10</div><div class="line">你无法连续向服务器发送数据，必须发送一次，接收一次</div><div class="line">REQ和REP模式中，客户端必须先发起请求</div><div class="line">@author: kwsy2015</div><div class="line">&apos;&apos;&apos;</div><div class="line">import zmq</div><div class="line">context = zmq.Context()</div><div class="line">print(&apos;connect to hello world server&apos;)</div><div class="line">socket = context.socket(zmq.REQ)</div><div class="line">socket.connect(&apos;tcp://localhost:5555&apos;)</div><div class="line">for request in range(1, 10):</div><div class="line">    print(&apos;send &apos;, request, &apos;...&apos;)</div><div class="line">    socket.send_string(&apos;hello&apos;)</div><div class="line">    message = socket.recv()</div><div class="line">    print(&apos;received reply &apos;, request, &apos;[&apos;, message, &apos;]&apos;)</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;zmq是一个云时代极速消息通信库，励志要写入Linux内核。这东西简单实用，完成同样的功能，如果是用socket，那恐怕要写出一大堆的代码，但用zmq，只需要简单的几行代码就可以了。&lt;/p&gt;
+&lt;p&gt;zmq的版本和pyzmq的版本:&lt;code&gt;zmq.zmq_version(
+    
+    </summary>
+    
+      <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
+    
+    
+      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>WireShark 抓包</title>
@@ -249,7 +374,7 @@
     <link href="http://microndgt.github.io/2017/02/17/Python%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E5%B7%A5%E7%A8%8B%E5%B8%88%E9%9D%A2%E8%AF%95%E6%8C%87%E5%8D%97/"/>
     <id>http://microndgt.github.io/2017/02/17/Python后台开发工程师面试指南/</id>
     <published>2017-02-17T09:15:39.000Z</published>
-    <updated>2017-02-23T10:12:58.000Z</updated>
+    <updated>2017-02-23T10:29:06.000Z</updated>
     
     <content type="html"><![CDATA[<p>最近两天当了三次面试官，刚开始面试的时候不知道问些什么，后来就形成套路了，基本就是先是Python语法，多线程多进程，然后是数据分析，数据结构与算法，操作系统，Linux，数据库。不过有些问题自己也不知道答案。。。为了防止自己什么时候卡壳，所以总结一下这个面试指南，得指南者得天下。。万一有面试者提前看了这篇文章，那就偷着乐吧，啊哈哈哈哈。</p>
 <h1 id="Python篇"><a href="#Python篇" class="headerlink" title="Python篇"></a>Python篇</h1><h2 id="序列倒序"><a href="#序列倒序" class="headerlink" title="序列倒序"></a>序列倒序</h2><p>这个问题是我乐此不疲的问题之一，方法有好多种。。。另外，记住拼写，<code>reverse</code>，好多面试者写错了= =</p>
@@ -308,7 +433,8 @@
 <h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><h1 id="数据结构与算法"><a href="#数据结构与算法" class="headerlink" title="数据结构与算法"></a>数据结构与算法</h1><h2 id="Reverse-a-singly-linked-list"><a href="#Reverse-a-singly-linked-list" class="headerlink" title="Reverse a singly linked list."></a>Reverse a singly linked list.</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># Definition for singly-linked list.</div><div class="line"># class ListNode(object):</div><div class="line">#     def __init__(self, x):</div><div class="line">#         self.val = x</div><div class="line">#         self.next = None</div><div class="line"></div><div class="line">class Solution(object):</div><div class="line">    def reverseList(self, head):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type head: ListNode</div><div class="line">        :rtype: ListNode</div><div class="line">        &quot;&quot;&quot;</div></pre></td></tr></table></figure>
 <h2 id="Same-Tree"><a href="#Same-Tree" class="headerlink" title="Same Tree"></a>Same Tree</h2><p>Given two binary trees, write a function to check if they are equal or not.<br>Two binary trees are considered equal if they are structurally identical and the nodes have the same value.</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"># Definition for a binary tree node.</div><div class="line"># class TreeNode(object):</div><div class="line">#     def __init__(self, x):</div><div class="line">#         self.val = x</div><div class="line">#         self.left = None</div><div class="line">#         self.right = None</div><div class="line">class Solution(object):</div><div class="line">    def isSameTree(self, p, q):</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        :type p: TreeNode</div><div class="line">        :type q: TreeNode</div><div class="line">        :rtype: bool</div><div class="line">        &quot;&quot;&quot;</div><div class="line">        #判断结构和值，并且注意空节点的判断</div><div class="line">        if p is None and q is None:</div><div class="line">            return True</div><div class="line">        elif p is None or q is None:</div><div class="line">            return False</div><div class="line">        else:</div><div class="line">            if p.val == q.val:</div><div class="line">                #值相同的时候，比较左子树</div><div class="line">                if self.isSameTree(p.left,q.left):</div><div class="line">                    #如果左子树相同，比较右子树</div><div class="line">                    return self.isSameTree(p.right,q.right)</div><div class="line">            #如果值不相同</div><div class="line">            return False</div></pre></td></tr></table></figure>
-]]></content>
+<h1 id="web（flask）"><a href="#web（flask）" class="headerlink" title="web（flask）"></a>web（flask）</h1><h2 id="web程序的结构，开发模式"><a href="#web程序的结构，开发模式" class="headerlink" title="web程序的结构，开发模式"></a>web程序的结构，开发模式</h2><h2 id="蓝本的作用"><a href="#蓝本的作用" class="headerlink" title="蓝本的作用"></a>蓝本的作用</h2><p>蓝本中定义的路由处于休眠状态，直到蓝本注册到程序中后，路由才真正成为程序的一部分。蓝本可以在单个文件定义，也可以用结构化的方式在包中的多个模块中构建。</p>
+<h2 id="如何理解restful"><a href="#如何理解restful" class="headerlink" title="如何理解restful"></a>如何理解restful</h2>]]></content>
     
     <summary type="html">
     
@@ -752,7 +878,7 @@
     <link href="http://microndgt.github.io/2017/02/01/Python%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A12/"/>
     <id>http://microndgt.github.io/2017/02/01/Python类与对象2/</id>
     <published>2017-02-01T04:29:49.000Z</published>
-    <updated>2017-02-04T02:59:01.000Z</updated>
+    <updated>2017-02-24T08:59:48.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="Python-set-和-get-等解释"><a href="#Python-set-和-get-等解释" class="headerlink" title="Python __set__和__get__等解释"></a>Python <code>__set__</code>和<code>__get__</code>等解释</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">class T:</div><div class="line">    name = &apos;name&apos;</div><div class="line">    def hello(self):</div><div class="line">        print(&apos;hello&apos;)</div><div class="line">t = T()</div></pre></td></tr></table></figure>
 <p>使用<code>dir(t)</code>列出t的所有有效属性，分为两类，一类是Python自动产生的，一类是自定义的，如hello,name</p>
@@ -764,10 +890,10 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">class Descriptor(object):</div><div class="line">    def __get__(self, obj, type=None):</div><div class="line">        return(&apos;get&apos;, self, obj, type, sep=&quot;, &quot;)</div><div class="line">    def __set__(self, obj, val):</div><div class="line">        print(&quot;set&quot;, self, obj, val)</div><div class="line">    def __delete__(self, obj):</div><div class="line">        print(&quot;delete&quot;, self, obj)</div></pre></td></tr></table></figure>
 <p>self是当前Descriptor实例，obj值是拥有属性的对象，如果直接用类访问，那么就相当于直接用类访问类的属性，obj的值是None。type是obj的类型，如果用类访问，obj是None，那么type就是类本身。</p>
 <p><code>T.d</code>返回的是<code>d.__get__(None, T)</code>，<code>t.d</code>返回的是<code>d.__get__(t, T)</code></p>
-<p>如果描述器只有get方法，没有set方法，那么给这样的属性赋值的时候就会隐藏实例的描述器，直接进行赋值了。</p>
+<p>如果描述器只有get方法，没有set方法，那么给这样的属性赋值的时候就会隐藏实例的描述器，直接进行赋值了。些方法: <code>__get__()</code>, <code>__set__()</code>, <code>__delete__()</code>, 如果任何这些方法在一个对象中被定义，就说他是个描述器。</p>
 <h2 id="Python属性查找策略"><a href="#Python属性查找策略" class="headerlink" title="Python属性查找策略"></a>Python属性查找策略</h2><ul>
 <li>如果attr是一个Python自动产生的属性，直接找到</li>
-<li>查找类中的属性<code>obj.__class__.__dict__</code>，如果attr存在而且是描述器，那么返回描述器<code>__get__</code>方法的结果，如果没有那么继续在<code>obj.__class__</code>的父类以及祖先类中寻找描述器，如果是non-data描述器的话，就不满足要求。</li>
+<li>查找类中的属性<code>obj.__class__.__dict__</code>，如果attr存在而且是描述器，那么返回描述器<code>__get__</code>方法的结果，如果没有那么继续在<code>obj.__class__</code>的父类以及祖先类中寻找描述器，如果是non-data描述器的话，仅仅定义<strong>get</strong>()被称为非资料描述器,就不满足要求。</li>
 <li>在实例属性字典中<code>obj.__dict__</code>寻找，如果obj是普通实例，那么找到就直接返回。如果obj是类，那么在obj和它的父类，祖先类的<code>__dict__</code>中查找，如果找到描述器就返回描述器的<code>__get__</code>方法的结果，否则直接返回attr。如果没有找到，进入下一步</li>
 <li>在<code>obj.__class__.__dict__</code>中查找，如果找到一个non-data描述器，返回描述器<code>__get__</code>方法的结果，找到普通属性，那么直接返回属性值。</li>
 <li><code>raise AttributeError</code></li>
@@ -799,13 +925,19 @@
 <p><code>@abstractmethod</code>还能注解静态方法，类方法和properties，只需要将注解紧靠在函数定义前即可。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@property</div><div class="line">@abstractmethod</div><div class="line">def name(self):</div><div class="line">    pass</div></pre></td></tr></table></figure>
 <h1 id="实现数据模型的类型约束"><a href="#实现数据模型的类型约束" class="headerlink" title="实现数据模型的类型约束"></a>实现数据模型的类型约束</h1><p>需要对某些实例属性赋值时候进行检查，自定义属性赋值函数，最好使用描述器。</p>
-<p>下面使用描述器实现了一个系统类型和赋值验证框架：</p>
+<p>下面使用描述器实现了一个系统类型和赋值验证框架,只定义了<code>__set__()</code>方法，没有<code>__get__()</code>方法，如果一个描述仅仅是从底层实例字典中获取某个属性值的话,那么没必要去定义<code>__get__()</code>方法。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">class Descriptor:</div><div class="line">    def __init__(self, name=None, **opts):</div><div class="line">        self.name = name</div><div class="line">        for key, value in opts.items():</div><div class="line">            # 赋值给实例属性</div><div class="line">            setattr(self, key, value)</div><div class="line">    def __set__(self, instance, value):</div><div class="line">        instance.__dict__[self.name] = value</div><div class="line">class Typed(Descriptor):</div><div class="line">    expected_type = type(None)</div><div class="line">    def __set__(self, instance, value):</div><div class="line">        # 这里用的是实例属性，描述器是在一个类中使用，所以这个属性是另外一个类的实例属性</div><div class="line">        if not isinstance(value, self.expected_type):</div><div class="line">            raise TypeError(&apos;expected &apos; + str(self.expected_type))</div><div class="line">        super().__set__(instance, value)</div><div class="line">class Unsigned(Descriptor):</div><div class="line">    def __set__(self, instance, value):</div><div class="line">        if value &lt; 0:</div><div class="line">            raise ValueError(&apos;Excepted &gt;= 0&apos;)</div><div class="line">        super().__set__(instance, value)</div><div class="line">class MaxSized(Descriptor):</div><div class="line">    def __init__(self, name=None, **opts):</div><div class="line">        if &apos;size&apos; not in opts:</div><div class="line">            raise TypeError(&apos;missing size option&apos;)</div><div class="line">        # 这里继承基类，已经设置了self.size</div><div class="line">        super().__init__(name, **opts)</div><div class="line">    def __set__(self, instance, value):</div><div class="line">        if len(value) &gt;= self.size:</div><div class="line">            raise ValueError(&apos;size must be &lt; &apos; + str(self.size))</div><div class="line">        super().__set__(instance, value)</div></pre></td></tr></table></figure>
-<p>自己定义各种不同的数据类型</p>
+<p>自己定义各种不同的数据类型，所有描述器类都是基于混入类来实现的。比如          和Unsigned要跟其他继承自MaxSized类混入。这里利用多继承来实现相应的功能。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">class Integer(Typed):</div><div class="line">    expected_type = int</div><div class="line">class UnsignedInteger(Integer, Unsigned):</div><div class="line">    pass</div><div class="line">class Float(Typed):</div><div class="line">    expected_type = float</div><div class="line">class UnsignedFloat(Float, Unsigned):</div><div class="line">    pass</div><div class="line">class String(Typed):</div><div class="line">    expected_type = str</div><div class="line">class SizedString(String, MaxSized):</div><div class="line">    pass</div></pre></td></tr></table></figure>
-<p>使用这些自定义数据类型：</p>
+<p>混入类的一个比较难理解的地方是,调用<code>super()</code>函数时,你并不知道究竟要调 用哪个具体类。你需要跟其他类结合后才能正确的使用,也就是必须合作才能产生效 果。</p>
+<p>使用这些自定义数据类型,描述器必须要定义在类变量中，描述器也必须存在类的<code>__dict__</code>中，只有在<strong><em>类</em></strong>的<code>__dict__</code>中找到属性，Python才会去看它有没有<code>__get__</code>，但是如果是实例的<code>__dict__</code>中找到的属性，那么不会去查看是否有<code>__get__</code>等方法，直接返回属性本身。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">class Stock:</div><div class="line">    name = SizedString(&apos;name&apos;, size=8)</div><div class="line">    shares = UnsignedInteger(&apos;shares&apos;)</div><div class="line">    price = UnsignedFloat(&apos;price&apos;)</div><div class="line">    def __init__(self, name, shares, price):</div><div class="line">        self.name = name</div><div class="line">        self.shares = shares</div><div class="line">        self.price = price</div></pre></td></tr></table></figure>
-<p>混入类的使用这块需要学习一下。。。</p>
+<p>还可以使用类装饰器来实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">def check_attributes(**kwargs):</div><div class="line">    def decorator(cls):</div><div class="line">        for key, value in kwargs.items():</div><div class="line">            if isinstance(value, Descriptor):</div><div class="line">                value.name = key</div><div class="line">                setattr(cls, key, value)</div><div class="line">            else:</div><div class="line">                # 如果不是描述器，那么就转换成这种类型</div><div class="line">                setattr(cls, key, value(key))</div><div class="line">        return cls</div><div class="line">    return decorator</div><div class="line">@check_attributes(name=SizedString(size=8),</div><div class="line">                  shares=UnsignedInteger,</div><div class="line">                  price=UnsignedFloat)</div><div class="line">class Stock:</div><div class="line">    def __init__(self, name, shares, price):</div><div class="line">        self.name = name</div><div class="line">        self.shares = shares</div><div class="line">        self.price = price</div></pre></td></tr></table></figure>
+<p>使用元类(元类这一块需要搞定)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">class checkedmeta(type):</div><div class="line">    def __new__(cls, clsname, bases, methods):</div><div class="line">        for key, value in methods.items():</div><div class="line">            if isinstance(value, Descriptor):</div><div class="line">                value.name = key</div><div class="line">        return type.__new__(cls, clsname, bases, methods)</div><div class="line">class Stock2(metaclass=checkedmeta):</div><div class="line">    name = SizedString(&apos;name&apos;, size=8)</div><div class="line">    shares = UnsignedInteger(&apos;shares&apos;)</div><div class="line">    price = UnsignedFloat(&apos;price&apos;)</div><div class="line">    def __init__(self, name, shares, price):</div><div class="line">        self.name = name</div><div class="line">        self.shares = shares</div><div class="line">        self.price = price</div></pre></td></tr></table></figure>
+<p>使用装饰器作为混入类的代替技术</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">def Typed(expected_type, cls=None):</div><div class="line">    if cls is None:</div><div class="line">        # 返回一个函数对象</div><div class="line">        return lambda cls: Typed(expected_type, cls)</div><div class="line">    super_set = cls.__set__</div><div class="line">    def __set__(self, instance, value):</div><div class="line">        if not isinstance(value, expected_type):</div><div class="line">            raise TypeError(&apos;expected &apos; + str(expected_type))</div><div class="line">        super_set(self, instance, value)</div><div class="line">    cls.__set__ = __set__</div><div class="line">    return cls</div><div class="line">def Unsigned(cls):</div><div class="line">    super_set = cls.__set__</div><div class="line">    def __set__(self, instance, value):</div><div class="line">        if value &lt; 0:</div><div class="line">            raise ValueError(&apos;Expected &gt;= 0&apos;)</div><div class="line">        super_set(self, instance, value)</div><div class="line">    cls.__set__ = __set__</div><div class="line">    return cls</div><div class="line">@Typed(int)</div><div class="line">class Integer(Descriptor):</div><div class="line">    pass</div><div class="line">@Unsigned</div><div class="line">class UnsignedInteger(Integer):</div><div class="line">    pass</div><div class="line"># 这些必须在类中使用</div></pre></td></tr></table></figure>
 ]]></content>
     
     <summary type="html">
@@ -871,224 +1003,6 @@
     
       &lt;p&gt;与类定义有关的常见编程模型，包括让对象支持常见的Python特性，特殊方法的使用，类封装技术，继承，内存管理以及有用的设计模式。&lt;/p&gt;
 &lt;h1 id=&quot;改变对象的字符串显示&quot;&gt;&lt;a href=&quot;#改变对象的字符串显示&quot; class=&quot;headerlink&quot; title=&quot;
-    
-    </summary>
-    
-      <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
-    
-    
-      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
-    
-      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
-    
-      <category term="Python_Cookbook" scheme="http://microndgt.github.io/tags/Python-Cookbook/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python Guide</title>
-    <link href="http://microndgt.github.io/2017/01/27/Python-guide/"/>
-    <id>http://microndgt.github.io/2017/01/27/Python-guide/</id>
-    <published>2017-01-27T03:18:47.000Z</published>
-    <updated>2017-01-28T06:41:52.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="算法与数据结构"><a href="#算法与数据结构" class="headerlink" title="算法与数据结构"></a>算法与数据结构</h1><p><code>list, tuple, set</code></p>
-<h2 id="fronzenset"><a href="#fronzenset" class="headerlink" title="fronzenset"></a>fronzenset</h2><p>元素一经创建，不可增加、删除和修改。</p>
-<h2 id="collections-OrderedDict"><a href="#collections-OrderedDict" class="headerlink" title="collections.OrderedDict"></a>collections.OrderedDict</h2><p>记录了内容添加的顺序，以添加顺序为准<code>d1 = collections.OrderedDict()</code></p>
-<h2 id="collections-defaultdict"><a href="#collections-defaultdict" class="headerlink" title="collections.defaultdict"></a>collections.defaultdict</h2><p>会自动为它的键赋一个初值，<code>frequencies = defaultdict(int)</code>，所以默认值是int类型的，如果<code>frequencies = defaultdict(list)</code>，键对应的值类型就默认是列表类型的</p>
-<h2 id="collections-deque"><a href="#collections-deque" class="headerlink" title="collections.deque"></a>collections.deque</h2><p>高效实现插入和删除操作的双向列表，适合用于列表和栈，对的，是否可以用在项目上经常有<code>insert</code>的列表数据结构上？</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">from collections import deque</div><div class="line">q = deque([&apos;a&apos;, &apos;b&apos;, &apos;c&apos;])</div><div class="line">q.append(&apos;x&apos;)</div><div class="line">q.appendleft(&apos;y&apos;)</div><div class="line"># 还支持pop()和popleft()</div></pre></td></tr></table></figure>
-<h2 id="collections-namedtuple"><a href="#collections-namedtuple" class="headerlink" title="collections.namedtuple"></a>collections.namedtuple</h2><p>创建了一个自定义的tuple对象，并且规定了tuple元素的个数，并且可以用属性而不是索引来表示tuple中的某个元素，这样<code>namedtuple</code>定义的数据类型，具备tuple的不变性，又可以根据属性来引用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">from collections import namedtuple</div><div class="line"># 名称，属性list</div><div class="line">Point = namedtuple(&apos;Point&apos;, [&apos;x&apos;, &apos;y&apos;])</div><div class="line">p = Point(1, 2)</div><div class="line">p.x</div><div class="line">p.y</div></pre></td></tr></table></figure>
-<h2 id="collections-Counter"><a href="#collections-Counter" class="headerlink" title="collections.Counter"></a>collections.Counter</h2><p>简单的计数器，比如统计字符出现的个数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">from collections import Counter</div><div class="line">a = &quot;programming&quot;</div><div class="line">c = Counter(a)</div><div class="line">c.most_common()</div></pre></td></tr></table></figure>
-<blockquote>
-<p>去刷leetcode！看看算法导论</p>
-</blockquote>
-<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><p>这块自己应该是最薄弱的地方吧，没有系统的概念，所以多看书，多学习吧。这里有两个资源：</p>
-<p><a href="http://fex.baidu.com/blog/2014/05/what-happen/" target="_blank" rel="external">从输入URL 到页面加载完成的过程中都发生了什么事情</a></p>
-<p>图解Http</p>
-<h1 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h1><p>有三种类型的数据库，关系型数据库，文档型数据库(mongodb)，内存型数据库(Redis)</p>
-<p>有时间去研究一下mongodb，强化学习一下Redis</p>
-<h1 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h1><p>这块虽然基本的自己在用，但是好多都没有实践，比如合并请求之类的命令，现在发现好多都需要学习。。。</p>
-<h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git add . #将什么添加到仓库</div><div class="line">git commit -m &quot;wrote a note&quot; # 将文件提交到仓库</div><div class="line">git status #掌握仓库当前状态</div><div class="line">git diff # 查看做了什么修改</div></pre></td></tr></table></figure>
-<h2 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">git log # 查看历史记录，显示最近到最远的提交日志</div><div class="line">git log --pretty=oneline # 只输出一条必要信息</div><div class="line"># HEAD表示当前版本，HEAD^表示上一个版本,HEAD^^上上一个版本，HEAD^100表示往上100个版本</div><div class="line">git reset --hard HEAD^ # 表示回退到上一个版本</div><div class="line"># 可以使用新版本的commit id号再回去，输入前几位也可以</div><div class="line">git reset --hard 326234</div><div class="line"># 下面命令记录了git的每次命令</div><div class="line">git reflog</div></pre></td></tr></table></figure>
-<h2 id="工作区和暂存区"><a href="#工作区和暂存区" class="headerlink" title="工作区和暂存区"></a>工作区和暂存区</h2><p><code>git add</code>命令是把要提交的所有修改放到暂存区，<code>git commit</code>是把暂存区的所有修改提交到分支</p>
-<p>每次修改，如果不add到暂存区，就不会加入到commit中</p>
-<h2 id="撤销修改"><a href="#撤销修改" class="headerlink" title="撤销修改"></a>撤销修改</h2><p><code>git checkout -- file</code>可以丢弃工作区的修改，将文件在工作区的修改全部撤销，也就是将该文件回到最近一次<code>git commit</code>或者<code>git add</code>时的状态</p>
-<p>如果不想要的内容已经<code>git add</code>到暂存区，但是没有提交，那么<code>git reset HEAD file</code>可以将暂存区的修改撤销掉，重新放回工作区，然后<code>git checkout -- file</code>丢弃工作区的修改</p>
-<p>如果已经commit那么使用版本回退</p>
-<h2 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h2><p>删除之后，工作区和版本库就不一致，这时候如果确实要在版本库中删除文件，那么使用<code>git rm file</code>并且<code>git commit</code></p>
-<p>如果删除错了，那么从版本库中将文件恢复<code>git checkout -- file</code>，<code>git checkout</code>其实是用版本库的版本替换工作区的版本</p>
-<h2 id="远程仓库"><a href="#远程仓库" class="headerlink" title="远程仓库"></a>远程仓库</h2><p>一台电脑充当服务器的角色，其他每个人都是从服务器仓库中克隆一份到自己电脑上，并且各自把自己的提交推送到服务器仓库中，也从服务器仓库中拉取别人的提交。所以完全可以自己搭建一台运行Git的服务器。</p>
-<p>git支持多种协议，https，但是通过ssh支持的原生的git协议速度最快，有必要，每次都输密码真是烦。在<code>hexo</code>配置文件中<code>_config.yml</code>设置<code>deploy</code>属性，<code>repo</code>为<code>git@github.com:Microndgt/microndgt.github.io.git</code>即可。</p>
-<h2 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h2><p><code>HEAD</code>指向的是<code>master</code>，<code>master</code>指向提交，所以<code>HEAD</code>指向的就是当前分支</p>
-<p>创建一个分支后，增加了一个<code>dev</code>指针，指向与<code>master</code>相同的提交，再把<code>HEAD</code>指向<code>dev</code>，就表示当前分支在<code>dev</code>上，新提交一次，<code>dev</code>指针往前移动一步，而<code>master</code>指针不变，合并的时候把<code>master</code>指向<code>dev</code>的当前提交，就完成了合并，删除<code>dev</code>分支是把<code>dev</code>指针给删掉</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># -b创建并且切换</div><div class="line">git checkout -b dev</div><div class="line"># 相当于以下</div><div class="line">git branch dev</div><div class="line">git checkout dev</div><div class="line"># 查看分支</div><div class="line">git branch</div><div class="line"># 切换分支</div><div class="line">git checkout master</div><div class="line"># 合并分支,合并指定分支到当前分支</div><div class="line">git merge dev</div><div class="line"># 合并完成后，删除dev分支</div><div class="line">git branch -d dev</div></pre></td></tr></table></figure>
-<h2 id="解决冲突"><a href="#解决冲突" class="headerlink" title="解决冲突"></a>解决冲突</h2><p>就是自己之前考虑的情况，这种情况如果是两个分支修改的文件各不相同就可以自动merge，没有冲突，但是如果修改了一个文件的话，就会产生冲突，就不能快速合并，必须解决冲突之后才能合并，可以使用<code>git status</code>来查看冲突文件，解决冲突之后<code>git merge feature1</code>，然后删除<code>feature1</code>分支,<code>git branch -d feature1</code></p>
-<h2 id="非快速合并分支"><a href="#非快速合并分支" class="headerlink" title="非快速合并分支"></a>非快速合并分支</h2><p>通常分支合并会使用<code>Fast forward</code>，这种模式下，删除分支后，会丢掉分支信息，强制禁用<code>Fast forward</code>，就会在<code>merge</code>生成一个新的commit，这样在分支历史上就可以看出分支信息。</p>
-<p>合并的时候指定<code>--no-ff</code>参数<code>git merge --no-ff -m &quot;merge with no-ff&quot; dev</code>，因为本次合并要创建一个新的commit，所以加上<code>-m</code>参数，把commit描述写进去</p>
-<h2 id="分支策略"><a href="#分支策略" class="headerlink" title="分支策略"></a>分支策略</h2><p>一般是<code>master</code>分支非常稳定，仅用来发布新版本，平时在<code>dev</code>分支干活，如果1.0版本发布的时候，再把<code>dev</code>分支合并到<code>master</code>上，在<code>master</code>分支发布1.0版本</p>
-<p>然后团队每个人在<code>dev</code>分支上干活，每个人都有自己的分支，时不时往<code>dev</code>分支上合并即可。</p>
-<p>我打算是<code>master</code>作为主分支，然后建立一个<code>dev</code>分支，我在这个上面干活，然后其他人就建立自己的分支，然后我来从<code>dev</code>分支合并他们的分支，然后每次稳定版本发布再合并到<code>master</code></p>
-<h2 id="Feature分支"><a href="#Feature分支" class="headerlink" title="Feature分支"></a>Feature分支</h2><p>每添加一个新功能的时候，最好新建一个feature分支，在上面开发，如果完成，合并，最后删除该feature分支，如果新功能要取消，就可以销毁掉这个分支<code>git branch -D feature-vulcan</code></p>
-<h2 id="多人协作"><a href="#多人协作" class="headerlink" title="多人协作"></a>多人协作</h2><p>git中，分支完全可以自己本地搞，推送的时候推送合并后的主分支好了。所以开发的时候，现在可以创建一个新分支，然后开发，最后合并删除即可，再推送。</p>
-<p>如果别人clone，默认只能看到<code>master</code>分支，那么要用其他分支，必须创建远程<code>origin</code>的<code>dev</code>分支到本地，<code>git checkout -b dev origin/dev</code>，如果别人更新了仓库，那么可以<code>git pull</code>然后再本地合并，解决冲突，再推送，但是必须指定本地分支与远程分支进行链接<code>git branch --set-upstream dev origin/dev</code></p>
-<p>查看远程库信息<code>git remote -v</code></p>
-<h2 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h2><p><code>git tag -a v0.1 -m &quot;version 0.1 released&quot;</code></p>
-<h1 id="专业素养"><a href="#专业素养" class="headerlink" title="专业素养"></a>专业素养</h1><p>不仅需要写程序，还要写文档，写注释，单元测试，这里自己还欠缺的能力是单元测试，有时间去研究学习一下。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;算法与数据结构&quot;&gt;&lt;a href=&quot;#算法与数据结构&quot; class=&quot;headerlink&quot; title=&quot;算法与数据结构&quot;&gt;&lt;/a&gt;算法与数据结构&lt;/h1&gt;&lt;p&gt;&lt;code&gt;list, tuple, set&lt;/code&gt;&lt;/p&gt;
-&lt;h2 id=&quot;fronzens
-    
-    </summary>
-    
-      <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
-    
-    
-      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
-    
-      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python函数</title>
-    <link href="http://microndgt.github.io/2017/01/23/Python%E5%87%BD%E6%95%B0/"/>
-    <id>http://microndgt.github.io/2017/01/23/Python函数/</id>
-    <published>2017-01-23T06:34:34.000Z</published>
-    <updated>2017-01-27T05:20:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>默认参数，任意数量参数，强制关键字参数，注解和闭包。</p>
-<h1 id="可接受任意数量参数的函数"><a href="#可接受任意数量参数的函数" class="headerlink" title="可接受任意数量参数的函数"></a>可接受任意数量参数的函数</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">def avg(first, *rest):</div><div class="line">    # 传入相当于一个序列</div><div class="line">    return (first + sum(rest)) / (1 + len(rest))</div></pre></td></tr></table></figure>
-<p>任意数量的关键字参数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">def make_element(name, value, **attrs):</div><div class="line">    keyvals = [&apos; %s = &quot;%s&quot; &apos; % item for item in attrs.items()]</div></pre></td></tr></table></figure>
-<p>任意数量的位置参数和关键字参数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">def anyargs(*args, **kwargs):</div><div class="line">    print(args)</div><div class="line">    print(kwargs)</div></pre></td></tr></table></figure>
-<h1 id="强制关键字参数"><a href="#强制关键字参数" class="headerlink" title="强制关键字参数"></a>强制关键字参数</h1><p>将强制关键字参数放到某个<em>参数，或者单个</em>后面就可以</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">def recv(maxsize, *, block):</div><div class="line">    pass</div><div class="line">recv(1024, block=True)</div><div class="line">def mininum(*values, clip=None):</div><div class="line">    pass</div><div class="line">mininum(1, 5, 2, clip=0)</div></pre></td></tr></table></figure>
-<p>使用强制关键字参数可以使得对调用者友好，并且也比<code>**kwargs</code>友好，因为help输出的时候更容易理解</p>
-<h1 id="给函数参数增加元信息"><a href="#给函数参数增加元信息" class="headerlink" title="给函数参数增加元信息"></a>给函数参数增加元信息</h1><p>增加额外信息，这样使用者就知道函数应该怎样使用</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">def add(x:int, y:int) -&gt; int:</div><div class="line">    return x + y</div></pre></td></tr></table></figure>
-<p>并不会类型检查，一般加上简单的注解，通常使用类或者字符串会更好</p>
-<h1 id="定义有默认参数的函数"><a href="#定义有默认参数的函数" class="headerlink" title="定义有默认参数的函数"></a>定义有默认参数的函数</h1><p>定义一个有可选参数的函数直接在函数定义中给参数指定一个默认值，并且放到参数列表最后就可以了。</p>
-<p>如果默认参数是一个可以修改的容器比如列表，使用None作为默认值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">def spam(a, b=None):</div><div class="line">    if b is None:</div><div class="line">        b = []</div></pre></td></tr></table></figure>
-<p>默认值仅仅在函数定义的时候赋值一次，默认参数的值应该是不可变的对象，并且在测试None值的时候使用is操作符。<code>if a is None:</code></p>
-<h1 id="匿名函数捕获变量值"><a href="#匿名函数捕获变量值" class="headerlink" title="匿名函数捕获变量值"></a>匿名函数捕获变量值</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">x = 10</div><div class="line">a = lambda y: x + y</div><div class="line">x = 20</div><div class="line">b = lambda y: x + y</div></pre></td></tr></table></figure>
-<p><code>a(10)</code>和<code>b(10)</code>的结果都是30，因为lambda表达式中x是一个自由变量，在运行的时候绑定值，也就是说，在调用lambda表达式的时候，x的值是执行时的值，和函数的默认参数定义是不一样的。</p>
-<p>如果想让某个匿名函数在定义的时候捕获到值，可以将那个参数值定义成默认参数</p>
-<p><code>a = lambda y, x=x: x + y</code></p>
-<h1 id="减少可调用对象的参数个数"><a href="#减少可调用对象的参数个数" class="headerlink" title="减少可调用对象的参数个数"></a>减少可调用对象的参数个数</h1><p>有一个被其他python代码使用的callable对象，可能是一个回调函数或者是一个处理器，但是参数过多的时候，可能导致调用出错。对这就是为什么我的多进程调用没有作用，可能这个是一方面原因，另外一方面原因就是传入的是可变对象。</p>
-<p>使用<code>functools.partial()</code>允许给一个或者多个参数设置固定的值，减少接下来被调用时候的参数个数。</p>
-<p>一个例子，partial用来微调其他库函数所使用的回调函数的参数:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">def output_result(result, log=None):</div><div class="line">    if log is not None:</div><div class="line">        log.debug(&apos;Got: %r&apos;, result)</div><div class="line">def add(x, y):</div><div class="line">    return x + y</div><div class="line">if __name__ == &apos;__main__&apos;:</div><div class="line">    import logging</div><div class="line">    from multiprocessing import Pool</div><div class="line">    from functools import partial</div><div class="line">    logging.basicConfig(level=logging.DEBUG)</div><div class="line">    log = logging.getLogger(&apos;test&apos;)</div><div class="line">    p = Pool()</div><div class="line">    p.apply_async(add, (3, 4), callback=partial(outoutput_result, log=log))</div><div class="line">    p.close()</div><div class="line">    p.join()</div></pre></td></tr></table></figure>
-<h1 id="将单方法的类转换成函数"><a href="#将单方法的类转换成函数" class="headerlink" title="将单方法的类转换成函数"></a>将单方法的类转换成函数</h1><p>可以使用闭包将单个方法的类转换成函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopen</div><div class="line">class UrlTemplate:</div><div class="line">    def __init__(self, template):</div><div class="line">        self.template = template</div><div class="line">    def open(self, **kwargs):</div><div class="line">        return urlopen(self.template.format_map(kwargs))</div></pre></td></tr></table></figure>
-<p>可以使用闭包来代替:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">def urltemplate(template):</div><div class="line">    def opener(**kwargs):</div><div class="line">        return urlopen(template.format_map(kwargs))</div><div class="line">    return opener</div></pre></td></tr></table></figure>
-<p>经典啊！使用单方法类的原因是需要存储某些额外的状态来给方法使用，但是使用内部函数或者闭包更优雅，一个闭包就是一个函数，只不过在函数内部带上了一个额外的变量环境。闭包关键特点是它会记住自己被定义时的环境。</p>
-<p>任何时候遇到需要给某个函数增加额外的状态信息的问题，都可以考虑使用闭包。</p>
-<h1 id="带额外状态信息的回调函数"><a href="#带额外状态信息的回调函数" class="headerlink" title="带额外状态信息的回调函数"></a>带额外状态信息的回调函数</h1><p>代码需要依赖到回调函数的使用，并且需要让回调函数拥有额外的状态值，以便在它的内部使用。</p>
-<p>回调函数的使用，仅仅接受一个参数，不能再传入其他信息。</p>
-<p>为了让回调函数访问外部信息，一种方法是使用绑定方法来代替一个简单函数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class ResultHandler:</div><div class="line">    def __init__(self):</div><div class="line">        self.sequence = 0</div><div class="line">    def handler(self, result):</div><div class="line">        self.sequence += 1</div><div class="line">        print(self.sequence, result)</div></pre></td></tr></table></figure>
-<p>先创建实例，然后使用它的handler()绑定方法作为回调函数</p>
-<p><code>apply_async(add, (2, 3), callback=r.handler)</code></p>
-<p>可以使用闭包捕获状态值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">def make_handler():</div><div class="line">    sequence = 0</div><div class="line">    def handler(result):</div><div class="line">        nonlocal sequence</div><div class="line">        sequence += 1</div><div class="line">        print(sequence, result)</div><div class="line">    return handler</div></pre></td></tr></table></figure>
-<p>使用协程来储存状态值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">def make_handler():</div><div class="line">    sequence = 0</div><div class="line">    while True:</div><div class="line">        result = yield</div><div class="line">        sequence += 1</div><div class="line">        print(sequence, result)</div></pre></td></tr></table></figure>
-<p>使用send方法作为回调函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">handler=make_handler()</div><div class="line">next(handler) ＃必须的，走到yield</div><div class="line">apply_async(add, (2, 3), callback=handler.send)</div></pre></td></tr></table></figure>
-<h1 id="访问闭包中定义的变量"><a href="#访问闭包中定义的变量" class="headerlink" title="访问闭包中定义的变量"></a>访问闭包中定义的变量</h1><p>扩展函数中的某个闭包，允许其能访问和修改函数的内部变量，通过编写访问函数并将其作为函数属性绑定到闭包上实现这个目的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">def sample():</div><div class="line">    n = 0</div><div class="line">    def func():</div><div class="line">        print(&apos;n=&apos;, n)</div><div class="line">    def get_n():</div><div class="line">        return n</div><div class="line">    def set_n(value):</div><div class="line">        nonlocal n</div><div class="line">        n = value</div><div class="line">    fuuc.get_n = get_n</div><div class="line">    func.set_n = set_n</div><div class="line">    return func</div><div class="line">f = sample()</div><div class="line">f()</div><div class="line">f.set_n(10)</div><div class="line">f.get_n()</div></pre></td></tr></table></figure>
-<p>函数属性可以使用简单的方式将访问方法绑定到闭包函数上。</p>
-<h1 id="内联回调函数"><a href="#内联回调函数" class="headerlink" title="内联回调函数"></a>内联回调函数</h1><p>回调函数可能会找不清楚程序控制流，所以使用内联回调函数可以看起来像一个普通的执行序列。</p>
-<p>使用生成器和协程可以使得回调函数内联在某个函数中。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">from queue import Queue</div><div class="line">from functools import wraps</div><div class="line"># 使用functools.wraps可以保证装饰器不会对被装饰函数造成影响，原函数返回内部函数，这样原函数的名字变成了内部函数，所以把原函数的名字等属性复制到内部函数中，这样的话依赖函数签名的代码就不会执行出错。</div><div class="line">class Async:</div><div class="line">    def __init__(self, func, args):</div><div class="line">        self.func = func</div><div class="line">        self.args = args</div><div class="line">def inlined_async(func):</div><div class="line">    @wraps(func)</div><div class="line">    def wrapper(*args):</div><div class="line">        # 这里相当于初始化生成器</div><div class="line">        f = func(*args)</div><div class="line">        result_queue = Queue()</div><div class="line">        result_queue.put(None)</div><div class="line">        while True:</div><div class="line">            result = result_queue.get()</div><div class="line">            try:</div><div class="line">                # 第一次发送None，作为必须的next，走到yield,下次来就会把计算结果发送过去，作为r，然后print，然后走向下一个yield</div><div class="line">                a = f.send(result)</div><div class="line">                # 返回a是Async对象，也就是yield之后的对象</div><div class="line">                apply_async(a.func, a.args, callback=result_queue.put)</div><div class="line">            except StopIteration:</div><div class="line">                break</div><div class="line">    return wrapper</div><div class="line">def add(x, y):</div><div class="line">    return x + y</div><div class="line">@inlined_async</div><div class="line">def test():</div><div class="line">    r = yield Async(add, (2, 3))</div><div class="line">    print(r)</div><div class="line">    r = yield Async(add, (&apos;hello&apos;, &apos;world&apos;))</div><div class="line">    print(r)</div><div class="line">    for n in range(10):</div><div class="line">        r = yield Async(add, (n, n))</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;默认参数，任意数量参数，强制关键字参数，注解和闭包。&lt;/p&gt;
-&lt;h1 id=&quot;可接受任意数量参数的函数&quot;&gt;&lt;a href=&quot;#可接受任意数量参数的函数&quot; class=&quot;headerlink&quot; title=&quot;可接受任意数量参数的函数&quot;&gt;&lt;/a&gt;可接受任意数量参数的函数&lt;/h1
-    
-    </summary>
-    
-      <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
-    
-    
-      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
-    
-      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
-    
-      <category term="Python_Cookbook" scheme="http://microndgt.github.io/tags/Python-Cookbook/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python数字日期和时间</title>
-    <link href="http://microndgt.github.io/2017/01/20/Python%E6%95%B0%E5%AD%97%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4/"/>
-    <id>http://microndgt.github.io/2017/01/20/Python数字日期和时间/</id>
-    <published>2017-01-20T03:20:22.000Z</published>
-    <updated>2017-01-27T05:41:38.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>执行分数，数组或者日期和时间运算，就需要更多工作，不过这里着重关注日期和时间的运算，毕竟工作上对时间处理还是比较多的。</p>
-<h1 id="数字的四舍五入"><a href="#数字的四舍五入" class="headerlink" title="数字的四舍五入"></a>数字的四舍五入</h1><p><code>round(value, ndigits)</code>比如<code>round(1.231, 1)</code>为1.2，如果在中间的话，返回离它最近的偶数，1.5和2.5都会返回2，并且ndigits可以是负数，这样舍入运算作用在十位，百位和千位上。</p>
-<p>如果不允许小误差，那么使用decimal模块。</p>
-<h1 id="精确的浮点数运算"><a href="#精确的浮点数运算" class="headerlink" title="精确的浮点数运算"></a>精确的浮点数运算</h1><p>精确但是有性能损失，使用decimal模块</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">from decimal import Decimal</div><div class="line">a = Decimal(&apos;4.2&apos;)</div><div class="line">b = Decimal(&apos;2.1&apos;)</div><div class="line">print(a + b) # 6.3</div></pre></td></tr></table></figure>
-<p>decimal可以允许你控制计算的数字位数和四舍五入运算。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 创建本地上下文并且更改它的设置</div><div class="line">with localcontext() as ctx:</div><div class="line">    ctx.prec = 3 # 位数</div><div class="line">print(a / b)</div></pre></td></tr></table></figure>
-<p>之前遇到的情况是这样的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">nums = [1.23e+18, 1, -1.23e+18]</div><div class="line">sum(nums)</div><div class="line"># 可以使用math.fsum()提供的更精确计算能力来解决</div><div class="line">import math</div><div class="line">math.fsum(nums)</div></pre></td></tr></table></figure>
-<p>处理金融数据的时候会用到decimal模块</p>
-<h1 id="数字的格式化输出"><a href="#数字的格式化输出" class="headerlink" title="数字的格式化输出"></a>数字的格式化输出</h1><p>控制数字位数，对齐，千位分隔符和其他细节</p>
-<p>格式化输出单个数字的时候，可以使用内置的format()函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">x = 1234.56789</div><div class="line">format(x, &apos;0.2f&apos;)</div><div class="line">format(x, &apos;&gt;10.1f&apos;) # 右对齐宽度10</div><div class="line">format(x, &apos;~10.1f&apos;) # 居中</div><div class="line">format(x, &apos;,&apos;) # 千位符</div></pre></td></tr></table></figure>
-<p>指定宽度和精度的一般形式是<code>&#39;[&lt;&gt;^]?width[,]?(.digits)?&#39;</code>，同样的格式也用在字符串的format()方法中</p>
-<p><code>the value is {:0,.2f}.format(x)</code></p>
-<p>格式化值会根据指定数字的位数，和round函数采用同样的规则</p>
-<h1 id="二八十六进制整数"><a href="#二八十六进制整数" class="headerlink" title="二八十六进制整数"></a>二八十六进制整数</h1><p><code>bin(x)</code>和<code>oct(x)</code>和<code>hex(x)</code>，如果不想显示前缀的话，使用format函数，<code>format(x, &#39;b&#39;)</code> 和 <code>format(x, &#39;o&#39;)</code>和<code>format(x, &#39;x&#39;)</code></p>
-<p>将不同进制转换整数字符串，使用带有进制的int()函数<code>int(&#39;4d2&#39;, 16)</code>或者<code>int(&#39;0010&#39;, 2)</code>表示16进制，2进制</p>
-<h1 id="无穷大和NaN"><a href="#无穷大和NaN" class="headerlink" title="无穷大和NaN"></a>无穷大和NaN</h1><p>使用<code>float()</code>来创建它们</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">a = float(&apos;inf&apos;)</div><div class="line">b = float(&apos;-inf&apos;)</div><div class="line">c = float(&apos;nan&apos;)</div></pre></td></tr></table></figure>
-<p>使用<code>math.isinf()</code>和<code>math.isnan()</code>函数来测试值是否存在,也可以使用<code>numpy.isinf()</code>或者<code>numpy.isnan()</code></p>
-<p>NaN值会在所有操作中传播，而不会产生异常</p>
-<h1 id="分数运算"><a href="#分数运算" class="headerlink" title="分数运算"></a>分数运算</h1><p>fractions模块可以用来执行包含分数的数学运算</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">from fractions import Fraction</div><div class="line">a = Fraction(5, 4)</div><div class="line">b = Fraction(7, 16)</div><div class="line">print(a + b)</div><div class="line">float(a + b)</div></pre></td></tr></table></figure>
-<h1 id="大型数组运算"><a href="#大型数组运算" class="headerlink" title="大型数组运算"></a>大型数组运算</h1><p>使用NumPy库，提供一个数组对象，更适合用来进行数学运算，底层实现中，NumPy数组使用了C或者Fortran语言的机制分配内存，它们是一个非常大的连续的并且由同类型数据组成的内存区域。<code>import numpy as np</code></p>
-<p>同时NumPy库有矩阵对象来进行线性代数运算</p>
-<h1 id="随机选择"><a href="#随机选择" class="headerlink" title="随机选择"></a>随机选择</h1><p>从一个序列中随机抽选一个元素，使用<code>random.choice()</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import random</div><div class="line">values = [1, 2, 3, 4, 5, 6]</div><div class="line">random.choice(values)</div></pre></td></tr></table></figure>
-<p>提取N个不同元素的样本来作进一步操作，<code>random.sample(values, 2)</code></p>
-<p>打乱序列中元素顺序，<code>random.shuffle(values)</code>，原地修改顺序</p>
-<p>生成随机整数，<code>random.randint(0, 10)</code> 包括0和10</p>
-<p>生成0到1范围内均匀分布的浮点书，使用<code>random.random()</code></p>
-<p>通过<code>random.seed()</code>函数修改初始化种子，<code>random.seed(12345)</code></p>
-<h1 id="基本的日期与时间转换"><a href="#基本的日期与时间转换" class="headerlink" title="基本的日期与时间转换"></a>基本的日期与时间转换</h1><p>使用datetime模块，表示一个时间段，创建一个timedelta实例，<code>a = timedelta(days=2)</code></p>
-<p>创建一个datetime实例<code>a = datetime(2012, 9, 23)</code></p>
-<p><code>now = datetime.today()</code>，并且datetime会自动处理闰年</p>
-<p>使用<code>dateutil</code>模块处理时区，模糊时间范围，节假日计算，使用<code>dateutil.relativedelta</code>来计算间距日期</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">from dateutil.relativedelta import relativedelta</div><div class="line">a = datetime(2017, 1, 21)</div><div class="line">a + relativedelta(years=-1)</div></pre></td></tr></table></figure>
-<h1 id="最后一个周五的日期"><a href="#最后一个周五的日期" class="headerlink" title="最后一个周五的日期"></a>最后一个周五的日期</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">from datetime import datetime, timedelta</div><div class="line">weekdays = [&apos;Monday&apos;, &apos;Tuesday&apos;, &apos;Wednesday&apos;, &apos;Thursday&apos;,</div><div class="line">            &apos;Friday&apos;, &apos;Saturday&apos;, &apos;Sunday&apos;]</div><div class="line">def get_previous_byday(dayname, start_date=None):</div><div class="line">    if start_date is None:</div><div class="line">        start_date = datetime.today()</div><div class="line">    day_num = start_date.weekday() # 返回序号，周一是第一个0</div><div class="line">    day_num_target = weekdays.index(dayname)</div><div class="line">    # 这里因为有两种情况，一种是现在日期序号大于或者等于target的，这样直接减就好，比如周三2减去周二1等于1，说明上一个周二离现在1天</div><div class="line">    ＃ 另外一种情况是日期序号小于的，这样直接减就是负的，并且肯定是上一个星期的，但是不足7天，所以7加上这个差</div><div class="line">    days_ago = (7 + day_num - day_num_target) % 7</div><div class="line">    if days_ago == 0:</div><div class="line">        days_ago = 7</div><div class="line">    target_date = start_date - timedelta(days=days_ago)</div><div class="line">    return target_date</div></pre></td></tr></table></figure>
-<p>可以使用dateutil模块中的relativedelta()函数执行同样的计算</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">from dateutil.relativedelta import relativedelta</div><div class="line">d = datetime.now()</div><div class="line">print(d + relativedelta(weekday=FR))</div><div class="line">print(d + relativedelta(weekday=FR(-1)))</div></pre></td></tr></table></figure>
-<h1 id="计算当前月份的日期范围"><a href="#计算当前月份的日期范围" class="headerlink" title="计算当前月份的日期范围"></a>计算当前月份的日期范围</h1><p><code>calendar.monthrange(year, month)</code>返回该月第一天的weekday和这个月的天数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">def get_month_range(start_date=None):</div><div class="line">    if start_date is None:</div><div class="line">        # 计算出对应月份第一天的日期</div><div class="line">        start_date = date.today().replace(day=1)</div><div class="line">    _, days_in_month = calendar.monthrange(start_date.year, start_date.month)</div><div class="line">    end_date = start_date + timedelta(days=days_in_month)</div><div class="line">    return (start_date, end_date)</div><div class="line">a_day = timedelta(days=1)</div><div class="line">first_day, last_day = get_month_range()</div><div class="line"># 结束日期不包含在日期范围内</div><div class="line">while first_day &lt; last_day:</div><div class="line">    print(first_day)</div><div class="line">    first_day += a_day</div><div class="line"># 或者定义一个生成器</div><div class="line">def date_range(start, stop, step):</div><div class="line">    while start &lt; stop:</div><div class="line">        yield start</div><div class="line">        start += step</div></pre></td></tr></table></figure>
-<h1 id="字符串转换为日期"><a href="#字符串转换为日期" class="headerlink" title="字符串转换为日期"></a>字符串转换为日期</h1><p>使用<code>datetime.strptime()</code>方法的性能还是很低的，所以如果知道了日期字符串的确切形式，可以自己实现解析方案来获取更好的性能</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">from datetime import datetime</div><div class="line">def parse_ymd(s):</div><div class="line">    year_s, mon_s, day_s = s.split(&apos;-&apos;)</div><div class="line">    return datetime(int(year_s), int(mon_s), int(day_s))</div></pre></td></tr></table></figure>
-<p>速度比<code>datetime.strptime()</code>快7倍多，6666，把capacity项目的都改过来了</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;执行分数，数组或者日期和时间运算，就需要更多工作，不过这里着重关注日期和时间的运算，毕竟工作上对时间处理还是比较多的。&lt;/p&gt;
-&lt;h1 id=&quot;数字的四舍五入&quot;&gt;&lt;a href=&quot;#数字的四舍五入&quot; class=&quot;headerlink&quot; title=&quot;数字的四舍五入&quot;&gt;&lt;/
     
     </summary>
     
