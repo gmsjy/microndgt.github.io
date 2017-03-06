@@ -4,13 +4,10 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>理解RESTful架构 | SkyRover</title>
+    <title>Docker总结 | SkyRover</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="Kevin">
-    
-    <meta name="description" content="理解RESTful架构Representational State Transfer 表现层状态转化
-表现层其实是指的是资源的表现层，所谓”资源”，就是网络上的一个实体，或者说是网络上的一个具体信息。可以用一个URI（统一资源定位符）指向它，每种资源对应一个特定的URI。要获取这个资源，访问它的UR">
     
     
     
@@ -91,10 +88,10 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2017/02/27/理解RESTful架构/" title="理解RESTful架构" itemprop="url">理解RESTful架构</a>
+      <a href="/2017/02/28/Docker总结/" title="Docker总结" itemprop="url">Docker总结</a>
   </h1>
   <p class="article-time">
-    <time datetime="2017-02-27T01:43:24.000Z" itemprop="datePublished">Feb 27 2017</time>
+    <time datetime="2017-02-28T02:09:44.000Z" itemprop="datePublished">Feb 28 2017</time>
   </p>
 </header>
 	<div class="article-content">
@@ -102,70 +99,19 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#理解RESTful架构"><span class="toc-number">1.</span> <span class="toc-text">理解RESTful架构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RESTful架构"><span class="toc-number">1.1.</span> <span class="toc-text">RESTful架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常见误区"><span class="toc-number">1.2.</span> <span class="toc-text">常见误区</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RESTful-API-设计指南"><span class="toc-number">2.</span> <span class="toc-text">RESTful API 设计指南</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#路径"><span class="toc-number">2.1.</span> <span class="toc-text">路径</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP动词"><span class="toc-number">2.2.</span> <span class="toc-text">HTTP动词</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#过滤信息"><span class="toc-number">2.3.</span> <span class="toc-text">过滤信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#错误处理"><span class="toc-number">2.4.</span> <span class="toc-text">错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#返回结果"><span class="toc-number">2.5.</span> <span class="toc-text">返回结果</span></a></li></ol></li></ol>
+		
 		</div>
 		
-		<h1 id="理解RESTful架构"><a href="#理解RESTful架构" class="headerlink" title="理解RESTful架构"></a>理解RESTful架构</h1><p>Representational State Transfer 表现层状态转化</p>
-<p>表现层其实是指的是资源的表现层，所谓”资源”，就是网络上的一个实体，或者说是网络上的一个具体信息。可以用一个URI（统一资源定位符）指向它，每种资源对应一个特定的URI。要获取这个资源，访问它的URI就可以，因此URI就成了每一个资源的地址或独一无二的识别符。</p>
-<p>我们把”资源”具体呈现出来的形式，叫做它的”表现层”（Representation）。URI只代表资源的实体，不代表它的形式。而URI应该只代表”资源”的位置。它的具体表现形式，应该在HTTP请求的头信息中用Accept和Content-Type字段指定，这两个字段才是对”表现层”的描述。所以设计API的URI时候，去除表现层，只保留资源的位置。</p>
-<p>如果客户端想要操作服务器，必须通过某种手段，让服务器端发生”状态转化”（State Transfer）。而这种转化是建立在表现层之上的，所以就是”表现层状态转化”。客户端用到的手段，只能是HTTP协议。具体来说，就是HTTP协议里面，四个表示操作方式的动词：GET、POST、PUT、DELETE。它们分别对应四种基本操作：GET用来获取资源，POST用来新建资源（也可以用于更新资源），PUT用来更新资源，DELETE用来删除资源。</p>
-<h2 id="RESTful架构"><a href="#RESTful架构" class="headerlink" title="RESTful架构"></a>RESTful架构</h2><ol>
-<li>每一个URI代表一种资源；</li>
-<li>客户端和服务器之间，传递这种资源的某种表现层，比如json</li>
-<li>客户端通过四个HTTP动词，对服务器端资源进行操作，实现”表现层状态转化”。</li>
-</ol>
-<h2 id="常见误区"><a href="#常见误区" class="headerlink" title="常见误区"></a>常见误区</h2><ol>
-<li>最常见的一种设计错误，就是URI包含动词。资源表示一种实体，应该是名词，URI不应该有动词，动词应该放在HTTP协议中。资源不能是动词，但是可以是一种服务。</li>
-<li>在URI中加入版本号，不同的版本，可以理解成同一种资源的不同表现形式，所以应该采用同一个URI。版本号可以在HTTP请求头信息的Accept字段中进行区分</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Accept: vnd.example-com.foo+json; version=1.0</div><div class="line">Accept: vnd.example-com.foo+json; version=1.1</div></pre></td></tr></table></figure>
-<h1 id="RESTful-API-设计指南"><a href="#RESTful-API-设计指南" class="headerlink" title="RESTful API 设计指南"></a>RESTful API 设计指南</h1><h2 id="路径"><a href="#路径" class="headerlink" title="路径"></a>路径</h2><p>路径又称”终点”（endpoint），表示API的具体网址。在RESTful架构中，每个网址代表一种资源（resource），所以网址中不能有动词，只能有名词，而且所用的名词往往与数据库的表格名对应。一般来说，数据库中的表都是同种记录的”集合”（collection），所以API中的名词也应该使用复数。</p>
-<h2 id="HTTP动词"><a href="#HTTP动词" class="headerlink" title="HTTP动词"></a>HTTP动词</h2><p>对于资源的具体操作类型，由HTTP动词表示。常用的HTTP动词有下面五个（括号里是对应的SQL命令）。</p>
-<ul>
-<li>GET（SELECT）：从服务器取出资源（一项或多项）。</li>
-<li>POST（CREATE）：在服务器新建一个资源。</li>
-<li>PUT（UPDATE）：在服务器更新资源（客户端提供改变后的完整资源）。</li>
-<li>PATCH（UPDATE）：在服务器更新资源（客户端提供改变的属性）。</li>
-<li>DELETE（DELETE）：从服务器删除资源。</li>
-</ul>
-<h2 id="过滤信息"><a href="#过滤信息" class="headerlink" title="过滤信息"></a>过滤信息</h2><p>如果记录数量很多，服务器不可能都将它们返回给用户。API应该提供参数，过滤返回结果。</p>
-<ul>
-<li>?limit=10：指定返回记录的数量</li>
-<li>?offset=10：指定返回记录的开始位置。</li>
-<li>?page=2&amp;per_page=100：指定第几页，以及每页的记录数。</li>
-<li>?sortby=name&amp;order=asc：指定返回结果按照哪个属性排序，以及排序顺序。</li>
-<li>?animal_type_id=1：指定筛选条件</li>
-</ul>
-<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><p>如果状态码是4xx，就应该向用户返回出错信息。一般来说，返回的信息中将error作为键名，出错信息作为键值即可。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    error: &quot;Invalid API key&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="返回结果"><a href="#返回结果" class="headerlink" title="返回结果"></a>返回结果</h2><ul>
-<li>GET /collection：返回资源对象的列表（数组）</li>
-<li>GET /collection/resource：返回单个资源对象</li>
-<li>POST /collection：返回新生成的资源对象</li>
-<li>PUT /collection/resource：返回完整的资源对象</li>
-<li>PATCH /collection/resource：返回完整的资源对象</li>
-<li>DELETE /collection/resource：返回一个空文档</li>
-</ul>
-  
+		  
 	</div>
 		<footer class="article-footer clearfix">
 
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/计算机网络/">计算机网络</a>
-  </div>
-
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/web/">web</a>
-</div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://microndgt.github.io/2017/02/27/理解RESTful架构/" data-title="理解RESTful架构 | SkyRover" data-tsina="null" class="share clearfix">
+  <div data-url="http://microndgt.github.io/2017/02/28/Docker总结/" data-title="Docker总结 | SkyRover" data-tsina="null" class="share clearfix">
   </div>
 
 </div>
@@ -175,18 +121,18 @@ var _hmt = _hmt || [];
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2017/02/28/Docker总结/" title="Docker总结">
+ <a href="/2017/03/01/Using-Celery-With-Flask/" title="Using Celery With Flask">
   <strong>新一篇:</strong><br/>
   <span>
-  Docker总结</span>
+  Using Celery With Flask</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2017/02/24/Using Mix-ins with Python/"  title="Using Mix-Ins With Python">
+<a href="/2017/02/27/理解RESTful架构/"  title="理解RESTful架构">
  <strong>旧一篇:</strong><br/> 
- <span>Using Mix-Ins With Python
+ <span>理解RESTful架构
 </span>
 </a>
 </div>
@@ -196,7 +142,7 @@ var _hmt = _hmt || [];
 	
 <section class="comment">
 	
-	<div class="ds-thread" data-title="理解RESTful架构" data-thread-key="理解RESTful架构" data-author-key="Kevin" data-url="http://microndgt.github.io/post/理解RESTful架构"></div>
+	<div class="ds-thread" data-title="Docker总结" data-thread-key="Docker总结" data-author-key="Kevin" data-url="http://microndgt.github.io/post/Docker总结"></div>
 	
 </section>
 
