@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://microndgt.github.io/"/>
-  <updated>2017-03-06T03:49:48.000Z</updated>
+  <updated>2017-03-06T04:24:16.000Z</updated>
   <id>http://microndgt.github.io/</id>
   
   <author>
@@ -14,6 +14,88 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Designing a RESTful API With Python and Flask</title>
+    <link href="http://microndgt.github.io/2017/03/06/Designing-a-RESTful-API-with-Python-and-Flask/"/>
+    <id>http://microndgt.github.io/2017/03/06/Designing-a-RESTful-API-with-Python-and-Flask/</id>
+    <published>2017-03-06T04:01:55.000Z</published>
+    <updated>2017-03-06T04:24:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>翻译自<a href="https://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask" target="_blank" rel="external">https://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask</a></p>
+<p>最近几年REST(表现层状态转移)已经成为了设计web服务和web APIs的标准框架。</p>
+<p>在这篇文章里我将向你展示使用Python和Flask微框架创建一个RESTful web服务器是多么的简单。</p>
+<h1 id="What-is-REST"><a href="#What-is-REST" class="headerlink" title="What is REST?"></a>What is REST?</h1><p>REST系统的特征可以通过以下6种设计原则定义：</p>
+<ul>
+<li>Client-Server: 服务器和客户端应该分离，服务器提供服务，客户端消费之</li>
+<li>Stateless: 客户端发出的每一个请求必须包涵服务器所需要的所有信息。也就是说，服务器不能存储客户端在一个请求中携带的信息去处理其他请求。</li>
+<li>Cacheable: 服务器必须指示客户端请求是否可以被缓存</li>
+<li>Layered System: 客户端和服务器的通信必须以允许中间件响应请求而不是后端服务器的方式来标准化，客户端无需改变</li>
+<li>Uniform Interface: 客户端和服务器的通信必须标准化</li>
+<li>Code on demand: 服务器可以提供客户端可以在其上下文运行的代码或者脚本，这一个是唯一可选的限制。</li>
+</ul>
+<h1 id="What-is-a-RESTful-web-service"><a href="#What-is-a-RESTful-web-service" class="headerlink" title="What is a RESTful web service?"></a>What is a RESTful web service?</h1><p>REST框架最初是为了适应www使用的HTTP协议</p>
+<p>RESTful web服务的中心概念是资源。资源通过URIs来表示。客户端发送由HTTP协议定义的请求到这些URIs，接下来这些被请求的资源状态会发生变化。</p>
+<p>HTTP请求方法以标准的方式设计来影响一个给定的资源</p>
+<table>
+<thead>
+<tr>
+<th>HTTP Methods</th>
+<th style="text-align:center">Action</th>
+<th style="text-align:right">Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td style="text-align:center">获取资源信息</td>
+<td style="text-align:right"><a href="http://example.com/api/orders" target="_blank" rel="external">http://example.com/api/orders</a></td>
+</tr>
+<tr>
+<td>GET</td>
+<td style="text-align:center">获取资源信息</td>
+<td style="text-align:right"><a href="http://example.com/api/orders/123" target="_blank" rel="external">http://example.com/api/orders/123</a></td>
+</tr>
+<tr>
+<td>POST</td>
+<td style="text-align:center">创建一个新资源</td>
+<td style="text-align:right"><a href="http://example.com/api/orders(create" target="_blank" rel="external">http://example.com/api/orders(create</a> a new order, from data provided with the request)</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td style="text-align:center">更新一个资源</td>
+<td style="text-align:right"><a href="http://example.com/api/orders/123(update" target="_blank" rel="external">http://example.com/api/orders/123(update</a> order #123, from data provided with the request)</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td style="text-align:center">删除一个资源</td>
+<td style="text-align:right"><a href="http://example.com/api/orders/123(delete" target="_blank" rel="external">http://example.com/api/orders/123(delete</a> order #123)</td>
+</tr>
+</tbody>
+</table>
+<p>REST设计不需要请求提供特定的数据格式，事实上数据是通过在request体的JSON数据包，或者有些时候是在URL的查询部分作为参数传递的。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;翻译自&lt;a href=&quot;https://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://bl
+    
+    </summary>
+    
+      <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
+    
+    
+      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
+    
+      <category term="RESTful" scheme="http://microndgt.github.io/tags/RESTful/"/>
+    
+      <category term="英文" scheme="http://microndgt.github.io/tags/%E8%8B%B1%E6%96%87/"/>
+    
+      <category term="翻译" scheme="http://microndgt.github.io/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+  </entry>
   
   <entry>
     <title>Using Celery With Flask</title>
@@ -97,11 +179,11 @@
     
       <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
     
-      <category term="Celery" scheme="http://microndgt.github.io/tags/Celery/"/>
-    
       <category term="英文" scheme="http://microndgt.github.io/tags/%E8%8B%B1%E6%96%87/"/>
     
       <category term="翻译" scheme="http://microndgt.github.io/tags/%E7%BF%BB%E8%AF%91/"/>
+    
+      <category term="Celery" scheme="http://microndgt.github.io/tags/Celery/"/>
     
   </entry>
   
@@ -931,61 +1013,6 @@
       <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
     
       <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python元编程</title>
-    <link href="http://microndgt.github.io/2017/02/04/Python%E5%85%83%E7%BC%96%E7%A8%8B/"/>
-    <id>http://microndgt.github.io/2017/02/04/Python元编程/</id>
-    <published>2017-02-04T07:02:23.000Z</published>
-    <updated>2017-02-05T02:48:22.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>元编程来解决高度重复的代码，元编程就是关于创建操作源代码(比如修改，生成或者包装原来的代码)的函数和类，主要技术是使用装饰器，类装饰器和元类，签名对象，使用exec()执行代码以及对内部函数和类的反射技术。</p>
-<h1 id="在函数上添加包装器"><a href="#在函数上添加包装器" class="headerlink" title="在函数上添加包装器"></a>在函数上添加包装器</h1><p>使用额外的代码包装一个函数，定义一个装饰器函数，一个装饰器就是一个函数，它接受一个函数作为参数并且返回一个新的函数</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">from functools import wraps</div><div class="line">def timethis(func):</div><div class="line">    # 使用wraps的目的是为了防止函数信息变成wrapper的函数信息</div><div class="line">    @wraps(func)</div><div class="line">    def wrapper(*args, **kwargs):</div><div class="line">        start = time.time()</div><div class="line">        result = func(*args, **kwargs)</div><div class="line">        end = time.time()</div><div class="line">        print(func.__name__, end-start)</div><div class="line">        return result</div><div class="line">    return wrapper</div><div class="line">@timethis</div><div class="line">def countdown(n):</div><div class="line">    while n &gt; 0:</div><div class="line">        n -= 1</div><div class="line"># 相当于</div><div class="line">def countdown(n):</div><div class="line">    while n &gt; 0:</div><div class="line">        n -= 1</div><div class="line">countdown = timethis(countdown)</div></pre></td></tr></table></figure>
-<p>所以真正执行的是装饰器函数中的闭包内部函数，使用装饰器并不会修改原始函数的参数签名以及返回值，使用<code>*args</code>和<code>**kwargs</code>的目的就是确保任何参数都能适用，而返回结果值都是调用原始函数<code>func(*args, **kwargs)</code>的返回结果。<code>@wraps(func)</code>注解是保留原始函数的元数据</p>
-<h1 id="创建装饰器时保留函数元信息"><a href="#创建装饰器时保留函数元信息" class="headerlink" title="创建装饰器时保留函数元信息"></a>创建装饰器时保留函数元信息</h1><p>任何时候定义装饰器，都应该使用functools库中的<code>@wraps</code>装饰器来注解底层包装函数，这样就会复制原始函数的元信息。<code>@wraps</code>可以通过属性<code>__wrapped__</code>直接访问被包装函数，<code>countdown.__wrapped__(100000)</code></p>
-<h1 id="解除一个装饰器"><a href="#解除一个装饰器" class="headerlink" title="解除一个装饰器"></a>解除一个装饰器</h1><p>如果装饰器是通过<code>@wraps</code>来实现的，那么可以访问<code>__wrapped__</code>属性来访问原始函数。</p>
-<p>如果有多个包装器，那么访问<code>__wrapped__</code>属性的行为是不可预知的，而且仅仅适用于包装器正确使用了<code>@wraps</code>的情况。多个包装器，从内向外进行包装。</p>
-<h1 id="定义一个带参数的装饰器"><a href="#定义一个带参数的装饰器" class="headerlink" title="定义一个带参数的装饰器"></a>定义一个带参数的装饰器</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">def logged(level, name=None, message=None):</div><div class="line">    def decorate(func):</div><div class="line">        logname = name if name else func.__module__</div><div class="line">        log = logging.getLogger(logname)</div><div class="line">        logmsg = message if message else func.__name__</div><div class="line">        @wraps(func)</div><div class="line">        def wrapper(*args, **kwargs):</div><div class="line">            log.log(level, logmsg)</div><div class="line">            return func(*args, **kwargs)</div><div class="line">        return wrapper</div><div class="line">    return decorate</div><div class="line">@logged(logging.DEBUG)</div><div class="line">def add(x, y):</div><div class="line">    return x + y</div></pre></td></tr></table></figure>
-<p>最外层的函数logged()接受参数并将它们作用在内部的装饰器函数上。其实就相当于下面：<code>add = logged(logging.DEBUG)(add)</code>logged()返回的是一个可调用对象，接受一个函数作为参数并且包装它。</p>
-<h1 id="可自定义属性的装饰器"><a href="#可自定义属性的装饰器" class="headerlink" title="可自定义属性的装饰器"></a>可自定义属性的装饰器</h1><p>用装饰器来包装函数，并且在运行时候提供参数控制装饰器的行为。方法是，引入一个访问函数，使用nolocal来修改内部变量，然后这个访问函数被作为一个属性赋值给包装函数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">def attach_wrapper(obj, func=None):</div><div class="line">    if func is None:</div><div class="line">        # 相当于将第一个参数默认了</div><div class="line">        return partial(attach_wrapper, obj)</div><div class="line">    # 这里相当于给这个对象设置了一个这个属性，后面可以直接调用</div><div class="line">    setattr(obj, func.__name__, func)</div><div class="line">    return func</div><div class="line">def logged(level, name=None, message=None):</div><div class="line">    def decorate(func):</div><div class="line">        logname = name if name else func.__module__</div><div class="line">        log = logging.getLogger(logname)</div><div class="line">        logmsg = message if message else func.__name__</div><div class="line">        @wraps(func)</div><div class="line">        def wrapper(*args, **kwargs):</div><div class="line">            log.log(level, logmsg)</div><div class="line">            return func(*args, **kwargs)</div><div class="line">        # 这里将返回的wrapper作为对象，返回了一个包涵默认对象的attach_wrapper，然后再装饰set_level，只是为该对象设置了set_level属性</div><div class="line">        @attach_wrapper(wrapper)</div><div class="line">        def set_level(newlevel):</div><div class="line">            nonlocal level</div><div class="line">            level = newlevel</div><div class="line">        @attach_wrapper(wrapper)</div><div class="line">        def set_message(newmsg):</div><div class="line">            nonlocal logmsg</div><div class="line">            logmsg = newmsg</div><div class="line">        return wrapper</div><div class="line">    return decorate</div><div class="line">@logged(logging.DEBUG)</div><div class="line">def add(x, y):</div><div class="line">    return x + y</div><div class="line">add.set_message(&apos;Add called&apos;)</div></pre></td></tr></table></figure>
-<p>并且访问函数会在多层装饰器间传播</p>
-<h1 id="带可选参数的装饰器"><a href="#带可选参数的装饰器" class="headerlink" title="带可选参数的装饰器"></a>带可选参数的装饰器</h1><p>一个装饰器可以不传参数，如<code>@decorator</code>，也可以传递参数给它，如<code>@decorator(x, y, z)</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">def logged(func=None, *, level=logging.DEBUG, name=None, message=None):</div><div class="line">    if func is None:</div><div class="line">        # 返回一个接受一个函数参数并且包装它的函数</div><div class="line">        return partial(logged, level=level, name=name, message=message)</div><div class="line">    logname = name if name else func.__module__</div><div class="line">    log = logging.getLogger(logname)</div><div class="line">    logmsg = message if message else func.__name__</div><div class="line">    @wraps(func)</div><div class="line">    def wrapper(*args, **kwargs):</div><div class="line">        log.log(level, logmsg)</div><div class="line">        return func(*args, **kwargs)</div><div class="line">    return wrapper</div><div class="line"># 不带参数，func不是None，调用类似于logged(func)</div><div class="line">@logged</div><div class="line">def add(x, y):</div><div class="line">    return x + y</div><div class="line"># 带参数，func为None，返回一个partial的函数logged,可选参数作为默认值</div><div class="line">@logged(level=logging.CRITICAL, name=&apos;example&apos;)</div><div class="line">def spam():</div><div class="line">    print(&quot;Spam!&quot;)</div></pre></td></tr></table></figure>
-<p>如果定义一个所有参数都是可选的装饰器，那么使用语法糖的时候就要这样<code>@logged()</code>加上括号，否则就会出现问题。上面的第一个装饰器调用等价于<code>add = logged(add)</code>，而第2个调用等价于<code>spam = logged(level=logging.CRITICAL, name=&#39;example&#39;)(spam)</code>，使用了<code>functools.partial</code>这个技巧，它会返回一个未完全初始化的自身，除了被包装函数外其他参数都已经确定。</p>
-<h1 id="将装饰器定义为类的一部分"><a href="#将装饰器定义为类的一部分" class="headerlink" title="将装饰器定义为类的一部分"></a>将装饰器定义为类的一部分</h1><p>在类中定义装饰器，并将其用在其他函数或者方法上。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">from functools import wraps</div><div class="line">class A:</div><div class="line">    def decorator1(self, func):</div><div class="line">        @wraps(func)</div><div class="line">        def wrapper(*args, **kwargs):</div><div class="line">            print(&quot;Decorator 1&quot;)</div><div class="line">            return func(*args, **kwrags)</div><div class="line">        return wrapper</div><div class="line">    @classmethod</div><div class="line">    def decorator2(cls, func):</div><div class="line">        @wraps(func)</div><div class="line">        def wrapper(*args, **kwargs):</div><div class="line">            print(&apos;Decorator 2&apos;)</div><div class="line">            return func(*args, **kwargs)</div><div class="line">        return wrapper</div><div class="line">a = A()</div><div class="line">@a.decorator1</div><div class="line">def spam():</div><div class="line">    pass</div><div class="line">@A.decorator2</div><div class="line">def grok():</div><div class="line">    pass</div></pre></td></tr></table></figure>
-<p>一个是实例调用，一个是类调用，<code>@property</code>装饰器实际上是一个类，里面定义了三个方法，<code>getter()</code>,<code>setter()</code>,<code>deleter()</code>，每一个方法都是一个装饰器。这么定义的主要原因是各种不同的装饰器方法会在关联的property实例上操作它的状态，因此，只要需要在装饰器中记录或者绑定信息，都可以使用在类中定义装饰器的办法。</p>
-<p>在类中定义装饰器对于额外参数self，cls，两个装饰器内部创建的wrapper函数并不需要这两个参数，唯一需要的时候是确实要访问包装器中这个实例的某些部分的时候。</p>
-<p>涉及到继承的时候，应该这么写</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">class B(A):</div><div class="line">    @A.decorator2</div><div class="line">    def bar(self):</div><div class="line">        pass</div></pre></td></tr></table></figure>
-<p>装饰器被定义成类方法并且必须显式使用父类名去调用它，而不能用B，因为方法定义的时候类B还没有创建。</p>
-<h1 id="将装饰器定义为类"><a href="#将装饰器定义为类" class="headerlink" title="将装饰器定义为类"></a>将装饰器定义为类</h1><p>使用一个装饰器去包装函数，但是返回一个可调用的实例，装饰器可以同时工作在类定义的内部和外部。</p>
-<p>将装饰器定义成一个实例，确保其实现了<code>__call__()</code>和<code>__get__()</code>方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">import types</div><div class="line">from functools import wraps</div><div class="line">class Profiled:</div><div class="line">    def __init__(self, func):</div><div class="line">        wraps(func)(self)</div><div class="line">        self.ncalls = 0</div><div class="line">    def __call__(self, *args, **kwargs):</div><div class="line">        self.ncalls += 1</div><div class="line">        return self.__wrapped__(*args, **kwargs)</div><div class="line">    def __get__(self, instance, cls):</div><div class="line">        if instance is None:</div><div class="line">            return self</div><div class="line">        else:</div><div class="line">            return types.MethodType(self, instance)</div><div class="line">@Profiled</div><div class="line">def add(x, y):</div><div class="line">    return x + y</div><div class="line">class Spam:</div><div class="line">    @Profiled</div><div class="line">    def bar(self, x):</div><div class="line">        print(self, x)</div></pre></td></tr></table></figure>
-<p>这一块居然没怎么看懂，我的妈呀～</p>
-<h1 id="为类方法和静态方法提供装饰器"><a href="#为类方法和静态方法提供装饰器" class="headerlink" title="为类方法和静态方法提供装饰器"></a>为类方法和静态方法提供装饰器</h1><p>确保装饰器在<code>@classmethod</code>或者<code>@staticmethod</code>之前</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">class Spam:</div><div class="line">    @timethis</div><div class="line">    def instance_method(self, n):</div><div class="line">        pass</div><div class="line">    @classmethod</div><div class="line">    @timethis</div><div class="line">    def class_method(cls, n):</div><div class="line">        pass</div><div class="line">    @staticmethod</div><div class="line">    @timethis</div><div class="line">    def static_method(n):</div><div class="line">        pass</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;元编程来解决高度重复的代码，元编程就是关于创建操作源代码(比如修改，生成或者包装原来的代码)的函数和类，主要技术是使用装饰器，类装饰器和元类，签名对象，使用exec()执行代码以及对内部函数和类的反射技术。&lt;/p&gt;
-&lt;h1 id=&quot;在函数上添加包装器&quot;&gt;&lt;a href=&quot;#
-    
-    </summary>
-    
-      <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
-    
-    
-      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
-    
-      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
-    
-      <category term="Python_Cookbook" scheme="http://microndgt.github.io/tags/Python-Cookbook/"/>
     
   </entry>
   
