@@ -1,0 +1,392 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>计算机网络-传输层 | SkyRover</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Kevin">
+    
+    <meta name="description" content="往返时延的估计与超时超时/重传机制来处理报文段的丢失问题，超时时间间隔必须大于TCP连接的往返时延RTT
+报文段的样本RTT是从某报文段被发出，交给IP到对该报文段的确认被收到之间的时间量。仅为传输一次的报文段测量样本RTT。
+TCP维持一个样本RTT的均值，EstimatedRTT，估计RTT，是">
+    
+    
+    
+    
+    <link rel="alternative" href="atom.xml" title="SkyRover" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/myLogo.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/myLogo.png">
+    
+
+  
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="SkyRover">SkyRover</a></h1>
+				<h2 class="blog-motto">做我的仲夏夜之梦～</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="st-search-inpu" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/02/19/计算机网络-传输层/" title="计算机网络-传输层" itemprop="url">计算机网络-传输层</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2017-02-19T03:06:16.000Z" itemprop="datePublished">Feb 19 2017</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#往返时延的估计与超时"><span class="toc-number">1.</span> <span class="toc-text">往返时延的估计与超时</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可靠数据传输"><span class="toc-number">2.</span> <span class="toc-text">可靠数据传输</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#流量控制"><span class="toc-number">3.</span> <span class="toc-text">流量控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP连接管理"><span class="toc-number">4.</span> <span class="toc-text">TCP连接管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SYN洪泛攻击"><span class="toc-number">5.</span> <span class="toc-text">SYN洪泛攻击</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#拥塞控制原理"><span class="toc-number"></span> <span class="toc-text">拥塞控制原理</span></a>
+		</div>
+		
+		<h2 id="往返时延的估计与超时"><a href="#往返时延的估计与超时" class="headerlink" title="往返时延的估计与超时"></a>往返时延的估计与超时</h2><p>超时/重传机制来处理报文段的丢失问题，超时时间间隔必须大于TCP连接的往返时延RTT</p>
+<p>报文段的样本RTT是从某报文段被发出，交给IP到对该报文段的确认被收到之间的时间量。仅为传输一次的报文段测量样本RTT。</p>
+<p>TCP维持一个样本RTT的均值，EstimatedRTT，估计RTT，是一个由样本RTT值而得出的加权平均值。</p>
+<p>要求将超时间隔设置为估计RTT加上一定余量。当DevRTT值比较大的时候，余量应该大一点。偏差DevRTT，是样本RTT和估计RTT之间差值的指数加权移动平均。</p>
+<h2 id="可靠数据传输"><a href="#可靠数据传输" class="headerlink" title="可靠数据传输"></a>可靠数据传输</h2><p>IP不保证数据报的交付，不保证数据报的按序交付，也不保证数据报中数据的完整性。推荐的定时器管理过程仅使用单一的重传定时器。</p>
+<p>TCP发送方有3个与发送和重传有关的主要事件：</p>
+<ol>
+<li>从上层应用程序接收数据。TCP接收数据后，将数据封装在一个报文段中，将报文段交给IP，每个报文段都有一个序号，是报文段第一个数据字节的字节流编号，如果定时器没有为其他报文段而运行，那么报文段传给IP时候，TCP启动定时器。</li>
+<li>超时。TCP通过重传引起超时的报文段来响应超时事件，然后TCP重启定时器。</li>
+<li>接收ACK报文。TCP将ACK的值y与变量sendbase比较，sendbase是最早未被确认的字节的序号，TCP采用累积确认，y确认了字节编号在y之前的所有字节都已经收到，如果y&gt;sendbase，该ACK是在确认一个或者多个先前未被确认的报文段。发送方更新其sendbase变量。如果当前有未被确认的报文段，那么TCP重启定时器。</li>
+</ol>
+<p>TCP重传具有最小序号的还未被确认的报文段。但是每次TCP重传都会将下一次的超时间隔设置为先前值的两倍，这种改动提供了一个有限形式的拥塞控制。定时器过期很有可能是由于网络拥塞引起的，在拥塞的时候，如果源持续重传分组，会使得拥塞更加严重，因此每个发送方的重传都是经过越来越长的时间间隔后进行的。</p>
+<p>发送方可以在超时事件发生之前通过注意冗余ACK来较好的检测丢包情况。TCP接收方检测到数据流中的一个间隔，即有报文段丢失，因为TCP不使用否定确认，只需对按序接收到的最后一个字节数据进行重复确认，即产生一个冗余ACK,发送的冗余ACK，指明下一个期待字节的序号，就是间隔的低端字节序号。</p>
+<p>如果TCP发送方接收到对相同数据的３个冗余ACK，就认为跟在这个已被确认过３次的报文段之后的报文段已经丢失。一旦收到３个冗余ACK，TCP就执行快速重传，即在该报文段的定时器过期之前重传丢失的报文段。</p>
+<p>TCP发送方仅需要维持已经发送但是未被确认字节的最小序号和下一个要发送字节的序号。对TCP协议提出的一个修改就是所谓的选择确认，它允许TCP接受方有选择的确认失序报文段。</p>
+<h2 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h2><p>有可能TCP连接的接收缓存溢出。TCP为应用程序提供了流量控制服务以消除发送方使接收方缓存溢出的可能性。所以流量控制是一个速度匹配服务。TCP发送方可能因为IP网络的拥塞而被遏制，这种形式的发送方控制被成为拥塞控制。</p>
+<p>TCP通过让发送方维护一个接收窗口的变量来提供流量控制，接收窗口用于告诉发送方，接收方还有多少可用的缓存空间。接收窗口是动态的，主机B通过把当前的接收窗口值放入它发给主机A的报文段接收窗口字段中，开始的时候接收窗口值大小和接收缓存大小一样。</p>
+<p>有一个问题是，当缓存区满的时候，主机A会被阻塞不能再发数据，所以当主机B的接收窗口为0的时候，主机A继续发送一个字节数据的报文段，这些报文段将会被接收方确认，最后缓存开始清空的时候，确认报文里将包含一个非0的接收窗口值。</p>
+<h2 id="TCP连接管理"><a href="#TCP连接管理" class="headerlink" title="TCP连接管理"></a>TCP连接管理</h2><ol>
+<li>客户端TCP向服务器端的TCP发送一个特殊的TCP报文段。报文部首部SYN标志位设置为1，客户机随机选择一个起始序号，防止在该起始的TCP SYN报文段的序号字段中。该报文段封装在一个IP数据报，发送给服务器。</li>
+<li>服务器提取TCP SYN报文段，为该TCP连接分配TCP缓存和变量。并向客户TCP发送允许连接的报文段。首部SYN比特设置为1，TCP报文首部确认号字段设置为客户发来的报文＋1，服务器选择自己的初始序号。这个允许连接的报文段被称为SYNACK报文段。</li>
+<li>收到SYNACK，客户机给该连接分配缓存和变量。客户机再向服务器发送另外一个报文段，报文段对服务器的允许连接的报文段进行确认。server_isn + 1,另外SYN比特置为0，因为连接已经建立了。</li>
+</ol>
+<p>在建立连接后，每一个报文段，SYN比特都置为0，这种连接建立的过程为三次握手。</p>
+<p>关闭的时候，客户机TCP向服务器进程发送一个特殊的TCP报文段，首部的FIN比特被置为1，然后服务器接收到之后，向客户机回送一个确认报文段ACK，服务器发送终止报文段，FIN比特为1，最后客户机对这个服务器的终止报文段进行确认ACK。此时两台主机用于该连接的所有资源都被释放了。</p>
+<p>客户机TCP状态，CLOSED-&gt;SYN_SENT-&gt;ESTABLISHED-&gt;FIN_WAIT_1-&gt;FIN_WAIT_2-&gt;TIME_WAIT</p>
+<p>服务器TCP状态,CLOSED-&gt;LISTEN-&gt;SYN_RCVD-&gt;ESTABLISHED-&gt;CLOSE_WAIT-&gt;LAST_ACK</p>
+<p>向某台主机发送一个特殊的TCP SYN报文段后，会有以下情况：</p>
+<ul>
+<li>源主机从目标主机收到一个TCP SYNACK报文段，这说明主机上一个应用程序使用TCP端口运行</li>
+<li>源主机从目标主机收到一个TCP RST报文段，意味着这个端口没有程序运行</li>
+<li>源主机什么也没有得到，说明SYN报文段被中间的防火墙阻挡，不能到达目标主机。</li>
+</ul>
+<h2 id="SYN洪泛攻击"><a href="#SYN洪泛攻击" class="headerlink" title="SYN洪泛攻击"></a>SYN洪泛攻击</h2><p>攻击者发送大量的TCP SYN报文段，而不完成三次握手的第三步。通过多个源发送SYN可以加大攻击力度，产生DDos分布式拒绝服务SYN洪泛攻击。还有一种完全握手攻击。</p>
+<h1 id="拥塞控制原理"><a href="#拥塞控制原理" class="headerlink" title="拥塞控制原理"></a>拥塞控制原理</h1>  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/计算机科学/">计算机科学</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/计算机网络/">计算机网络</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://microndgt.github.io/2017/02/19/计算机网络-传输层/" data-title="计算机网络-传输层 | SkyRover" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/02/19/BAIDU的DNS解析/" title="BAIDU的DNS解析">
+  <strong>新一篇:</strong><br/>
+  <span>
+  BAIDU的DNS解析</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/02/19/计算机网络-应用层/"  title="计算机网络 应用层">
+ <strong>旧一篇:</strong><br/> 
+ <span>计算机网络 应用层
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="计算机网络-传输层" data-thread-key="计算机网络-传输层" data-author-key="Kevin" data-url="http://microndgt.github.io/post/计算机网络-传输层"></div>
+	
+</section>
+
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© Kevin</span>
+		
+	<div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"microndgt"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';    //change to ds.src = '/js/embed.js'; to add useragent for duoshuo
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>

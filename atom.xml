@@ -102,7 +102,7 @@
     <link href="http://microndgt.github.io/2017/03/01/Using-Celery-With-Flask/"/>
     <id>http://microndgt.github.io/2017/03/01/Using-Celery-With-Flask/</id>
     <published>2017-03-01T08:59:01.000Z</published>
-    <updated>2017-03-06T03:49:48.000Z</updated>
+    <updated>2017-03-06T11:17:56.000Z</updated>
     
     <content type="html"><![CDATA[<p>翻译自<a href="https://blog.miguelgrinberg.com/post/using-celery-with-flask" target="_blank" rel="external">https://blog.miguelgrinberg.com/post/using-celery-with-flask</a></p>
 <p><a href="http://www.cnblogs.com/jay54520/p/6212623.html" target="_blank" rel="external">http://www.cnblogs.com/jay54520/p/6212623.html</a></p>
@@ -164,6 +164,7 @@
 <p><code>docker run -d --net=host --name=ability_stable -p 8888:8888 -it ability:170304</code></p>
 <h2 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h2><p>shell中单引号和双引号是有区别的,单引号不执行里面的命令,双引号执行里面的命令</p>
 <h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><p>时区有问题:<code>cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</code></p>
+<h2 id="Python模块包"><a href="#Python模块包" class="headerlink" title="Python模块包"></a>Python模块包</h2><p><code>sudo vim /usr/local/lib/python3.5/dist-packages/capacity/</code></p>
 ]]></content>
     
     <summary type="html">
@@ -396,7 +397,7 @@
     <link href="http://microndgt.github.io/2017/02/21/WireShark-%E6%8A%93%E5%8C%85/"/>
     <id>http://microndgt.github.io/2017/02/21/WireShark-抓包/</id>
     <published>2017-02-21T04:05:10.000Z</published>
-    <updated>2017-02-21T09:34:10.000Z</updated>
+    <updated>2017-03-06T11:17:20.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="抓包原理"><a href="#抓包原理" class="headerlink" title="抓包原理"></a>抓包原理</h1><h2 id="网络原理"><a href="#网络原理" class="headerlink" title="网络原理"></a>网络原理</h2><h3 id="本机环境"><a href="#本机环境" class="headerlink" title="本机环境"></a>本机环境</h3><p>直接抓包本机网卡进出流量</p>
 <h3 id="集线器环境"><a href="#集线器环境" class="headerlink" title="集线器环境"></a>集线器环境</h3><p>物理层，流量防洪，统一冲突域</p>
@@ -432,7 +433,44 @@
 <li>打印数据包</li>
 <li>输出数据包</li>
 </ul>
-<h2 id="抓包选项设置"><a href="#抓包选项设置" class="headerlink" title="抓包选项设置"></a>抓包选项设置</h2>]]></content>
+<h2 id="抓包选项设置"><a href="#抓包选项设置" class="headerlink" title="抓包选项设置"></a>抓包选项设置</h2><p>网卡设置，抓包过滤器，多文件连续保存，停止抓包规则，名字解析</p>
+<p>过滤器：抓包过滤器，显示过滤器</p>
+<p>BPF语法 Berkeley Packet Filter</p>
+<p>类型：host主机 net子网 port端口</p>
+<p>方向Dir： src dst</p>
+<p>协议Proto： ether,ip,tcp,udp,http,ftp</p>
+<p>逻辑运算符: &amp;&amp;, ||, !</p>
+<p>示例：<code>src host 192.168.1.1 &amp;&amp; dst port 80</code>,抓取源地址为192.168.1.1，目的为80端口的流量</p>
+<p><code>host 192.168.1.1 || host 192.168.1.2</code> 抓取这两个ip的流量</p>
+<p><code>!broadcast</code> 不要抓取广播包</p>
+<p>例子：</p>
+<p>过滤MAC地址： <code>ether host 00:88:ca:86:f8:0d</code>, <code>ether src host 00:88:ca:86:f8:0d</code>, <code>ether dst host 00:88:ca:86:f8:0d</code></p>
+<p>过滤IP地址：<code>host 192.168.0.1</code>,<code>src host 192.168.1.1</code>, <code>dst host 192.168.1.1</code></p>
+<p>过滤端口：<code>port 80</code>, <code>!port 80</code>, <code>dst port 80</code></p>
+<p>过滤协议：<code>arp</code>, <code>icmp</code></p>
+<p>综合：<code>host 192.168.1.1 &amp;&amp; port 8080</code></p>
+<p>先协议，然后方向，然后主机，端口</p>
+<ul>
+<li>显示过滤器</li>
+</ul>
+<p>==, !=, &gt;, &lt;, &gt;=, &lt;=</p>
+<p>and, or, xor（有仅有一个条件满足), not</p>
+<p>ip.addr, ip.src, ip.dst</p>
+<p>tcp.port, tcp.srcport, tcp.dstport, tcp.flag.syn, tcp.flag.ack</p>
+<p>arp, ip, icmp, udp, tcp, bootp, dns</p>
+<ul>
+<li>案例</li>
+</ul>
+<p><code>ip.addr == 192.168.1.1</code>, <code>ip.src == 192.168.1.1</code>, <code>ip.dst == 192.168.1.1</code>, <code>ip.src == 192.168.1.100 and ip.dst = 192.168.1.1</code></p>
+<p><code>tcp.port == 80</code>, <code>tcp.srcport == 80</code>, <code>tcp.dstport == 80</code>, <code>tcp.flag.syn == 1</code></p>
+<p><code>arp</code>, <code>tcp</code>, <code>udp</code>, <code>not http</code>, <code>not arp</code></p>
+<p><code>ip.src == 192.168.1.1 and tcp.dstport == 80</code></p>
+<p><code>ip.addr == 192.168.1.1 and udp.port == 4000</code></p>
+<h1 id="数据流追踪"><a href="#数据流追踪" class="headerlink" title="数据流追踪"></a>数据流追踪</h1><p>tcp,udp,ssl数据流进行重组并且完整呈现出来</p>
+<h1 id="专家信息说明"><a href="#专家信息说明" class="headerlink" title="专家信息说明"></a>专家信息说明</h1><p>可以对数据包中特定状态进行警告说明，errors, warnings, notes, chats</p>
+<h1 id="统计摘要说明"><a href="#统计摘要说明" class="headerlink" title="统计摘要说明"></a>统计摘要说明</h1><p>对抓取的数据包进行全局统计</p>
+<h1 id="协议分层统计"><a href="#协议分层统计" class="headerlink" title="协议分层统计"></a>协议分层统计</h1><p>统计通信流量中不同协议占用的百分比，通过这个可以对全网流量有 直观的了解，整个网络哪些流量占用最多，哪些最少</p>
+<h1 id="网络节点和会话统计"><a href="#网络节点和会话统计" class="headerlink" title="网络节点和会话统计"></a>网络节点和会话统计</h1><h1 id="数据包长度"><a href="#数据包长度" class="headerlink" title="数据包长度"></a>数据包长度</h1><h1 id="图表分析"><a href="#图表分析" class="headerlink" title="图表分析"></a>图表分析</h1>]]></content>
     
     <summary type="html">
     
@@ -484,6 +522,64 @@
     
       &lt;p&gt;今天用&lt;code&gt;nslookup&lt;/code&gt;命令解析查看了&lt;code&gt;www.baidu.com&lt;/code&gt;的IP地址，却意外发现百度的&lt;code&gt;CNAME&lt;/code&gt;居然是&lt;code&gt;www.a.shifen.com&lt;/code&gt;&lt;/p&gt;
 &lt;h1 id=&quot;解析过
+    
+    </summary>
+    
+      <category term="计算机网络" scheme="http://microndgt.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+    
+      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="计算机科学" scheme="http://microndgt.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>计算机网络-传输层</title>
+    <link href="http://microndgt.github.io/2017/02/19/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E4%BC%A0%E8%BE%93%E5%B1%82/"/>
+    <id>http://microndgt.github.io/2017/02/19/计算机网络-传输层/</id>
+    <published>2017-02-19T03:06:16.000Z</published>
+    <updated>2017-03-08T09:50:10.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="往返时延的估计与超时"><a href="#往返时延的估计与超时" class="headerlink" title="往返时延的估计与超时"></a>往返时延的估计与超时</h2><p>超时/重传机制来处理报文段的丢失问题，超时时间间隔必须大于TCP连接的往返时延RTT</p>
+<p>报文段的样本RTT是从某报文段被发出，交给IP到对该报文段的确认被收到之间的时间量。仅为传输一次的报文段测量样本RTT。</p>
+<p>TCP维持一个样本RTT的均值，EstimatedRTT，估计RTT，是一个由样本RTT值而得出的加权平均值。</p>
+<p>要求将超时间隔设置为估计RTT加上一定余量。当DevRTT值比较大的时候，余量应该大一点。偏差DevRTT，是样本RTT和估计RTT之间差值的指数加权移动平均。</p>
+<h2 id="可靠数据传输"><a href="#可靠数据传输" class="headerlink" title="可靠数据传输"></a>可靠数据传输</h2><p>IP不保证数据报的交付，不保证数据报的按序交付，也不保证数据报中数据的完整性。推荐的定时器管理过程仅使用单一的重传定时器。</p>
+<p>TCP发送方有3个与发送和重传有关的主要事件：</p>
+<ol>
+<li>从上层应用程序接收数据。TCP接收数据后，将数据封装在一个报文段中，将报文段交给IP，每个报文段都有一个序号，是报文段第一个数据字节的字节流编号，如果定时器没有为其他报文段而运行，那么报文段传给IP时候，TCP启动定时器。</li>
+<li>超时。TCP通过重传引起超时的报文段来响应超时事件，然后TCP重启定时器。</li>
+<li>接收ACK报文。TCP将ACK的值y与变量sendbase比较，sendbase是最早未被确认的字节的序号，TCP采用累积确认，y确认了字节编号在y之前的所有字节都已经收到，如果y&gt;sendbase，该ACK是在确认一个或者多个先前未被确认的报文段。发送方更新其sendbase变量。如果当前有未被确认的报文段，那么TCP重启定时器。</li>
+</ol>
+<p>TCP重传具有最小序号的还未被确认的报文段。但是每次TCP重传都会将下一次的超时间隔设置为先前值的两倍，这种改动提供了一个有限形式的拥塞控制。定时器过期很有可能是由于网络拥塞引起的，在拥塞的时候，如果源持续重传分组，会使得拥塞更加严重，因此每个发送方的重传都是经过越来越长的时间间隔后进行的。</p>
+<p>发送方可以在超时事件发生之前通过注意冗余ACK来较好的检测丢包情况。TCP接收方检测到数据流中的一个间隔，即有报文段丢失，因为TCP不使用否定确认，只需对按序接收到的最后一个字节数据进行重复确认，即产生一个冗余ACK,发送的冗余ACK，指明下一个期待字节的序号，就是间隔的低端字节序号。</p>
+<p>如果TCP发送方接收到对相同数据的３个冗余ACK，就认为跟在这个已被确认过３次的报文段之后的报文段已经丢失。一旦收到３个冗余ACK，TCP就执行快速重传，即在该报文段的定时器过期之前重传丢失的报文段。</p>
+<p>TCP发送方仅需要维持已经发送但是未被确认字节的最小序号和下一个要发送字节的序号。对TCP协议提出的一个修改就是所谓的选择确认，它允许TCP接受方有选择的确认失序报文段。</p>
+<h2 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h2><p>有可能TCP连接的接收缓存溢出。TCP为应用程序提供了流量控制服务以消除发送方使接收方缓存溢出的可能性。所以流量控制是一个速度匹配服务。TCP发送方可能因为IP网络的拥塞而被遏制，这种形式的发送方控制被成为拥塞控制。</p>
+<p>TCP通过让发送方维护一个接收窗口的变量来提供流量控制，接收窗口用于告诉发送方，接收方还有多少可用的缓存空间。接收窗口是动态的，主机B通过把当前的接收窗口值放入它发给主机A的报文段接收窗口字段中，开始的时候接收窗口值大小和接收缓存大小一样。</p>
+<p>有一个问题是，当缓存区满的时候，主机A会被阻塞不能再发数据，所以当主机B的接收窗口为0的时候，主机A继续发送一个字节数据的报文段，这些报文段将会被接收方确认，最后缓存开始清空的时候，确认报文里将包含一个非0的接收窗口值。</p>
+<h2 id="TCP连接管理"><a href="#TCP连接管理" class="headerlink" title="TCP连接管理"></a>TCP连接管理</h2><ol>
+<li>客户端TCP向服务器端的TCP发送一个特殊的TCP报文段。报文部首部SYN标志位设置为1，客户机随机选择一个起始序号，防止在该起始的TCP SYN报文段的序号字段中。该报文段封装在一个IP数据报，发送给服务器。</li>
+<li>服务器提取TCP SYN报文段，为该TCP连接分配TCP缓存和变量。并向客户TCP发送允许连接的报文段。首部SYN比特设置为1，TCP报文首部确认号字段设置为客户发来的报文＋1，服务器选择自己的初始序号。这个允许连接的报文段被称为SYNACK报文段。</li>
+<li>收到SYNACK，客户机给该连接分配缓存和变量。客户机再向服务器发送另外一个报文段，报文段对服务器的允许连接的报文段进行确认。server_isn + 1,另外SYN比特置为0，因为连接已经建立了。</li>
+</ol>
+<p>在建立连接后，每一个报文段，SYN比特都置为0，这种连接建立的过程为三次握手。</p>
+<p>关闭的时候，客户机TCP向服务器进程发送一个特殊的TCP报文段，首部的FIN比特被置为1，然后服务器接收到之后，向客户机回送一个确认报文段ACK，服务器发送终止报文段，FIN比特为1，最后客户机对这个服务器的终止报文段进行确认ACK。此时两台主机用于该连接的所有资源都被释放了。</p>
+<p>客户机TCP状态，CLOSED-&gt;SYN_SENT-&gt;ESTABLISHED-&gt;FIN_WAIT_1-&gt;FIN_WAIT_2-&gt;TIME_WAIT</p>
+<p>服务器TCP状态,CLOSED-&gt;LISTEN-&gt;SYN_RCVD-&gt;ESTABLISHED-&gt;CLOSE_WAIT-&gt;LAST_ACK</p>
+<p>向某台主机发送一个特殊的TCP SYN报文段后，会有以下情况：</p>
+<ul>
+<li>源主机从目标主机收到一个TCP SYNACK报文段，这说明主机上一个应用程序使用TCP端口运行</li>
+<li>源主机从目标主机收到一个TCP RST报文段，意味着这个端口没有程序运行</li>
+<li>源主机什么也没有得到，说明SYN报文段被中间的防火墙阻挡，不能到达目标主机。</li>
+</ul>
+<h2 id="SYN洪泛攻击"><a href="#SYN洪泛攻击" class="headerlink" title="SYN洪泛攻击"></a>SYN洪泛攻击</h2><p>攻击者发送大量的TCP SYN报文段，而不完成三次握手的第三步。通过多个源发送SYN可以加大攻击力度，产生DDos分布式拒绝服务SYN洪泛攻击。还有一种完全握手攻击。</p>
+<h1 id="拥塞控制原理"><a href="#拥塞控制原理" class="headerlink" title="拥塞控制原理"></a>拥塞控制原理</h1>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;往返时延的估计与超时&quot;&gt;&lt;a href=&quot;#往返时延的估计与超时&quot; class=&quot;headerlink&quot; title=&quot;往返时延的估计与超时&quot;&gt;&lt;/a&gt;往返时延的估计与超时&lt;/h2&gt;&lt;p&gt;超时/重传机制来处理报文段的丢失问题，超时时间间隔必须大于TCP连接的往返时
     
     </summary>
     
@@ -966,48 +1062,6 @@
     </summary>
     
       <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
-    
-    
-      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
-    
-      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用Python和Flask设计RESTful API</title>
-    <link href="http://microndgt.github.io/2017/02/05/%E4%BD%BF%E7%94%A8Python%E5%92%8CFlask%E8%AE%BE%E8%AE%A1RESTful-API/"/>
-    <id>http://microndgt.github.io/2017/02/05/使用Python和Flask设计RESTful-API/</id>
-    <published>2017-02-05T03:25:20.000Z</published>
-    <updated>2017-02-05T03:03:24.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="REST-REpresentational-State-Transfer表现层状态迁移"><a href="#REST-REpresentational-State-Transfer表现层状态迁移" class="headerlink" title="REST(REpresentational State Transfer表现层状态迁移)"></a>REST(REpresentational State Transfer表现层状态迁移)</h1><p>web services和web APIs</p>
-<ul>
-<li>客户端－服务器，两者隔离</li>
-<li>无状态，一种服务器不会存储客户端上一次请求的信息用来下一次使用</li>
-<li>可缓存，服务器明示客户端请求能否缓存</li>
-<li>分层系统，客户端和服务器通信应该以一种标准方式，中间层代替服务器做出相应，客户端不需要做任何变动</li>
-<li>统一接口，通信方法必须是统一的</li>
-<li>按需编码：服务器可以提供可执行代码的脚本，为客户端在它们的环境中执行</li>
-</ul>
-<h1 id="RESTful-的-web-service"><a href="#RESTful-的-web-service" class="headerlink" title="RESTful 的 web service"></a>RESTful 的 web service</h1><p>核心是资源，资源可以用URI表示，客户端使用HTTP协议定义的方法来发送请求到这些URIs，当然可能会导致这些被访问的资源状态改变</p>
-<p><code>GET,POST,PUT,DELETE</code></p>
-<p>REST设计不需要特定的数据格式，在请求中数据可以以JSON形式，或者作为url中查询参数项。</p>
-<h1 id="设计一个web-service"><a href="#设计一个web-service" class="headerlink" title="设计一个web service"></a>设计一个web service</h1><p>其实就是一个标识资源被展示出来以及它们是怎样受不同的请求方法影响。</p>
-<p>首先设计URL: <code>http://[hostname]/todo/api/v1.0</code>，在URL中包含应用名称有助于提供一个命名空间以便区分同一系统上的其他服务，包含版本号能够帮助以后的更新，如果新版本中存在新的和潜在不兼容的功能，可以不影响依赖于旧的功能的应用程序。</p>
-<p>现在从前端过来的也就是指令信息，然后发送给服务器，计算之后返回数据信息，主要在于要将这些数据格式化成json格式，把指令从json变成python可用的。</p>
-<p>有这么几项，一个是登陆，密码验证之类。另外一个是开始计算，返回数据，已完成百分比，耗费时间。另外一个是返回summary数据，输入id的话返回对应的ability或者其他数据，这块也就是数据查询功能，看查询类型了</p>
-<p>擦，在虚拟环境指定Python3也是不容易啊，<code>virtualenv backend -p /usr/local/bin/python3</code>使用用户安装的python3，貌似anaconda的Python3用不了</p>
-<h1 id="Flask-restful使用"><a href="#Flask-restful使用" class="headerlink" title="Flask restful使用"></a>Flask restful使用</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">from flask import Flask</div><div class="line">from flask.ext import restful</div><div class="line"># 创建程序实例</div><div class="line">app = Flask(__name__)</div><div class="line">api = restful.Api(app)</div><div class="line"># 定义资源</div><div class="line">class HelloWorld(restful.Resource):</div><div class="line">    def get(self):</div><div class="line">        return &#123;&apos;hello&apos;: &apos;world&apos;&#125;</div><div class="line"># 添加资源</div><div class="line">api.add_resource(HelloWorld, &apos;/&apos;)</div><div class="line">if __name__ == &apos;__main__&apos;:</div><div class="line">    # 开始运行</div><div class="line">    app.run(debug=True)</div></pre></td></tr></table></figure>
-<h2 id="添加路由"><a href="#添加路由" class="headerlink" title="添加路由"></a>添加路由</h2>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h1 id=&quot;REST-REpresentational-State-Transfer表现层状态迁移&quot;&gt;&lt;a href=&quot;#REST-REpresentational-State-Transfer表现层状态迁移&quot; class=&quot;headerlink&quot; title=&quot;REST(R
-    
-    </summary>
-    
-      <category term="web" scheme="http://microndgt.github.io/categories/web/"/>
     
     
       <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
