@@ -1,0 +1,384 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>前端小白学习日记之HTML&amp;CSS | SkyRover</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="Kevin">
+    
+    <meta name="description" content="搞了后端这么久了，我觉得是时候冲出江湖啦！开始学习前端！
+第一段代码12345678910&amp;lt;!DOCTYPE HTML&amp;gt;&amp;lt;html&amp;gt;    &amp;lt;head&amp;gt;        &amp;lt;meta http-equiv=&amp;quot;Content-Type&amp;quot; con">
+    
+    
+    
+    
+    <link rel="alternative" href="atom.xml" title="SkyRover" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/myLogo.png">
+    <link rel="apple-touch-icon-precomposed" href="/img/myLogo.png">
+    
+
+  
+    <link href="/css/font-awesome.min.css" rel="stylesheet">
+    
+  
+
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?d182ed77fc48758bf45a33835ee35745";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+      <script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v1/st.js','_st');
+
+  _st('install','.............Add your swiftype userID...............');
+</script>
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="SkyRover">SkyRover</a></h1>
+				<h2 class="blog-motto">做我的仲夏夜之梦～</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+                    <ul>
+					 
+						<li><a href="/">首页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+					
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="st-search-inpu" maxlength="20" placeholder="Search" />
+						</form>
+					
+					</li>
+                <!--<li><div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div></li>-->
+
+				</ul>
+			</nav>	
+</div>
+    </header>
+    <div id="container" class="clearfix">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/03/14/前端小白学习日记之HTML-CSS/" title="前端小白学习日记之HTML&amp;CSS" itemprop="url">前端小白学习日记之HTML&amp;CSS</a>
+  </h1>
+  <p class="article-time">
+    <time datetime="2017-03-14T15:25:36.000Z" itemprop="datePublished">Mar 14 2017</time>
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title"></strong>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#第一段代码"><span class="toc-number">1.</span> <span class="toc-text">第一段代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Html和CSS的关系"><span class="toc-number">2.</span> <span class="toc-text">Html和CSS的关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Html文件基本结构"><span class="toc-number">3.</span> <span class="toc-text">Html文件基本结构</span></a></li></ol>
+		</div>
+		
+		<p>搞了后端这么久了，我觉得是时候冲出江湖啦！开始学习前端！</p>
+<h2 id="第一段代码"><a href="#第一段代码" class="headerlink" title="第一段代码"></a>第一段代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE HTML&gt;</div><div class="line">&lt;html&gt;</div><div class="line">    &lt;head&gt;</div><div class="line">        &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;</div><div class="line">        &lt;title&gt;制作我的第一个网页&lt;/title&gt;</div><div class="line">    &lt;/head&gt;</div><div class="line">    &lt;body&gt;</div><div class="line">        &lt;h1&gt;Hello World&lt;/h1&gt;</div><div class="line">    &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>学习web前端开发基础技术需要掌握：HTML、CSS、JavaScript语言</p>
+<ol>
+<li>HTML是网页内容的载体。内容就是网页制作者放在页面上想要让用户浏览的信息，可以包含文字、图片、视频等。</li>
+<li>CSS样式是表现。就像网页的外衣。比如，标题字体、颜色变化，或为标题加入背景图片、边框等。所有这些用来改变内容外观的东西称之为表现。</li>
+<li>JavaScript是用来实现网页上的特效效果。如：鼠标滑过弹出下拉菜单。或鼠标滑过表格的背景颜色改变。还有焦点新闻（新闻图片）的轮换。可以这么理解，有动画的，有交互的一般都是用JavaScript来实现的。</li>
+</ol>
+<h2 id="Html和CSS的关系"><a href="#Html和CSS的关系" class="headerlink" title="Html和CSS的关系"></a>Html和CSS的关系</h2><p>网页中每一个内容在浏览器中的显示，都要存放到各种标签中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE HTML&gt;</div><div class="line">&lt;html&gt;</div><div class="line">    &lt;head&gt;</div><div class="line">        &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;</div><div class="line">        &lt;title&gt;Html和CSS的关系&lt;/title&gt;</div><div class="line">        &lt;style type=&quot;text/css&quot;&gt;</div><div class="line">        h1&#123;</div><div class="line">            font-size: 12px;</div><div class="line">            color: #930;</div><div class="line">            text-align: center;</div><div class="line">        &#125;</div><div class="line">        &lt;/style&gt;</div><div class="line">    &lt;/head&gt;</div><div class="line">    &lt;body&gt;</div><div class="line">        &lt;h1&gt;Hello World!&lt;/h1&gt;</div><div class="line">    &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<h2 id="Html文件基本结构"><a href="#Html文件基本结构" class="headerlink" title="Html文件基本结构"></a>Html文件基本结构</h2><ol>
+<li><html></html>称为根标签，所有的网页标签都在<html></html>中。</li>
+<li><head> 标签用于定义文档的头部，它是所有头部元素的容器。头部元素有<title>、<script>、 <style>、<link>、 <meta>等标签，头部标签在下一小节中会有详细介绍。</li>
+<li>在<body>和</body>标签之间的内容是网页的主要内容，如<h1>、<p>、<a>、<img>等网页内容标签，在这里的标签中的内容会在浏览器中显示出来。</li>
+</ol>
+<h2 id="head标签"><a href="#head标签" class="headerlink" title="head标签"></a>head标签</h2><p>文档的头部描述了文档的各种属性和信息，包括文档的标题等。绝大多数文档头部包含的数据都不会真正作为内容显示给读者。</p>
+<p>下面这些标签可以用在head部分</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;head&gt;</div><div class="line">    &lt;title&gt;...&lt;/title&gt;</div><div class="line">    &lt;meta&gt;</div><div class="line">    &lt;link&gt;</div><div class="line">    &lt;style&gt;...&lt;/style&gt;</div><div class="line">    &lt;script&gt;...&lt;/script&gt;</div><div class="line">&lt;/head&gt;</div></pre></td></tr></table></figure>
+<h2 id="代码注释"><a href="#代码注释" class="headerlink" title="代码注释"></a>代码注释</h2><p><code>&lt;!--文字--&gt;</code></p>
+<h2 id="标签语义化"><a href="#标签语义化" class="headerlink" title="标签语义化"></a>标签语义化</h2><p>语义化，说的通俗点就是：明白每个标签的用途（在什么情况下使用此标签合理）比如，网页上的文章的标题就可以用标题标签，网页上的各个栏目的栏目名称也可以使用标题标签。文章中内容的段落就得放在段落标签中，在文章中有想强调的文本，就可以使用 em 标签表示强调等等。</p>
+<h2 id="body标签"><a href="#body标签" class="headerlink" title="body标签"></a>body标签</h2><p>在网页上要展示出来的页面内容一定要放在body标签中。</p>
+<h2 id="p标签"><a href="#p标签" class="headerlink" title="p标签"></a>p标签</h2><p>如果想在网页上显示文章，这时就需要<p>标签了，把文章的段落放到<p>标签中。</p>
+<p><p>标签的默认样式，段前段后都会有空白，如果不喜欢这个空白，可以用css样式来删除或改变它。</p>
+<h2 id="hx标签"><a href="#hx标签" class="headerlink" title="hx标签"></a>hx标签</h2><p>使用<hx>标签来制作文章的标题。标题标签一共有6个，h1、h2、h3、h4、h5、h6分别为一级标题、二级标题、三级标题、四级标题、五级标题、六级标题。并且依据重要性递减。<h1>是最高的等级。</p>
+<h2 id="em和strong标签"><a href="#em和strong标签" class="headerlink" title="em和strong标签"></a>em和strong标签</h2><p>如果想在一段话中特别强调某几个文字，这时候就可以用到<em>或<strong>标签。</p>
+<p><em> 表示强调，<strong> 表示更强烈的强调。并且在浏览器中<em> 默认用斜体表示，<strong> 用粗体表示。</p>
+<p><em>的内容在浏览中显示为斜体，<strong>显示为加粗。如果不喜欢这种样式，没有关系，以后可以使用css样式去改变它。那么HTML就是相当于给了一个简单的样式，而CSS可以自定义的去改变它。</p>
+<h2 id="span标签"><a href="#span标签" class="headerlink" title="span标签"></a>span标签</h2><p><span>标签是没有语义的，它的作用就是为了设置单独的样式用的。看下面的例子就懂了，但是<code>color:blue;</code>之间是没有空格的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE HTML&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;</div><div class="line">&lt;title&gt;了不起的盖茨比&lt;/title&gt;</div><div class="line">&lt;style&gt;</div><div class="line">span&#123;</div><div class="line">    color:blue;</div><div class="line">&#125;</div><div class="line">&lt;/style&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">    &lt;p&gt;1922年的春天，一个想要成名名叫尼克•卡拉威（托比•马奎尔Tobey Maguire 饰）的作家，离开了美国中西部，来到了纽约。那是一个道德感渐失，爵士乐流行，走私为王，股票飞涨的时代。为了追寻他的&lt;span&gt;美国梦&lt;/span&gt;，他搬入纽约附近一海湾居住。&lt;/p&gt;</div><div class="line">    &lt;p&gt;菲茨杰拉德，二十世纪美国文学巨擘之一，兼具作家和编剧双重身份。他以诗人的敏感和戏剧家的想象为&quot;爵士乐时代&quot;吟唱华丽挽歌，其诗人和梦想家的气质亦为那个奢靡年代的不二注解。&lt;/p&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<h2 id="q标签"><a href="#q标签" class="headerlink" title="q标签"></a>q标签</h2><p>短文本引用，浏览器会对q标签自动添加双引号，其实关键在于它的语义，引用别人的话。</p>
+<h2 id="blockquote标签"><a href="#blockquote标签" class="headerlink" title="blockquote标签"></a>blockquote标签</h2><p>长文本引用，浏览器对<blockquote>标签的解析是缩进样式。</p>
+<h2 id="br标签"><a href="#br标签" class="headerlink" title="br标签"></a>br标签</h2><p>分行显示文本，在需要加回车换行的地方加入<br />，<br />标签作用相当于word文档中的回车。<br />标签是一个空标签，没有HTML内容的标签就是空标签，空标签只需要写一个开始标签，这样的标签有<br />、<hr />和<img />。</p>
+<p>在 html 中是忽略回车和空格的，你输入的再多回车和空格也是显示不出来的。所以必须使用<br/></p>
+<h2 id="amp-nbsp-空格"><a href="#amp-nbsp-空格" class="headerlink" title="&amp;nbsp;空格"></a><code>&amp;nbsp;</code>空格</h2><p>输入空格，必须写入<code>&amp;nbsp;</code></p>
+<h2 id="hr标签"><a href="#hr标签" class="headerlink" title="hr标签"></a>hr标签</h2><p>水平横线，<hr />标签和<br />标签一样也是一个空标签，所以只有一个开始标签，没有结束标签。</p>
+</script></title></head></li></ol>  
+	</div>
+		<footer class="article-footer clearfix">
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/编程/">编程</a><a href="/tags/HTML/">HTML</a><a href="/tags/CSS/">CSS</a>
+  </div>
+
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/前端/">前端</a>
+</div>
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://microndgt.github.io/2017/03/14/前端小白学习日记之HTML-CSS/" data-title="前端小白学习日记之HTML&amp;CSS | SkyRover" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2017/03/10/工作总结/"  title="工作总结">
+ <strong>旧一篇:</strong><br/> 
+ <span>工作总结
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	
+	<div class="ds-thread" data-title="前端小白学习日记之HTML&amp;CSS" data-thread-key="前端小白学习日记之HTML-CSS" data-author-key="Kevin" data-url="http://microndgt.github.io/post/前端小白学习日记之HTML-CSS"></div>
+	
+</section>
+
+
+</div>  
+    </div>
+    <footer><div id="footer" >
+	<div class="copyright">
+		<span>Powered by <a href="https://github.com/hexojs/hexo">Hexo</a> and theme by 
+		<a href="https://github.com/levonlin/Tinnypp">Tinnypp</a>.</span>
+		
+			<span>© Kevin</span>
+		
+	<div>
+</div></footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  //back to top
+  function backToTop(){
+    var buttonHTML = $("<a href=\"#top\" id=\"back-top\">" + "<span>Back to Top</span></a>");
+    buttonHTML.appendTo($("body"));
+    var buttonToTop = $("#back-top");
+    // hide #back-top first
+    buttonToTop.hide();
+
+    // fade in #back-top
+    $(function() {
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                buttonToTop.fadeIn();
+            } else {
+                buttonToTop.fadeOut();
+            }
+        });
+        // scroll body to 0px on click
+        buttonToTop.click(function() {
+            $('body,html').animate({
+                scrollTop: 0
+            }, 800);
+            return false;
+        });
+    });
+  }
+  backToTop();
+
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      ta = $('#toc.toc-aside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+        
+    }
+  });
+
+  var show = true;
+  c.click(function(){
+    if(show == true){
+        a.addClass('fadeOut').css('display', 'none');
+        ta.css('display', 'block').addClass('fadeIn');
+        m.addClass('moveMain');  
+    }else{
+        a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');     
+        ta.css('display', 'none'); 
+        m.removeClass('moveMain');
+        $('#toc.toc-aside').css('display', 'none');
+    }
+    show = !show;
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,240-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"microndgt"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';    //change to ds.src = '/js/embed.js'; to add useragent for duoshuo
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+<script type="text/javascript">
+  function footerPosition() {
+    var contentHeight = document.documentElement.scrollHeight,
+        winHeight = window.innerHeight;
+    if(contentHeight <= winHeight) {
+      $('footer').addClass('fixed-bottom');
+    } else {
+      $('footer').removeClass('fixed-bottom');
+    }
+  }
+  footerPosition();
+  $(window).resize(footerPosition);
+</script>
+
+
+  </body>
+</html>

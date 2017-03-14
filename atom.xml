@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://microndgt.github.io/"/>
-  <updated>2017-03-09T03:50:07.000Z</updated>
+  <updated>2017-03-14T15:55:28.000Z</updated>
   <id>http://microndgt.github.io/</id>
   
   <author>
@@ -16,11 +16,95 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>前端小白学习日记之HTML&amp;CSS</title>
+    <link href="http://microndgt.github.io/2017/03/14/%E5%89%8D%E7%AB%AF%E5%B0%8F%E7%99%BD%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B9%8BHTML-CSS/"/>
+    <id>http://microndgt.github.io/2017/03/14/前端小白学习日记之HTML-CSS/</id>
+    <published>2017-03-14T15:25:36.000Z</published>
+    <updated>2017-03-14T15:55:28.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>搞了后端这么久了，我觉得是时候冲出江湖啦！开始学习前端！</p>
+<h2 id="第一段代码"><a href="#第一段代码" class="headerlink" title="第一段代码"></a>第一段代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE HTML&gt;</div><div class="line">&lt;html&gt;</div><div class="line">    &lt;head&gt;</div><div class="line">        &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;</div><div class="line">        &lt;title&gt;制作我的第一个网页&lt;/title&gt;</div><div class="line">    &lt;/head&gt;</div><div class="line">    &lt;body&gt;</div><div class="line">        &lt;h1&gt;Hello World&lt;/h1&gt;</div><div class="line">    &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>学习web前端开发基础技术需要掌握：HTML、CSS、JavaScript语言</p>
+<ol>
+<li>HTML是网页内容的载体。内容就是网页制作者放在页面上想要让用户浏览的信息，可以包含文字、图片、视频等。</li>
+<li>CSS样式是表现。就像网页的外衣。比如，标题字体、颜色变化，或为标题加入背景图片、边框等。所有这些用来改变内容外观的东西称之为表现。</li>
+<li>JavaScript是用来实现网页上的特效效果。如：鼠标滑过弹出下拉菜单。或鼠标滑过表格的背景颜色改变。还有焦点新闻（新闻图片）的轮换。可以这么理解，有动画的，有交互的一般都是用JavaScript来实现的。</li>
+</ol>
+<h2 id="Html和CSS的关系"><a href="#Html和CSS的关系" class="headerlink" title="Html和CSS的关系"></a>Html和CSS的关系</h2><p>网页中每一个内容在浏览器中的显示，都要存放到各种标签中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE HTML&gt;</div><div class="line">&lt;html&gt;</div><div class="line">    &lt;head&gt;</div><div class="line">        &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;</div><div class="line">        &lt;title&gt;Html和CSS的关系&lt;/title&gt;</div><div class="line">        &lt;style type=&quot;text/css&quot;&gt;</div><div class="line">        h1&#123;</div><div class="line">            font-size: 12px;</div><div class="line">            color: #930;</div><div class="line">            text-align: center;</div><div class="line">        &#125;</div><div class="line">        &lt;/style&gt;</div><div class="line">    &lt;/head&gt;</div><div class="line">    &lt;body&gt;</div><div class="line">        &lt;h1&gt;Hello World!&lt;/h1&gt;</div><div class="line">    &lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<h2 id="Html文件基本结构"><a href="#Html文件基本结构" class="headerlink" title="Html文件基本结构"></a>Html文件基本结构</h2><ol>
+<li><html></html>称为根标签，所有的网页标签都在<html></html>中。</li>
+<li><head> 标签用于定义文档的头部，它是所有头部元素的容器。头部元素有<title>、<script>、 <style>、<link>、 <meta>等标签，头部标签在下一小节中会有详细介绍。</li>
+<li>在<body>和</body>标签之间的内容是网页的主要内容，如<h1>、<p>、<a>、<img>等网页内容标签，在这里的标签中的内容会在浏览器中显示出来。</li>
+</ol>
+<h2 id="head标签"><a href="#head标签" class="headerlink" title="head标签"></a>head标签</h2><p>文档的头部描述了文档的各种属性和信息，包括文档的标题等。绝大多数文档头部包含的数据都不会真正作为内容显示给读者。</p>
+<p>下面这些标签可以用在head部分</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;head&gt;</div><div class="line">    &lt;title&gt;...&lt;/title&gt;</div><div class="line">    &lt;meta&gt;</div><div class="line">    &lt;link&gt;</div><div class="line">    &lt;style&gt;...&lt;/style&gt;</div><div class="line">    &lt;script&gt;...&lt;/script&gt;</div><div class="line">&lt;/head&gt;</div></pre></td></tr></table></figure>
+<h2 id="代码注释"><a href="#代码注释" class="headerlink" title="代码注释"></a>代码注释</h2><p><code>&lt;!--文字--&gt;</code></p>
+<h2 id="标签语义化"><a href="#标签语义化" class="headerlink" title="标签语义化"></a>标签语义化</h2><p>语义化，说的通俗点就是：明白每个标签的用途（在什么情况下使用此标签合理）比如，网页上的文章的标题就可以用标题标签，网页上的各个栏目的栏目名称也可以使用标题标签。文章中内容的段落就得放在段落标签中，在文章中有想强调的文本，就可以使用 em 标签表示强调等等。</p>
+<h2 id="body标签"><a href="#body标签" class="headerlink" title="body标签"></a>body标签</h2><p>在网页上要展示出来的页面内容一定要放在body标签中。</p>
+<h2 id="p标签"><a href="#p标签" class="headerlink" title="p标签"></a>p标签</h2><p>如果想在网页上显示文章，这时就需要<p>标签了，把文章的段落放到<p>标签中。</p>
+<p><p>标签的默认样式，段前段后都会有空白，如果不喜欢这个空白，可以用css样式来删除或改变它。</p>
+<h2 id="hx标签"><a href="#hx标签" class="headerlink" title="hx标签"></a>hx标签</h2><p>使用<hx>标签来制作文章的标题。标题标签一共有6个，h1、h2、h3、h4、h5、h6分别为一级标题、二级标题、三级标题、四级标题、五级标题、六级标题。并且依据重要性递减。<h1>是最高的等级。</p>
+<h2 id="em和strong标签"><a href="#em和strong标签" class="headerlink" title="em和strong标签"></a>em和strong标签</h2><p>如果想在一段话中特别强调某几个文字，这时候就可以用到<em>或<strong>标签。</p>
+<p><em> 表示强调，<strong> 表示更强烈的强调。并且在浏览器中<em> 默认用斜体表示，<strong> 用粗体表示。</p>
+<p><em>的内容在浏览中显示为斜体，<strong>显示为加粗。如果不喜欢这种样式，没有关系，以后可以使用css样式去改变它。那么HTML就是相当于给了一个简单的样式，而CSS可以自定义的去改变它。</p>
+<h2 id="span标签"><a href="#span标签" class="headerlink" title="span标签"></a>span标签</h2><p><span>标签是没有语义的，它的作用就是为了设置单独的样式用的。看下面的例子就懂了，但是<code>color:blue;</code>之间是没有空格的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE HTML&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;</div><div class="line">&lt;title&gt;了不起的盖茨比&lt;/title&gt;</div><div class="line">&lt;style&gt;</div><div class="line">span&#123;</div><div class="line">    color:blue;</div><div class="line">&#125;</div><div class="line">&lt;/style&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line">    &lt;p&gt;1922年的春天，一个想要成名名叫尼克•卡拉威（托比•马奎尔Tobey Maguire 饰）的作家，离开了美国中西部，来到了纽约。那是一个道德感渐失，爵士乐流行，走私为王，股票飞涨的时代。为了追寻他的&lt;span&gt;美国梦&lt;/span&gt;，他搬入纽约附近一海湾居住。&lt;/p&gt;</div><div class="line">    &lt;p&gt;菲茨杰拉德，二十世纪美国文学巨擘之一，兼具作家和编剧双重身份。他以诗人的敏感和戏剧家的想象为&quot;爵士乐时代&quot;吟唱华丽挽歌，其诗人和梦想家的气质亦为那个奢靡年代的不二注解。&lt;/p&gt;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<h2 id="q标签"><a href="#q标签" class="headerlink" title="q标签"></a>q标签</h2><p>短文本引用，浏览器会对q标签自动添加双引号，其实关键在于它的语义，引用别人的话。</p>
+<h2 id="blockquote标签"><a href="#blockquote标签" class="headerlink" title="blockquote标签"></a>blockquote标签</h2><p>长文本引用，浏览器对<blockquote>标签的解析是缩进样式。</p>
+<h2 id="br标签"><a href="#br标签" class="headerlink" title="br标签"></a>br标签</h2><p>分行显示文本，在需要加回车换行的地方加入<br />，<br />标签作用相当于word文档中的回车。<br />标签是一个空标签，没有HTML内容的标签就是空标签，空标签只需要写一个开始标签，这样的标签有<br />、<hr />和<img />。</p>
+<p>在 html 中是忽略回车和空格的，你输入的再多回车和空格也是显示不出来的。所以必须使用<br/></p>
+<h2 id="amp-nbsp-空格"><a href="#amp-nbsp-空格" class="headerlink" title="&amp;nbsp;空格"></a><code>&amp;nbsp;</code>空格</h2><p>输入空格，必须写入<code>&amp;nbsp;</code></p>
+<h2 id="hr标签"><a href="#hr标签" class="headerlink" title="hr标签"></a>hr标签</h2><p>水平横线，<hr />标签和<br />标签一样也是一个空标签，所以只有一个开始标签，没有结束标签。</p>
+</script></title></head></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;搞了后端这么久了，我觉得是时候冲出江湖啦！开始学习前端！&lt;/p&gt;
+&lt;h2 id=&quot;第一段代码&quot;&gt;&lt;a href=&quot;#第一段代码&quot; class=&quot;headerlink&quot; title=&quot;第一段代码&quot;&gt;&lt;/a&gt;第一段代码&lt;/h2&gt;&lt;figure class=&quot;highlight 
+    
+    </summary>
+    
+      <category term="前端" scheme="http://microndgt.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
+    
+      <category term="HTML" scheme="http://microndgt.github.io/tags/HTML/"/>
+    
+      <category term="CSS" scheme="http://microndgt.github.io/tags/CSS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>工作总结</title>
+    <link href="http://microndgt.github.io/2017/03/10/%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/"/>
+    <id>http://microndgt.github.io/2017/03/10/工作总结/</id>
+    <published>2017-03-10T09:10:18.000Z</published>
+    <updated>2017-03-14T07:27:06.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="virtualenv"><a href="#virtualenv" class="headerlink" title="virtualenv"></a>virtualenv</h1><p>创建virtualenv时候遇到这个问题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">kevin@duguangtingdeMacBook-Pro:~ $ virtualenv myblog_env --python=python3</div><div class="line">Running virtualenv with interpreter /Users/kevin/anaconda/bin/python3</div><div class="line">Using base prefix &apos;/Users/kevin/anaconda&apos;</div><div class="line">New python executable in /Users/kevin/myblog_env/bin/python3</div><div class="line">Not overwriting existing python script /Users/kevin/myblog_env/bin/python (you must use /Users/kevin/myblog_env/bin/python3)</div><div class="line">ERROR: The executable /Users/kevin/myblog_env/bin/python3 is not functioning</div><div class="line">ERROR: It thinks sys.prefix is &apos;/Users/kevin&apos; (should be &apos;/Users/kevin/myblog_env&apos;)</div><div class="line">ERROR: virtualenv is not compatible with this system or executable</div></pre></td></tr></table></figure>
+<p>这个问题的原因是没有用系统级的Python，建立virtualenv的时候指定<code>-p</code>参数：<code>virtualenv -p python3 myblog_env</code></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;virtualenv&quot;&gt;&lt;a href=&quot;#virtualenv&quot; class=&quot;headerlink&quot; title=&quot;virtualenv&quot;&gt;&lt;/a&gt;virtualenv&lt;/h1&gt;&lt;p&gt;创建virtualenv时候遇到这个问题：&lt;/p&gt;
+&lt;figure clas
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>计算机网络-传输层</title>
     <link href="http://microndgt.github.io/2017/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E4%BC%A0%E8%BE%93%E5%B1%82/"/>
     <id>http://microndgt.github.io/2017/03/08/计算机网络-传输层/</id>
     <published>2017-03-08T03:06:16.000Z</published>
-    <updated>2017-03-09T03:50:07.000Z</updated>
+    <updated>2017-03-13T10:16:51.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="往返时延的估计与超时"><a href="#往返时延的估计与超时" class="headerlink" title="往返时延的估计与超时"></a>往返时延的估计与超时</h2><p>超时/重传机制来处理报文段的丢失问题，超时时间间隔必须大于TCP连接的往返时延RTT</p>
 <p>报文段的样本RTT是从某报文段被发出，交给IP到对该报文段的确认被收到之间的时间量。仅为传输一次的报文段测量样本RTT。</p>
@@ -56,7 +140,31 @@
 <li>源主机什么也没有得到，说明SYN报文段被中间的防火墙阻挡，不能到达目标主机。</li>
 </ul>
 <h2 id="SYN洪泛攻击"><a href="#SYN洪泛攻击" class="headerlink" title="SYN洪泛攻击"></a>SYN洪泛攻击</h2><p>攻击者发送大量的TCP SYN报文段，而不完成三次握手的第三步。通过多个源发送SYN可以加大攻击力度，产生DDos分布式拒绝服务SYN洪泛攻击。还有一种完全握手攻击。</p>
-<h1 id="拥塞控制原理"><a href="#拥塞控制原理" class="headerlink" title="拥塞控制原理"></a>拥塞控制原理</h1>]]></content>
+<h1 id="拥塞控制原理"><a href="#拥塞控制原理" class="headerlink" title="拥塞控制原理"></a>拥塞控制原理</h1><h2 id="拥塞原因与开销"><a href="#拥塞原因与开销" class="headerlink" title="拥塞原因与开销"></a>拥塞原因与开销</h2><p>分组到达一个已经满了的缓存时候会被丢弃，那么这个分组将会被重传。运输层向网络中发送报文段(含有初始数据或者重传数据)的速率称为对网络的供给载荷。因此这是另外一种网络拥塞开销，发送方必须执行重传以补偿因为缓存溢出而丢弃的分组。还有一种网络拥塞的开销是，发送发在遇到大时延时后进行的不必要重传会引起路由器利用其链路带宽来转发不必要的分组拷贝。</p>
+<p>由于拥塞而丢弃分组的另一种开销，当一个分组沿一条路径被丢弃时，每个上游路由器用于转发该分组到丢弃该分组而使用的传输容量最终被浪费掉了。</p>
+<h2 id="拥塞控制方法"><a href="#拥塞控制方法" class="headerlink" title="拥塞控制方法"></a>拥塞控制方法</h2><ul>
+<li>端到端拥塞控制，网络层没有为运输层拥塞控制提供显式支持，TCP通过端对端的方法处理拥塞控制。TCP报文段的丢失被认为是网络拥塞的迹象，TCP会相应减少窗口长度。TCP通过增加往返时延值作为网络拥塞程序增加的指示。</li>
+<li>网络辅助的拥塞控制，网络层组件，路由器向发送方提供关于网络中拥塞状态的显式反馈信息。拥塞信息从网络反馈到发送方通常有两种方式，一种是直接反馈信息，通常采用阻塞分组。另一种是路由器标记或更新从发送方流向接收方的分组中的某个字段来指示拥塞的发生，这个是经由接收方的网络反馈。</li>
+</ul>
+<h2 id="网络辅助的拥塞控制例子：ATM-ABR拥塞控制"><a href="#网络辅助的拥塞控制例子：ATM-ABR拥塞控制" class="headerlink" title="网络辅助的拥塞控制例子：ATM ABR拥塞控制"></a>网络辅助的拥塞控制例子：ATM ABR拥塞控制</h2><p>ATM采用面向虚电路方法处理分组交换问题，从源到目的地上的每台交换机将维护有关源到目的地VC的状态，允许交换机跟踪各个发送方的行为，采取源特定的拥塞控制动作。执行网络辅助拥塞控制。</p>
+<p>ABR弹性数据传输服务。</p>
+<h1 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h1><p>TCP必须使用端到端拥塞控制而不是网络辅助的拥塞控制，因为IP层不向端系统提供显式的网络拥塞反馈。</p>
+<p>TCP拥塞控制机制让连接的每一端都记录一个额外的变量，即拥塞窗口，它对一个TCP发送方能向网络中发送流量的速率进行了限制，一个发送方中未被确认的数据量。所以也就是说允许发送方向该连接发送CongWin个字节的数据。</p>
+<p>一个TCP发送方的丢包事件为，要么出现超时，要么收到接收方3个冗余的ACK。如果报文段确认到达，说明一切正常，使用确认来增加拥塞窗口的长度。TCP使用确认来触发它的拥塞窗口长度的增大，TCP是自计时的。</p>
+<p>TCP发送方在感知拥塞时候，使用的调节发送速率使用的TCP拥塞控制算法。</p>
+<ul>
+<li>加性增，乘性减：出现丢包事件时候，让发送方降低发送速率，每次发生一次丢包事件就将其拥塞窗口值减半。如果没有检测到拥塞，则缓慢的增加其拥塞窗口的长度，探测端到端路径上额外的可用带宽。一个新的确认到达，拥塞窗口增加一个MSS/CongWin字节。</li>
+<li>慢启动：拥塞窗口的值初始设为1个MSS，但是TCP发送方在初始阶段不是线性增加发送速率，而是指数速度增加。每过一个RTT将拥塞窗口翻倍，直到一个丢包事件，此时拥塞窗口降为一半。</li>
+<li>对超时事件做出反应：超时事件发生时，TCP发送方进入一个慢启动阶段，同上。直到拥塞窗口到达超时事件前窗口值一半为止。然后拥塞窗口以线性速率增长。TCP通过维持一个阈值的变量来管理，阈值初始为很大的值，这个值就是超时事件前窗口值的一半。网络在显示它自己至少能交付一些报文段，即使其他报文段因拥塞而丢失了，这种在收到3个冗余ACK后取消慢启动阶段的行为称为快速恢复。分组的RTT越长，路由器中的拥塞越严重。</li>
+<li>对TCP吞吐量的宏观描述：TCP发送数据速率是拥塞窗口和当前RTT的函数，</li>
+<li>TCP的未来：高速TCP连接</li>
+<li>公平性：较小RTT连接能够在链路空闲时候更快的抢到可用带宽，较快的打开拥塞窗口，比较大RTT连接有更高的吞吐量。目前一个研究是开发一种因特网拥塞控制机制，用于阻止UDP流量不断压制直至中断因特网吞吐量。也可以使用多条并行TCP连接来传送一个web页中的多个对象。</li>
+</ul>
+<p>运输层协议能够提供的服务经常受下面网络层协议服务模型的限制。在协议栈中任意一层都可以实现确认，定时器，重传以及序号，就可以向上层提供可靠数据传输。</p>
+<p>数据报拥塞控制协议，DCCP，提供了低开销，面向报文，类似UDP的不可靠服务，但是具有拥塞控制。</p>
+<p>流控制传输协议SCTP</p>
+<p>TCP友好速率控制 TFRC 是一种拥塞控制协议而不是一种功能齐全的运输层协议。</p>
+]]></content>
     
     <summary type="html">
     
@@ -78,7 +186,7 @@
     <link href="http://microndgt.github.io/2017/03/06/Designing-a-RESTful-API-with-Python-and-Flask/"/>
     <id>http://microndgt.github.io/2017/03/06/Designing-a-RESTful-API-with-Python-and-Flask/</id>
     <published>2017-03-06T04:01:55.000Z</published>
-    <updated>2017-03-06T04:24:16.000Z</updated>
+    <updated>2017-03-14T07:05:14.000Z</updated>
     
     <content type="html"><![CDATA[<p>翻译自<a href="https://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask" target="_blank" rel="external">https://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask</a></p>
 <p>最近几年REST(表现层状态转移)已经成为了设计web服务和web APIs的标准框架。</p>
@@ -132,7 +240,57 @@
 </tbody>
 </table>
 <p>REST设计不需要请求提供特定的数据格式，事实上数据是通过在request体的JSON数据包，或者有些时候是在URL的查询部分作为参数传递的。</p>
-]]></content>
+<h1 id="Designing-a-simple-web-service"><a href="#Designing-a-simple-web-service" class="headerlink" title="Designing a simple web service"></a>Designing a simple web service</h1><p>设计一个符合REST风格的web服务或者API的任务现在变成了确定被暴露出的资源以及他们如何被不同的请求方法改变。</p>
+<p>我们现在想写一个To Do应用，我们要设计一个web服务。第一件事情就是决定进入这个服务的根URL。例如，我们可以这样暴露这个服务</p>
+<p><code>http://[hostname]/todo/api/v1.0/</code></p>
+<p>这里我决定在URL包含应用的名字和API的版本。在URL中包含应用名字是很有用的，特别是在相同系统上运行有其他应用，这样就可以提供一个命名空间将其分开。在URL包含版本号有助于以后升级，因为新的或者潜在的不相容的函数可能在新版本中添加，这样就不会影响依赖旧函数的应用。</p>
+<p>下一步是选择服务要暴露的资源。这是一个很简单的应用，我们只有task，所以我们唯一在我们todo列表中的资源是tasks.</p>
+<p>我们的tasks资源将会使用如下的HTTP方法。</p>
+<table>
+<thead>
+<tr>
+<th>HTTP Methods</th>
+<th style="text-align:center">URI</th>
+<th style="text-align:right">Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td style="text-align:center"><a href="http://[hostname]/todo/api/v1.0/tasks" target="_blank" rel="external">http://[hostname]/todo/api/v1.0/tasks</a></td>
+<td style="text-align:right">Retrieve list of tasks</td>
+</tr>
+<tr>
+<td>GET</td>
+<td style="text-align:center"><a href="http://[hostname]/todo/api/v1.0/tasks/[task_id" target="_blank" rel="external">http://[hostname]/todo/api/v1.0/tasks/[task_id</a>]</td>
+<td style="text-align:right">Retrieve a task</td>
+</tr>
+<tr>
+<td>POST</td>
+<td style="text-align:center"><a href="http://[hostname]/todo/api/v1.0/tasks" target="_blank" rel="external">http://[hostname]/todo/api/v1.0/tasks</a></td>
+<td style="text-align:right">Create a new task</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td style="text-align:center"><a href="http://[hostname]/todo/api/v1.0/tasks/[task_id" target="_blank" rel="external">http://[hostname]/todo/api/v1.0/tasks/[task_id</a>]</td>
+<td style="text-align:right">Update an existing task</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td style="text-align:center"><a href="http://[hostname]/todo/api/v1.0/tasks/[task_id" target="_blank" rel="external">http://[hostname]/todo/api/v1.0/tasks/[task_id</a>]</td>
+<td style="text-align:right">Delete a task</td>
+</tr>
+</tbody>
+</table>
+<p>我们可以定义一个task有以下字段，<strong><em>自己的应用的task也应该这么设计，然后就可以有一个计算的历史记录功能了，计算完成不用删除这条记录，而是将其done字段设为True，然后每次载入的时候检索哪些done是False进行运行。另外API也应该设置为应用名加上版本号，这个是以后要加上的功能</em></strong></p>
+<ul>
+<li>id: 标识符，数字类型</li>
+<li>title: 简短的任务描述，字符串类型</li>
+<li>description: 长的任务描述，文本类型</li>
+<li>done: 任务完成状态，布尔类型</li>
+</ul>
+<p>现在我们基本已经完成了web服务的设计部分，剩下的就是应用！</p>
+<h1 id="A-brief-introduction-to-the-Flask-microframework"><a href="#A-brief-introduction-to-the-Flask-microframework" class="headerlink" title="A brief introduction to the Flask microframework"></a>A brief introduction to the Flask microframework</h1>]]></content>
     
     <summary type="html">
     
@@ -1003,65 +1161,6 @@
     
       &lt;p&gt;多线程，调用子进程，生成器函数，并行计算&lt;/p&gt;
 &lt;h1 id=&quot;启动和停止线程&quot;&gt;&lt;a href=&quot;#启动和停止线程&quot; class=&quot;headerlink&quot; title=&quot;启动和停止线程&quot;&gt;&lt;/a&gt;启动和停止线程&lt;/h1&gt;&lt;p&gt;threading库可以在单独的线程中执行任
-    
-    </summary>
-    
-      <category term="Python" scheme="http://microndgt.github.io/categories/Python/"/>
-    
-    
-      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
-    
-      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Intro to Backend 1</title>
-    <link href="http://microndgt.github.io/2017/02/13/Intro-to-backend-1/"/>
-    <id>http://microndgt.github.io/2017/02/13/Intro-to-backend-1/</id>
-    <published>2017-02-13T04:43:57.000Z</published>
-    <updated>2017-02-13T04:50:09.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>第一部分，Introduction to the web</p>
-<p>万维网是HTML文档的集合，这些文件由HTML组成</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;第一部分，Introduction to the web&lt;/p&gt;
-&lt;p&gt;万维网是HTML文档的集合，这些文件由HTML组成&lt;/p&gt;
-
-    
-    </summary>
-    
-      <category term="web" scheme="http://microndgt.github.io/categories/web/"/>
-    
-    
-      <category term="编程" scheme="http://microndgt.github.io/tags/%E7%BC%96%E7%A8%8B/"/>
-    
-      <category term="Python" scheme="http://microndgt.github.io/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Python多进程管理</title>
-    <link href="http://microndgt.github.io/2017/02/13/Python%E5%A4%9A%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/"/>
-    <id>http://microndgt.github.io/2017/02/13/Python多进程管理/</id>
-    <published>2017-02-13T01:41:53.000Z</published>
-    <updated>2017-02-13T03:33:58.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>工作上要在Flask后台调用计算包，需要进行多进程并行计算，但是要对诸多进程进行管理，于是创造了这个多进程管理，记录下来以便后来使用。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">class MyProcManager(object):</div><div class="line">    def __init__(self):</div><div class="line">        self.procs = []</div><div class="line">        self.errors_flag = False</div><div class="line">        self._threads = []</div><div class="line">        self._lock = threading.Lock()</div><div class="line">    def terminate_all(self):</div><div class="line">        with self._lock:</div><div class="line">            for p in self.procs:</div><div class="line">                if p.is_alive():</div><div class="line">                    print(&quot;Terminating %s&quot; % p)</div><div class="line">                    p.terminate()</div><div class="line">        self.cleaning()</div><div class="line">    def launch_proc(self, func, args=(), kwargs=&#123;&#125;):</div><div class="line">        t = threading.Thread(target=self._proc_thread_runner,</div><div class="line">                             args=(func, args, kwargs))</div><div class="line">        self._threads.append(t)</div><div class="line">        t.start()</div><div class="line">    def _proc_thread_runner(self, func, args, kwargs):</div><div class="line">        p = multiprocessing.Process(target=func, args=args, kwargs=kwargs)</div><div class="line">        self.procs.append(p)</div><div class="line">        p.start()</div><div class="line">        while p.exitcode is None:</div><div class="line">            p.join()</div><div class="line">        if p.exitcode &gt; 0:</div><div class="line">            self.errors_flag = True</div><div class="line">            self.terminate_all()</div><div class="line">    def wait(self):</div><div class="line">        for t in self._threads:</div><div class="line">            t.join()</div><div class="line">    def cleaning(self):</div><div class="line">        self.procs = []</div><div class="line">        self.errors_flag = False</div><div class="line">        self._threads = []</div><div class="line">        self._lock = threading.Lock()</div></pre></td></tr></table></figure>
-<p><code>cleaning</code>方法，因为自己在调用的时候在全局实例化了这个类，所以在每次运行完毕的时候需要重新初始化实例变量。</p>
-<p>以下是调用方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">t0 = time.time()</div><div class="line">for fundId in fundIds:</div><div class="line">    proc_manager.launch_proc(calc_ability_proc, args=(fundId, start_date, end_date, config))</div><div class="line">proc_manager.wait()</div><div class="line">if proc_manager.errors_flag:</div><div class="line">    return gen_response(data=None, message=&quot;some processes crashed&quot;, errorcode=1, status=&quot;error&quot;)</div><div class="line">else:</div><div class="line">    print(&quot;Everything closed cleanly&quot;)</div><div class="line">proc_manager.cleaning()</div><div class="line">t1 = time.time()</div><div class="line">print(&quot;time used: %d min&quot; % ((t1 - t0) / 60))</div></pre></td></tr></table></figure>
-<p>用了10个fundId进行测试，大约比单线程快了2倍，不过应该fundId越多，速度会越快吧。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;工作上要在Flask后台调用计算包，需要进行多进程并行计算，但是要对诸多进程进行管理，于是创造了这个多进程管理，记录下来以便后来使用。&lt;/p&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pr
     
     </summary>
     

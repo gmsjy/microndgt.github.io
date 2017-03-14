@@ -103,7 +103,7 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#往返时延的估计与超时"><span class="toc-number">1.</span> <span class="toc-text">往返时延的估计与超时</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可靠数据传输"><span class="toc-number">2.</span> <span class="toc-text">可靠数据传输</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#流量控制"><span class="toc-number">3.</span> <span class="toc-text">流量控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP连接管理"><span class="toc-number">4.</span> <span class="toc-text">TCP连接管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SYN洪泛攻击"><span class="toc-number">5.</span> <span class="toc-text">SYN洪泛攻击</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#拥塞控制原理"><span class="toc-number"></span> <span class="toc-text">拥塞控制原理</span></a>
+		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#往返时延的估计与超时"><span class="toc-number">1.</span> <span class="toc-text">往返时延的估计与超时</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#可靠数据传输"><span class="toc-number">2.</span> <span class="toc-text">可靠数据传输</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#流量控制"><span class="toc-number">3.</span> <span class="toc-text">流量控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP连接管理"><span class="toc-number">4.</span> <span class="toc-text">TCP连接管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SYN洪泛攻击"><span class="toc-number">5.</span> <span class="toc-text">SYN洪泛攻击</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#拥塞控制原理"><span class="toc-number"></span> <span class="toc-text">拥塞控制原理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#拥塞原因与开销"><span class="toc-number">1.</span> <span class="toc-text">拥塞原因与开销</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拥塞控制方法"><span class="toc-number">2.</span> <span class="toc-text">拥塞控制方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#网络辅助的拥塞控制例子：ATM-ABR拥塞控制"><span class="toc-number">3.</span> <span class="toc-text">网络辅助的拥塞控制例子：ATM ABR拥塞控制</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP拥塞控制"><span class="toc-number"></span> <span class="toc-text">TCP拥塞控制</span></a>
 		</div>
 		
 		<h2 id="往返时延的估计与超时"><a href="#往返时延的估计与超时" class="headerlink" title="往返时延的估计与超时"></a>往返时延的估计与超时</h2><p>超时/重传机制来处理报文段的丢失问题，超时时间间隔必须大于TCP连接的往返时延RTT</p>
@@ -140,7 +140,31 @@ var _hmt = _hmt || [];
 <li>源主机什么也没有得到，说明SYN报文段被中间的防火墙阻挡，不能到达目标主机。</li>
 </ul>
 <h2 id="SYN洪泛攻击"><a href="#SYN洪泛攻击" class="headerlink" title="SYN洪泛攻击"></a>SYN洪泛攻击</h2><p>攻击者发送大量的TCP SYN报文段，而不完成三次握手的第三步。通过多个源发送SYN可以加大攻击力度，产生DDos分布式拒绝服务SYN洪泛攻击。还有一种完全握手攻击。</p>
-<h1 id="拥塞控制原理"><a href="#拥塞控制原理" class="headerlink" title="拥塞控制原理"></a>拥塞控制原理</h1>  
+<h1 id="拥塞控制原理"><a href="#拥塞控制原理" class="headerlink" title="拥塞控制原理"></a>拥塞控制原理</h1><h2 id="拥塞原因与开销"><a href="#拥塞原因与开销" class="headerlink" title="拥塞原因与开销"></a>拥塞原因与开销</h2><p>分组到达一个已经满了的缓存时候会被丢弃，那么这个分组将会被重传。运输层向网络中发送报文段(含有初始数据或者重传数据)的速率称为对网络的供给载荷。因此这是另外一种网络拥塞开销，发送方必须执行重传以补偿因为缓存溢出而丢弃的分组。还有一种网络拥塞的开销是，发送发在遇到大时延时后进行的不必要重传会引起路由器利用其链路带宽来转发不必要的分组拷贝。</p>
+<p>由于拥塞而丢弃分组的另一种开销，当一个分组沿一条路径被丢弃时，每个上游路由器用于转发该分组到丢弃该分组而使用的传输容量最终被浪费掉了。</p>
+<h2 id="拥塞控制方法"><a href="#拥塞控制方法" class="headerlink" title="拥塞控制方法"></a>拥塞控制方法</h2><ul>
+<li>端到端拥塞控制，网络层没有为运输层拥塞控制提供显式支持，TCP通过端对端的方法处理拥塞控制。TCP报文段的丢失被认为是网络拥塞的迹象，TCP会相应减少窗口长度。TCP通过增加往返时延值作为网络拥塞程序增加的指示。</li>
+<li>网络辅助的拥塞控制，网络层组件，路由器向发送方提供关于网络中拥塞状态的显式反馈信息。拥塞信息从网络反馈到发送方通常有两种方式，一种是直接反馈信息，通常采用阻塞分组。另一种是路由器标记或更新从发送方流向接收方的分组中的某个字段来指示拥塞的发生，这个是经由接收方的网络反馈。</li>
+</ul>
+<h2 id="网络辅助的拥塞控制例子：ATM-ABR拥塞控制"><a href="#网络辅助的拥塞控制例子：ATM-ABR拥塞控制" class="headerlink" title="网络辅助的拥塞控制例子：ATM ABR拥塞控制"></a>网络辅助的拥塞控制例子：ATM ABR拥塞控制</h2><p>ATM采用面向虚电路方法处理分组交换问题，从源到目的地上的每台交换机将维护有关源到目的地VC的状态，允许交换机跟踪各个发送方的行为，采取源特定的拥塞控制动作。执行网络辅助拥塞控制。</p>
+<p>ABR弹性数据传输服务。</p>
+<h1 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h1><p>TCP必须使用端到端拥塞控制而不是网络辅助的拥塞控制，因为IP层不向端系统提供显式的网络拥塞反馈。</p>
+<p>TCP拥塞控制机制让连接的每一端都记录一个额外的变量，即拥塞窗口，它对一个TCP发送方能向网络中发送流量的速率进行了限制，一个发送方中未被确认的数据量。所以也就是说允许发送方向该连接发送CongWin个字节的数据。</p>
+<p>一个TCP发送方的丢包事件为，要么出现超时，要么收到接收方3个冗余的ACK。如果报文段确认到达，说明一切正常，使用确认来增加拥塞窗口的长度。TCP使用确认来触发它的拥塞窗口长度的增大，TCP是自计时的。</p>
+<p>TCP发送方在感知拥塞时候，使用的调节发送速率使用的TCP拥塞控制算法。</p>
+<ul>
+<li>加性增，乘性减：出现丢包事件时候，让发送方降低发送速率，每次发生一次丢包事件就将其拥塞窗口值减半。如果没有检测到拥塞，则缓慢的增加其拥塞窗口的长度，探测端到端路径上额外的可用带宽。一个新的确认到达，拥塞窗口增加一个MSS/CongWin字节。</li>
+<li>慢启动：拥塞窗口的值初始设为1个MSS，但是TCP发送方在初始阶段不是线性增加发送速率，而是指数速度增加。每过一个RTT将拥塞窗口翻倍，直到一个丢包事件，此时拥塞窗口降为一半。</li>
+<li>对超时事件做出反应：超时事件发生时，TCP发送方进入一个慢启动阶段，同上。直到拥塞窗口到达超时事件前窗口值一半为止。然后拥塞窗口以线性速率增长。TCP通过维持一个阈值的变量来管理，阈值初始为很大的值，这个值就是超时事件前窗口值的一半。网络在显示它自己至少能交付一些报文段，即使其他报文段因拥塞而丢失了，这种在收到3个冗余ACK后取消慢启动阶段的行为称为快速恢复。分组的RTT越长，路由器中的拥塞越严重。</li>
+<li>对TCP吞吐量的宏观描述：TCP发送数据速率是拥塞窗口和当前RTT的函数，</li>
+<li>TCP的未来：高速TCP连接</li>
+<li>公平性：较小RTT连接能够在链路空闲时候更快的抢到可用带宽，较快的打开拥塞窗口，比较大RTT连接有更高的吞吐量。目前一个研究是开发一种因特网拥塞控制机制，用于阻止UDP流量不断压制直至中断因特网吞吐量。也可以使用多条并行TCP连接来传送一个web页中的多个对象。</li>
+</ul>
+<p>运输层协议能够提供的服务经常受下面网络层协议服务模型的限制。在协议栈中任意一层都可以实现确认，定时器，重传以及序号，就可以向上层提供可靠数据传输。</p>
+<p>数据报拥塞控制协议，DCCP，提供了低开销，面向报文，类似UDP的不可靠服务，但是具有拥塞控制。</p>
+<p>流控制传输协议SCTP</p>
+<p>TCP友好速率控制 TFRC 是一种拥塞控制协议而不是一种功能齐全的运输层协议。</p>
+  
 	</div>
 		<footer class="article-footer clearfix">
 
@@ -168,6 +192,14 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
+ <div class="prev" >
+ <a href="/2017/03/10/工作总结/" title="工作总结">
+  <strong>新一篇:</strong><br/>
+  <span>
+  工作总结</span>
+</a>
+</div>
+
 
 <div class="next">
 <a href="/2017/03/06/Designing-a-RESTful-API-with-Python-and-Flask/"  title="Designing a RESTful API With Python and Flask">

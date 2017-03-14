@@ -103,7 +103,7 @@ var _hmt = _hmt || [];
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title"></strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#What-is-REST"><span class="toc-number">1.</span> <span class="toc-text">What is REST?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#What-is-a-RESTful-web-service"><span class="toc-number">2.</span> <span class="toc-text">What is a RESTful web service?</span></a></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#What-is-REST"><span class="toc-number">1.</span> <span class="toc-text">What is REST?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#What-is-a-RESTful-web-service"><span class="toc-number">2.</span> <span class="toc-text">What is a RESTful web service?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Designing-a-simple-web-service"><span class="toc-number">3.</span> <span class="toc-text">Designing a simple web service</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#A-brief-introduction-to-the-Flask-microframework"><span class="toc-number">4.</span> <span class="toc-text">A brief introduction to the Flask microframework</span></a></li></ol>
 		</div>
 		
 		<p>翻译自<a href="https://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask" target="_blank" rel="external">https://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask</a></p>
@@ -158,7 +158,57 @@ var _hmt = _hmt || [];
 </tbody>
 </table>
 <p>REST设计不需要请求提供特定的数据格式，事实上数据是通过在request体的JSON数据包，或者有些时候是在URL的查询部分作为参数传递的。</p>
-  
+<h1 id="Designing-a-simple-web-service"><a href="#Designing-a-simple-web-service" class="headerlink" title="Designing a simple web service"></a>Designing a simple web service</h1><p>设计一个符合REST风格的web服务或者API的任务现在变成了确定被暴露出的资源以及他们如何被不同的请求方法改变。</p>
+<p>我们现在想写一个To Do应用，我们要设计一个web服务。第一件事情就是决定进入这个服务的根URL。例如，我们可以这样暴露这个服务</p>
+<p><code>http://[hostname]/todo/api/v1.0/</code></p>
+<p>这里我决定在URL包含应用的名字和API的版本。在URL中包含应用名字是很有用的，特别是在相同系统上运行有其他应用，这样就可以提供一个命名空间将其分开。在URL包含版本号有助于以后升级，因为新的或者潜在的不相容的函数可能在新版本中添加，这样就不会影响依赖旧函数的应用。</p>
+<p>下一步是选择服务要暴露的资源。这是一个很简单的应用，我们只有task，所以我们唯一在我们todo列表中的资源是tasks.</p>
+<p>我们的tasks资源将会使用如下的HTTP方法。</p>
+<table>
+<thead>
+<tr>
+<th>HTTP Methods</th>
+<th style="text-align:center">URI</th>
+<th style="text-align:right">Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td style="text-align:center"><a href="http://[hostname]/todo/api/v1.0/tasks" target="_blank" rel="external">http://[hostname]/todo/api/v1.0/tasks</a></td>
+<td style="text-align:right">Retrieve list of tasks</td>
+</tr>
+<tr>
+<td>GET</td>
+<td style="text-align:center"><a href="http://[hostname]/todo/api/v1.0/tasks/[task_id" target="_blank" rel="external">http://[hostname]/todo/api/v1.0/tasks/[task_id</a>]</td>
+<td style="text-align:right">Retrieve a task</td>
+</tr>
+<tr>
+<td>POST</td>
+<td style="text-align:center"><a href="http://[hostname]/todo/api/v1.0/tasks" target="_blank" rel="external">http://[hostname]/todo/api/v1.0/tasks</a></td>
+<td style="text-align:right">Create a new task</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td style="text-align:center"><a href="http://[hostname]/todo/api/v1.0/tasks/[task_id" target="_blank" rel="external">http://[hostname]/todo/api/v1.0/tasks/[task_id</a>]</td>
+<td style="text-align:right">Update an existing task</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td style="text-align:center"><a href="http://[hostname]/todo/api/v1.0/tasks/[task_id" target="_blank" rel="external">http://[hostname]/todo/api/v1.0/tasks/[task_id</a>]</td>
+<td style="text-align:right">Delete a task</td>
+</tr>
+</tbody>
+</table>
+<p>我们可以定义一个task有以下字段，<strong><em>自己的应用的task也应该这么设计，然后就可以有一个计算的历史记录功能了，计算完成不用删除这条记录，而是将其done字段设为True，然后每次载入的时候检索哪些done是False进行运行。另外API也应该设置为应用名加上版本号，这个是以后要加上的功能</em></strong></p>
+<ul>
+<li>id: 标识符，数字类型</li>
+<li>title: 简短的任务描述，字符串类型</li>
+<li>description: 长的任务描述，文本类型</li>
+<li>done: 任务完成状态，布尔类型</li>
+</ul>
+<p>现在我们基本已经完成了web服务的设计部分，剩下的就是应用！</p>
+<h1 id="A-brief-introduction-to-the-Flask-microframework"><a href="#A-brief-introduction-to-the-Flask-microframework" class="headerlink" title="A brief introduction to the Flask microframework"></a>A brief introduction to the Flask microframework</h1>  
 	</div>
 		<footer class="article-footer clearfix">
 
